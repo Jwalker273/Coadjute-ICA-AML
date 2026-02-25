@@ -775,6 +775,7 @@ function submitQuiz() {
   let correct = Qs.filter((_,i)=>answered[i]===Qs[i].c).length;
   const pct = Math.round((correct/Qs.length)*100);
   const pass = pct >= 70;
+if (pass) localStorage.setItem('module_1_complete', 'true');
   const panel = document.getElementById('resultPanel');
   document.getElementById('resultScore').textContent = pct+'%';
   document.getElementById('resultMsg').textContent = pass ? '✅ Pass — Module 1 Complete!' : '❌ Not quite — 70% needed to pass';
@@ -799,3 +800,4 @@ buildQuiz();
 </script>
 </body>
 </html>
+
