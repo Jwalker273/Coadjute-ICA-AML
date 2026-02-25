@@ -34,7 +34,7 @@
 
   /* ── OVERALL PROGRESS ── */
   .progress-band{background:#fff;border-bottom:1px solid var(--grey);padding:20px 40px;display:flex;align-items:center;gap:24px}
-  .pb-label{font-size:.78rem;font-weight:700;color:var(--ink);white-space:nowrap;min-width:120px}
+  .pb-label{font-size:.78rem;font-weight:700;color:var(--ink);white-space:nowrap;min-width:160px}
   .pb-track{flex:1;height:8px;background:var(--grey);border-radius:99px;overflow:hidden}
   .pb-fill{height:100%;background:var(--grad);border-radius:99px;transition:width .6s ease}
   .pb-pct{font-size:.82rem;font-weight:800;color:var(--ink);min-width:36px;text-align:right}
@@ -49,11 +49,9 @@
   /* ── MODULE CARDS ── */
   .card{background:#fff;border-radius:14px;border:1.5px solid var(--grey);padding:24px 26px;cursor:pointer;transition:all .22s;position:relative;overflow:hidden;text-decoration:none;display:block;color:var(--ink)}
   .card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad);opacity:0;transition:.22s}
-  .card:hover{border-color:var(--lilac);box-shadow:0 6px 24px rgba(193,127,255,.2);transform:translateY(-2px)}
-  .card:hover::before{opacity:1}
-  .card.locked{cursor:not-allowed;opacity:.55;filter:grayscale(.3)}
-  .card.locked:hover{transform:none;box-shadow:none;border-color:var(--grey)}
-  .card.locked:hover::before{opacity:0}
+  .card:hover:not(.locked){border-color:var(--lilac);box-shadow:0 6px 24px rgba(193,127,255,.2);transform:translateY(-2px)}
+  .card:hover:not(.locked)::before{opacity:1}
+  .card.locked{cursor:not-allowed;opacity:.55;filter:grayscale(.3);pointer-events:none}
   .card.completed{border-color:#22cc77;background:linear-gradient(135deg,#fff 80%,rgba(34,204,119,.04))}
   .card.completed::before{background:linear-gradient(90deg,#22cc77,#00dd88);opacity:1}
 
@@ -63,7 +61,6 @@
   .badge-done{background:rgba(34,204,119,.12);color:#22aa66;border:1px solid rgba(34,204,119,.3)}
   .badge-next{background:linear-gradient(90deg,#C17FFF,#FF44D6);color:#fff}
   .badge-locked{background:var(--grey);color:rgba(0,40,70,.4)}
-  .badge-exam{background:linear-gradient(90deg,#FF6D3D,#FF44D6);color:#fff}
 
   .card h3{font-size:1rem;font-weight:800;line-height:1.3;margin-bottom:6px}
   .card-desc{font-size:.82rem;color:rgba(0,40,70,.6);line-height:1.5;margin-bottom:16px}
@@ -74,20 +71,25 @@
   .card-lock-msg{font-size:.72rem;color:rgba(0,40,70,.4);display:flex;align-items:center;gap:5px}
   .card-lock-msg::before{content:'🔒'}
 
-  /* ── MOCK EXAM CARD (full width) ── */
-  .exam-card{background:var(--ink);border-radius:14px;border:none;padding:32px 36px;cursor:pointer;transition:all .22s;position:relative;overflow:hidden;text-decoration:none;display:flex;align-items:center;justify-content:space-between;gap:24px;color:#fff;margin-top:8px}
+  /* ── MOCK EXAM CARD ── */
+  .exam-card{background:var(--ink);border-radius:14px;border:none;padding:32px 36px;cursor:pointer;transition:all .22s;position:relative;overflow:hidden;text-decoration:none;display:flex;align-items:center;justify-content:space-between;gap:24px;color:#fff;margin-bottom:8px}
   .exam-card::after{content:'';position:absolute;top:-60px;right:-60px;width:280px;height:280px;background:radial-gradient(circle,rgba(193,127,255,.2) 0%,transparent 65%)}
-  .exam-card:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.25)}
-  .exam-card.locked{opacity:.5;cursor:not-allowed}
-  .exam-card.locked:hover{transform:none;box-shadow:none}
+  .exam-card:hover:not(.locked){transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.25)}
+  .exam-card.locked{opacity:.5;cursor:not-allowed;pointer-events:none}
   .exam-info h3{font-size:1.2rem;font-weight:900;margin-bottom:6px}
   .exam-info p{font-size:.85rem;color:rgba(255,255,255,.6);max-width:440px;line-height:1.5}
   .exam-meta{display:flex;gap:16px;margin-top:16px;flex-wrap:wrap}
   .exam-stat{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:10px 18px;text-align:center}
   .exam-stat .ev{font-size:1.1rem;font-weight:800;color:#fff}
   .exam-stat .el{font-size:.65rem;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.06em}
-  .exam-btn{background:var(--grad);color:#fff;border:none;padding:14px 28px;border-radius:10px;font-size:.9rem;font-weight:800;cursor:pointer;white-space:nowrap;box-shadow:0 4px 18px rgba(193,127,255,.4);transition:.2s;flex-shrink:0;z-index:1}
+  .exam-btn{background:var(--grad);color:#fff;border:none;padding:14px 28px;border-radius:10px;font-size:.9rem;font-weight:800;cursor:pointer;white-space:nowrap;box-shadow:0 4px 18px rgba(193,127,255,.4);transition:.2s;flex-shrink:0;z-index:1;text-decoration:none;display:inline-block}
   .exam-btn:hover{opacity:.9}
+  .exam-btn.locked-btn{background:rgba(255,255,255,.15);box-shadow:none;cursor:not-allowed}
+
+  /* ── RESET LINK ── */
+  .reset-bar{text-align:center;padding:12px;font-size:.75rem;color:rgba(0,40,70,.35)}
+  .reset-bar button{background:none;border:none;color:rgba(0,40,70,.35);cursor:pointer;font-size:.75rem;text-decoration:underline}
+  .reset-bar button:hover{color:var(--ink)}
 
   /* ── FOOTER ── */
   footer{text-align:center;padding:24px;font-size:.75rem;color:rgba(0,40,70,.35);border-top:1px solid var(--grey)}
@@ -113,7 +115,7 @@
 </section>
 
 <div class="progress-band">
-  <div class="pb-label">Overall Progress</div>
+  <div class="pb-label">Overall Progress — <span id="done-count">0</span> of 8 modules complete</div>
   <div class="pb-track"><div class="pb-fill" id="overall-fill" style="width:0%"></div></div>
   <div class="pb-pct" id="overall-pct">0%</div>
 </div>
@@ -124,29 +126,29 @@
   <div class="week-label">Week 1 — Foundations</div>
   <div class="week-grid">
 
-    <a href="Module 1 What is Money Laundering.html" class="card completed" id="card-1">
+    <a href="Module 1 What is Money Laundering.html" class="card" id="card-1">
       <div class="card-header">
         <div class="card-num">Module 01</div>
-        <span class="card-badge badge-done">✓ Complete</span>
+        <span class="card-badge" id="badge-1">Up Next</span>
       </div>
       <h3>What is Money Laundering?</h3>
       <p class="card-desc">Definitions, the three stages (placement, layering, integration), predicate offences, criminal liability, and why it matters.</p>
       <div class="card-meta">
         <span class="card-duration">45–60 min</span>
-        <span class="card-progress">Quiz: Unlocked</span>
+        <span class="card-status" id="status-1">Quiz: 15 questions</span>
       </div>
     </a>
 
-    <a href="Module 2 Terrorist Financing & Sanctions.html" class="card completed" id="card-2">
+    <a href="Module 2 Terrorist Financing &amp; Sanctions.html" class="card locked" id="card-2">
       <div class="card-header">
         <div class="card-num">Module 02</div>
-        <span class="card-badge badge-done">✓ Complete</span>
+        <span class="card-badge badge-locked" id="badge-2">Locked</span>
       </div>
       <h3>Terrorist Financing &amp; Sanctions</h3>
       <p class="card-desc">How TF differs from ML, sanctions regimes (UN, EU, OFAC), identifying sanctioned individuals and entities, and Coadjute obligations.</p>
       <div class="card-meta">
         <span class="card-duration">45–60 min</span>
-        <span class="card-progress">Quiz: Unlocked</span>
+        <span class="card-status card-lock-msg" id="status-2">Complete Module 1 first</span>
       </div>
     </a>
 
@@ -156,29 +158,29 @@
   <div class="week-label">Week 2 — Sector Vulnerabilities</div>
   <div class="week-grid">
 
-    <a href="Module 3 How Financial Institutions Are Exploited.html" class="card" id="card-3">
+    <a href="Module 3 How Financial Institutions Are Exploited.html" class="card locked" id="card-3">
       <div class="card-header">
         <div class="card-num">Module 03</div>
-        <span class="card-badge badge-next">Up Next</span>
+        <span class="card-badge badge-locked" id="badge-3">Locked</span>
       </div>
       <h3>How Financial Institutions Are Exploited</h3>
       <p class="card-desc">Bank accounts, private banking, correspondent banking, shell companies, legal entities, and property sector exploitation typologies.</p>
       <div class="card-meta">
         <span class="card-duration">45–60 min</span>
-        <span class="card-progress">Quiz: 15 questions</span>
+        <span class="card-status card-lock-msg" id="status-3">Complete Module 2 first</span>
       </div>
     </a>
 
-    <a href="Module 4 High-Risk Products & Sectors.html" class="card locked" id="card-4">
+    <a href="Module 4 High-Risk Products &amp; Sectors.html" class="card locked" id="card-4">
       <div class="card-header">
         <div class="card-num">Module 04</div>
-        <span class="card-badge badge-locked">Locked</span>
+        <span class="card-badge badge-locked" id="badge-4">Locked</span>
       </div>
       <h3>High-Risk Products &amp; Sectors</h3>
       <p class="card-desc">Insurance, investment products, betting &amp; gaming, mobile financial services, prepaid cards, and virtual currencies.</p>
       <div class="card-meta">
         <span class="card-duration">45–60 min</span>
-        <span class="card-lock-msg">Complete Module 3 first</span>
+        <span class="card-status card-lock-msg" id="status-4">Complete Module 3 first</span>
       </div>
     </a>
 
@@ -191,69 +193,70 @@
     <a href="Module 5 Customer Due Diligence (CDD).html" class="card locked" id="card-5">
       <div class="card-header">
         <div class="card-num">Module 05</div>
-        <span class="card-badge badge-locked">Locked</span>
+        <span class="card-badge badge-locked" id="badge-5">Locked</span>
       </div>
       <h3>Customer Due Diligence (CDD)</h3>
       <p class="card-desc">Standard, simplified and enhanced CDD, identifying suspicious activity, plausibility testing, and property sector CDD obligations.</p>
       <div class="card-meta">
         <span class="card-duration">45–60 min</span>
-        <span class="card-lock-msg">Complete Module 4 first</span>
+        <span class="card-status card-lock-msg" id="status-5">Complete Module 4 first</span>
       </div>
     </a>
 
-    <a href="Module 6 Monitoring, PEPs & Reporting.html" class="card locked" id="card-6">
+    <a href="Module 6 Monitoring, PEPs &amp; Reporting.html" class="card locked" id="card-6">
       <div class="card-header">
         <div class="card-num">Module 06</div>
-        <span class="card-badge badge-locked">Locked</span>
+        <span class="card-badge badge-locked" id="badge-6">Locked</span>
       </div>
       <h3>Monitoring, PEPs &amp; Reporting</h3>
       <p class="card-desc">Beneficial ownership, politically exposed persons, suspicious activity reports (SARs), tipping off, and ongoing monitoring obligations.</p>
       <div class="card-meta">
         <span class="card-duration">45–60 min</span>
-        <span class="card-lock-msg">Complete Module 5 first</span>
+        <span class="card-status card-lock-msg" id="status-6">Complete Module 5 first</span>
       </div>
     </a>
 
   </div>
 
   <!-- WEEK 4 -->
-  <div class="week-label">Week 4 — Law, Regulation &amp; Management</div>
+  <div class="week-label">Week 4 — Legal Framework &amp; Risk Management</div>
   <div class="week-grid">
 
-    <a href="Module 7 Legal & Regulatory Framework.html" class="card locked" id="card-7">
+    <a href="Module 7 Legal &amp; Regulatory Framework.html" class="card locked" id="card-7">
       <div class="card-header">
         <div class="card-num">Module 07</div>
-        <span class="card-badge badge-locked">Locked</span>
+        <span class="card-badge badge-locked" id="badge-7">Locked</span>
       </div>
       <h3>Legal &amp; Regulatory Framework</h3>
-      <p class="card-desc">FATF, international bodies, national frameworks (POCA, EU Directives), money laundering offences, and legal duty to report.</p>
+      <p class="card-desc">POCA 2002, Terrorism Act 2000, Money Laundering Regulations 2017, the role of HMRC, FCA, and FATF, and key criminal offences.</p>
       <div class="card-meta">
         <span class="card-duration">45–60 min</span>
-        <span class="card-lock-msg">Complete Module 6 first</span>
+        <span class="card-status card-lock-msg" id="status-7">Complete Module 6 first</span>
       </div>
     </a>
 
-    <a href="Module 8 Risk-Based Approach & Management Obligations.html" class="card locked" id="card-8">
+    <a href="Module 8 Risk-Based Approach &amp; Management Obligations.html" class="card locked" id="card-8">
       <div class="card-header">
         <div class="card-num">Module 08</div>
-        <span class="card-badge badge-locked">Locked</span>
+        <span class="card-badge badge-locked" id="badge-8">Locked</span>
       </div>
       <h3>Risk-Based Approach &amp; Management Obligations</h3>
-      <p class="card-desc">Building an AML policy, designing procedures, monitoring compliance, training obligations, and organisational culture.</p>
+      <p class="card-desc">Building an AML policy, designing procedures, risk assessment frameworks, senior management obligations, and organisational culture.</p>
       <div class="card-meta">
         <span class="card-duration">45–60 min</span>
-        <span class="card-lock-msg">Complete Module 7 first</span>
+        <span class="card-status card-lock-msg" id="status-8">Complete Module 7 first</span>
       </div>
     </a>
 
   </div>
 
-  <!-- WEEK 5 / MOCK EXAM -->
+  <!-- WEEK 5 — MOCK EXAM -->
   <div class="week-label">Week 5 — Final Assessment</div>
+
   <a href="Mock Exam.html" class="exam-card locked" id="card-exam">
     <div class="exam-info">
-      <h3>🎓 Final Mock Exam</h3>
-      <p>ICA-style comprehensive assessment covering all eight modules. Complete all modules before attempting.</p>
+      <h3>🎓 ICA Certificate Mock Exam</h3>
+      <p>40 questions drawn from all 8 modules, timed at 60 minutes, ICA exam style. Complete all modules before attempting.</p>
       <div class="exam-meta">
         <div class="exam-stat"><div class="ev">40</div><div class="el">Questions</div></div>
         <div class="exam-stat"><div class="ev">60m</div><div class="el">Time Limit</div></div>
@@ -261,99 +264,111 @@
         <div class="exam-stat"><div class="ev">28/40</div><div class="el">To Pass</div></div>
       </div>
     </div>
-    <button class="exam-btn" id="exam-btn">🔒 Complete All Modules</button>
+    <span class="exam-btn locked-btn" id="exam-btn">🔒 Complete All Modules</span>
   </a>
 
 </main>
 
+<div class="reset-bar">
+  <button onclick="resetProgress()">Reset all progress (for testing)</button>
+</div>
+
 <footer>Coadjute AML Training &nbsp;·&nbsp; ICA Certificate in AML &nbsp;·&nbsp; For internal training use only</footer>
 
 <script>
-// ── FILE NAMES — update if your filenames differ ──
+// ── MODULE REGISTRY ──
+// Keys must exactly match what each module writes to localStorage on quiz pass:
+// localStorage.setItem('module_N_complete', 'true')
 const MODULES = [
-  { id: 1, file: 'Module 1 What is Money Laundering.html' },
-  { id: 2, file: 'Module 2 Terrorist Financing & Sanctions.html' },
-  { id: 3, file: 'Module 3 How Financial Institutions Are Exploited.html' },
-  { id: 4, file: 'Module 4 High-Risk Products & Sectors.html' },
-  { id: 5, file: 'Module 5 Customer Due Diligence (CDD).html' },
-  { id: 6, file: 'Module 6 Monitoring, PEPs & Reporting.html' },
-  { id: 7, file: 'Module 7 Legal & Regulatory Framework.html' },
-  { id: 8, file: 'Module 8 Risk-Based Approach & Management Obligations.html' },
+  { id:1, prevId:null },
+  { id:2, prevId:1 },
+  { id:3, prevId:2 },
+  { id:4, prevId:3 },
+  { id:5, prevId:4 },
+  { id:6, prevId:5 },
+  { id:7, prevId:6 },
+  { id:8, prevId:7 },
 ];
 
-// ── MANUAL OVERRIDE — mark modules as complete here until
-//    we wire up real cross-module completion signals ──
-//    Set to true for modules whose quiz has been passed.
-const COMPLETED = {
-  1: true,   // Module 1 — done
-  2: true,   // Module 2 — done
-  3: false,
-  4: false,
-  5: false,
-  6: false,
-  7: false,
-  8: false,
-};
+function isComplete(id) {
+  return localStorage.getItem('module_' + id + '_complete') === 'true';
+}
 
 function updateDashboard() {
-  const doneCount = Object.values(COMPLETED).filter(Boolean).length;
-  const total = MODULES.length;
-  const pct = Math.round(doneCount / total * 100);
+  const doneCount = MODULES.filter(m => isComplete(m.id)).length;
+  const pct = Math.round(doneCount / MODULES.length * 100);
 
   document.getElementById('overall-fill').style.width = pct + '%';
   document.getElementById('overall-pct').textContent = pct + '%';
-
-  let firstIncomplete = null;
+  document.getElementById('done-count').textContent = doneCount;
 
   MODULES.forEach(m => {
-    const card = document.getElementById('card-' + m.id);
+    const card   = document.getElementById('card-' + m.id);
+    const badge  = document.getElementById('badge-' + m.id);
+    const status = document.getElementById('status-' + m.id);
     if (!card) return;
-    const prev = m.id === 1 ? true : COMPLETED[m.id - 1];
-    const done = COMPLETED[m.id];
 
+    const done     = isComplete(m.id);
+    const prevDone = m.prevId === null || isComplete(m.prevId);
+
+    // Reset classes
     card.classList.remove('locked', 'completed');
+    badge.className = 'card-badge';
+    status.className = 'card-status';
 
     if (done) {
       card.classList.add('completed');
-      const badge = card.querySelector('.card-badge');
-      if (badge) { badge.className = 'card-badge badge-done'; badge.textContent = '✓ Complete'; }
-      card.removeAttribute('onclick');
-    } else if (prev) {
-      if (!firstIncomplete) firstIncomplete = m.id;
-      const badge = card.querySelector('.card-badge');
-      if (badge) { badge.className = 'card-badge badge-next'; badge.textContent = 'Up Next'; }
-      const meta = card.querySelector('.card-meta .card-progress, .card-meta .card-lock-msg');
-      if (meta) { meta.className = 'card-progress'; meta.textContent = 'Quiz: 15 questions'; }
+      badge.classList.add('badge-done');
+      badge.textContent = '✓ Complete';
+      status.classList.add('card-progress');
+      status.textContent = 'Quiz passed ✓';
+
+    } else if (prevDone) {
+      // Unlocked and available
+      badge.classList.add('badge-next');
+      badge.textContent = doneCount === 0 && m.id === 1 ? 'Start Here' : 'Up Next';
+      status.classList.add('card-progress');
+      status.textContent = 'Quiz: 15 questions';
+
     } else {
+      // Locked
       card.classList.add('locked');
-      const badge = card.querySelector('.card-badge');
-      if (badge) { badge.className = 'card-badge badge-locked'; badge.textContent = 'Locked'; }
+      badge.classList.add('badge-locked');
+      badge.textContent = 'Locked';
+      status.classList.add('card-lock-msg');
+      status.textContent = 'Complete Module ' + m.prevId + ' first';
     }
   });
 
-  // Exam card
+  // Mock exam gate — only unlock when all 8 modules complete
   const examCard = document.getElementById('card-exam');
-  const examBtn = document.getElementById('exam-btn');
-  const allDone = Object.values(COMPLETED).every(Boolean);
+  const examBtn  = document.getElementById('exam-btn');
+  const allDone  = MODULES.every(m => isComplete(m.id));
+
   if (allDone) {
     examCard.classList.remove('locked');
+    examBtn.className = 'exam-btn';
     examBtn.textContent = '→ Start Exam';
+  } else {
+    examCard.classList.add('locked');
+    examBtn.className = 'exam-btn locked-btn';
+    const remaining = MODULES.filter(m => !isComplete(m.id)).length;
+    examBtn.textContent = '🔒 ' + remaining + ' module' + (remaining > 1 ? 's' : '') + ' remaining';
   }
 }
 
-// ── Prevent locked cards from navigating ──
-document.querySelectorAll('.card.locked, .exam-card.locked').forEach(c => {
-  c.addEventListener('click', e => e.preventDefault());
-});
+// Re-run whenever user returns to this tab (e.g. after passing a quiz)
+window.addEventListener('focus', updateDashboard);
 
+// ── RESET (for testing only) ──
+function resetProgress() {
+  if (!confirm('Reset all module progress? This cannot be undone.')) return;
+  MODULES.forEach(m => localStorage.removeItem('module_' + m.id + '_complete'));
+  updateDashboard();
+}
+
+// ── INIT ──
 updateDashboard();
-
-// Re-apply locked click prevention after update
-setTimeout(() => {
-  document.querySelectorAll('.card.locked, .exam-card.locked').forEach(c => {
-    c.addEventListener('click', e => e.preventDefault());
-  });
-}, 0);
 </script>
 </body>
 </html>
