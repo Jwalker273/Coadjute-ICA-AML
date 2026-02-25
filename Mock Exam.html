@@ -5,36 +5,40 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Final Mock Exam | Coadjute ICA AML Certificate</title>
 <style>
+/* ── COADJUTE TOKENS ── */
 :root{
   --ink:#002846;--lilac:#C17FFF;--pink:#FF44D6;--orange:#FF6D3D;
-  --active:#4EEFF9;--l1:#DFBEFF;--l2:#F2E5FF;--l3:#F9F2FF;
-  --grey:#EEE8F1;--white:#fff;
-  --grad:linear-gradient(90deg,#C17FFF 0%,#FF44D6 50%,#FF6D3D 100%);
+  --active:#4EEFF9;--l50:#DFBEFF;--l20:#F2E5FF;--l10:#F9F2FF;
+  --grey:#EEE8F1;--white:#FFFFFF;
+  --grad:linear-gradient(90deg,var(--lilac) 0%,var(--pink) 60%,var(--orange) 100%);
   --green:#1a9e5f;--red:#d63b1f;
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f4f8;color:var(--ink);line-height:1.7;min-height:100vh}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--ink);line-height:1.7;min-height:100vh}
 
-/* TOPBAR */
-.topbar{height:56px;background:var(--ink);display:flex;align-items:center;padding:0 24px;gap:16px;position:fixed;top:0;left:0;right:0;z-index:200;box-shadow:0 2px 12px rgba(0,0,0,.3)}
-.tb-logo{font-weight:800;font-size:1rem;color:#fff}
-.tb-logo span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.tb-sep{color:rgba(255,255,255,.25)}
-.tb-title{color:rgba(255,255,255,.6);font-size:.8rem}
-.tb-right{margin-left:auto;display:flex;align-items:center;gap:16px}
-.timer-wrap{display:flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.12)}
-.timer-icon{font-size:.9rem}
-.timer-val{font-size:.9rem;font-weight:700;color:var(--active);font-variant-numeric:tabular-nums;min-width:48px}
+/* ════════ TOPBAR (Standardised v2) ════════ */
+.topbar{background:var(--ink);height:56px;display:flex;align-items:center;padding:0 24px;gap:16px;position:fixed;top:0;left:0;right:0;z-index:200;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.topbar-logo{font-weight:800;font-size:1.1rem;color:var(--white);letter-spacing:-.5px;white-space:nowrap}
+.topbar-logo span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.topbar-course{font-size:.8rem;color:rgba(255,255,255,.5);margin-left:8px;border-left:1px solid rgba(255,255,255,.15);padding-left:14px;white-space:nowrap}
+.topbar-progress{margin-left:auto;display:flex;align-items:center;gap:10px}
+.topbar-pct{font-size:.8rem;color:rgba(255,255,255,.6);white-space:nowrap}
+.topbar-bar{width:120px;height:4px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden}
+.topbar-bar-fill{height:100%;background:var(--grad);border-radius:2px;transition:width .4s}
+.topbar-back{color:rgba(255,255,255,.6);font-size:.8rem;text-decoration:none;padding:6px 14px;border:1px solid rgba(255,255,255,.2);border-radius:6px;margin-left:16px;white-space:nowrap;transition:color .2s,border-color .2s}
+.topbar-back:hover{color:var(--white);border-color:rgba(255,255,255,.45)}
+/* Timer — lives inside topbar-progress */
+.timer-wrap{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.08);padding:5px 12px;border-radius:20px;border:1px solid rgba(255,255,255,.12)}
+.timer-icon{font-size:.85rem}
+.timer-val{font-size:.85rem;font-weight:700;color:var(--active);font-variant-numeric:tabular-nums;min-width:44px}
 .timer-val.warn{color:var(--orange);animation:pulse 1s infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
-.tb-back{background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);font-size:.75rem;padding:5px 12px;border-radius:20px;cursor:pointer}
-.tb-back:hover{background:rgba(255,255,255,.1);color:#fff}
 
-/* SCREENS */
+/* ════════ SCREENS ════════ */
 .screen{display:none;padding-top:56px;min-height:100vh}
 .screen.active{display:block}
 
-/* ─── INTRO SCREEN ─── */
+/* ════════ INTRO SCREEN ════════ */
 .intro-wrap{max-width:760px;margin:0 auto;padding:60px 32px}
 .intro-hero{background:linear-gradient(135deg,var(--ink) 0%,#1a3d5c 100%);border-radius:16px;padding:48px 44px;color:#fff;margin-bottom:32px;position:relative;overflow:hidden}
 .intro-hero::before{content:'';position:absolute;top:-40px;right:-40px;width:220px;height:220px;background:radial-gradient(circle,rgba(193,127,255,.15) 0%,transparent 70%)}
@@ -50,111 +54,108 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f4f8;color:var(--
 .intro-rules ul{padding-left:20px}
 .intro-rules li{margin-bottom:8px;font-size:.9rem;color:#2a3f55}
 .modules-covered{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.mod-tag{background:var(--l2);border:1px solid var(--l1);border-radius:6px;padding:5px 12px;font-size:.75rem;font-weight:600;color:#7320cc}
+.mod-tag{background:var(--l20);border:1px solid var(--l50);border-radius:6px;padding:5px 12px;font-size:.75rem;font-weight:600;color:#7320cc}
 .begin-btn{width:100%;background:var(--grad);color:#fff;border:none;padding:16px;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;box-shadow:0 4px 16px rgba(193,127,255,.4);transition:.2s}
 .begin-btn:hover{opacity:.9;transform:translateY(-1px)}
 
-/* ─── EXAM SCREEN ─── */
+/* ════════ EXAM SCREEN ════════ */
 .exam-wrap{display:flex;min-height:calc(100vh - 56px)}
 
-/* QUESTION SIDEBAR */
+/* Question nav sidebar */
 .q-sidebar{width:220px;background:var(--ink);position:fixed;top:56px;left:0;bottom:0;overflow-y:auto;padding:16px 12px;z-index:100}
 .q-sidebar::-webkit-scrollbar{width:3px}
 .q-sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12)}
-.qs-title{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:12px;padding:0 4px}
-.q-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:5px}
-.q-dot{width:32px;height:32px;border-radius:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:600;color:rgba(255,255,255,.45);cursor:pointer;transition:.15s}
-.q-dot:hover{background:rgba(255,255,255,.15)}
-.q-dot.answered{background:rgba(193,127,255,.25);border-color:rgba(193,127,255,.4);color:var(--lilac)}
-.q-dot.current{background:var(--lilac);border-color:var(--lilac);color:#fff}
-.qs-legend{margin-top:14px;padding:0 4px}
-.legend-row{display:flex;align-items:center;gap:8px;font-size:.7rem;color:rgba(255,255,255,.45);margin-bottom:5px}
+.qs-title{font-size:.65rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.35);margin-bottom:12px;padding:0 4px}
+.q-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:5px;margin-bottom:16px}
+.q-dot{width:100%;aspect-ratio:1;border-radius:6px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;font-size:.68rem;font-weight:600;color:rgba(255,255,255,.4);cursor:pointer;transition:.15s}
+.q-dot:hover{background:rgba(255,255,255,.14)}
+.q-dot.answered{background:rgba(193,127,255,.2);border-color:rgba(193,127,255,.4);color:rgba(255,255,255,.7)}
+.q-dot.current{background:var(--lilac);border-color:var(--lilac);color:var(--ink);font-weight:700}
+.qs-legend{margin-top:8px}
+.legend-row{display:flex;align-items:center;gap:7px;font-size:.68rem;color:rgba(255,255,255,.35);margin-bottom:5px}
 .legend-dot{width:12px;height:12px;border-radius:3px;flex-shrink:0}
 
-/* MAIN EXAM AREA */
-.exam-main{margin-left:220px;flex:1;padding:36px 48px 80px;max-width:calc(100% - 220px)}
-.q-progress{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
-.q-prog-text{font-size:.82rem;color:#5a7080;font-weight:600}
-.q-prog-bar{flex:1;height:4px;background:var(--grey);border-radius:2px;margin:0 16px;overflow:hidden}
+/* Exam main */
+.exam-main{margin-left:220px;flex:1;padding:32px 40px 80px;max-width:820px}
+.q-progress{display:flex;align-items:center;gap:12px;margin-bottom:28px}
+.q-prog-text{font-size:.8rem;color:#666;white-space:nowrap}
+.q-prog-bar{flex:1;height:4px;background:var(--grey);border-radius:2px;overflow:hidden}
 .q-prog-fill{height:100%;background:var(--grad);border-radius:2px;transition:width .3s}
-.answered-count{font-size:.82rem;color:var(--lilac);font-weight:600}
+.answered-count{font-size:.78rem;color:#888;white-space:nowrap}
+.q-card{background:#fff;border-radius:14px;padding:36px 40px;box-shadow:0 2px 12px rgba(0,0,0,.07);border:1px solid var(--grey);margin-bottom:24px}
+.q-module-tag{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--lilac);margin-bottom:12px}
+.q-num{font-size:.8rem;color:#888;margin-bottom:6px}
+.q-text{font-size:1.05rem;font-weight:600;color:var(--ink);margin-bottom:24px;line-height:1.5}
+.q-options{display:flex;flex-direction:column;gap:10px}
+.q-opt{display:flex;align-items:flex-start;gap:14px;padding:14px 18px;border:2px solid var(--grey);border-radius:10px;cursor:pointer;transition:.15s;background:#fafafa}
+.q-opt:hover{border-color:var(--lilac);background:var(--l10)}
+.q-opt.selected{border-color:var(--lilac);background:var(--l20)}
+.q-opt-letter{width:26px;height:26px;border-radius:50%;background:var(--grey);display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;color:var(--ink);flex-shrink:0;margin-top:1px}
+.q-opt.selected .q-opt-letter{background:var(--lilac);color:var(--ink)}
+.q-opt-text{font-size:.92rem;line-height:1.5;color:#2a3f55}
+.exam-nav{display:flex;gap:12px;justify-content:space-between;align-items:center}
+.nav-btn{padding:11px 24px;border-radius:8px;font-size:.9rem;font-weight:600;cursor:pointer;border:2px solid var(--grey);background:#fff;color:var(--ink);transition:.15s}
+.nav-btn:hover:not(:disabled){border-color:var(--lilac);color:var(--lilac)}
+.nav-btn:disabled{opacity:.4;cursor:not-allowed}
+.btn-submit{background:var(--grad);color:#fff;border:none;padding:12px 32px;border-radius:8px;font-size:.9rem;font-weight:700;cursor:pointer;box-shadow:0 3px 10px rgba(193,127,255,.35);transition:.2s;display:none}
+.btn-submit:hover{opacity:.9}
+.btn-submit.visible{display:block}
 
-.q-card{background:#fff;border:1px solid var(--grey);border-radius:12px;padding:32px 32px 28px;box-shadow:0 2px 10px rgba(0,0,0,.05);max-width:760px}
-.q-module-tag{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--lilac);margin-bottom:10px}
-.q-number{font-size:.8rem;font-weight:600;color:#8a9db0;margin-bottom:6px}
-.q-text{font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:22px;line-height:1.55}
-.q-opts{display:flex;flex-direction:column;gap:10px}
-.q-opt{background:#f9f8fc;border:1.5px solid #e0d8ef;border-radius:9px;padding:13px 18px;font-size:.88rem;color:var(--ink);cursor:pointer;text-align:left;transition:.2s;position:relative}
-.q-opt:hover:not(:disabled){border-color:var(--lilac);background:var(--l3)}
-.q-opt.selected{border-color:var(--lilac);background:var(--l2);font-weight:500}
-.q-opt.correct-ans{background:#e6f9f0!important;border-color:#2eb87a!important;color:#1a6644!important}
-.q-opt.wrong-ans{background:#fef0ee!important;border-color:var(--orange)!important;color:#8b2a10!important}
-.q-exp{margin-top:16px;padding:14px 18px;background:var(--l3);border-left:3px solid var(--lilac);border-radius:0 8px 8px 0;font-size:.84rem;color:#2a3f55;display:none;line-height:1.6}
-.q-exp.show{display:block}
-.q-exp strong{color:var(--ink)}
-
-.exam-nav{display:flex;align-items:center;justify-content:space-between;margin-top:24px;max-width:760px}
-.nav-btn{padding:11px 24px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;transition:.2s;border:none}
-.btn-prev{background:var(--grey);color:var(--ink)}
-.btn-prev:hover:not(:disabled){background:#ddd8e5}
-.btn-prev:disabled{opacity:.35;cursor:default}
-.btn-next{background:var(--grad);color:#fff;box-shadow:0 4px 12px rgba(193,127,255,.3)}
-.btn-next:hover{opacity:.9}
-.btn-submit{background:linear-gradient(90deg,var(--green),#15805a);color:#fff;box-shadow:0 4px 14px rgba(26,158,95,.3);padding:12px 32px}
-
-/* ─── RESULTS SCREEN ─── */
-.results-wrap{max-width:820px;margin:0 auto;padding:52px 32px 80px}
-.results-hero{background:linear-gradient(135deg,var(--ink) 0%,#1a3d5c 100%);border-radius:16px;padding:44px;text-align:center;color:#fff;margin-bottom:32px}
-.res-week{font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--active);margin-bottom:12px}
-.res-title{font-size:1.8rem;font-weight:900;margin-bottom:6px}
-.res-score-big{font-size:4.5rem;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1;margin:16px 0 8px}
-.res-pct{font-size:1.4rem;font-weight:700;color:rgba(255,255,255,.8);margin-bottom:6px}
-.res-verdict{font-size:1.1rem;font-weight:700;padding:8px 24px;border-radius:20px;display:inline-block;margin-bottom:12px}
-.res-verdict.pass{background:rgba(26,158,95,.25);color:#6dffc5;border:1px solid rgba(26,158,95,.3)}
-.res-verdict.fail{background:rgba(214,59,31,.2);color:#ffaa8a;border:1px solid rgba(214,59,31,.3)}
-.res-time-used{color:rgba(255,255,255,.5);font-size:.85rem}
-.res-module-breakdown{background:#fff;border:1px solid var(--grey);border-radius:12px;padding:28px;margin-bottom:28px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
-.res-module-breakdown h2{font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:16px}
-.breakdown-row{display:flex;align-items:center;gap:14px;padding:9px 0;border-bottom:1px solid var(--grey)}
-.breakdown-row:last-child{border-bottom:none}
-.brow-label{font-size:.82rem;font-weight:600;color:var(--ink);width:220px;flex-shrink:0}
+/* ════════ RESULTS SCREEN ════════ */
+.results-wrap{max-width:800px;margin:0 auto;padding:48px 32px}
+.results-hero{background:linear-gradient(135deg,var(--ink) 0%,#1a3d5c 100%);border-radius:16px;padding:48px;color:#fff;margin-bottom:32px;text-align:center;position:relative;overflow:hidden}
+.results-hero::before{content:'';position:absolute;top:-60px;left:50%;transform:translateX(-50%);width:300px;height:300px;background:radial-gradient(circle,rgba(193,127,255,.12) 0%,transparent 70%)}
+.res-week{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--active);margin-bottom:8px}
+.res-title{font-size:.9rem;color:rgba(255,255,255,.6);margin-bottom:20px}
+.res-score-big{font-size:4rem;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;line-height:1.1;margin-bottom:6px}
+.res-pct{font-size:1.2rem;color:rgba(255,255,255,.7);margin-bottom:10px}
+.res-verdict{font-size:1.1rem;font-weight:700;padding:8px 20px;border-radius:20px;display:inline-block;margin-bottom:8px}
+.res-verdict.pass{background:rgba(26,158,95,.2);color:#5effa5;border:1px solid rgba(26,158,95,.3)}
+.res-verdict.fail{background:rgba(214,59,31,.2);color:#ffa07a;border:1px solid rgba(214,59,31,.3)}
+.res-time-used{font-size:.8rem;color:rgba(255,255,255,.4);margin-top:8px}
+.res-module-breakdown{background:#fff;border-radius:12px;padding:28px 32px;margin-bottom:24px;border:1px solid var(--grey);box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.res-module-breakdown h2{font-size:1rem;font-weight:700;margin-bottom:20px;color:var(--ink)}
+.breakdown-row{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.brow-label{font-size:.8rem;font-weight:600;color:var(--ink);width:180px;flex-shrink:0}
 .brow-bar-wrap{flex:1;height:8px;background:var(--grey);border-radius:4px;overflow:hidden}
-.brow-bar{height:100%;border-radius:4px;transition:width .6s ease}
-.brow-score{font-size:.8rem;font-weight:700;width:50px;text-align:right;flex-shrink:0}
-.review-section{background:#fff;border:1px solid var(--grey);border-radius:12px;padding:28px;box-shadow:0 2px 8px rgba(0,0,0,.05);margin-bottom:28px}
-.review-section h2{font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:20px}
-.review-q{border:1px solid var(--grey);border-radius:10px;padding:20px 22px;margin-bottom:14px}
-.review-q.correct-q{border-left:4px solid var(--green)}
-.review-q.wrong-q{border-left:4px solid var(--orange)}
-.review-q-mod{font-size:.65rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--lilac);margin-bottom:5px}
+.brow-bar{height:100%;border-radius:4px;transition:width .6s}
+.brow-score{font-size:.82rem;font-weight:700;width:40px;text-align:right;flex-shrink:0}
+.review-section{background:#fff;border-radius:12px;padding:28px 32px;margin-bottom:24px;border:1px solid var(--grey);box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.review-section h2{font-size:1rem;font-weight:700;margin-bottom:20px;color:var(--ink)}
+.review-q{padding:16px 20px;border-radius:10px;margin-bottom:12px;border:1px solid var(--grey)}
+.review-q.correct-q{background:#f0fdf6;border-color:#a7f3d0}
+.review-q.wrong-q{background:#fff5f5;border-color:#fecaca}
+.review-q-mod{font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#888;margin-bottom:4px}
 .review-q-text{font-size:.9rem;font-weight:600;color:var(--ink);margin-bottom:10px}
-.review-answers{font-size:.83rem;margin-bottom:8px}
-.review-your{color:var(--orange)}
+.review-answers{margin-bottom:8px;font-size:.85rem}
+.review-your{color:var(--red);margin-bottom:3px}
 .review-correct{color:var(--green);font-weight:600}
-.review-exp{font-size:.82rem;color:#4a6070;background:var(--l3);padding:10px 14px;border-radius:7px;margin-top:8px}
-.results-actions{display:flex;gap:14px;flex-wrap:wrap}
-.btn-retry{background:var(--grey);color:var(--ink);border:none;padding:13px 32px;border-radius:8px;font-size:.9rem;font-weight:600;cursor:pointer}
+.review-exp{font-size:.82rem;color:#555;line-height:1.6;padding-top:8px;border-top:1px solid rgba(0,0,0,.06);margin-top:8px}
+.results-actions{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;padding-top:8px}
+/* v2 Result buttons */
+.btn-retry{padding:13px 32px;background:var(--grey);color:var(--ink);border:none;border-radius:8px;font-size:.9rem;font-weight:700;cursor:pointer;transition:.2s}
 .btn-retry:hover{background:#ddd8e5}
-.btn-dashboard{background:var(--grad);color:#fff;border:none;padding:13px 32px;border-radius:8px;font-size:.9rem;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(193,127,255,.35)}
+.btn-dashboard{display:inline-block;padding:13px 32px;background:var(--grad);color:#fff;font-weight:700;font-size:.9rem;border-radius:8px;text-decoration:none;border:none;cursor:pointer;box-shadow:0 4px 14px rgba(193,127,255,.35);transition:opacity .2s}
+.btn-dashboard:hover{opacity:.88}
 </style>
 </head>
 <body>
 
-<!-- TOPBAR -->
-<header class="topbar">
-  <div class="tb-logo">Coadjute <span>AML</span></div>
-  <div class="tb-sep">|</div>
-  <div class="tb-title">ICA Certificate in AML — Final Mock Exam</div>
-  <div class="tb-right">
+<!-- ════════ TOPBAR (Standardised v2) ════════ -->
+<div class="topbar">
+  <div class="topbar-logo"><span>Coadjute</span></div>
+  <div class="topbar-course">AML Certificate — Final Mock Exam</div>
+  <div class="topbar-progress">
     <div class="timer-wrap" id="timer-wrap" style="display:none">
       <span class="timer-icon">⏱</span>
       <span class="timer-val" id="timer-val">60:00</span>
     </div>
-    <button class="tb-back" onclick="history.back()">← Dashboard</button>
+    <span class="topbar-pct" id="topPct" style="display:none"></span>
+    <a href="index.html" class="topbar-back">← Dashboard</a>
   </div>
-</header>
+</div>
 
-<!-- ═══════════════ INTRO SCREEN ═══════════════ -->
+<!-- ════════ INTRO SCREEN ════════ -->
 <div class="screen active" id="screen-intro">
   <div class="intro-wrap">
     <div class="intro-hero">
@@ -168,18 +169,17 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f4f8;color:var(--
         <div class="meta-badge"><span class="val">28/40</span><span class="lbl">To Pass</span></div>
       </div>
     </div>
-
     <div class="intro-rules">
       <h2>Before You Begin</h2>
       <ul>
         <li>The 60-minute timer starts when you click <strong>Begin Exam</strong>.</li>
-        <li>You can navigate between questions freely using the question panel on the left.</li>
+        <li>Navigate freely between questions using the panel on the left.</li>
         <li>All 40 questions must be answered before you can submit.</li>
         <li>Detailed explanations are provided for every answer after submission.</li>
         <li>The pass mark is <strong>70% — 28 correct out of 40</strong>.</li>
-        <li>This exam covers all 8 modules. Questions are at genuine ICA difficulty — read carefully.</li>
+        <li>Questions are at genuine ICA difficulty — read carefully.</li>
       </ul>
-      <p style="margin-top:14px;font-size:.82rem;color:#8a9db0">Modules covered in this exam:</p>
+      <p style="margin-top:14px;font-size:.82rem;color:#8a9db0">Modules covered:</p>
       <div class="modules-covered">
         <span class="mod-tag">M1: What is ML?</span>
         <span class="mod-tag">M2: TF &amp; Sanctions</span>
@@ -195,10 +195,9 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f4f8;color:var(--
   </div>
 </div>
 
-<!-- ═══════════════ EXAM SCREEN ═══════════════ -->
+<!-- ════════ EXAM SCREEN ════════ -->
 <div class="screen" id="screen-exam">
   <div class="exam-wrap">
-    <!-- QUESTION NAV SIDEBAR -->
     <aside class="q-sidebar">
       <div class="qs-title">Questions</div>
       <div class="q-grid" id="q-grid"></div>
@@ -208,26 +207,23 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f4f8;color:var(--
         <div class="legend-row"><div class="legend-dot" style="background:var(--lilac)"></div>Current</div>
       </div>
     </aside>
-
-    <!-- EXAM MAIN -->
     <div class="exam-main">
       <div class="q-progress">
         <span class="q-prog-text" id="q-prog-text">Question 1 of 40</span>
         <div class="q-prog-bar"><div class="q-prog-fill" id="q-prog-fill" style="width:2.5%"></div></div>
         <span class="answered-count" id="answered-count">0 answered</span>
       </div>
-      <div class="q-card" id="q-card">
-        <!-- rendered by JS -->
-      </div>
+      <div class="q-card" id="q-card"></div>
       <div class="exam-nav">
-        <button class="nav-btn btn-prev" id="btn-prev" onclick="navQ(-1)" disabled>← Previous</button>
-        <button class="nav-btn btn-next" id="btn-next" onclick="navQ(1)">Next →</button>
+        <button class="nav-btn" id="btn-prev" onclick="navQ(-1)" disabled>← Previous</button>
+        <button class="btn-submit" id="btn-submit" onclick="submitExam()">Submit Exam →</button>
+        <button class="nav-btn" id="btn-next" onclick="navQ(1)">Next →</button>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ═══════════════ RESULTS SCREEN ═══════════════ -->
+<!-- ════════ RESULTS SCREEN ════════ -->
 <div class="screen" id="screen-results">
   <div class="results-wrap">
     <div class="results-hero">
@@ -238,289 +234,371 @@ body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f4f8;color:var(--
       <div class="res-verdict" id="res-verdict"></div>
       <div class="res-time-used" id="res-time-used"></div>
     </div>
-
     <div class="res-module-breakdown">
       <h2>📊 Performance by Module</h2>
       <div id="breakdown-rows"></div>
     </div>
-
     <div class="review-section">
       <h2>📋 Full Answer Review</h2>
       <div id="review-list"></div>
     </div>
-
-    <div class="results-actions">
-      <button class="btn-retry" onclick="retryExam()">↺ Retry Exam</button>
-      <button class="btn-dashboard" onclick="history.back()">← Back to Dashboard</button>
-    </div>
+    <!-- v2 pass/fail actions -->
+    <div class="results-actions" id="results-actions"></div>
   </div>
 </div>
 
 <script>
-// ═══════════ ALL 40 QUESTIONS ═══════════
+// ════════════ ALL 40 QUESTIONS ════════════
 const QS = [
-  // ── MODULE 1: WHAT IS MONEY LAUNDERING ──
-  {m:'Module 1',t:'What is Money Laundering?',q:"Which of the following BEST defines money laundering?",o:["Evading tax on legitimate income","The process by which the proceeds of criminal activity are made to appear as legitimate funds","Paying bribes to public officials","Moving money between bank accounts to avoid transaction fees"],a:1,e:"Money laundering is the process by which funds derived from criminal activity (predicate offences) are processed to make them appear legitimately obtained. Tax evasion, bribery, and fund transfers may be related crimes or typologies, but they are not the definition of ML itself."},
-  {m:'Module 1',t:'What is Money Laundering?',q:"The three classic stages of money laundering are:",o:["Concealment, conversion, extraction","Placement, layering, integration","Smuggling, structuring, shell companies","Identification, verification, monitoring"],a:1,e:"The classic FATF/ICA model identifies three stages: Placement (introducing criminal funds into the financial system), Layering (disguising the trail through multiple transactions), and Integration (the now 'clean' money re-entering the legitimate economy)."},
-  {m:'Module 1',t:'What is Money Laundering?',q:"At which stage of money laundering is the criminal most at risk of detection?",o:["Integration","Layering","Placement","None — all stages carry equal risk"],a:2,e:"Placement is the most dangerous stage for the launderer. At this point, the cash is most obviously connected to criminal activity and the volume of physical currency being introduced into the system creates the greatest detection risk."},
-  {m:'Module 1',t:'What is Money Laundering?',q:"A 'predicate offence' in the context of money laundering is best described as:",o:["An offence committed by an MLRO","The underlying criminal activity that generated the funds being laundered","A minor regulatory breach that precedes a more serious offence","The offence of failing to report suspicious activity"],a:1,e:"A predicate offence is the underlying criminal activity — drug trafficking, fraud, corruption, etc. — that generated the illicit proceeds in the first place. Money laundering is the subsequent process of cleaning those proceeds."},
-  {m:'Module 1',t:'What is Money Laundering?',q:"In the property sector, which of the following is a recognised money laundering typology?",o:["Purchasing property at market value with a mortgage from a regulated lender","Purchasing property at significantly above market value with cash, then quickly reselling at the true market value — crystallising a 'loss' that explains the difference as a legitimate property transaction","Using a conveyancer regulated by the SRA","Making a subject access request under GDPR"],a:1,e:"Over/under-valuing property transactions is a classic ML typology. Purchasing above market value with cash and reselling at market value creates an apparent legitimate explanation for the source of funds, with the 'loss' disguising the illicit origin of the difference."},
+  // ── MODULE 1 ──
+  {m:'Module 1',t:'What is Money Laundering?',
+   q:"Which of the following BEST defines money laundering?",
+   o:["Evading tax on legitimate income","The process by which the proceeds of criminal activity are made to appear as legitimate funds","Paying bribes to public officials","Moving money between bank accounts to avoid transaction fees"],
+   a:1,e:"Money laundering is the process by which funds derived from criminal activity (predicate offences) are processed to make them appear legitimately obtained. Tax evasion, bribery, and fund transfers may be related crimes or typologies, but they do not define ML itself."},
+  {m:'Module 1',t:'What is Money Laundering?',
+   q:"The three classic stages of money laundering are:",
+   o:["Concealment, conversion, extraction","Placement, layering, integration","Smuggling, structuring, shell companies","Identification, verification, monitoring"],
+   a:1,e:"The classic FATF/ICA model identifies three stages: Placement (introducing criminal funds into the financial system), Layering (disguising the trail through multiple transactions), and Integration (the now 'clean' money re-entering the legitimate economy)."},
+  {m:'Module 1',t:'What is Money Laundering?',
+   q:"At which stage of money laundering is the criminal most at risk of detection?",
+   o:["Integration","Layering","Placement","None — all stages carry equal risk"],
+   a:2,e:"Placement is the most dangerous stage for the launderer. The cash is most obviously connected to criminal activity and the volume of physical currency being introduced into the system creates the greatest detection risk."},
+  {m:'Module 1',t:'What is Money Laundering?',
+   q:"A property is purchased using a complex chain of offshore loans, nominee directors, and shell companies in multiple jurisdictions. This MOST closely represents which stage of money laundering?",
+   o:["Placement","Layering","Integration","Structuring"],
+   a:1,e:"Layering involves creating a complex trail of transactions to disguise the criminal origin of funds. Using offshore structures, multiple jurisdictions, nominees and shell companies is a classic layering technique — the aim is to make the audit trail so complex that the criminal origin cannot be traced."},
+  {m:'Module 1',t:'What is Money Laundering?',
+   q:"Under the Proceeds of Crime Act 2002, which of the following is a 'predicate offence' for the purposes of money laundering?",
+   o:["Any criminal conduct which generates a financial benefit","Only drug trafficking offences","Only offences carrying a sentence of 5 years or more","Only offences listed in Schedule 2 of POCA"],
+   a:0,e:"POCA 2002 defines 'criminal conduct' very broadly — it covers any conduct which constitutes an offence in the UK (or would do so if it occurred in the UK). Unlike some other jurisdictions, the UK does not limit ML predicate offences to a defined list. This is sometimes called 'all crimes' ML."},
 
-  // ── MODULE 2: TERRORIST FINANCING ──
-  {m:'Module 2',t:'Terrorist Financing & Sanctions',q:"The most important distinction between terrorist financing and money laundering is:",o:["Terrorist financing always involves larger sums of money","In terrorist financing, the funds may be derived from entirely legitimate sources — the criminality lies in the intended use","Terrorist financing is only relevant in conflict zones","Money laundering is a more serious offence under UK law"],a:1,e:"This is the key ICA distinction. In ML, the crime is the origin of the funds. In TF, the funds may be entirely clean — the problem is their intended destination (funding terrorism). This makes TF significantly harder to detect using conventional financial crime controls."},
-  {m:'Module 2',t:'Terrorist Financing & Sanctions',q:"Under the UK Terrorism Act 2000, the threshold for making a SAR about suspected terrorist financing is:",o:["The same as for ML — reasonable grounds for suspicion","Higher than for ML — you must be almost certain before reporting","Lower than for ML — even a vague concern may be sufficient","There is no SAR obligation for TF — it must be reported directly to the police"],a:0,e:"The threshold is the same as for money laundering — reasonable grounds to know or suspect. There is no higher bar for TF, nor a requirement to be certain. Staff must report concerns to the MLRO in the same way as for ML suspicions."},
-  {m:'Module 2',t:'Terrorist Financing & Sanctions',q:"The UK's financial sanctions authority — which implements and enforces UN and UK domestic sanctions — is:",o:["The Financial Conduct Authority (FCA)","The National Crime Agency (NCA)","HMRC","The Office of Financial Sanctions Implementation (OFSI)"],a:3,e:"OFSI (Office of Financial Sanctions Implementation) sits within HM Treasury and is the UK authority responsible for implementing and enforcing UK financial sanctions. It is distinct from the FCA (which regulates financial services), the NCA (which handles serious crime), and HMRC."},
-  {m:'Module 2',t:'Terrorist Financing & Sanctions',q:"A UK firm discovers it holds a frozen asset belonging to a designated person. The firm must:",o:["Immediately return the asset to the client","Do nothing — only law enforcement can act on frozen assets","Report to OFSI and obtain a licence before taking any further action","Report to the NCA via a SAR and await instructions"],a:2,e:"When a UK firm identifies a match against a sanctions list, it must freeze the asset and report to OFSI. It cannot deal with the asset without an OFSI licence. Filing a SAR with the NCA may also be required, but OFSI is the primary authority for sanctions matters."},
-  {m:'Module 2',t:'Terrorist Financing & Sanctions',q:"Which statement about sanctions screening in the property sector is CORRECT?",o:["Only the conveyancer needs to screen parties — the estate agent has no screening obligation","Screening only needs to occur at the start of the transaction","All parties to a property transaction — buyers, sellers, and connected entities — should be screened at the start and throughout the transaction","Sanctions screening is only required for transactions above £25,000"],a:2,e:"Sanctions screening must apply to all parties and must be ongoing throughout the transaction. A party may be added to a sanctions list at any point during a property transaction, which can take several months — so screening at inception only is insufficient."},
+  // ── MODULE 2 ──
+  {m:'Module 2',t:'Terrorist Financing & Sanctions',
+   q:"Which of the following BEST describes the key distinction between money laundering and terrorist financing?",
+   o:["Terrorist financing always involves larger sums of money","In terrorist financing, the funds may be from a legitimate source; in money laundering the funds always derive from crime","Terrorist financing is legal in most jurisdictions","Money laundering always involves real estate; terrorist financing does not"],
+   a:1,e:"This is the critical ICA distinction: ML always involves criminal proceeds (dirty money being cleaned), whereas TF may involve perfectly legitimate funds (charity donations, business income, personal savings) being diverted to fund terrorism. The criminality in TF lies in the destination of the funds, not their origin."},
+  {m:'Module 2',t:'Terrorist Financing & Sanctions',
+   q:"A UK person who provides financial services to a firm on the UN Consolidated Sanctions List, without a licence, is:",
+   o:["Committing an offence only if they knew the client was sanctioned","Committing a strict liability criminal offence regardless of knowledge","Guilty of a civil infraction only","Acting lawfully provided the transaction is below £10,000"],
+   a:1,e:"Sanctions offences under UK law (The Sanctions and Anti-Money Laundering Act 2018 and related regulations) are strict liability. The prosecution does not need to prove the defendant knew the person was sanctioned. It is the responsibility of regulated firms to screen for sanctions matches before providing services."},
+  {m:'Module 2',t:'Terrorist Financing & Sanctions',
+   q:"Which of the following is NOT one of the key objectives of the UN Security Council sanctions regime?",
+   o:["Maintaining international peace and security","Supporting legitimate businesses in sanctioned countries","Targeting the financing of weapons of mass destruction","Countering terrorism"],
+   a:1,e:"UN Security Council sanctions are designed to maintain international peace and security, counter terrorism, prevent the proliferation of weapons of mass destruction, and protect human rights. They are specifically not designed to support businesses in sanctioned countries — that is the opposite of their intent."},
+  {m:'Module 2',t:'Terrorist Financing & Sanctions',
+   q:"A property transaction is proceeding when you discover the beneficial owner of the purchasing company appears on the OFAC SDN list. What is the appropriate action?",
+   o:["Complete the transaction quickly to avoid financial loss","Continue but apply enhanced due diligence","Stop the transaction immediately and seek legal/compliance advice before proceeding","Report to the MLRO only after the transaction completes"],
+   a:2,e:"Transacting with a person on the OFAC SDN list (or UK/EU equivalent) is a sanctions violation. The transaction must stop immediately. Completing it — even to avoid financial loss — would be a criminal offence. The MLRO and legal/compliance team must be involved before any further steps are taken."},
+  {m:'Module 2',t:'Terrorist Financing & Sanctions',
+   q:"The 'tipping off' prohibition in terrorist financing cases means:",
+   o:["You may never discuss TF with colleagues","You must not disclose to the subject that a report has been made or an investigation is underway, if that would prejudice the investigation","You must immediately tell the police if you suspect TF","You can only report suspicions through OFAC"],
+   a:1,e:"Tipping off in a TF context — as in ML — means you must not tell the person who is subject to a report or investigation that you have made a disclosure, if doing so would prejudice the investigation. This does not prevent internal discussion or reporting through proper channels."},
 
-  // ── MODULE 3: FI EXPLOITATION ──
-  {m:'Module 3',t:'How Financial Institutions Are Exploited',q:"Correspondent banking relationships are exploited for money laundering primarily because:",o:["They operate in a single currency only","Respondent bank customers can access the global financial system without direct relationships — providing anonymity and distance from scrutiny","They always involve high-value transactions","They are unregulated in most jurisdictions"],a:1,e:"Correspondent banking allows customers of the respondent bank to effectively use the correspondent bank's network without having a direct relationship with it. This creates layers of distance between the illicit funds and the financial institution where they ultimately flow — making the ultimate origin harder to trace."},
-  {m:'Module 3',t:'How Financial Institutions Are Exploited',q:"Shell companies are attractive to money launderers because:",o:["They pay lower corporate tax rates","They obscure the true beneficial owners of funds and assets behind a corporate veil","They are prohibited in most jurisdictions, making them exclusive","They provide limited liability for their directors"],a:1,e:"Shell companies are entities with no genuine business activity, used solely (or primarily) to hold assets or move money. Their key ML value is obscuring beneficial ownership — the identity of the real human beings who own and control the assets is hidden behind the corporate structure."},
-  {m:'Module 3',t:'How Financial Institutions Are Exploited',q:"Private banking relationships are considered higher ML risk because:",o:["Private bank clients are always foreign nationals","The highly personalised, relationship-focused service model can create pressure to avoid rigorous scrutiny of key clients","Private banks deal exclusively in cash transactions","Private bank accounts are unregulated in the UK"],a:1,e:"The relationship-focused nature of private banking — where preserving the client relationship is commercially critical — creates cultural pressure to avoid challenging or scrutinising clients. This is one of the ICA's specific examples of the 'territorial attitudes towards key clients' cultural problem."},
-  {m:'Module 3',t:'How Financial Institutions Are Exploited',q:"'Smurfing' (structuring) as a money laundering technique involves:",o:["Using offshore shell companies to hold assets","Breaking large cash deposits into multiple smaller deposits below reporting thresholds to avoid detection","Purchasing luxury goods and reselling them","Using false invoices to disguise payments as business expenses"],a:1,e:"Structuring (smurfing) involves deliberately breaking down large sums into multiple smaller transactions specifically to stay below reporting thresholds. This is both a classic typology and a specific offence in many jurisdictions — the intent to evade reporting is the key element."},
+  // ── MODULE 3 ──
+  {m:'Module 3',t:'How Financial Institutions Are Exploited',
+   q:"Which of the following is the PRIMARY money laundering vulnerability of correspondent banking?",
+   o:["High transaction fees make it unattractive to launderers","The respondent bank's customers are effectively invisible to the correspondent bank, creating a 'nested' anonymity risk","Correspondent banks always conduct full CDD on end customers","It is only used for legitimate inter-bank settlements"],
+   a:1,e:"The core vulnerability of correspondent banking is that the correspondent bank relies entirely on the respondent bank having conducted proper CDD. The correspondent has no direct relationship with — or visibility of — the respondent's customers. If the respondent has weak controls, the correspondent is effectively processing transactions for unknown third parties. This 'nested' risk is a key ICA exam topic."},
+  {m:'Module 3',t:'How Financial Institutions Are Exploited',
+   q:"A shell company has no genuine commercial activity but holds assets and a bank account. Why does this structure assist money laundering?",
+   o:["Shell companies are illegal in all jurisdictions","They create apparent corporate legitimacy and separate the criminal from direct ownership of assets, obscuring the beneficial ownership chain","Banks are not required to conduct CDD on corporate clients","Shell companies cannot own real estate"],
+   a:1,e:"Shell companies are legal entities with no genuine business operations. They are used in ML because they create a layer of corporate separation between the criminal and their assets. Combined with nominee directors and shareholders, they make it very difficult to identify the true beneficial owner — which is exactly what the launderer wants."},
+  {m:'Module 3',t:'How Financial Institutions Are Exploited',
+   q:"What is 'smurfing' in the context of money laundering?",
+   o:["A technique where criminal assets are hidden inside legitimate cartoon merchandising","Breaking large amounts of cash into smaller deposits, made by multiple individuals, to avoid reporting thresholds","Using animated characters to conceal ownership of assets","The process of extracting criminal funds from foreign accounts"],
+   a:1,e:"Smurfing (also called structuring) involves breaking large sums of criminal cash into multiple smaller deposits — often made by a network of individuals ('smurfs') — specifically to avoid transaction reporting thresholds. Each individual deposit may appear innocent, but the aggregate represents a significant criminal sum being placed into the financial system."},
+  {m:'Module 3',t:'How Financial Institutions Are Exploited',
+   q:"In a private banking context, which feature makes it particularly vulnerable to money laundering?",
+   o:["Private banking clients are always subject to the lowest level of CDD","Private banks operate exclusively in low-risk jurisdictions","The relationship manager model, where a single trusted contact manages a wealthy client, can create loyalty that overrides compliance scrutiny","Private banking accounts cannot hold real estate assets"],
+   a:2,e:"The relationship manager model in private banking creates an ML vulnerability: the RM builds a close personal relationship with the client and develops loyalty that can, consciously or unconsciously, lead to compliance corners being cut. The ICA notes that this dynamic — combined with HNWI clients, complex structures, and cross-border assets — makes private banking a high-risk sector."},
 
-  // ── MODULE 4: HIGH-RISK PRODUCTS ──
-  {m:'Module 4',t:'High-Risk Products & Sectors',q:"Life assurance policies are considered higher ML risk compared to other insurance products primarily because:",o:["They always have an investment element","They typically have surrender values that can be accessed — allowing illicitly placed premiums to be withdrawn in a 'clean' form","They are not regulated by the FCA","They can only be purchased with cash"],a:1,e:"Life assurance (particularly investment-linked policies) has a surrender value. Criminals can place illicit funds by paying premiums, then 'surrender' the policy — receiving a payment from a regulated insurance company that appears legitimate. This makes them attractive placement vehicles."},
-  {m:'Module 4',t:'High-Risk Products & Sectors',q:"Which of the following features of virtual currencies makes them attractive for money laundering?",o:["They are subject to more regulation than traditional bank accounts","They can offer pseudonymity, global transfer capability, and in some cases near-complete anonymity","They require a bank account to set up","They are only usable within a single country"],a:1,e:"The combination of pseudonymity (transactions tied to wallet addresses rather than identities), global transfer capability, and speed makes certain virtual currencies attractive for ML purposes. The degree of anonymity varies significantly by currency and jurisdiction."},
-  {m:'Module 4',t:'High-Risk Products & Sectors',q:"In the gaming/gambling sector, which of the following is a recognised ML typology?",o:["Winning consistently at skill-based games","Using chips as a currency — buying in with cash, gambling minimally, then cashing out 'winnings' to obtain a casino cheque","Playing exclusively on online platforms with documented accounts","Using credit cards to fund gambling accounts"],a:1,e:"The 'chip washing' technique involves purchasing casino chips with criminal cash, gambling for a short time (to create cover), then cashing out and receiving a casino cheque — converting criminal cash into an apparently legitimate gaming winnings receipt. This is a classic integration technique."},
-  {m:'Module 4',t:'High-Risk Products & Sectors',q:"Prepaid cards present AML risk primarily because:",o:["They can only be used for online purchases","Many allow anonymous loading and use — making it difficult to trace the origin of funds","They are exclusively used by younger people","They are subject to unlimited transaction amounts"],a:1,e:"Many prepaid cards — particularly those that don't require CDD — can be loaded with cash anonymously, used anywhere, and transferred. This makes them effective placement vehicles for criminal funds, bypassing the CDD requirements that apply to conventional bank accounts."},
+  // ── MODULE 4 ──
+  {m:'Module 4',t:'High-Risk Products & Sectors',
+   q:"A person purchases casino chips with cash, gambles for a short period, then cashes out and receives a casino cheque. This is an example of:",
+   o:["Legitimate gambling activity","Chip washing — converting criminal cash into an apparently legitimate gaming receipt","A predicate offence","Terrorist financing"],
+   a:1,e:"'Chip washing' involves purchasing chips with criminal cash, gambling minimally to create cover, then cashing out and receiving a casino cheque — converting criminal cash into an apparently legitimate gaming receipt. This is a classic integration/placement technique exploiting the cash-intensive nature of casinos."},
+  {m:'Module 4',t:'High-Risk Products & Sectors',
+   q:"Prepaid cards present AML risk primarily because:",
+   o:["They can only be used for online purchases","Many allow anonymous loading and use, making it difficult to trace the origin of funds","They are exclusively used by younger people","They are subject to unlimited transaction amounts"],
+   a:1,e:"Many prepaid cards — particularly those not requiring CDD — can be loaded with cash anonymously and used anywhere. This makes them effective placement vehicles for criminal funds, bypassing the CDD requirements that apply to conventional bank accounts."},
+  {m:'Module 4',t:'High-Risk Products & Sectors',
+   q:"Why are high-value goods (art, jewellery, luxury cars) considered a high-risk sector for money laundering?",
+   o:["They are always purchased using bank transfers which are easy to trace","They store value, are portable, can be purchased with cash, and resold for apparent legitimate income — completing the integration cycle","High-value goods dealers are not required to conduct any AML checks","The goods must be declared to HMRC on purchase"],
+   a:1,e:"High-value goods are attractive to launderers because they: can often be purchased with cash (placement); are portable and can cross borders easily; store or even appreciate in value; and can be sold to generate apparently legitimate proceeds (integration). The art market in particular has been criticised for weak AML controls."},
+  {m:'Module 4',t:'High-Risk Products & Sectors',
+   q:"Virtual currencies (cryptocurrencies) present which of the following specific AML challenges?",
+   o:["They are backed by central banks, making them easy to trace","They are too volatile to be used for money laundering","Pseudonymity, cross-border transfer without intermediaries, and the use of mixing services can obscure the origin and destination of funds","Cryptocurrency transactions are all publicly reported to regulators"],
+   a:2,e:"Cryptocurrencies present specific AML challenges: pseudonymity (wallet addresses are not directly linked to identities); the ability to transfer value across borders without a bank intermediary; and the use of mixing/tumbling services and privacy coins to further obscure transaction trails. The ICA notes these as key features that launderers exploit."},
 
-  // ── MODULE 5: CDD ──
-  {m:'Module 5',t:'Customer Due Diligence',q:"Under the Money Laundering Regulations 2017, CDD is triggered in which of the following circumstances?",o:["Only when a new account is opened","Only for transactions above £15,000","When establishing a business relationship, carrying out an occasional transaction at or above €15,000 (or equivalent), or when there is suspicion of ML/TF regardless of transaction size","Only for PEPs and high-risk customers"],a:2,e:"The MLRs 2017 specify multiple CDD trigger points: (i) establishing a business relationship; (ii) occasional transactions at/above the €15,000 threshold; (iii) suspicious activity regardless of value; and (iv) doubts about the veracity of previously obtained identification information."},
-  {m:'Module 5',t:'Customer Due Diligence',q:"Enhanced Due Diligence (EDD) is MANDATORY in which of the following situations under the MLRs 2017?",o:["For any client who refuses to answer questions","For all new business relationships","For all Politically Exposed Persons (PEPs) — the MLRs require EDD for all PEPs automatically","For all clients from EU member states"],a:2,e:"The MLRs 2017 make EDD mandatory for all PEPs and their family members/close associates. EDD is also required for high-risk third countries and other high-risk business relationships, but for PEPs it is an automatic requirement regardless of other risk factors."},
-  {m:'Module 5',t:'Customer Due Diligence',q:"What is 'plausibility testing' in the context of CDD?",o:["Checking whether a client's documentation appears genuine on its face","Verifying whether a client's stated source of funds, occupation, and transaction purpose are consistent with each other and with the nature of the proposed business relationship","A regulatory test applied only to PEPs","A statistical model for estimating money laundering risk scores"],a:1,e:"Plausibility testing means assessing whether the overall picture presented by the client — their stated income, source of funds, wealth, occupation, and the nature of what they want to do — makes logical sense. An accountant earning £40,000 purchasing a £2 million property in cash should fail a plausibility test."},
-  {m:'Module 5',t:'Customer Due Diligence',q:"Simplified Due Diligence (SDD) may be applied when:",o:["A customer provides certified copies of their passport","A firm has previously conducted CDD on a customer at another institution","The firm determines, based on a risk assessment, that the business relationship or transaction presents a low degree of money laundering risk","The customer has been referred by a trusted introducer"],a:2,e:"SDD is only permissible where a risk-based assessment supports it — i.e., the firm has determined that the specific relationship genuinely presents low risk. It is not available simply because CDD was done before or because an introducer has referred the client."},
-  {m:'Module 5',t:'Customer Due Diligence',q:"In the property sector, which of the following is a red flag that should prompt enhanced CDD or an internal SAR?",o:["The buyer is purchasing with a standard residential mortgage","The buyer has a solicitor representing them","The buyer insists on an unusually rapid completion and appears unconcerned about the price, paying substantially above the asking price in cash","The buyer has previously purchased property in the UK"],a:2,e:"Urgency combined with cash purchase above asking price is a classic ML red flag in property. Criminals are often willing to overpay because the purpose is laundering funds, not achieving value. Indifference to price is a strong plausibility testing failure."},
+  // ── MODULE 5 ──
+  {m:'Module 5',t:'Customer Due Diligence',
+   q:"Under the Money Laundering Regulations 2017, CDD is triggered in which of the following circumstances?",
+   o:["Only when a new account is opened","Only for transactions above £15,000","When establishing a business relationship, carrying out an occasional transaction at or above €15,000, or when there is suspicion of ML/TF regardless of transaction size","Only for PEPs and high-risk customers"],
+   a:2,e:"The MLRs 2017 specify multiple CDD trigger points: (i) establishing a business relationship; (ii) occasional transactions at/above the €15,000 threshold; (iii) suspicious activity regardless of value; and (iv) doubts about previously obtained identification. The threshold does not exempt firms from CDD when suspicion arises."},
+  {m:'Module 5',t:'Customer Due Diligence',
+   q:"Enhanced Due Diligence (EDD) is MANDATORY in which of the following situations under the MLRs 2017?",
+   o:["For any client who refuses to answer questions","For all new business relationships","For all Politically Exposed Persons — the MLRs require EDD for PEPs automatically","For all clients from EU member states"],
+   a:2,e:"The MLRs 2017 make EDD mandatory for all PEPs and their family members/close associates. EDD is also required for high-risk third countries and other high-risk business relationships, but for PEPs it is an automatic requirement regardless of other risk factors."},
+  {m:'Module 5',t:'Customer Due Diligence',
+   q:"What is 'plausibility testing' in the context of CDD?",
+   o:["Running a client's name through a commercial database","Testing whether the information provided by the client is consistent and credible given everything else you know about them — not merely whether it can be verified","Checking a client's credit score","Verifying a client's identity document against a government database"],
+   a:1,e:"Plausibility testing goes beyond documentary verification. It requires the firm to assess whether the client's explanation of their business, source of funds, and reasons for the transaction is credible and internally consistent. The ICA emphasises that you should be asking 'does this make sense?' not just 'can I verify this document?'"},
+  {m:'Module 5',t:'Customer Due Diligence',
+   q:"A client refuses to provide source of funds information, citing privacy concerns. Under the MLRs 2017, the appropriate response is:",
+   o:["Proceed with the transaction but note the refusal on file","Accept the refusal — privacy rights override AML obligations","Decline to proceed with the transaction or terminate the business relationship, and consider whether a SAR is required","Apply simplified CDD instead"],
+   a:2,e:"Refusal to provide information required for CDD is a legal basis for declining to establish or continue a business relationship. The MLRs 2017 require firms to apply CDD measures and, if they cannot do so, not to proceed. The refusal itself — combined with any other indicators — may also give rise to a suspicion requiring an internal SAR report to the MLRO."},
+  {m:'Module 5',t:'Customer Due Diligence',
+   q:"Simplified CDD is available when:",
+   o:["The client is a long-standing customer with no previous issues","The regulated firm concludes, based on documented risk assessment, that the business relationship presents a lower degree of risk","The client is a UK national","The transaction value is below £5,000"],
+   a:1,e:"Simplified CDD is not 'no CDD' — it is proportionately reduced CDD that may be applied where a documented risk assessment supports the conclusion that the customer or product presents lower risk. It cannot be applied as a default or based on assumptions; it requires documented justification."},
 
-  // ── MODULE 6: PEPs, SARs, REPORTING ──
-  {m:'Module 6',t:'PEPs, SARs & Reporting',q:"Under the MLRs 2017, a 'Politically Exposed Person' (PEP) is defined as:",o:["Any politician anywhere in the world","An individual who is, or has been, entrusted with a prominent public function — including heads of state, senior politicians, senior government/judicial/military officials, and senior executives of state-owned enterprises","Any person who has made political donations","Any person employed by a government department"],a:1,e:"The MLRs 2017 definition of a PEP covers specific categories of prominent public function. Family members and known close associates of PEPs are also treated as PEPs for AML purposes. The definition is specific — not everyone with any political connection is a PEP."},
-  {m:'Module 6',t:'PEPs, SARs & Reporting',q:"A domestic PEP (a UK politician, for example) under the MLRs 2017 must be treated:",o:["In exactly the same way as a foreign PEP — automatic EDD","As a PEP, but with EDD applied only where the firm determines there is a higher risk","As a standard customer — domestic PEPs are lower risk by definition","As a PEP only if they hold a national-level position"],a:1,e:"The MLRs 2017 introduced a tiered approach: domestic PEPs and international organisation PEPs should be assessed for risk rather than automatically receiving full EDD. However, they must still be identified as PEPs and appropriate risk-based measures applied. Foreign PEPs receive automatic EDD."},
-  {m:'Module 6',t:'PEPs, SARs & Reporting',q:"'Tipping off' under POCA 2002 occurs when:",o:["An employee discusses a client's account details with a colleague","A person discloses to a suspect or third party that a SAR has been made or that a ML investigation is underway, thereby prejudicing that investigation","A firm reports a suspicious transaction to the FCA rather than the NCA","An MLRO declines to file an external SAR that an employee submitted internally"],a:1,e:"Tipping off is the specific POCA offence of disclosing that a SAR has been filed or that an investigation is underway in circumstances where that disclosure would be likely to prejudice the investigation. It carries criminal penalties and can arise innocently — e.g., telling a client their account is under review."},
-  {m:'Module 6',t:'PEPs, SARs & Reporting',q:"Who is responsible for making an external SAR to the NCA in a regulated firm?",o:["Every employee who has a suspicion — they must report directly to the NCA","The MLRO — employees report internally and the MLRO decides whether to file externally","The FCA — employees report to the FCA which forwards to the NCA","The firm's CEO in all cases"],a:1,e:"In a regulated firm, employees report internal suspicions to the MLRO (or a nominated deputy). The MLRO is the gateway — they assess the internal report and decide whether to file an external SAR with the NCA's Suspicious Activity Reports regime. Employees do not contact the NCA directly."},
-  {m:'Module 6',t:'PEPs, SARs & Reporting',q:"A Defence Against Money Laundering (DAML) SAR is filed when:",o:["A firm wants to end a relationship with a suspicious client","A firm suspects a transaction involves ML/TF but is required to complete it by contract","A firm needs consent from the NCA before proceeding with a transaction that the firm knows or suspects involves criminal property","A firm reports a completed transaction retrospectively"],a:2,e:"A DAML SAR (previously called a 'consent SAR') is used when a firm is required to complete a transaction but doing so would constitute an offence under POCA because the property is suspected to be criminal. Filing a DAML SAR and receiving consent (or a 7-day moratorium passing without refusal) provides a defence against the POCA 'arrangements' offence."},
-  {m:'Module 6',t:'PEPs, SARs & Reporting',q:"Beneficial ownership of a company is defined as ownership or control of:",o:["More than 5% of shares","More than 10% of shares","More than 25% of shares or voting rights, or other forms of significant control","More than 50% of shares — i.e., a majority shareholder"],a:2,e:"The MLRs 2017 and the Companies Act define a beneficial owner as a natural person who ultimately owns or controls more than 25% of the shares or voting rights in a company, or who otherwise exercises significant control. Identifying UBOs (Ultimate Beneficial Owners) is a fundamental CDD requirement."},
+  // ── MODULE 6 ──
+  {m:'Module 6',t:'Monitoring, PEPs & Reporting',
+   q:"Which of the following statements about Politically Exposed Persons (PEPs) is CORRECT under the MLRs 2017?",
+   o:["PEPs are always criminals and should be refused as clients","EDD for PEPs applies only while they hold public office — once they leave, standard CDD resumes immediately","A former PEP must be treated as a PEP for an appropriate period after leaving public office — the ICA notes this is commonly 12 months, though firms must assess ongoing risk","PEP status only applies to foreign government officials, not UK ones"],
+   a:2,e:"The ICA explicitly addresses the 'former PEP' issue: the elevated risk does not automatically cease when a person leaves public office. Firms must apply EDD for an appropriate period — commonly 12 months — and thereafter make a risk-based judgment. UK domestic PEPs are also in scope (though typically lower risk than foreign PEPs under MLRs 2017 guidance)."},
+  {m:'Module 6',t:'Monitoring, PEPs & Reporting',
+   q:"A Suspicious Activity Report (SAR) must be submitted to the National Crime Agency (NCA) when:",
+   o:["You are certain that money laundering has occurred","A transaction is above £10,000","You know or suspect, or have reasonable grounds for knowing or suspecting, that a person is engaged in money laundering or terrorist financing","You have documentary proof of criminal activity"],
+   a:2,e:"The legal threshold for SAR reporting is 'knows or suspects, or has reasonable grounds for knowing or suspecting.' This is deliberately low — you do not need to be certain, and you do not need documentary proof. The 'reasonable grounds' test is objective: what would a reasonable person in your position suspect given the information available?"},
+  {m:'Module 6',t:'Monitoring, PEPs & Reporting',
+   q:"'Tipping off' under POCA 2002 means:",
+   o:["Providing anonymous intelligence to law enforcement","Disclosing to another person information which is likely to prejudice an investigation, once you know or suspect a SAR has been made or an investigation is underway","Reporting to the MLRO more than once about the same client","Providing guidance to colleagues about AML requirements"],
+   a:1,e:"Tipping off is a specific criminal offence under POCA 2002. It requires: (a) disclosure to a person; (b) of information; (c) which is likely to prejudice an investigation; (d) after the person knows or suspects that an investigation is underway or a SAR has been made. It is not merely mentioning AML — it requires prejudicial disclosure of information about a specific investigation."},
+  {m:'Module 6',t:'Monitoring, PEPs & Reporting',
+   q:"A 'Defence Against Money Laundering' (DAML) SAR is required when:",
+   o:["You wish to report a completed transaction","You want to proceed with a transaction but believe it involves the proceeds of crime — you need NCA consent or a deemed consent period to pass before proceeding","You are reporting a PEP to the NCA","You have identified a sanctions match"],
+   a:1,e:"A DAML SAR is a specific type of SAR submitted when a firm identifies that a proposed or ongoing transaction involves criminal property and wishes to seek consent to proceed. Without submitting a DAML and either receiving consent or waiting for the 7-day moratorium period to expire, proceeding with the transaction could constitute the s.328 POCA 'arranging' offence."},
+  {m:'Module 6',t:'Monitoring, PEPs & Reporting',
+   q:"Ongoing monitoring of a business relationship requires which of the following?",
+   o:["Re-verifying the client's identity on every transaction","Only monitoring transactions above £15,000","Scrutinising transactions to ensure consistency with the firm's knowledge of the client, their business, and risk profile — and updating CDD when circumstances change","Monitoring is only required for PEPs and high-risk customers"],
+   a:2,e:"The MLRs 2017 require ongoing monitoring of all business relationships: scrutinising transactions for consistency with the client's known profile and risk assessment, and keeping CDD documents up to date. It is a continuous obligation, not an ad hoc one. Unusual transactions — even below financial thresholds — should trigger review."},
 
-  // ── MODULE 7: LEGAL FRAMEWORK ──
-  {m:'Module 7',t:'Legal & Regulatory Framework',q:"The Financial Action Task Force (FATF) is:",o:["A UK government body that enforces AML law","An inter-governmental body that sets international standards and promotes the effective implementation of legal, regulatory and operational measures to combat ML and TF","A European court with jurisdiction over money laundering cases","A private sector industry body for financial compliance professionals"],a:1,e:"FATF is an inter-governmental body founded in 1989. Its 40 Recommendations are the international standard for AML/CFT. FATF conducts mutual evaluations of member countries, and being placed on the FATF blacklist (High-Risk Countries) or greylist (Under Increased Monitoring) has significant consequences for financial relationships with those countries."},
-  {m:'Module 7',t:'Legal & Regulatory Framework',q:"Under the Proceeds of Crime Act 2002 (POCA), which of the following is a principal money laundering offence?",o:["Failing to complete training by the regulatory deadline","'Concealing, disguising, converting, transferring or removing' criminal property (s.327)","Submitting an inaccurate suspicious activity report","Employing a person who has been convicted of a financial crime"],a:1,e:"Section 327 POCA creates the offence of concealing, disguising, converting, transferring or removing criminal property. Sections 328 and 329 create further offences of 'arranging' and 'acquiring, using or possessing' criminal property. These are the three principal ML offences under UK law."},
-  {m:'Module 7',t:'Legal & Regulatory Framework',q:"'Wilful blindness' in the context of AML law means:",o:["A genuine failure to notice suspicious activity despite reasonable diligence","Deliberately refraining from making enquiries to avoid knowledge — treated legally similarly to actual knowledge of criminality","A mental health defence to a money laundering charge","A regulatory term for inadequate AML training"],a:1,e:"Wilful blindness (or 'deliberate disregard') is a legal concept where a person deliberately avoids acquiring knowledge that would implicate them. Courts treat wilful blindness similarly to actual knowledge — a person cannot avoid liability by strategically failing to ask obvious questions."},
-  {m:'Module 7',t:'Legal & Regulatory Framework',q:"Which EU Directive introduced the concept of 'risk-sensitive' Customer Due Diligence?",o:["3rd Money Laundering Directive (3MLD)","4th Money Laundering Directive (4MLD)","5th Money Laundering Directive (5MLD)","6th Money Laundering Directive (6MLD)"],a:1,e:"The 4MLD placed particular emphasis on the risk-sensitive approach to CDD — the concept that firms must tailor their CDD measures to the level of risk presented. It also strengthened beneficial ownership requirements and PEP provisions."},
-  {m:'Module 7',t:'Legal & Regulatory Framework',q:"The Money Laundering Regulations 2017 (MLRs 2017) apply to which of the following?",o:["Only banks and investment firms","Only firms regulated by the FCA","A wide range of regulated sectors including financial institutions, legal professionals, accountants, estate agents, notaries, and trust and company service providers","Only firms with annual revenue above £10 million"],a:2,e:"The MLRs 2017 apply to a broad range of 'relevant persons' — not just financial services firms. Estate agents, conveyancers, solicitors, accountants, and art market participants are all within scope, which is why AML compliance is directly relevant to Coadjute's clients."},
-  {m:'Module 7',t:'Legal & Regulatory Framework',q:"Under POCA 2002, the obligation to make a Suspicious Activity Report applies when an employee:",o:["Sees something suspicious in a newspaper article about a client","Knows or suspects, or has reasonable grounds to know or suspect, that a person is engaged in money laundering or terrorist financing","Is directly asked by law enforcement to do so","Receives a formal instruction from the FCA to report"],a:1,e:"The POCA reporting obligation is triggered by knowledge, suspicion, or reasonable grounds to know or suspect. It is not limited to certainty, and does not require external prompting from regulators or law enforcement. The obligation arises in the employee's own mind — and must be reported to the MLRO."},
+  // ── MODULE 7 ──
+  {m:'Module 7',t:'Legal & Regulatory Framework',
+   q:"FATF is best described as:",
+   o:["A UN body that prosecutes money launderers","An inter-governmental body that sets international AML standards and conducts peer reviews of national compliance","The UK's domestic AML regulator","A European Court that hears ML cases"],
+   a:1,e:"FATF (Financial Action Task Force) is an inter-governmental policy-making body that sets the international standards for AML/CFT — the '40 Recommendations'. It conducts peer reviews (mutual evaluations) of member states' compliance with its standards. It does not prosecute individuals; that is the role of national law enforcement."},
+  {m:'Module 7',t:'Legal & Regulatory Framework',
+   q:"The principal criminal offences for money laundering in the UK are contained in:",
+   o:["The Money Laundering Regulations 2017","The Terrorism Act 2000","The Proceeds of Crime Act 2002, sections 327–329","The Financial Services and Markets Act 2000"],
+   a:2,e:"The three primary ML criminal offences — concealing/disguising/converting criminal property (s.327), arranging (s.328), and acquisition/use/possession (s.329) — are all in POCA 2002. The MLRs 2017 create regulatory obligations for supervised firms but are not the source of the criminal offences. FSMA 2000 covers financial services regulation more broadly."},
+  {m:'Module 7',t:'Legal & Regulatory Framework',
+   q:"The principal failure-to-disclose offence under POCA 2002 applies to a person in the regulated sector when they:",
+   o:["Know about money laundering but choose not to report it to the police directly","Know or suspect, or have reasonable grounds for knowing or suspecting, that another person is engaged in money laundering, but fail to make a required disclosure to their MLRO or NCA","Lose paperwork relating to a suspicious transaction","Fail to attend AML training"],
+   a:1,e:"The s.330 failure-to-disclose offence (regulated sector) is committed when: (a) a person knows or suspects, or has reasonable grounds for knowing/suspecting, ML; (b) the information came to them in the course of business in the regulated sector; and (c) they do not make the required disclosure. The 'reasonable grounds' element makes this an objective — not just subjective — test."},
+  {m:'Module 7',t:'Legal & Regulatory Framework',
+   q:"Under the UK's risk-based approach to AML, the national risk assessment (NRA) published by HM Treasury and the Home Office:",
+   o:["Is a list of high-risk customers that must be declined","Provides a government-level assessment of the ML/TF risks facing the UK, which informs both government policy and firms' own risk assessments","Is binding on all firms and must be adopted verbatim","Replaces a firm's own risk assessment"],
+   a:1,e:"The NRA provides the macro-level analysis of threats and vulnerabilities facing the UK as a whole. Firms are expected to be aware of it and to factor it into their own sector- and firm-level risk assessments. It informs but does not replace a firm's own assessment — each firm must conduct its own proportionate analysis."},
+  {m:'Module 7',t:'Legal & Regulatory Framework',
+   q:"A solicitor discovers that a client they acted for last year has been convicted of fraud and that funds passed through the client account were the proceeds of crime. The solicitor should:",
+   o:["Do nothing — the transaction is complete","Consult the NRA","Make a disclosure (SAR) to the NCA, as the solicitor now has knowledge/suspicion of ML even though the transaction is historic","Wait for the client to contact them"],
+   a:2,e:"There is no limitation period on the ML reporting obligation. Discovery of past transactions involving criminal property creates a present obligation to make a SAR. The s.328 'arranging' offence may already have been committed, but making a voluntary SAR may provide a defence or mitigate liability. The MLRO must be informed immediately."},
 
-  // ── MODULE 8: RBA & MANAGEMENT ──
-  {m:'Module 8',t:'RBA & Management Obligations',q:"The primary rationale for the risk-based approach to AML is:",o:["It exempts low-risk firms from all compliance obligations","Firms have finite resources — concentrating those resources on higher-risk areas achieves the maximum protective benefit","It satisfies the minimum requirements of the 6th Money Laundering Directive","It allows firms to apply the same procedures to all customers more efficiently"],a:1,e:"The ICA's core rationale for the RBA is simply that firms have finite resources. Spreading those resources equally across all business — regardless of risk — is inefficient. The RBA maximises the impact of compliance investment by focusing it where money laundering risk is greatest."},
-  {m:'Module 8',t:'RBA & Management Obligations',q:"According to the ICA, the four components of a proper risk-based approach are:",o:["CDD, EDD, SDD, and SAR filing","Risk assessment, risk mitigation, effective implementation, and ongoing monitoring with record-keeping","Client identification, sanctions screening, PEP checks, and source of funds verification","Policy drafting, board approval, staff training, and annual review"],a:1,e:"The four ICA components are: (i) a documented risk assessment covering the firm's exposure and risk appetite; (ii) policies and procedures to mitigate those risks; (iii) effective implementation; and (iv) an ongoing monitoring and review process, underpinned by robust record-keeping."},
-  {m:'Module 8',t:'RBA & Management Obligations',q:"The ICA warns against AML policies that 'window dress'. This refers to policies that:",o:["Are presented in a visually complex format","Are drafted by external advisers without genuine internal discussion, making them operationally irrelevant","Exceed the minimum legal requirements","Are approved by a subcommittee rather than the full board"],a:1,e:"The ICA specifically warns against firms paying external consultants to draft policies that are adopted without internal consideration. Such policies look impressive but fail to engage the firm's actual operations and risks — they 'do little more than window dress.'"},
-  {m:'Module 8',t:'RBA & Management Obligations',q:"Which of the following is specifically included in the ICA's list of required AML procedures?",o:["A minimum annual leave requirement for all staff","Annual investment review for all client accounts","Mandatory use of video conferencing for client meetings","Quarterly dividend declarations for senior management"],a:0,e:"Minimum annual leave is a genuine AML control — enforced absence prevents an employee from continuously managing activity they may be concealing. This is specifically listed by the ICA as a required procedure. The other options have no AML basis."},
-  {m:'Module 8',t:'RBA & Management Obligations',q:"The MLRO Annual Report is primarily a tool for:",o:["Reporting SAR statistics to the NCA","The MLRO to document their continuing professional development","Reporting to the board on the organisation's AML performance and compliance with its own policy","Notifying the FCA of any regulatory breaches in the period"],a:2,e:"The MLRO Annual Report is the formal mechanism through which the MLRO reports to the board on how the firm's AML framework is performing. It covers compliance with the AML policy, monitoring data, key incidents, and any recommended improvements."},
-  {m:'Module 8',t:'RBA & Management Obligations',q:"The 'objective test of suspicion' has which of the following implications for a busy compliance employee?",o:["Volume of work is a recognised mitigating factor if suspicious activity is missed","The employee is only liable if they were personally aware of the suspicious activity","Volume of work is irrelevant — if a reasonable person in their role should have been suspicious, the law treats them as having had grounds for suspicion","The objective test only applies to MLRO-level staff"],a:2,e:"The objective test is indifferent to workload and resources. It asks: what ought a reasonable person in this role, with access to the same information, have known or suspected? Factors such as volume of work are legally irrelevant to this assessment."},
-  {m:'Module 8',t:'RBA & Management Obligations',q:"Which of the following BEST describes a positive AML corporate culture?",o:["Compliance procedures are streamlined to reduce friction on high-value transactions","Staff only raise concerns when they are certain that criminal activity is occurring","All staff — regardless of seniority — understand their role in AML; the MLRO is accessible and backed by management; commercial pressure does not override compliance","Senior relationship managers are exempted from AML scrutiny to protect key client relationships"],a:2,e:"The ICA's description of positive AML culture encompasses: universal staff understanding of their AML role; an approachable and backed MLRO; freedom from commercial pressure on compliance matters; and no special treatment for 'important' clients. The ICA explicitly lists territorial attitudes towards key clients as a cultural warning sign."},
-  {m:'Module 8',t:'RBA & Management Obligations',q:"A firm discovers it has repeatedly failed to comply with its own AML policy. According to the ICA, this situation is:",o:["Acceptable provided the failures were unintentional","Less serious than having no policy at all","Extremely damaging — particularly when discovered by a regulator — as it shows the stated standards existed but were ignored","A matter for the compliance team to address quietly without board involvement"],a:2,e:"The ICA is explicit: circumstances in which a regulatory authority discovers that a firm has failed to comply with its own policy are 'extremely damaging.' This situation is potentially more serious than having an imperfect policy, because it demonstrates intentional or systematic disregard for the firm's own stated standards."}
+  // ── MODULE 8 ──
+  {m:'Module 8',t:'RBA & Management Obligations',
+   q:"A firm's AML risk assessment should be:",
+   o:["Conducted once when the firm is established and filed away","A static document provided by the sector regulator","A living document, regularly reviewed and updated as the firm's business, customer base, products, and the wider threat environment change","Identical to every other firm in the same sector"],
+   a:2,e:"The ICA is explicit: a risk assessment is not a one-off exercise. It must be a living document that is reviewed and updated when the firm's business changes (new products, new markets, new customer types), when the regulatory environment changes, and periodically regardless. A static risk assessment provides false comfort."},
+  {m:'Module 8',t:'RBA & Management Obligations',
+   q:"The Money Laundering Regulations 2017 require designated firms to have an MLRO (Money Laundering Reporting Officer). The MLRO's primary legal function is:",
+   o:["To conduct CDD on every client personally","To act as the single internal point for AML reports from staff, assess those reports, and make external disclosures to the NCA where required","To train all staff in AML procedures","To set the firm's commercial strategy in a way that avoids high-risk clients"],
+   a:1,e:"The MLRO's statutory function under the MLRs 2017 is to receive internal SARs from staff, assess them, and determine whether an external SAR to the NCA is warranted. They are the gatekeeper between internal suspicions and external law enforcement disclosure. Training and strategy are important but are secondary to this core legal role."},
+  {m:'Module 8',t:'RBA & Management Obligations',
+   q:"A firm's AML policy is drafted by an external consultant and adopted without internal review or discussion. The ICA's view of this approach is that it:",
+   o:["Represents best practice — external expertise adds objectivity","Is acceptable provided the policy is legally compliant","Is likely to amount to 'window dressing' — the policy will not be embedded in the firm's actual operations and therefore provides limited real protection","Is fine for smaller firms with limited compliance resources"],
+   a:2,e:"The ICA explicitly warns against externally-drafted policies adopted without internal engagement. Such policies may be technically accurate but are operationally meaningless — staff won't know or own them, and they won't reflect how the firm actually works. Real AML protection requires genuine internal engagement, ownership, and embedding of the policy."},
+  {m:'Module 8',t:'RBA & Management Obligations',
+   q:"The 'objective test of suspicion' has which implication for a busy compliance employee?",
+   o:["Volume of work is a recognised mitigating factor if suspicious activity is missed","The employee is only liable if they were personally aware of the suspicious activity","Volume of work is legally irrelevant — if a reasonable person in their role should have been suspicious, the law treats them as having had grounds for suspicion","The objective test only applies to MLRO-level staff"],
+   a:2,e:"The objective test is indifferent to workload. It asks: what ought a reasonable person in this role, with access to the same information, have known or suspected? Factors like volume of work do not excuse failure to report. This is a significant point for property sector staff who handle many transactions simultaneously."},
+  {m:'Module 8',t:'RBA & Management Obligations',
+   q:"A firm discovers it has repeatedly failed to comply with its own AML policy. According to the ICA, this situation is:",
+   o:["Acceptable provided the failures were unintentional","Less serious than having no policy at all","Extremely damaging — particularly when discovered by a regulator — as it shows the stated standards existed but were systematically ignored","A matter for the compliance team to address quietly without board involvement"],
+   a:2,e:"The ICA is explicit: discovery by a regulatory authority that a firm has failed to comply with its own policy is 'extremely damaging.' It is potentially more serious than having an imperfect policy, because it demonstrates the firm knew what the standard should be but chose (or failed) to meet it. It signals a governance and culture failure at the highest level."},
+  {m:'Module 8',t:'RBA & Management Obligations',
+   q:"Which of the following BEST describes a positive AML corporate culture according to the ICA?",
+   o:["Compliance procedures are streamlined to reduce friction on high-value transactions","Staff only raise concerns when they are certain that criminal activity is occurring","All staff — regardless of seniority — understand their AML role; the MLRO is accessible and backed by management; commercial pressure does not override compliance","Senior relationship managers are exempt from AML scrutiny to protect key client relationships"],
+   a:2,e:"The ICA's description of positive AML culture encompasses: universal staff understanding of their AML role; an approachable MLRO backed by senior management; freedom from commercial pressure on compliance matters; and no special treatment for 'important' clients. Territorial attitudes towards key clients and management pressure to close deals are specifically listed as cultural warning signs."}
 ];
 
-// ─── STATE ───
-let cur = 0;
+// ════════ STATE ════════
 let answers = new Array(40).fill(null);
+let cur = 0;
+let timeLeft = 3600;
 let timerInterval = null;
-let timeLeft = 3600; // 60 minutes
-let startTime = null;
 let examSubmitted = false;
+let startTime = null;
 
-// ─── TIMER ───
-function startTimer(){
-  startTime = Date.now();
-  document.getElementById('timer-wrap').style.display='flex';
-  timerInterval = setInterval(()=>{
-    timeLeft--;
-    const tv = document.getElementById('timer-val');
-    const m = Math.floor(timeLeft/60).toString().padStart(2,'0');
-    const s = (timeLeft%60).toString().padStart(2,'0');
-    tv.textContent = m+':'+s;
-    if(timeLeft<=300) tv.classList.add('warn');
-    if(timeLeft<=0){ clearInterval(timerInterval); submitExam(); }
-  },1000);
+// ════════ SCREEN ════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
 }
 
-function beginExam(){
-  showScreen('screen-exam');
+// ════════ BEGIN ════════
+function beginExam() {
   buildGrid();
   renderQ(0);
-  startTimer();
+  showScreen('screen-exam');
+  document.getElementById('timer-wrap').style.display = 'flex';
+  startTime = Date.now();
+  timerInterval = setInterval(tick, 1000);
 }
 
-function showScreen(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-  window.scrollTo(0,0);
+function tick() {
+  timeLeft--;
+  const m = Math.floor(timeLeft / 60), s = timeLeft % 60;
+  const tv = document.getElementById('timer-val');
+  tv.textContent = `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+  if (timeLeft <= 300) tv.classList.add('warn');
+  if (timeLeft <= 0) { clearInterval(timerInterval); submitExam(); }
 }
 
-// ─── QUESTION GRID ───
-function buildGrid(){
+// ════════ GRID ════════
+function buildGrid() {
   const g = document.getElementById('q-grid');
-  g.innerHTML = QS.map((_,i)=>`<div class="q-dot" id="qdot-${i}" onclick="renderQ(${i})">${i+1}</div>`).join('');
-}
-
-function updateGrid(){
-  QS.forEach((_,i)=>{
-    const d = document.getElementById('qdot-'+i);
-    d.classList.remove('answered','current');
-    if(i===cur) d.classList.add('current');
-    else if(answers[i]!==null) d.classList.add('answered');
+  g.innerHTML = '';
+  QS.forEach((_,i) => {
+    const d = document.createElement('div');
+    d.className = 'q-dot' + (i===0?' current':'');
+    d.textContent = i+1;
+    d.onclick = () => navToQ(i);
+    g.appendChild(d);
   });
 }
 
-// ─── RENDER QUESTION ───
-function renderQ(idx){
-  cur = idx;
-  const q = QS[idx];
-  const card = document.getElementById('q-card');
-  const selected = answers[idx];
-  card.innerHTML = `
+function updateGrid() {
+  document.querySelectorAll('.q-dot').forEach((d,i) => {
+    d.className = 'q-dot';
+    if (i === cur) d.classList.add('current');
+    else if (answers[i] !== null) d.classList.add('answered');
+  });
+}
+
+// ════════ RENDER QUESTION ════════
+function renderQ(i) {
+  cur = i;
+  const q = QS[i];
+  const letters = ['A','B','C','D'];
+  document.getElementById('q-card').innerHTML = `
     <div class="q-module-tag">${q.m} — ${q.t}</div>
-    <div class="q-number">Question ${idx+1} of ${QS.length}</div>
+    <div class="q-num">Question ${i+1} of ${QS.length}</div>
     <div class="q-text">${q.q}</div>
-    <div class="q-opts">
-      ${q.o.map((o,j)=>`
-        <button class="q-opt${selected===j?' selected':''}" id="opt-${j}" onclick="selectOpt(${j})" ${examSubmitted?'disabled':''}>${String.fromCharCode(65+j)}. ${o}</button>
-      `).join('')}
-    </div>
-    <div class="q-exp${examSubmitted?' show':''}" id="q-exp">${q.e}</div>
-  `;
-  if(examSubmitted) applyReviewStyles(idx);
+    <div class="q-options">
+      ${q.o.map((opt,oi) => `
+        <div class="q-opt${answers[i]===oi?' selected':''}" onclick="selectOpt(${oi})">
+          <div class="q-opt-letter">${letters[oi]}</div>
+          <div class="q-opt-text">${opt}</div>
+        </div>`).join('')}
+    </div>`;
+  document.getElementById('q-prog-text').textContent = `Question ${i+1} of ${QS.length}`;
+  document.getElementById('q-prog-fill').style.width = `${((i+1)/QS.length)*100}%`;
+  const ac = answers.filter(a => a !== null).length;
+  document.getElementById('answered-count').textContent = `${ac} answered`;
+  document.getElementById('btn-prev').disabled = i === 0;
+  document.getElementById('btn-next').disabled = i === QS.length-1;
+  // Show submit when all answered
+  const sub = document.getElementById('btn-submit');
+  if (ac === QS.length) sub.classList.add('visible'); else sub.classList.remove('visible');
   updateGrid();
-  updateProgressBar();
-  document.getElementById('btn-prev').disabled = cur===0;
-  document.getElementById('btn-next').innerHTML = cur===QS.length-1
-    ? (examSubmitted?'':'<span style="opacity:.5">End of Questions</span>')
-    : 'Next →';
-  document.getElementById('btn-next').disabled = cur===QS.length-1;
-  // show submit button when all answered
-  const allAnswered = answers.every(a=>a!==null);
-  const existingSubmit = document.getElementById('submit-row');
-  if(existingSubmit) existingSubmit.remove();
-  if(allAnswered && !examSubmitted){
-    const row = document.createElement('div');
-    row.id='submit-row';
-    row.style.cssText='display:flex;justify-content:flex-end;margin-top:20px;max-width:760px';
-    row.innerHTML='<button class="nav-btn btn-submit" onclick="submitExam()">Submit All 40 Answers →</button>';
-    document.querySelector('.exam-main').appendChild(row);
-  }
 }
 
-function applyReviewStyles(idx){
-  const q = QS[idx];
-  const chosen = answers[idx];
-  for(let j=0;j<q.o.length;j++){
-    const btn = document.getElementById('opt-'+j);
-    if(!btn) continue;
-    btn.disabled=true;
-    if(j===q.a) btn.classList.add('correct-ans');
-    else if(j===chosen && chosen!==q.a) btn.classList.add('wrong-ans');
-  }
-}
-
-function selectOpt(j){
-  if(examSubmitted) return;
-  answers[cur]=j;
+function selectOpt(oi) {
+  if (examSubmitted) return;
+  answers[cur] = oi;
   renderQ(cur);
 }
 
-function navQ(dir){
-  let next=cur+dir;
-  if(next<0||next>=QS.length) return;
-  renderQ(next);
-}
+function navQ(dir) { navToQ(cur + dir); }
+function navToQ(i) { if (i>=0 && i<QS.length) renderQ(i); }
 
-function updateProgressBar(){
-  const done=answers.filter(a=>a!==null).length;
-  document.getElementById('q-prog-text').textContent=`Question ${cur+1} of ${QS.length}`;
-  document.getElementById('q-prog-fill').style.width=((cur+1)/QS.length*100)+'%';
-  document.getElementById('answered-count').textContent=done+' answered';
-}
-
-// ─── SUBMIT ───
-function submitExam(){
-  if(examSubmitted) return;
-  examSubmitted=true;
+// ════════ SUBMIT ════════
+function submitExam() {
+  if (examSubmitted) return;
+  const unanswered = answers.filter(a => a === null).length;
+  if (unanswered > 0 && timeLeft > 0) {
+    if (!confirm(`You have ${unanswered} unanswered question(s). Submit anyway?`)) return;
+  }
+  examSubmitted = true;
   clearInterval(timerInterval);
-  const elapsed = Math.round((Date.now()-startTime)/1000);
-  const usedMins = Math.floor(elapsed/60);
-  const usedSecs = elapsed%60;
-  showResults(usedMins, usedSecs);
+  showResults();
 }
 
-// ─── RESULTS ───
-function showResults(usedMins, usedSecs){
-  showScreen('screen-results');
+// ════════ RESULTS ════════
+function showResults() {
+  const score = answers.reduce((acc,a,i) => acc + (a === QS[i].a ? 1 : 0), 0);
+  const total = QS.length;
+  const pct = Math.round((score/total)*100);
+  const pass = pct >= 70;
+  const elapsed = startTime ? Math.floor((Date.now()-startTime)/1000) : 0;
+  const em = Math.floor(elapsed/60), es = elapsed%60;
 
-  // Score
-  let correct=0;
-  const moduleScores={};
-  const moduleTotals={};
-  QS.forEach((q,i)=>{
-    const mod=q.m;
-    if(!moduleScores[mod]){moduleScores[mod]=0;moduleTotals[mod]=0;}
-    moduleTotals[mod]++;
-    if(answers[i]===q.a){correct++;moduleScores[mod]++;}
-  });
-  const pct=Math.round(correct/QS.length*100);
-  const pass=pct>=70;
-
-  document.getElementById('res-score-big').textContent=correct+'/'+QS.length;
-  document.getElementById('res-pct').textContent=pct+'% — '+(pass?'Pass':'Fail');
-  document.getElementById('res-verdict').textContent=pass?'✓ PASS — Well done!':'✗ NOT YET — Review explanations and retry';
-  document.getElementById('res-verdict').className='res-verdict '+(pass?'pass':'fail');
-  document.getElementById('res-time-used').textContent=`Time used: ${usedMins}m ${usedSecs}s`;
+  document.getElementById('res-score-big').textContent = `${score}/${total}`;
+  document.getElementById('res-pct').textContent = `${pct}%`;
+  const v = document.getElementById('res-verdict');
+  v.textContent = pass ? '✓ PASS — Well done!' : '✗ NOT YET — Review and retry';
+  v.className = 'res-verdict ' + (pass ? 'pass' : 'fail');
+  document.getElementById('res-time-used').textContent = `Time used: ${em}m ${es}s`;
 
   // Module breakdown
-  const mColors={
-    'Module 1':'#C17FFF','Module 2':'#FF44D6','Module 3':'#FF6D3D',
-    'Module 4':'#4EEFF9','Module 5':'#C17FFF','Module 6':'#FF44D6',
-    'Module 7':'#FF6D3D','Module 8':'#4EEFF9'
-  };
-  const mNames={
-    'Module 1':'M1: What is ML?','Module 2':'M2: TF & Sanctions',
-    'Module 3':'M3: FI Exploitation','Module 4':'M4: High-Risk Sectors',
-    'Module 5':'M5: CDD','Module 6':'M6: PEPs, SARs & Reporting',
-    'Module 7':'M7: Legal Framework','Module 8':'M8: RBA & Management'
-  };
-  const br = document.getElementById('breakdown-rows');
-  br.innerHTML = Object.keys(moduleTotals).map(mod=>{
-    const s=moduleScores[mod],t=moduleTotals[mod];
-    const mp=Math.round(s/t*100);
+  const mTotals={}, mScores={};
+  QS.forEach((q,i) => {
+    if (!mTotals[q.m]) { mTotals[q.m]=0; mScores[q.m]=0; }
+    mTotals[q.m]++;
+    if (answers[i]===q.a) mScores[q.m]++;
+  });
+  const mColors={'Module 1':'#C17FFF','Module 2':'#FF44D6','Module 3':'#FF6D3D','Module 4':'#4EEFF9','Module 5':'#C17FFF','Module 6':'#FF44D6','Module 7':'#FF6D3D','Module 8':'#4EEFF9'};
+  const mNames={'Module 1':'M1: What is ML?','Module 2':'M2: TF & Sanctions','Module 3':'M3: FI Exploitation','Module 4':'M4: High-Risk Sectors','Module 5':'M5: CDD','Module 6':'M6: PEPs, SARs & Reporting','Module 7':'M7: Legal Framework','Module 8':'M8: RBA & Management'};
+  document.getElementById('breakdown-rows').innerHTML = Object.keys(mTotals).map(mod => {
+    const s=mScores[mod],t=mTotals[mod],mp=Math.round(s/t*100);
     return `<div class="breakdown-row">
       <div class="brow-label">${mNames[mod]||mod}</div>
-      <div class="brow-bar-wrap"><div class="brow-bar" style="width:${mp}%;background:${mColors[mod]||'var(--lilac)'}"></div></div>
+      <div class="brow-bar-wrap"><div class="brow-bar" style="width:${mp}%;background:${mColors[mod]||'#C17FFF'}"></div></div>
       <div class="brow-score" style="color:${mp>=70?'var(--green)':'var(--orange)'}">${s}/${t}</div>
     </div>`;
   }).join('');
 
   // Review list
-  const rl = document.getElementById('review-list');
-  rl.innerHTML = QS.map((q,i)=>{
-    const correct=answers[i]===q.a;
-    const yourAns=answers[i]!==null?q.o[answers[i]]:'(not answered)';
-    const corrAns=q.o[q.a];
+  document.getElementById('review-list').innerHTML = QS.map((q,i) => {
+    const correct = answers[i]===q.a;
+    const your = answers[i]!==null ? q.o[answers[i]] : '(not answered)';
     return `<div class="review-q ${correct?'correct-q':'wrong-q'}">
       <div class="review-q-mod">${q.m} — Q${i+1}</div>
       <div class="review-q-text">${q.q}</div>
       <div class="review-answers">
-        ${!correct?`<div class="review-your">✗ Your answer: ${yourAns}</div>`:''}
-        <div class="review-correct">${correct?'✓':''} Correct answer: ${corrAns}</div>
+        ${!correct?`<div class="review-your">✗ Your answer: ${your}</div>`:''}
+        <div class="review-correct">${correct?'✓ Correct:':'Correct answer:'} ${q.o[q.a]}</div>
       </div>
       <div class="review-exp">${q.e}</div>
     </div>`;
   }).join('');
+
+  // v2 Pass/Fail actions
+  const actionsEl = document.getElementById('results-actions');
+  if (pass) {
+    actionsEl.innerHTML = `
+      <a href="index.html" class="btn-dashboard">← Back to Dashboard</a>
+      <button class="btn-retry" onclick="retryExam()">Retake for a Better Score</button>`;
+  } else {
+    actionsEl.innerHTML = `
+      <button class="btn-retry" onclick="retryExam()" style="background:var(--grad);color:#fff;border:none;box-shadow:0 4px 14px rgba(193,127,255,.35)">↺ Retry Exam</button>
+      <a href="index.html" class="btn-dashboard" style="background:transparent;color:var(--ink);border:2px solid var(--grey);box-shadow:none">← Dashboard</a>`;
+  }
+
+  showScreen('screen-results');
 }
 
-function retryExam(){
-  answers=new Array(40).fill(null);
-  cur=0;
-  timeLeft=3600;
-  examSubmitted=false;
-  document.getElementById('timer-val').textContent='60:00';
+function retryExam() {
+  answers = new Array(40).fill(null);
+  cur = 0;
+  timeLeft = 3600;
+  examSubmitted = false;
+  startTime = null;
+  document.getElementById('timer-val').textContent = '60:00';
   document.getElementById('timer-val').classList.remove('warn');
+  document.getElementById('timer-wrap').style.display = 'none';
   showScreen('screen-intro');
 }
 </script>
