@@ -617,6 +617,7 @@ tr:nth-child(even) td{background:var(--l10)}
         <div class="result-body">
           <p id="resultDetail"></p>
           <button class="retry-btn" onclick="resetQuiz()">Try Again</button>
+<a id="dashboard-btn" href="index.html" style="display:none;padding:11px 24px;background:linear-gradient(90deg,#C17FFF,#FF44D6,#FF6D3D);color:#002846;border-radius:8px;font-weight:700;font-size:.9rem;text-decoration:none;margin-left:12px">✓ Back to Dashboard</a>
         </div>
       </div>
     </div>
@@ -775,7 +776,10 @@ function submitQuiz() {
   let correct = Qs.filter((_,i)=>answered[i]===Qs[i].c).length;
   const pct = Math.round((correct/Qs.length)*100);
   const pass = pct >= 70;
-if (pass) localStorage.setItem('module_1_complete', 'true');
+if (pass) {
+  localStorage.setItem('module_1_complete', 'true');
+  document.getElementById('dashboard-btn').style.display = 'inline-block';
+}
   const panel = document.getElementById('resultPanel');
   document.getElementById('resultScore').textContent = pct+'%';
   document.getElementById('resultMsg').textContent = pass ? '✅ Pass — Module 1 Complete!' : '❌ Not quite — 70% needed to pass';
@@ -800,4 +804,5 @@ buildQuiz();
 </script>
 </body>
 </html>
+
 
