@@ -44,15 +44,16 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--i
 .nav-item.active{background:rgba(193,127,255,.12);border-left-color:var(--lilac)}
 .nav-item.completed{border-left-color:var(--active)}
 .nav-item.locked{opacity:.45;cursor:not-allowed}
-.nav-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;flex-shrink:0;transition:background .2s,color .2s;background:rgba(255,255,255,.1);color:rgba(255,255,255,.5)}
-.nav-item.active .nav-icon{background:var(--lilac);color:var(--ink)}
+.nav-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;flex-shrink:0;transition:background .2s,color .2s}
+.nav-item.active    .nav-icon{background:var(--lilac);color:var(--ink)}
 .nav-item.completed .nav-icon{background:var(--active);color:var(--ink)}
-.nav-item.locked .nav-icon{background:rgba(255,255,255,.06);color:rgba(255,255,255,.3)}
+.nav-item:not(.active):not(.completed):not(.locked) .nav-icon{background:rgba(255,255,255,.1);color:rgba(255,255,255,.5)}
+.nav-item.locked    .nav-icon{background:rgba(255,255,255,.06);color:rgba(255,255,255,.3)}
 .nav-text{flex:1;min-width:0}
 .nav-label{font-size:.82rem;color:var(--white);font-weight:500;line-height:1.3}
-.nav-item.active .nav-label{color:var(--lilac)}
+.nav-item.active    .nav-label{color:var(--lilac)}
 .nav-item.completed .nav-label{color:rgba(255,255,255,.75)}
-.nav-item.locked .nav-label{color:rgba(255,255,255,.3)}
+.nav-item.locked    .nav-label{color:rgba(255,255,255,.3)}
 .nav-sublabel{font-size:.7rem;color:rgba(255,255,255,.3);margin-top:1px}
 .lock-icon{font-size:.7rem;color:rgba(255,255,255,.25);flex-shrink:0}
 .tick-icon{font-size:.75rem;color:var(--active);flex-shrink:0}
@@ -215,9 +216,73 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--i
     <h2>Module 2 of 8</h2>
     <h3>Terrorist Financing &amp; Sanctions</h3>
   </div>
-  <nav class="sidebar-nav" id="sideNav"></nav>
+  <nav class="sidebar-nav" id="sideNav">
+
+    <div class="nav-item active" id="navItem0" onclick="goTo(0)">
+      <div class="nav-icon">1</div>
+      <div class="nav-text">
+        <div class="nav-label">TF vs Money Laundering</div>
+        <div class="nav-sublabel">Key differences &amp; direction of funds</div>
+      </div>
+    </div>
+
+    <div class="nav-item locked" id="navItem1">
+      <div class="nav-icon">2</div>
+      <div class="nav-text">
+        <div class="nav-label">How Terrorist Financing Works</div>
+        <div class="nav-sublabel">Methods, scale &amp; techniques</div>
+      </div>
+      <span class="lock-icon">🔒</span>
+    </div>
+
+    <div class="nav-item locked" id="navItem2">
+      <div class="nav-icon">3</div>
+      <div class="nav-text">
+        <div class="nav-label">What Are Sanctions?</div>
+        <div class="nav-sublabel">Definitions &amp; scope</div>
+      </div>
+      <span class="lock-icon">🔒</span>
+    </div>
+
+    <div class="nav-item locked" id="navItem3">
+      <div class="nav-icon">4</div>
+      <div class="nav-text">
+        <div class="nav-label">The Four Sanctions Regimes</div>
+        <div class="nav-sublabel">UN, EU, OFAC &amp; OFSI</div>
+      </div>
+      <span class="lock-icon">🔒</span>
+    </div>
+
+    <div class="nav-item locked" id="navItem4">
+      <div class="nav-icon">5</div>
+      <div class="nav-text">
+        <div class="nav-label">Country-Specific Restrictions</div>
+        <div class="nav-sublabel">Iran, Russia, North Korea &amp; others</div>
+      </div>
+      <span class="lock-icon">🔒</span>
+    </div>
+
+    <div class="nav-item locked" id="navItem5">
+      <div class="nav-icon">6</div>
+      <div class="nav-text">
+        <div class="nav-label">Sanctions Compliance Programmes</div>
+        <div class="nav-sublabel">Screening, detection &amp; escalation</div>
+      </div>
+      <span class="lock-icon">🔒</span>
+    </div>
+
+    <div class="nav-item locked" id="navItem6">
+      <div class="nav-icon">✦</div>
+      <div class="nav-text">
+        <div class="nav-label">Module Quiz</div>
+        <div class="nav-sublabel">15 questions · 70% to pass</div>
+      </div>
+      <span class="lock-icon">🔒</span>
+    </div>
+
+  </nav>
   <div class="sidebar-footer">
-    <div class="module-progress-label" id="sideProgressLabel">0 of 7 sections complete</div>
+    <div class="module-progress-label" id="sideProgressLabel">0 of 6 sections complete</div>
     <div class="module-progress-bar"><div class="module-progress-fill" id="sideProgressFill" style="width:0%"></div></div>
   </div>
 </aside>
@@ -229,7 +294,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--i
      S0 — TF vs ML
 ══════════════════════════════════════ -->
 <div class="section active" id="sec0">
-  <div class="section-tag">Section 1 of 7</div>
+  <div class="section-tag">Section 1 of 6</div>
   <h2 style="font-size:1.6rem;font-weight:800;margin-bottom:8px">Terrorist Financing vs Money Laundering</h2>
   <div class="section-divider"></div>
   <p class="section-intro" style="margin-bottom:20px">Terrorist financing and money laundering share many techniques — but the flow of money works in fundamentally different directions. Understanding the distinction is a core ICA exam topic and essential for your day-to-day work at Coadjute.</p>
@@ -286,7 +351,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--i
      S1 — HOW TF WORKS
 ══════════════════════════════════════ -->
 <div class="section" id="sec1">
-  <div class="section-tag">Section 2 of 7</div>
+  <div class="section-tag">Section 2 of 6</div>
   <h2 style="font-size:1.6rem;font-weight:800;margin-bottom:8px">How Terrorist Financing Works</h2>
   <div class="section-divider"></div>
   <p class="section-intro" style="margin-bottom:20px">Terrorist organisations range from large, sophisticated networks to small cells operating on minimal budgets. Understanding how each raises and moves funds is essential to recognising the risk in property transactions.</p>
@@ -363,7 +428,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--i
   </div>
 
   <div class="bottom-nav">
-    <button class="btn-prev" onclick="advance(0)">← TF vs Money Laundering</button>
+    <button class="btn-prev" onclick="goTo(0)">← TF vs Money Laundering</button>
     <button class="btn-next" onclick="advance(2)">What Are Sanctions? →</button>
   </div>
 </div>
@@ -372,7 +437,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--i
      S2 — WHAT ARE SANCTIONS
 ══════════════════════════════════════ -->
 <div class="section" id="sec2">
-  <div class="section-tag">Section 3 of 7</div>
+  <div class="section-tag">Section 3 of 6</div>
   <h2 style="font-size:1.6rem;font-weight:800;margin-bottom:8px">What Are Sanctions?</h2>
   <div class="section-divider"></div>
   <p class="section-intro" style="margin-bottom:20px">Sanctions are one of the primary tools used by governments and international bodies to combat money laundering, terrorist financing, and threats to national security. Understanding what they are and who they apply to is a core exam topic.</p>
@@ -428,7 +493,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--i
   </div>
 
   <div class="bottom-nav">
-    <button class="btn-prev" onclick="advance(1)">← How Terrorist Financing Works</button>
+    <button class="btn-prev" onclick="goTo(1)">← How Terrorist Financing Works</button>
     <button class="btn-next" onclick="advance(3)">The Four Sanctions Regimes →</button>
   </div>
 </div>
@@ -437,7 +502,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--i
      S3 — FOUR REGIMES
 ══════════════════════════════════════ -->
 <div class="section" id="sec3">
-  <div class="section-tag">Section 4 of 7</div>
+  <div class="section-tag">Section 4 of 6</div>
   <h2 style="font-size:1.6rem;font-weight:800;margin-bottom:8px">The Four Key Sanctions Regimes</h2>
   <div class="section-divider"></div>
   <p class="section-intro" style="margin-bottom:20px">There are four main international sanctions regimes your firm must be familiar with. Each has different coverage, legal force, and — critically — different extraterritorial reach.</p>
@@ -493,7 +558,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--i
   </div>
 
   <div class="bottom-nav">
-    <button class="btn-prev" onclick="advance(2)">← What Are Sanctions?</button>
+    <button class="btn-prev" onclick="goTo(2)">← What Are Sanctions?</button>
     <button class="btn-next" onclick="advance(4)">Country-Specific Restrictions →</button>
   </div>
 </div>
@@ -502,7 +567,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--i
      S4 — COUNTRY RESTRICTIONS
 ══════════════════════════════════════ -->
 <div class="section" id="sec4">
-  <div class="section-tag">Section 5 of 7</div>
+  <div class="section-tag">Section 5 of 6</div>
   <h2 style="font-size:1.6rem;font-weight:800;margin-bottom:8px">Country-Specific Sanctions Regimes</h2>
   <div class="section-divider"></div>
   <p class="section-intro" style="margin-bottom:20px">Some countries face such extensive sanctions that dealing with almost any party connected to them creates regulatory exposure. These are the highest-risk jurisdictions your screening must flag.</p>
@@ -543,7 +608,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--i
   </div>
 
   <div class="bottom-nav">
-    <button class="btn-prev" onclick="advance(3)">← The Four Sanctions Regimes</button>
+    <button class="btn-prev" onclick="goTo(3)">← The Four Sanctions Regimes</button>
     <button class="btn-next" onclick="advance(5)">Sanctions Compliance Programmes →</button>
   </div>
 </div>
@@ -552,7 +617,7 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--i
      S5 — COMPLIANCE PROGRAMME
 ══════════════════════════════════════ -->
 <div class="section" id="sec5">
-  <div class="section-tag">Section 6 of 7</div>
+  <div class="section-tag">Section 6 of 6</div>
   <h2 style="font-size:1.6rem;font-weight:800;margin-bottom:8px">Building a Sanctions Compliance Programme</h2>
   <div class="section-divider"></div>
   <p class="section-intro" style="margin-bottom:20px">Knowing that sanctions exist is not enough. Firms must have active, documented processes to screen against them and respond when a match is found. This section covers what a compliant programme looks like in practice.</p>
@@ -612,8 +677,8 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--i
   </div>
 
   <div class="bottom-nav">
-    <button class="btn-prev" onclick="advance(4)">← Country-Specific Restrictions</button>
-    <button class="btn-next btn-next cta" onclick="advance(6)">Take the Module Quiz →</button>
+    <button class="btn-prev" onclick="goTo(4)">← Country-Specific Restrictions</button>
+    <button class="btn-next cta" onclick="advance(6)">Take the Module Quiz →</button>
   </div>
 </div>
 
@@ -651,97 +716,119 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--i
 </div>
 
 </main>
-</div><!-- end .layout -->
+</div>
 
 <script>
 /* ════════════════════════════════════
-   SECTION DATA & NAV
+   STATE
 ════════════════════════════════════ */
-const SECTIONS=[
-  {label:"TF vs Money Laundering",sub:"Key differences & direction of funds"},
-  {label:"How Terrorist Financing Works",sub:"Methods, scale & techniques"},
-  {label:"What Are Sanctions?",sub:"Definitions & scope"},
-  {label:"The Four Sanctions Regimes",sub:"UN, EU, OFAC & OFSI"},
-  {label:"Country-Specific Restrictions",sub:"Iran, Russia, North Korea & others"},
-  {label:"Sanctions Compliance Programmes",sub:"Screening, detection & escalation"},
-  {label:"Module Quiz",sub:"15 questions · 70% to pass"}
-];
-const TOTAL_SECTIONS=6; // excludes quiz
+const TOTAL_CONTENT = 6; // sections 0–5 (quiz = 6)
+let current = 0;
+const completed = new Set();
 
-let current=0;
-const completed=new Set();
+/* ════════════════════════════════════
+   SIDEBAR RENDERING
+════════════════════════════════════ */
+function refreshNav() {
+  for (let i = 0; i <= 6; i++) {
+    const el = document.getElementById('navItem' + i);
+    if (!el) continue;
+    const isActive    = i === current;
+    const isDone      = completed.has(i);
+    // Item i is locked if no prior section is complete AND it's not already active/done
+    // Rule: item i is unlocked if i===0, or completed.has(i-1), or isDone, or isActive
+    const isLocked    = i > 0 && !completed.has(i - 1) && !isDone && !isActive;
 
-function buildNav(){
-  const nav=document.getElementById('sideNav');
-  nav.innerHTML='';
-  SECTIONS.forEach((s,i)=>{
-    const isQuiz=i===6;
-    const isActive=i===current;
-    const isDone=completed.has(i);
-    const isLocked=i>0&&!completed.has(i-1)&&i!==current;
-    const locked=isLocked&&!isDone&&!isActive;
-    const div=document.createElement('div');
-    div.className='nav-item'+(isActive?' active':isDone?' completed':locked?' locked':'');
-    div.id='navItem'+i;
-    let icon=isQuiz?'✦':(i+1);
-    if(isDone)icon='✓';
-    let badge=locked?'<span class="lock-icon">🔒</span>':isDone&&!isActive?'<span class="tick-icon">✓</span>':'';
-    div.innerHTML=`<div class="nav-icon">${icon}</div><div class="nav-text"><div class="nav-label">${s.label}</div><div class="nav-sublabel">${s.sub}</div></div>${badge}`;
-    if(!locked){div.onclick=()=>goTo(i);}
-    nav.appendChild(div);
-  });
+    el.className = 'nav-item' + (isActive ? ' active' : isDone ? ' completed' : isLocked ? ' locked' : '');
+
+    // Update icon
+    const icon = el.querySelector('.nav-icon');
+    if (icon) {
+      if (isDone && !isActive) icon.textContent = '✓';
+      else if (i === 6)        icon.textContent = '✦';
+      else                     icon.textContent = String(i + 1);
+    }
+
+    // Update badge (lock / tick)
+    // Remove any existing badge
+    const existingBadge = el.querySelector('.lock-icon, .tick-icon');
+    if (existingBadge) existingBadge.remove();
+
+    if (isLocked) {
+      const s = document.createElement('span');
+      s.className = 'lock-icon'; s.textContent = '🔒';
+      el.appendChild(s);
+    } else if (isDone && !isActive) {
+      const s = document.createElement('span');
+      s.className = 'tick-icon'; s.textContent = '✓';
+      el.appendChild(s);
+    }
+
+    // Click handler — locked items do nothing
+    el.onclick = isLocked ? null : () => goTo(i);
+    el.style.cursor = isLocked ? 'not-allowed' : 'pointer';
+  }
 }
 
-function updateProgress(){
-  const n=completed.size;
-  const pct=Math.round((n/TOTAL_SECTIONS)*100);
-  document.getElementById('topPct').textContent=pct+'% complete';
-  document.getElementById('topFill').style.width=pct+'%';
-  document.getElementById('sideProgressFill').style.width=pct+'%';
-  document.getElementById('sideProgressLabel').textContent=n+' of '+TOTAL_SECTIONS+' sections complete';
+function updateProgress() {
+  const n   = completed.size;
+  // Only count content sections (0–5) toward progress, not quiz
+  const contentDone = [...completed].filter(i => i < TOTAL_CONTENT).length;
+  const pct = Math.round((contentDone / TOTAL_CONTENT) * 100);
+  document.getElementById('topPct').textContent = pct + '% complete';
+  document.getElementById('topFill').style.width = pct + '%';
+  document.getElementById('sideProgressFill').style.width = pct + '%';
+  document.getElementById('sideProgressLabel').textContent = contentDone + ' of ' + TOTAL_CONTENT + ' sections complete';
 }
 
-function goTo(i){
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.getElementById('sec'+i).classList.add('active');
-  current=i;
-  buildNav();
+/* ════════════════════════════════════
+   NAVIGATION
+════════════════════════════════════ */
+function goTo(i) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec' + i).classList.add('active');
+  current = i;
+  refreshNav();
   updateProgress();
-  window.scrollTo({top:0,behavior:'smooth'});
+  window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-function advance(i){
+// advance: mark current as complete, then go to target
+function advance(target) {
   completed.add(current);
-  goTo(i);
+  if (target === 6 && document.getElementById('quizContainer').innerHTML === '') {
+    buildQuiz();
+  }
+  goTo(target);
 }
 
 /* ════════════════════════════════════
    QUICK CHECKS
 ════════════════════════════════════ */
-const qcExp={
-  qc1:"Correct. The source being legitimate does not change the nature of the offence. This is the key distinction from money laundering — in TF, clean funds are directed to criminal (terrorist) purposes. The direction of the flow, not the origin of the money, determines whether it is TF.",
-  qc2:"Correct. The USD trigger is a critical ICA exam point. All USD transactions clear through New York, giving OFAC jurisdiction even over non-US firms. Using USD with a sanctioned party could expose a UK firm to OFAC enforcement, fines, and loss of USD banking access.",
-  qc3:"Correct. Ongoing screening obligations mean firms must act even after a transaction is complete. A confirmed sanctions match requires reporting to OFSI and potentially filing a SAR. The obligation to freeze assets and report arises automatically — inaction is itself a sanctions breach."
+const qcExp = {
+  qc1: "Correct. The source being legitimate does not change the nature of the offence. This is the key distinction from money laundering — in TF, clean funds are directed to criminal (terrorist) purposes. The direction of the flow, not the origin of the money, determines whether it is TF.",
+  qc2: "Correct. The USD trigger is a critical ICA exam point. All USD transactions clear through New York, giving OFAC jurisdiction even over non-US firms. Using USD with a sanctioned party could expose a UK firm to OFAC enforcement, fines, and loss of USD banking access.",
+  qc3: "Correct. Ongoing screening obligations mean firms must act even after a transaction is complete. A confirmed sanctions match requires reporting to OFSI and potentially filing a SAR. The obligation to freeze assets and report arises automatically — inaction is itself a sanctions breach."
 };
 
-function qc(id,chosen,correct){
-  const el=document.getElementById(id);
-  const opts=el.querySelectorAll('.qc-opt');
-  const fb=document.getElementById(id+'-fb');
-  const letters=['a','b','c','d'];
-  opts.forEach((o,i)=>{
-    o.disabled=true;
-    if(letters[i]===correct)o.classList.add('correct');
-    else if(letters[i]===chosen&&chosen!==correct)o.classList.add('wrong');
+function qc(id, chosen, correct) {
+  const el   = document.getElementById(id);
+  const opts = el.querySelectorAll('.qc-opt');
+  const fb   = document.getElementById(id + '-fb');
+  const L    = ['a','b','c','d'];
+  opts.forEach((o, i) => {
+    o.disabled = true;
+    if (L[i] === correct)                    o.classList.add('correct');
+    else if (L[i] === chosen && chosen !== correct) o.classList.add('wrong');
   });
-  fb.classList.add('show',chosen===correct?'c':'w');
-  fb.innerHTML=(chosen===correct?'✅ <strong>Correct!</strong> ':'❌ <strong>Not quite.</strong> ')+qcExp[id];
+  fb.classList.add('show', chosen === correct ? 'c' : 'w');
+  fb.innerHTML = (chosen === correct ? '✅ <strong>Correct!</strong> ' : '❌ <strong>Not quite.</strong> ') + qcExp[id];
 }
 
 /* ════════════════════════════════════
    QUIZ
 ════════════════════════════════════ */
-const Qs=[
+const Qs = [
   {q:"What is the key difference between terrorist financing and money laundering?",o:["TF always involves larger sums of money","TF can involve legitimately sourced funds; ML always involves criminal proceeds","ML is a criminal offence; TF is not regulated","TF only occurs in conflict zones"],c:1,e:"Terrorist funds can come from entirely legitimate sources — salary, charity donations, personal savings. The crime is their intended use, not their origin. This makes TF transactions very difficult to detect using conventional AML controls."},
   {q:"Terrorist financing is sometimes described as 'money laundering in reverse.' Why?",o:["Because the amounts involved are always smaller","Because clean money is used for criminal purposes, rather than criminal money being cleaned","Because it involves foreign jurisdictions rather than domestic ones","Because it only involves charities and front organisations"],c:1,e:"With ML, dirty money is cleaned. With TF, clean money is directed to criminal/terrorist purposes. The direction of the flow is reversed — hence 'in reverse'."},
   {q:"The 2015 Paris attacks reportedly cost no more than $10,000. What is the key implication for financial services firms?",o:["Only large, suspicious transactions need monitoring","TF transactions can be indistinguishable from normal financial activity given their small size","Firms should focus resources only on high-value transactions","Cash transactions are the primary TF risk"],c:1,e:"Low-cost attacks mean TF activity may involve very small, unremarkable transactions — making behavioural patterns and customer context more important than transaction size alone."},
@@ -759,92 +846,77 @@ const Qs=[
   {q:"A property transaction has been ongoing for three months. The estate agent screens the buyer at the start and finds no match. Mid-transaction, the buyer is added to OFSI's UK Consolidated List. Which statement best describes the firm's obligation?",o:["No further action is required — the initial screen was clean","The firm should complete the transaction and report to OFSI afterwards","The firm should freeze any funds it holds, report to OFSI, and not proceed without an OFSI licence","The firm should notify the buyer's solicitor and ask them to investigate"],c:2,e:"Sanctions obligations are ongoing. When a designated person is identified mid-transaction, the firm must freeze relevant assets or funds, report to OFSI, and cannot proceed with the transaction without an OFSI licence. Notifying the client could constitute tipping off in some circumstances."}
 ];
 
-let answered={};
-let reviewData=[];
+let answered = {};
+let reviewData = [];
 
-function buildQuiz(){
-  const c=document.getElementById('quizContainer');
-  c.innerHTML='';answered={};reviewData=[];
-  document.getElementById('submitBtn').disabled=true;
-  document.getElementById('result-fail').style.display='none';
-  document.getElementById('result-pass').style.display='none';
-  const L=['A','B','C','D'];
-  Qs.forEach((q,qi)=>{
-    const div=document.createElement('div');
-    div.className='q-block';div.id='qb'+qi;
-    div.innerHTML=`<div class="q-num">Question ${qi+1} of ${Qs.length}</div><div class="q-text">${q.q}</div>${q.o.map((o,oi)=>`<div class="a-opt" id="opt_${qi}_${oi}" onclick="pick(${qi},${oi})"><span class="let">${L[oi]}</span><span>${o}</span></div>`).join('')}<div class="q-fb" id="fb_${qi}"></div>`;
+function buildQuiz() {
+  const c = document.getElementById('quizContainer');
+  c.innerHTML = ''; answered = {}; reviewData = [];
+  document.getElementById('submitBtn').disabled = true;
+  document.getElementById('submitBtn').style.display = 'block';
+  document.getElementById('result-fail').style.display = 'none';
+  document.getElementById('result-pass').style.display = 'none';
+  const L = ['A','B','C','D'];
+  Qs.forEach((q, qi) => {
+    const div = document.createElement('div');
+    div.className = 'q-block'; div.id = 'qb' + qi;
+    div.innerHTML = `<div class="q-num">Question ${qi+1} of ${Qs.length}</div><div class="q-text">${q.q}</div>${q.o.map((o,oi)=>`<div class="a-opt" id="opt_${qi}_${oi}" onclick="pick(${qi},${oi})"><span class="let">${L[oi]}</span><span>${o}</span></div>`).join('')}<div class="q-fb" id="fb_${qi}"></div>`;
     c.appendChild(div);
   });
 }
 
-function pick(qi,oi){
-  if(answered[qi]!==undefined)return;
-  answered[qi]=oi;
-  const q=Qs[qi];
-  document.querySelectorAll(`[id^="opt_${qi}_"]`).forEach((o,i)=>{
-    o.style.pointerEvents='none';
-    if(i===q.c)o.classList.add('correct');
-    else if(i===oi&&oi!==q.c)o.classList.add('wrong');
+function pick(qi, oi) {
+  if (answered[qi] !== undefined) return;
+  answered[qi] = oi;
+  const q = Qs[qi];
+  document.querySelectorAll(`[id^="opt_${qi}_"]`).forEach((o, i) => {
+    o.style.pointerEvents = 'none';
+    if (i === q.c)                  o.classList.add('correct');
+    else if (i === oi && oi !== q.c) o.classList.add('wrong');
   });
-  const fb=document.getElementById('fb_'+qi);
-  const pass=oi===q.c;
-  fb.classList.add('show',pass?'pass':'fail');
-  fb.innerHTML='<strong>'+(pass?'✅ Correct!':'❌ Not quite.')+'</strong> '+q.e;
-  reviewData[qi]={correct:pass,text:q.q};
-  if(Object.keys(answered).length===Qs.length)document.getElementById('submitBtn').disabled=false;
+  const fb = document.getElementById('fb_' + qi);
+  const pass = oi === q.c;
+  fb.classList.add('show', pass ? 'pass' : 'fail');
+  fb.innerHTML = '<strong>' + (pass ? '✅ Correct!' : '❌ Not quite.') + '</strong> ' + q.e;
+  reviewData[qi] = { correct: pass, text: q.q };
+  if (Object.keys(answered).length === Qs.length) document.getElementById('submitBtn').disabled = false;
 }
 
-function submitQuiz(){
-  document.getElementById('submitBtn').style.display='none';
-  const score=Object.values(answered).filter((a,i)=>a===Qs[i].c).length;
-  const total=Qs.length;
-  const pct=Math.round((score/total)*100);
-  const passed=pct>=70;
+function submitQuiz() {
+  document.getElementById('submitBtn').style.display = 'none';
+  const score = Object.values(answered).filter((a, i) => a === Qs[i].c).length;
+  const total = Qs.length;
+  const pct   = Math.round((score / total) * 100);
+  const passed = pct >= 70;
 
-  // Build breakdown HTML
-  let bdHTML='<strong style="display:block;margin-bottom:12px;font-size:.9rem">Question Breakdown</strong>';
-  reviewData.forEach((r,i)=>{
-    bdHTML+=`<div class="rb-item"><span style="min-width:26px;font-weight:700;font-size:.8rem">${i+1}.</span><span class="${r.correct?'rb-correct':'rb-wrong'}">${r.correct?'✓':'✗'}</span><span style="font-size:.84rem;color:rgba(0,40,70,.75)">${r.text.substring(0,100)+(r.text.length>100?'…':'')}</span></div>`;
+  let bdHTML = '<strong style="display:block;margin-bottom:12px;font-size:.9rem">Question Breakdown</strong>';
+  reviewData.forEach((r, i) => {
+    bdHTML += `<div class="rb-item"><span style="min-width:26px;font-weight:700;font-size:.8rem">${i+1}.</span><span class="${r.correct ? 'rb-correct' : 'rb-wrong'}">${r.correct ? '✓' : '✗'}</span><span style="font-size:.84rem;color:rgba(0,40,70,.75)">${r.text.substring(0,100)+(r.text.length>100?'…':'')}</span></div>`;
   });
 
-  if(passed){
-    localStorage.setItem('module_2_complete', 'true'); // ← add this
-    document.getElementById('pass-score-msg').textContent=`You scored ${score}/${total} (${pct}%) — well done!`;
-    document.getElementById('pass-breakdown').innerHTML=bdHTML;
-    document.getElementById('result-pass').style.display='block';
+  if (passed) {
+    document.getElementById('pass-score-msg').textContent = `You scored ${score}/${total} (${pct}%) — well done!`;
+    document.getElementById('pass-breakdown').innerHTML = bdHTML;
+    document.getElementById('result-pass').style.display = 'block';
     completed.add(current);
     updateProgress();
-    buildNav();
-}
+    refreshNav();
   } else {
-    document.getElementById('fail-score-msg').textContent=`You scored ${score}/${total} (${pct}%). You need 70% to pass. Review the sections and try again.`;
-    document.getElementById('fail-breakdown').innerHTML=bdHTML;
-    document.getElementById('result-fail').style.display='block';
+    document.getElementById('fail-score-msg').textContent = `You scored ${score}/${total} (${pct}%). You need 70% to pass. Review the sections and try again.`;
+    document.getElementById('fail-breakdown').innerHTML = bdHTML;
+    document.getElementById('result-fail').style.display = 'block';
   }
-  document.getElementById('result-pass').scrollIntoView({behavior:'smooth',block:'start'});
+  document.getElementById(passed ? 'result-pass' : 'result-fail').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function retryQuiz(){
-  document.getElementById('submitBtn').style.display='block';
+function retryQuiz() {
   buildQuiz();
-  document.querySelector('.quiz-header').scrollIntoView({behavior:'smooth'});
+  document.querySelector('.quiz-header').scrollIntoView({ behavior: 'smooth' });
 }
 
-/* ════════ INIT ════════ */
-buildNav();
+/* ════ INIT ════ */
+refreshNav();
 updateProgress();
-// Quiz is unlocked only after all content sections are completed
-// For now, attach onclick after content sections complete
-document.getElementById('sec6').addEventListener('focus',buildQuiz,{once:true});
-// Also build on first entry via advance()
-const origAdvance=advance;
-window.advance=function(i){
-  completed.add(current);
-  if(i===6&&document.getElementById('quizContainer').innerHTML===''){buildQuiz();}
-  goTo(i);
-};
-// Initialise
 </script>
 </body>
 </html>
-
