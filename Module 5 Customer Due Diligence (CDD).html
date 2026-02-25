@@ -799,106 +799,83 @@ tr:nth-child(even) td{background:rgba(193,127,255,.05)}
 </div>
 
 <script>
-// ════ NAVIGATION ════
+// ════ STATE ════
 let unlockedUpTo = 0;
-const TOTAL = 8;
+const TOTAL_SECS = 8; // sections 0-7 (0-6 content + quiz)
 
+// ════ NAVIGATION ════
 function goTo(n) {
-  if (n > unlockedUpTo + 1) return; // allow going back freely
-  // Actually allow jumping back to any completed section
   if (n > unlockedUpTo) return;
-  
   document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.getElementById('sec'+n).classList.add('active');
-  updateSidebar(n);
+  document.getElementById('sec' + n).classList.add('active');
+  buildSidebar(n);
   updateProgress();
-  window.scrollTo(0,0);
-  document.getElementById('mainContent').scrollTop = 0;
-  
-  // Hide quiz back nav if not on quiz
-  document.getElementById('quiz-back-nav').style.display = n === 7 ? 'flex' : 'none';
-}
-
-function unlock(n) {
-  if (n > unlockedUpTo) unlockedUpTo = n;
-  updateSidebar(null);
-  updateProgress();
-}
-
-function completeSection(n) {
-  unlock(n + 1); // unlock next
-  goTo(n + 1);
-}
-
-function updateSidebar(active) {
-  for (let i = 0; i < TOTAL; i++) {
-    const el = document.getElementById('ni'+i);
-    const li = document.getElementById('li'+i);
-    const ti = el ? el.querySelector('.tick-icon') : null;
-    if (!el) continue;
-    el.classList.remove('active','completed','locked');
-    if (li) li.style.display = 'none';
-    if (i < unlockedUpTo) {
-      el.classList.add('completed');
-      if (li) { li.textContent = '✓'; li.className = 'tick-icon'; li.style.display = 'inline'; }
-    } else if (i === unlockedUpTo) {
-      // current unlocked
-    } else {
-      el.classList.add('locked');
-      if (li) { li.textContent = '🔒'; li.className = 'lock-icon'; li.style.display = 'inline'; }
-    }
-    if (active !== null && i === active) el.classList.add('active');
-  }
-}
-
-function updateProgress() {
-  const pct = Math.round((unlockedUpTo / TOTAL) * 100);
-  document.getElementById('topFill').style.width = pct + '%';
-  document.getElementById('topPct').textContent = pct + '% complete';
-  document.getElementById('progFill').style.width = pct + '%';
-  document.getElementById('progLabel').textContent = unlockedUpTo + ' of ' + TOTAL + ' sections complete';
-}
-
-// Override goTo to allow back-navigation freely
-function goTo(n) {
-  if (n > unlockedUpTo) return; // can't skip ahead past unlocked
-  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-  document.getElementById('sec'+n).classList.add('active');
-  updateSidebar(n);
-  updateProgress();
-  window.scrollTo(0,0);
+  window.scrollTo(0, 0);
   document.getElementById('quiz-back-nav').style.display = (n === 7) ? 'flex' : 'none';
 }
 
-// Unlock first section
-unlockedUpTo = 0;
-updateSidebar(0);
-updateProgress();
-document.getElementById('quiz-back-nav').style.display = 'none';
-
-// When user clicks Next, unlock the next section
-// Intercept bottom-nav next buttons via wrapper
-function nextSection(current) {
-  unlock(current + 1);
-  goTo(current + 1);
+function advance(from) {
+  // Called by every "Next" button — unlocks the next section then navigates to it
+  const next = from + 1;
+  if (next > unlockedUpTo) unlockedUpTo = next;
+  goTo(next);
 }
 
-// Re-wire bottom-nav buttons to use nextSection
-document.addEventListener('DOMContentLoaded', () => {
-  // Already wired inline, just ensure quiz-back-nav hidden
-  document.getElementById('quiz-back-nav').style.display = 'none';
-});
+// ════ SIDEBAR ════
+function buildSidebar(active) {
+  const LABELS = [
+    { l: 'What is CDD?',               s: 'Definition, purpose & when it applies' },
+    { l: 'Standard CDD in Practice',   s: 'Identifying & verifying customers' },
+    { l: 'Simplified Due Diligence',   s: 'When & how SDD applies' },
+    { l: 'Enhanced Due Diligence',     s: 'EDD triggers, source of wealth & funds' },
+    { l: 'Plausibility Testing',       s: 'Applying common sense to CDD' },
+    { l: 'Ongoing Monitoring',         s: 'Reg 28, transaction scrutiny & reviews' },
+    { l: 'Identifying Suspicious Activity', s: 'Red flags, suspicion & reporting triggers' },
+    { l: 'Module 5 Quiz',              s: '15 questions · 70% to pass' },
+  ];
+  const nav = document.getElementById('sideNav');
+  nav.innerHTML = '';
+  LABELS.forEach((item, i) => {
+    const div = document.createElement('div');
+    const isActive    = i === active;
+    const isCompleted = i < active;
+    const isLocked    = i > unlockedUpTo;
+    div.className = 'nav-item' +
+      (isActive    ? ' active'    : '') +
+      (isCompleted ? ' completed' : '') +
+      (isLocked    ? ' locked'    : '');
+    if (!isLocked) div.onclick = () => goTo(i);
+    div.innerHTML = `
+      <div class="nav-icon">${isCompleted ? '✓' : (i + 1)}</div>
+      <div class="nav-text">
+        <div class="nav-label">${item.l}</div>
+        <div class="nav-sublabel">${item.s}</div>
+      </div>
+      ${isLocked    ? '<span class="lock-icon">🔒</span>' : ''}
+      ${isCompleted ? '<span class="tick-icon">✓</span>'  : ''}`;
+    nav.appendChild(div);
+  });
+}
+
+function updateProgress() {
+  // Use active section index as proxy for completion
+  const activeSec = document.querySelector('.section.active');
+  const cur = activeSec ? parseInt(activeSec.id.replace('sec', '')) : 0;
+  const pct = Math.round((unlockedUpTo / (TOTAL_SECS - 1)) * 100);
+  document.getElementById('topFill').style.width = pct + '%';
+  document.getElementById('topPct').textContent = pct + '% complete';
+  document.getElementById('progFill').style.width = pct + '%';
+  document.getElementById('progLabel').textContent = unlockedUpTo + ' of ' + (TOTAL_SECS - 1) + ' sections complete';
+}
 
 // ════ QUICK CHECKS ════
 function qc(btn, correct, id) {
   const container = document.getElementById(id);
-  const btns = container.querySelectorAll('.qc-btn');
-  btns.forEach(b => { b.disabled = true; });
+  container.querySelectorAll('.qc-btn').forEach(b => { b.disabled = true; });
   btn.classList.add(correct ? 'correct' : 'wrong');
   const fb = document.getElementById(id + '-fb');
   fb.style.display = 'block';
-  if (correct) fb.innerHTML = '✅ ' + fb.innerHTML;
-  else fb.innerHTML = '❌ ' + fb.innerHTML;
+  fb.innerHTML = (correct ? '✅ ' : '❌ ') + fb.innerHTML;
 }
 
 // ════ QUIZ DATA ════
@@ -995,53 +972,51 @@ const Qs = [
   }
 ];
 
-let answered = [], current = 0;
+// ════ QUIZ STATE ════
+let qIdx = 0, score = 0, answered = [];
 
 function startQuiz() {
+  qIdx = 0; score = 0; answered = [];
   document.getElementById('quiz-start').style.display = 'none';
   document.getElementById('quiz-shell').style.display = 'block';
   document.getElementById('quiz-back-nav').style.display = 'none';
-  answered = [];
-  current = 0;
-  renderQ(0);
+  renderQ();
 }
 
-function renderQ(i) {
-  const q = Qs[i];
-  document.getElementById('qpf').style.width = (i / Qs.length * 100) + '%';
-  const html = `
+function renderQ() {
+  document.getElementById('qpf').style.width = (qIdx / Qs.length * 100) + '%';
+  const Q = Qs[qIdx];
+  const L = ['A','B','C','D'];
+  document.getElementById('q-mount').innerHTML = `
     <div class="quiz-q-box">
-      <div class="quiz-q-num">Question ${i+1} of ${Qs.length}</div>
-      <div class="quiz-q-text">${q.q}</div>
-      <div class="quiz-opts" id="opts">
-        ${q.opts.map((o,j) => `<button class="quiz-opt" onclick="answerQ(${i},${j})">${o}</button>`).join('')}
+      <div class="quiz-q-num">Question ${qIdx+1} of ${Qs.length}</div>
+      <div class="quiz-q-text">${Q.q}</div>
+      <div class="quiz-opts">
+        ${Q.opts.map((o,i) => `<button class="quiz-opt" onclick="answerQ(${i})">${o}</button>`).join('')}
       </div>
-      <div class="quiz-expl" id="expl">${q.expl}</div>
+      <div class="quiz-expl" id="expl">${Q.expl}</div>
       <div class="quiz-nav" id="qnav" style="display:none">
-        <button class="btn-next-q" onclick="nextQ(${i})">${i < Qs.length-1 ? 'Next Question →' : 'See Results →'}</button>
+        <button class="btn-next-q" onclick="nextQ()">${qIdx < Qs.length-1 ? 'Next Question →' : 'See Results →'}</button>
       </div>
     </div>`;
-  document.getElementById('q-mount').innerHTML = html;
 }
 
-function answerQ(qi, sel) {
-  const q = Qs[qi];
-  const opts = document.querySelectorAll('.quiz-opt');
-  opts.forEach(b => b.disabled = true);
-  opts[sel].classList.add(sel === q.ans ? 'correct' : 'wrong');
-  if (sel !== q.ans) opts[q.ans].classList.add('correct');
+function answerQ(sel) {
+  const Q = Qs[qIdx];
+  document.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
+  document.querySelectorAll('.quiz-opt')[sel].classList.add(sel === Q.ans ? 'correct' : 'wrong');
+  if (sel !== Q.ans) document.querySelectorAll('.quiz-opt')[Q.ans].classList.add('correct');
   document.getElementById('expl').style.display = 'block';
   document.getElementById('qnav').style.display = 'flex';
-  answered[qi] = { correct: sel === q.ans, q: q.q, right: q.opts[q.ans] };
+  const correct = sel === Q.ans;
+  if (correct) score++;
+  answered.push({ correct, q: Q.q, right: Q.opts[Q.ans] });
 }
 
-function nextQ(i) {
-  if (i < Qs.length - 1) {
-    current = i + 1;
-    renderQ(current);
-  } else {
-    showResults();
-  }
+function nextQ() {
+  qIdx++;
+  if (qIdx >= Qs.length) { showResults(); return; }
+  renderQ();
 }
 
 function showResults() {
@@ -1049,9 +1024,13 @@ function showResults() {
   document.getElementById('quiz-results').style.display = 'block';
   document.getElementById('qpf').style.width = '100%';
 
-  const score = answered.filter(a => a && a.correct).length;
   const pct = Math.round((score / Qs.length) * 100);
   const pass = pct >= 70;
+
+  if (pass) {
+    // ── Write to localStorage so the dashboard unlocks Module 6 ──
+    localStorage.setItem('module_5_complete', 'true');
+  }
 
   const breakdown = answered.map((a, i) => `
     <div class="rb-item">
@@ -1060,15 +1039,19 @@ function showResults() {
       <span style="flex:1"><strong>${a.q}</strong>${!a.correct ? `<br><span style="color:#889;font-size:.8rem">Correct: ${a.right}</span>` : ''}</span>
     </div>`).join('');
 
+  document.getElementById('result-fail').style.display = 'none';
+  document.getElementById('result-pass').style.display = 'none';
+
   if (pass) {
-    document.getElementById('result-fail').style.display = 'none';
     document.getElementById('result-pass').style.display = 'block';
     document.getElementById('pass-score').textContent = score + '/' + Qs.length + ' — ' + pct + '%';
-    document.getElementById('pass-msg').textContent = 'You passed! CDD is the most important practical skill in AML — well done.';
+    document.getElementById('pass-msg').textContent = 'You passed! CDD is the most important practical skill in AML — well done. Module 5 is complete.';
     document.getElementById('pass-breakdown').innerHTML = '<strong style="display:block;margin-bottom:12px;font-size:.9rem">Question Breakdown</strong>' + breakdown;
-    unlock(TOTAL); // mark module complete
+    // Mark all sections complete in sidebar
+    unlockedUpTo = TOTAL_SECS - 1;
+    buildSidebar(7);
+    updateProgress();
   } else {
-    document.getElementById('result-pass').style.display = 'none';
     document.getElementById('result-fail').style.display = 'block';
     document.getElementById('fail-score').textContent = score + '/' + Qs.length + ' — ' + pct + '%';
     document.getElementById('fail-msg').textContent = 'You need 70% (11/15) to pass. Review the sections and try again.';
@@ -1082,20 +1065,12 @@ function retryQuiz() {
   document.getElementById('quiz-back-nav').style.display = 'flex';
 }
 
-// Wire Next buttons on content sections
-// Sections 0-6 have inline onclick="goTo(n)" but we need unlock first
-// Patch: override all .btn-next clicks to unlock before navigating
-document.addEventListener('click', e => {
-  const btn = e.target.closest('.btn-next');
-  if (btn) {
-    // find current active section
-    const active = document.querySelector('.section.active');
-    if (active) {
-      const n = parseInt(active.id.replace('sec',''));
-      if (!isNaN(n)) unlock(n + 1);
-    }
-  }
-});
+// ════ INIT ════
+unlockedUpTo = 0;
+buildSidebar(0);
+updateProgress();
+document.getElementById('quiz-back-nav').style.display = 'none';
 </script>
 </body>
 </html>
+
