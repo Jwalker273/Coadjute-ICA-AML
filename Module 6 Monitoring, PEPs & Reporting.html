@@ -1079,6 +1079,9 @@ function submitQuiz() {
   });
   const pct = Math.round(score / QUESTIONS.length * 100);
   const passed = pct >= 70;
+    if (passed) {
+    localStorage.setItem('module_6_complete', 'true');
+  }
 
   // Build breakdown table
   const breakdownHtml = `
@@ -1110,6 +1113,8 @@ function retryQuiz() {
   document.getElementById('quizIntro').style.display = 'block';
   document.getElementById('quizShell').style.display = 'none';
   document.getElementById('quizShell').innerHTML = '';
+  userAnswers = {};
+  quizSubmitted = false;
 }
 
 // ════ INIT ════
@@ -1118,3 +1123,4 @@ updateProgress();
 </script>
 </body>
 </html>
+
