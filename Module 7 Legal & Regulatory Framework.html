@@ -1007,12 +1007,13 @@ function submitQuiz(){
     if(chosen===q.ans) score++;
     document.getElementById('qe'+i).classList.add('show');
   });
-  const pct=Math.round(score/QUIZ.length*100);
+  const pct = Math.round(score / QUIZ.length * 100);
   const pass=pct>=70;
+  if(pass) localStorage.setItem('module_7_complete','true');
   document.getElementById('quiz-shell').style.display='none';
   if(pass){
     document.getElementById('pass-pct').textContent=pct+'%';
-    document.getElementById('pass-msg').textContent=`You scored ${score}/${QUIZ.length} — well done! You've demonstrated a solid understanding of the legal and regulatory framework.`;
+    document.getElementById('pass-msg').innerHTML=`You scored ${score}/${QUIZ.length} — well done! You've demonstrated a solid understanding of the legal and regulatory framework.<br><br><a href="index.html" style="display:inline-block;margin-top:8px;padding:13px 30px;background:var(--grad);color:var(--white);font-weight:700;border-radius:8px;text-decoration:none">← Back to Dashboard</a>`;
     document.getElementById('result-pass').style.display='block';
   } else {
     document.getElementById('fail-pct').textContent=pct+'%';
@@ -1045,3 +1046,4 @@ updateProgress();
 </script>
 </body>
 </html>
+
