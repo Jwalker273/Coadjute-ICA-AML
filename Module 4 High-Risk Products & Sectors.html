@@ -3,1119 +3,1009 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Module 4 – High-Risk Products & Sectors | ICA Certificate in AML</title>
+<title>Module 4 – High-Risk Products & Sectors | Coadjute AML</title>
 <style>
-  :root{
-    --ink:#002846;--lilac:#C17FFF;--pink:#FF44D6;--orange:#FF6D3D;
-    --active:#4EEFF9;--l10:#DFBEFF;--l20:#F2E5FF;--l30:#F9F2FF;
-    --grey:#EEE8F1;--white:#FFFFFF;
-    --grad:linear-gradient(90deg,#C17FFF 0%,#FF44D6 50%,#FF6D3D 100%);
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Segoe UI',system-ui,sans-serif;background:#f4f0f8;color:var(--ink);line-height:1.7;font-size:15px}
+/* ── COADJUTE TOKENS ── */
+:root {
+  --ink:#002846; --lilac:#C17FFF; --pink:#FF44D6; --orange:#FF6D3D;
+  --active:#4EEFF9; --l50:#DFBEFF; --l20:#F2E5FF; --l10:#F9F2FF;
+  --grey:#EEE8F1; --white:#FFFFFF;
+  --grad:linear-gradient(90deg,var(--lilac) 0%,var(--pink) 60%,var(--orange) 100%);
+  --sidebar-w:270px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--ink);line-height:1.7;display:flex;flex-direction:column;min-height:100vh}
 
-  /* TOP NAV */
-  .topnav{position:fixed;top:0;left:0;right:0;height:56px;background:var(--ink);display:flex;align-items:center;padding:0 24px;gap:16px;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.25)}
-  .nav-logo{font-size:.8rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5)}
-  .nav-module{font-size:.9rem;font-weight:700;color:var(--white);flex:1}
-  .nav-week{font-size:.75rem;color:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:3px 12px}
+/* ════ TOPBAR ════ */
+.topbar{background:var(--ink);height:56px;display:flex;align-items:center;padding:0 24px;gap:16px;position:fixed;top:0;left:0;right:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.topbar-logo{font-weight:800;font-size:1.1rem;color:var(--white);letter-spacing:-.5px;white-space:nowrap}
+.topbar-logo span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.topbar-course{font-size:.8rem;color:rgba(255,255,255,.5);margin-left:8px;border-left:1px solid rgba(255,255,255,.15);padding-left:14px;white-space:nowrap}
+.topbar-progress{margin-left:auto;display:flex;align-items:center;gap:10px}
+.topbar-pct{font-size:.8rem;color:rgba(255,255,255,.6);white-space:nowrap}
+.topbar-bar{width:120px;height:4px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden}
+.topbar-bar-fill{height:100%;background:var(--grad);border-radius:2px;transition:width .4s}
+.topbar-back{color:rgba(255,255,255,.6);font-size:.8rem;text-decoration:none;padding:6px 14px;border:1px solid rgba(255,255,255,.2);border-radius:6px;margin-left:16px;white-space:nowrap;transition:color .2s,border-color .2s}
+.topbar-back:hover{color:var(--white);border-color:rgba(255,255,255,.45)}
 
-  /* LAYOUT */
-  .layout{display:flex;min-height:100vh;padding-top:56px}
+/* ════ LAYOUT ════ */
+.layout{display:flex;margin-top:56px;min-height:calc(100vh - 56px)}
 
-  /* SIDEBAR */
-  .sidebar{width:280px;min-width:280px;background:var(--ink);position:fixed;top:56px;left:0;bottom:0;overflow-y:auto;padding:24px 0}
-  .sidebar-title{font-size:.65rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);padding:0 20px 12px}
-  .sidebar-module{font-size:.78rem;font-weight:700;color:var(--lilac);padding:0 20px 20px;line-height:1.4;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:8px}
-  .snav-item{display:flex;align-items:center;gap:12px;padding:10px 20px;cursor:pointer;transition:.2s;color:rgba(255,255,255,.55);font-size:.82rem;border-left:3px solid transparent;user-select:none}
-  .snav-item:hover:not(.locked){color:var(--white);background:rgba(255,255,255,.06)}
-  .snav-item.active{color:var(--white);background:rgba(193,127,255,.15);border-left-color:var(--lilac)}
-  .snav-item.locked{color:rgba(255,255,255,.25);cursor:not-allowed}
-  .sn-num{font-size:.65rem;font-weight:800;letter-spacing:.08em;min-width:22px;color:var(--lilac);opacity:.7}
-  .snav-item.active .sn-num{opacity:1}
-  .snav-item.locked .sn-num{color:rgba(255,255,255,.2)}
-  .sn-sub{font-size:.68rem;color:rgba(255,255,255,.3);display:block;margin-top:1px}
-  .snav-item.active .sn-sub{color:rgba(193,127,255,.6)}
-  .sidebar-progress{padding:20px;margin-top:auto;border-top:1px solid rgba(255,255,255,.08)}
-  .sp-label{font-size:.65rem;color:rgba(255,255,255,.35);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
-  .sp-bar{height:4px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden}
-  .sp-fill{height:100%;background:var(--grad);border-radius:4px;transition:width .4s}
-  .sp-pct{font-size:.7rem;color:rgba(255,255,255,.4);margin-top:6px}
+/* ════ SIDEBAR ════ */
+.sidebar{width:var(--sidebar-w);background:var(--ink);position:fixed;top:56px;left:0;bottom:0;overflow-y:auto;display:flex;flex-direction:column;z-index:90}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px}
+.sidebar-header{padding:20px 20px 12px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
+.sidebar-header h2{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.4);margin-bottom:4px}
+.sidebar-header h3{font-size:.95rem;color:var(--white);font-weight:700;line-height:1.3}
+.sidebar-nav{padding:12px 0;flex:1}
+.nav-item{display:flex;align-items:center;gap:12px;padding:11px 20px;cursor:pointer;transition:background .15s;border-left:3px solid transparent}
+.nav-item:hover:not(.locked){background:rgba(255,255,255,.06)}
+.nav-item.active{background:rgba(193,127,255,.12);border-left-color:var(--lilac)}
+.nav-item.completed{border-left-color:var(--active)}
+.nav-item.locked{opacity:.45;cursor:not-allowed}
+.nav-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;flex-shrink:0;transition:background .2s,color .2s;background:rgba(255,255,255,.1);color:rgba(255,255,255,.5)}
+.nav-item.active .nav-icon{background:var(--lilac);color:var(--ink)}
+.nav-item.completed .nav-icon{background:rgba(255,255,255,.1);color:rgba(255,255,255,.5)}
+.nav-text{flex:1;min-width:0}
+.nav-label{font-size:.82rem;color:var(--white);font-weight:500;line-height:1.3}
+.nav-item.active .nav-label{color:var(--lilac)}
+.nav-item.completed .nav-label{color:rgba(255,255,255,.75)}
+.nav-item.locked .nav-label{color:rgba(255,255,255,.3)}
+.nav-sublabel{font-size:.7rem;color:rgba(255,255,255,.3);margin-top:1px}
+.lock-icon{font-size:.7rem;color:rgba(255,255,255,.25);flex-shrink:0}
+.tick-icon{font-size:.75rem;color:var(--active);flex-shrink:0}
+.sidebar-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,.08);flex-shrink:0}
+.module-progress-label{font-size:.72rem;color:rgba(255,255,255,.4);margin-bottom:6px}
+.module-progress-bar{height:3px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
+.module-progress-fill{height:100%;background:var(--grad);border-radius:2px;transition:width .4s}
 
-  /* MAIN CONTENT */
-  .main-content{margin-left:280px;flex:1;padding:40px 48px;max-width:900px}
+/* ════ MAIN ════ */
+.main{margin-left:var(--sidebar-w);flex:1;padding:32px 40px 80px;max-width:900px}
 
-  /* SECTIONS */
-  .section{display:none}
-  .section.active{display:block}
+/* ════ CONTENT ════ */
+.section{display:none}
+.section.active{display:block}
+.lesson-tag{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--lilac);margin-bottom:12px}
+.lesson-header{margin-bottom:28px}
+.lesson-header h1{font-size:1.9rem;font-weight:900;color:var(--ink);line-height:1.2;margin-bottom:10px}
+.lesson-intro{font-size:1.05rem;color:#445;line-height:1.7;border-left:3px solid var(--lilac);padding-left:16px}
+h2{font-size:1.2rem;font-weight:800;color:var(--ink);margin:28px 0 10px}
+h3{font-size:1rem;font-weight:700;color:var(--ink);margin:20px 0 8px}
+p{margin-bottom:14px;font-size:.94rem;line-height:1.75;color:#1a3348}
+ul,ol{margin:10px 0 16px 22px}
+li{font-size:.93rem;line-height:1.7;margin-bottom:4px}
 
-  /* LESSON HEADER */
-  .lesson-tag{font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--lilac);margin-bottom:10px}
-  .lesson-header{margin-bottom:28px}
-  .lesson-header h1{font-size:2rem;font-weight:800;color:var(--ink);line-height:1.2;margin-bottom:8px}
-  .lesson-intro{color:#556;font-size:1rem;line-height:1.6;margin-top:8px}
-  .section-badge{display:inline-flex;align-items:center;gap:6px;background:var(--l20);color:#5a20a0;font-size:.72rem;font-weight:700;padding:4px 12px;border-radius:20px;margin-bottom:16px;letter-spacing:.04em}
+/* CALLOUTS */
+.exam-note{background:linear-gradient(135deg,var(--l20),var(--l10));border:1px solid var(--l50);border-left:4px solid var(--lilac);border-radius:10px;padding:18px 22px;margin:22px 0}
+.exam-note-label{font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--lilac);margin-bottom:10px}
+.exam-note ul{margin:10px 0 0 18px}
+.exam-note li{font-size:.87rem;color:#2a1a4e}
+.exam-note p{font-size:.87rem;color:#2a1a4e;margin-bottom:0}
+.callout{border-radius:10px;padding:16px 20px;margin:20px 0}
+.callout.key{background:#e8fff4;border:1px solid #7ee8b4;border-left:4px solid #22aa66}
+.callout.key .callout-label{font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#22aa66;margin-bottom:8px}
+.callout.info{background:var(--l20);border:1px solid var(--l50);border-left:4px solid var(--lilac)}
+.callout.info .callout-label{font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--lilac);margin-bottom:8px}
+.callout p,.callout li{font-size:.88rem}
+.property-link{background:linear-gradient(135deg,#e8f5ff,#f0f8ff);border:1px solid #a8d8ff;border-left:4px solid #2080cc;border-radius:10px;padding:16px 20px;margin:20px 0}
+.property-label{font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#1060aa;margin-bottom:8px}
+.property-link p,.property-link li{color:#003055;font-size:.88rem}
+.scenario-box{background:#fff8e6;border:1px solid #f0c840;border-left:4px solid #e0a800;border-radius:10px;padding:16px 20px;margin:20px 0}
+.scenario-label{font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#a07000;margin-bottom:8px}
+.scenario-box p{font-size:.88rem;color:#3d2800}
 
-  /* TYPOGRAPHY */
-  p{margin-bottom:16px;color:#334}
-  h2{font-size:1.25rem;font-weight:700;color:var(--ink);margin:28px 0 12px;padding-top:4px}
-  h3{font-size:1rem;font-weight:700;color:var(--ink);margin:20px 0 8px}
-  ul,ol{margin:12px 0 16px 24px}
-  li{margin-bottom:8px;color:#334}
-  strong{color:var(--ink)}
+/* STAGE GRID */
+.stage-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin:20px 0}
+.stage-card{background:var(--white);border:2px solid var(--grey);border-radius:10px;padding:18px 16px}
+.stage-card h3{font-size:.9rem;margin:8px 0 6px;color:var(--ink)}
+.stage-card p{font-size:.82rem;line-height:1.6;color:#445}
+.stage-icon{font-size:1.6rem;margin-bottom:4px}
 
-  /* CALLOUT BOXES */
-  .exam-note{background:linear-gradient(135deg,#f3e8ff,#fdf0ff);border:1px solid #d4a8ff;border-left:4px solid var(--lilac);border-radius:10px;padding:18px 22px;margin:20px 0}
-  .exam-note-label{font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#8b44cc;margin-bottom:10px}
-  .exam-note p,.exam-note li{color:#3d1870;font-size:.9rem}
-  .exam-note ul{margin:10px 0 0 18px}
+/* RISK TABLE */
+.risk-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.85rem}
+.risk-table th{background:var(--ink);color:var(--white);padding:10px 14px;text-align:left;font-size:.8rem;font-weight:700}
+.risk-table td{padding:10px 14px;border-bottom:1px solid var(--grey);vertical-align:top}
+.risk-table tr:nth-child(even) td{background:#f9f6fd}
+.risk-table tr:hover td{background:var(--l20)}
+.badge-high{background:#ffe0e0;color:#990000;border-radius:4px;padding:2px 8px;font-size:.75rem;font-weight:700}
+.badge-med{background:#fff3cc;color:#885500;border-radius:4px;padding:2px 8px;font-size:.75rem;font-weight:700}
 
-  .callout{border-radius:10px;padding:16px 20px;margin:20px 0;border-left:4px solid}
-  .callout-label{font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
-  .callout.warning{background:#fff7ed;border-color:var(--orange)}
-  .callout.warning .callout-label{color:#b84400}
-  .callout.warning p,.callout.warning li{color:#6b3300;font-size:.9rem}
-  .callout.info{background:#e8f7fd;border-color:var(--active)}
-  .callout.info .callout-label{color:#006b80}
-  .callout.info p,.callout.info li{color:#003d50;font-size:.9rem}
-  .callout.key{background:#f0fff8;border-color:#22aa66}
-  .callout.key .callout-label{color:#005530}
-  .callout.key p,.callout.key li{color:#003820;font-size:.9rem}
-  .callout.danger{background:#fff0f5;border-color:var(--pink)}
-  .callout.danger .callout-label{color:#a00060}
-  .callout.danger p,.callout.danger li{color:#600038;font-size:.9rem}
+/* QUICK CHECK */
+.qc-block{background:var(--white);border:2px solid var(--grey);border-radius:12px;padding:22px;margin:24px 0;box-shadow:0 2px 8px rgba(0,40,70,.06)}
+.qc-label{font-size:.65rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--lilac);margin-bottom:10px}
+.qc-q{font-size:.95rem;font-weight:600;color:var(--ink);margin-bottom:16px;line-height:1.5}
+.qc-opts{display:flex;flex-direction:column;gap:8px}
+.qc-btn{background:var(--l10);border:2px solid var(--grey);border-radius:8px;padding:11px 16px;text-align:left;cursor:pointer;font-size:.88rem;color:var(--ink);transition:.15s;line-height:1.5}
+.qc-btn:hover:not(:disabled){border-color:var(--lilac);background:var(--l20)}
+.qc-btn.correct{background:#f0fff8;border-color:#22aa66;color:#005530}
+.qc-btn.wrong{background:#fff0f5;border-color:#cc2255;color:#770033}
+.qc-fb{margin-top:12px;padding:12px 16px;border-radius:8px;font-size:.85rem;line-height:1.55;display:none}
+.qc-fb.show{display:block}
+.qc-fb.c{background:#f0fff8;color:#005530;border:1px solid #9ae6b4}
+.qc-fb.w{background:#fff0f5;color:#770033;border:1px solid #ffb2cc}
 
-  /* CASE STUDY */
-  .case-study{background:var(--ink);border-radius:12px;padding:22px 24px;margin:20px 0;position:relative;overflow:hidden}
-  .case-study::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad)}
-  .case-label{font-size:.65rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--active);margin-bottom:8px}
-  .case-study h3{color:var(--white);font-size:.95rem;margin:0 0 10px}
-  .case-study p,.case-study li{color:rgba(255,255,255,.75);font-size:.88rem}
-  .case-study ul{margin-left:18px}
+/* BOTTOM NAV */
+.bottom-nav{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--grey)}
+.btn-prev,.btn-next{padding:12px 26px;border-radius:8px;border:none;cursor:pointer;font-size:.9rem;font-weight:700;transition:.2s}
+.btn-prev{background:var(--grey);color:var(--ink)}.btn-prev:hover:not(:disabled){background:#d8d0e2}
+.btn-prev:disabled{opacity:.35;cursor:not-allowed}
+.btn-next{background:var(--ink);color:var(--white)}.btn-next:hover:not(:disabled){background:#00396a}
+.btn-next.cta{background:var(--grad);color:var(--ink);font-weight:800}
 
-  /* RED FLAGS TABLE */
-  .rf-table{width:100%;border-collapse:collapse;margin:16px 0;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,40,70,.08)}
-  .rf-table th{background:var(--ink);color:var(--white);padding:12px 16px;text-align:left;font-size:.78rem;font-weight:700;letter-spacing:.05em}
-  .rf-table td{padding:11px 16px;font-size:.85rem;color:#334;border-bottom:1px solid var(--grey);vertical-align:top}
-  .rf-table tr:nth-child(even) td{background:var(--l30)}
-  .rf-table tr:last-child td{border-bottom:none}
-  .rf-flag{font-weight:700;color:#8b44cc}
-
-  /* PROPERTY CALLOUT */
-  .property-link{background:linear-gradient(135deg,#e8f5ff,#f0f8ff);border:1px solid #a8d8ff;border-left:4px solid #2080cc;border-radius:10px;padding:16px 20px;margin:20px 0}
-  .property-label{font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#1060aa;margin-bottom:8px}
-  .property-link p,.property-link li{color:#003055;font-size:.88rem}
-
-  /* QUICK CHECK */
-  .qc-block{background:var(--white);border:2px solid var(--grey);border-radius:12px;padding:22px;margin:24px 0;box-shadow:0 2px 8px rgba(0,40,70,.06)}
-  .qc-label{font-size:.65rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--lilac);margin-bottom:10px}
-  .qc-q{font-size:.95rem;font-weight:600;color:var(--ink);margin-bottom:16px;line-height:1.5}
-  .qc-opts{display:flex;flex-direction:column;gap:8px}
-  .qc-btn{background:var(--l30);border:2px solid var(--grey);border-radius:8px;padding:11px 16px;text-align:left;cursor:pointer;font-size:.88rem;color:var(--ink);transition:.15s}
-  .qc-btn:hover:not(:disabled){border-color:var(--lilac);background:var(--l20)}
-  .qc-btn.correct{background:#f0fff8;border-color:#22aa66;color:#005530}
-  .qc-btn.wrong{background:#fff0f5;border-color:#cc2255;color:#770033}
-  .qc-fb{margin-top:12px;padding:12px 16px;border-radius:8px;font-size:.85rem;line-height:1.55;display:none}
-  .qc-fb.show{display:block}
-  .qc-fb.correct{background:#f0fff8;color:#005530;border:1px solid #9ae6b4}
-  .qc-fb.wrong{background:#fff0f5;color:#770033;border:1px solid #ffb2cc}
-
-  /* BOTTOM NAV */
-  .bottom-nav{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--grey)}
-  .btn-prev,.btn-next{padding:12px 26px;border-radius:8px;border:none;cursor:pointer;font-size:.9rem;font-weight:700;transition:.2s}
-  .btn-prev{background:var(--grey);color:var(--ink)}.btn-prev:hover{background:#d8d0e2}
-  .btn-prev:disabled{opacity:.35;cursor:not-allowed}
-  .btn-next{background:var(--ink);color:var(--white)}.btn-next:hover{background:#00396a}
-  .btn-next:disabled{opacity:.35;cursor:not-allowed}
-  .btn-next.cta{background:var(--grad);color:var(--ink)}
-
-  /* QUIZ */
-  .quiz-header{background:var(--grad);border-radius:12px;padding:22px 26px;margin-bottom:24px}
-  .quiz-header h2{font-size:1.2rem;font-weight:800;margin-bottom:4px;color:var(--ink)}
-  .quiz-header p{font-size:.85rem;color:rgba(0,40,70,.65)}
-  .q-block{background:var(--white);border-radius:10px;padding:20px 22px;margin-bottom:16px;border:2px solid var(--grey);transition:.2s}
-  .q-block.ans-correct{border-color:#22aa66;background:#f0fff8}
-  .q-block.ans-wrong{border-color:#cc2255;background:#fff0f5}
-  .q-num{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--lilac);margin-bottom:6px}
-  .q-text{font-weight:600;color:var(--ink);margin-bottom:14px;font-size:.93rem;line-height:1.5}
-  .a-opt{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:var(--l30);border:2px solid var(--grey);border-radius:6px;cursor:pointer;margin-bottom:8px;font-size:.88rem;transition:.15s;color:var(--ink)}
-  .a-opt:hover:not([disabled]){border-color:var(--lilac);background:var(--l20)}
-  .a-opt .let{font-weight:700;color:var(--lilac);min-width:18px;margin-top:1px}
-  .a-opt.correct{border-color:#22aa66;background:#f0fff8}.a-opt.correct .let{color:#22aa66}
-  .a-opt.wrong{border-color:#cc2255;background:#fff0f5}.a-opt.wrong .let{color:#cc2255}
-  .q-fb{margin-top:10px;padding:12px 14px;border-radius:6px;font-size:.84rem;display:none;line-height:1.5}
-  .q-fb.show{display:block}
-  .q-fb.c{background:#f0fff8;color:#005530;border:1px solid #9ae6b4}
-  .q-fb.w{background:#fff0f5;color:#770033;border:1px solid #ffb2cc}
-  .submit-btn{width:100%;padding:14px;background:var(--ink);color:var(--white);border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:8px;transition:.2s}
-  .submit-btn:hover:not(:disabled){background:#00396a}
-  .submit-btn:disabled{opacity:.4;cursor:not-allowed}
-  .q-next{margin-top:16px;display:flex;justify-content:flex-end}
-  .btn-qnext{background:var(--ink);color:var(--white);border:none;border-radius:8px;padding:10px 22px;font-size:.88rem;font-weight:700;cursor:pointer;transition:.2s}
-  .btn-qnext:hover{background:#00396a}
-  .quiz-results{text-align:center;padding:32px 20px}
-  .result-score{font-size:4rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:12px 0}
-  .result-msg{font-size:1.05rem;color:#445;margin-bottom:24px}
-  .result-pass{color:#22aa66;font-weight:700}
-  .result-fail{color:#cc2255;font-weight:700}
-  .result-breakdown{text-align:left;background:var(--grey);border-radius:12px;padding:20px;margin:24px 0}
-  .rb-item{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #ddd;font-size:.85rem}
-  .rb-item:last-child{border-bottom:none}
-  .rb-correct{color:#22aa66;font-weight:700}
-  .rb-wrong{color:#cc2255;font-weight:700}
-
-  /* PROGRESS BAR IN HEADER */
-  .module-progress-bar{height:3px;background:rgba(255,255,255,.15);position:fixed;top:56px;left:0;right:0;z-index:99}
-  .module-progress-fill{height:100%;background:var(--grad);transition:width .4s}
-
-  /* COMPLETION BANNER */
-  .completion-banner{background:linear-gradient(135deg,#22aa66,#00dd88);border-radius:12px;padding:20px 24px;margin-top:24px;color:var(--white);text-align:center;display:none}
-  .completion-banner.show{display:block}
-  .completion-banner h3{font-size:1.1rem;font-weight:800;margin-bottom:4px}
-  .completion-banner p{font-size:.88rem;opacity:.9}
+/* QUIZ */
+.quiz-header{background:var(--grad);border-radius:12px;padding:22px 26px;margin-bottom:24px}
+.quiz-header h1{font-size:1.4rem;font-weight:900;color:var(--ink);margin-bottom:4px}
+.quiz-header p{font-size:.9rem;color:rgba(0,40,70,.7)}
+.q-block{background:var(--white);border-radius:10px;padding:22px;margin-bottom:18px;border:2px solid var(--grey)}
+.q-block.ans-correct{border-color:#22aa66;background:#f0fff8}
+.q-block.ans-wrong{border-color:#cc2255;background:#fff0f5}
+.q-num{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--lilac);margin-bottom:8px}
+.q-text{font-weight:600;color:var(--ink);margin-bottom:16px;font-size:.95rem;line-height:1.5}
+.a-opt{display:flex;align-items:flex-start;gap:10px;padding:11px 14px;background:var(--l10);border:2px solid var(--grey);border-radius:8px;cursor:pointer;margin-bottom:8px;font-size:.88rem;transition:.15s;color:var(--ink);line-height:1.5}
+.a-opt:hover:not([disabled]){border-color:var(--lilac);background:var(--l20)}
+.a-opt .let{font-weight:800;color:var(--lilac);min-width:20px;margin-top:1px;flex-shrink:0}
+.a-opt.correct{border-color:#22aa66;background:#f0fff8}.a-opt.correct .let{color:#22aa66}
+.a-opt.wrong{border-color:#cc2255;background:#fff0f5}.a-opt.wrong .let{color:#cc2255}
+.q-fb{margin-top:10px;padding:12px 14px;border-radius:6px;font-size:.84rem;display:none;line-height:1.55}
+.q-fb.show{display:block}
+.q-fb.c{background:#f0fff8;color:#005530;border:1px solid #9ae6b4}
+.q-fb.w{background:#fff0f5;color:#770033;border:1px solid #ffb2cc}
+.q-next{margin-top:14px;display:flex;justify-content:flex-end}
+.btn-qnext{background:var(--ink);color:var(--white);border:none;border-radius:8px;padding:10px 24px;font-size:.88rem;font-weight:700;cursor:pointer}
+.btn-qnext:hover{background:#00396a}
+/* Results */
+.quiz-results{text-align:center;padding:32px 16px;background:var(--white);border-radius:12px;border:2px solid var(--grey)}
+.res-score{font-size:3.5rem;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;line-height:1}
+.res-pct{font-size:1.1rem;color:#445;margin:8px 0 4px}
+.res-verdict{font-size:1rem;font-weight:700;margin-bottom:24px}
+.res-verdict.pass{color:#22aa66}
+.res-verdict.fail{color:#cc2255}
+.res-breakdown{text-align:left;background:var(--grey);border-radius:10px;padding:18px;margin:20px 0}
+.rb-row{display:flex;gap:10px;padding:7px 0;border-bottom:1px solid #ddd;font-size:.83rem;align-items:flex-start}
+.rb-row:last-child{border-bottom:none}
+/* Pass/Fail buttons */
+.btn-dashboard{display:inline-block;padding:14px 32px;background:var(--grad);color:var(--ink);font-weight:700;font-size:.95rem;border-radius:8px;text-decoration:none;border:none;cursor:pointer;transition:opacity .2s}
+.btn-dashboard:hover{opacity:.88}
+.btn-retry{display:inline-block;padding:14px 32px;background:var(--grad);color:var(--ink);font-weight:700;font-size:.95rem;border-radius:8px;border:none;cursor:pointer;transition:opacity .2s}
+.btn-retry:hover{opacity:.88}
+.btn-retry-secondary{display:inline-block;padding:13px 28px;background:transparent;color:var(--ink);font-weight:600;font-size:.9rem;border-radius:8px;border:2px solid var(--grey);cursor:pointer;transition:border-color .2s,color .2s}
+.btn-retry-secondary:hover{border-color:var(--lilac);color:var(--lilac)}
+.result-panel{display:none}
+#result-pass,#result-fail{display:none}
 </style>
 </head>
 <body>
 
-<nav class="topnav">
-  <span class="nav-logo">ICA Certificate in AML</span>
-  <span class="nav-module">Module 4 — High-Risk Products &amp; Sectors</span>
-  <span class="nav-week">Week 2 of 4</span>
-</nav>
-<div class="module-progress-bar"><div class="module-progress-fill" id="progress-fill" style="width:0%"></div></div>
+<!-- TOPBAR -->
+<div class="topbar">
+  <div class="topbar-logo"><span>Coadjute</span></div>
+  <div class="topbar-course">AML Certificate — Module 4 of 8</div>
+  <div class="topbar-progress">
+    <span class="topbar-pct" id="topPct">0% complete</span>
+    <div class="topbar-bar"><div class="topbar-bar-fill" id="topFill" style="width:0%"></div></div>
+    <a href="index.html" class="topbar-back">← Dashboard</a>
+  </div>
+</div>
 
 <div class="layout">
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
-    <div class="sidebar-title">Module Navigation</div>
-    <div class="sidebar-module">MODULE 04 — High-Risk Products &amp; Sectors</div>
-    <nav id="sidebar-nav">
-      <div class="snav-item active" onclick="goTo(0)" id="sn0">
-        <span class="sn-num">01</span>
-        <span><strong>Insurance Products</strong><span class="sn-sub">Life insurance &amp; investment policies</span></span>
-      </div>
-      <div class="snav-item locked" onclick="goTo(1)" id="sn1">
-        <span class="sn-num">02</span>
-        <span><strong>Investment Services</strong><span class="sn-sub">Funds, shares &amp; retail investments</span></span>
-      </div>
-      <div class="snav-item locked" onclick="goTo(2)" id="sn2">
-        <span class="sn-num">03</span>
-        <span><strong>Betting &amp; Gaming</strong><span class="sn-sub">Casinos, online gaming &amp; sports betting</span></span>
-      </div>
-      <div class="snav-item locked" onclick="goTo(3)" id="sn3">
-        <span class="sn-num">04</span>
-        <span><strong>Mobile Financial Services</strong><span class="sn-sub">m-Money, prepaid cards &amp; agent risk</span></span>
-      </div>
-      <div class="snav-item locked" onclick="goTo(4)" id="sn4">
-        <span class="sn-num">05</span>
-        <span><strong>Virtual Currencies</strong><span class="sn-sub">Crypto, mixers &amp; blockchain risk</span></span>
-      </div>
-      <div class="snav-item locked" onclick="goTo(5)" id="sn5">
-        <span class="sn-num">06</span>
-        <span><strong>Red Flags &amp; Sector Summary</strong><span class="sn-sub">Bringing it all together</span></span>
-      </div>
-      <div class="snav-item locked" onclick="goTo(6)" id="sn6">
-        <span class="sn-num">07</span>
-        <span><strong>Module 4 Quiz</strong><span class="sn-sub">15 questions · 70% to pass</span></span>
-      </div>
-    </nav>
-    <div class="sidebar-progress">
-      <div class="sp-label">Module Progress</div>
-      <div class="sp-bar"><div class="sp-fill" id="sp-fill" style="width:0%"></div></div>
-      <div class="sp-pct" id="sp-pct">0 of 7 sections</div>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <h2>Module 4 of 8</h2>
+    <h3>High-Risk Products &amp; Sectors</h3>
+  </div>
+  <nav class="sidebar-nav" id="sideNav"></nav>
+  <div class="sidebar-footer">
+    <div class="module-progress-label" id="progLabel">0 of 7 sections complete</div>
+    <div class="module-progress-bar"><div class="module-progress-fill" id="progFill" style="width:0%"></div></div>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<main class="main" id="mainWrap">
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- SECTION 0: INSURANCE PRODUCTS -->
+<!-- ══════════════════════════════════════════════ -->
+<div class="section active" id="sec0">
+  <div class="lesson-tag">Module 04 — Section 1 of 7</div>
+  <div class="lesson-header">
+    <h1>Insurance Products</h1>
+    <p class="lesson-intro">Life insurance and investment-linked policies give criminals a powerful tool: place dirty money in as premiums, receive a clean payout from a reputable insurer. Understanding the mechanism — and the red flags — is essential for anyone in financial services.</p>
+  </div>
+
+  <h2>Why Insurance Attracts Money Launderers</h2>
+  <p>Insurance policies — particularly life insurance with an investment element — are vulnerable because they allow criminals to do something simple but powerful: place criminal funds in and receive a clean payment back out. The fact that the refund or payout comes from a reputable insurance company gives it an air of legitimacy that a direct bank transfer could never achieve.</p>
+  <p>There are two key appeals. First, the money trail is effectively broken — between placement (paying premiums) and the eventual payout (surrender or claim), the funds appear to be the proceeds of a legitimate insurance arrangement. Second, the payer of premiums and the recipient of the payout do not need to be the same person, creating additional distance between the criminal and the money.</p>
+
+  <div class="stage-grid">
+    <div class="stage-card">
+      <div class="stage-icon">💰</div>
+      <h3>Step 1: Placement</h3>
+      <p>Criminal pays large single-premium or regular premiums into a life/investment-linked policy. Funds enter the insurance system.</p>
     </div>
-  </aside>
-
-  <!-- MAIN CONTENT -->
-  <main class="main-content" id="main-content">
-
-    <!-- ═══════════════════════════════════════════════════════ -->
-    <!-- SECTION 0: INSURANCE PRODUCTS -->
-    <!-- ═══════════════════════════════════════════════════════ -->
-    <div class="section active" id="sec0">
-      <div class="lesson-tag">Module 04 — Section 1 of 6</div>
-      <div class="lesson-header">
-        <h1>Insurance Products</h1>
-        <p class="lesson-intro">Life insurance and investment-linked policies offer criminals a seemingly legitimate way to break the money trail and generate clean funds. Understanding how this works is essential for anyone in financial services.</p>
-      </div>
-
-      <h2>Why Insurance is Attractive to Money Launderers</h2>
-      <p>Insurance policies — particularly life insurance with an investment element — are vulnerable because they allow criminals to do something simple but powerful: place dirty money in, and receive a clean payment back out. The fact that the refund or payout comes from a reputable insurance company gives it an air of legitimacy that a direct bank transfer could never achieve.</p>
-      <p>There are two key appeals. First, the money trail is effectively broken — between placement (paying premiums) and the eventual payout (surrender or claim), the funds look like the proceeds of a legitimate insurance arrangement. Second, it provides cover: a criminal can genuinely point to an insurance company as the source of their funds.</p>
-
-      <div class="callout warning">
-        <div class="callout-label">⚠️ The Fundamental Mechanism</div>
-        <p>Criminal funds → paid as insurance premiums → policy surrendered or claimed → insurer pays out "clean" money. The criminal accepts losing a small percentage (early surrender fees, etc.) as the cost of laundering. This is simply the price of doing business.</p>
-      </div>
-
-      <h2>The Core Insurance Laundering Technique</h2>
-      <p>The ICA manual describes a classic example of how this works in practice:</p>
-
-      <div class="case-study">
-        <div class="case-label">📋 Case Study — Art &amp; Yacht Fraud</div>
-        <h3>The Offshore Company Premium Scheme</h3>
-        <p>A fraudster wire-transfers proceeds from a fraud into an offshore company's account. The company then pays a single large premium to insure a high-value asset — a work of art or a yacht.</p>
-        <p style="margin-top:10px">Six months later, the assets are said to have been sold and the insurance policy is cancelled. The insurance company refunds the majority of the "unused" premium. The company can now demonstrate a legitimate source for those funds — a refund from an insurer.</p>
-        <p style="margin-top:10px">The small percentage lost to surrender charges is simply the cost of laundering — far cheaper than the alternative of having funds that can be traced directly to crime.</p>
-      </div>
-
-      <h2>The Many Ways Insurance Products Are Exploited</h2>
-      <p>The ICA identifies several specific techniques beyond the basic model:</p>
-
-      <h3>1. Single-Premium Return Policies</h3>
-      <p>A criminal purchases a large, single-premium policy, then quickly redeems it. Even with high early redemption fees, they receive a cheque from a reputable insurer. The source of funds now appears to be the insurance company rather than the crime.</p>
-
-      <h3>2. Second-Hand Endowments (Life Policy Secondary Market)</h3>
-      <p>Criminals purchase second-hand life insurance policies using laundered funds. The policy pays out when the original life assured (someone completely unconnected to the criminal) dies. At that point, the criminal receives a legitimate insurance company cheque, with nothing to connect it to the original criminal funds.</p>
-
-      <h3>3. Overpayment of Premiums</h3>
-      <p>A relatively simple technique: deliberately overpay premiums, then wait for the insurer to refund the excess by cheque. The cheque appears to be from a legitimate source — the insurer — regardless of how the premiums were originally funded.</p>
-
-      <h3>4. Assignment of Claims</h3>
-      <p>The criminal arranges with legitimate business owners to have genuine insurance claims paid to the criminal instead of the policy holder. The criminal pays the legitimate holder their claim value in cash (plus a premium for the arrangement), while receiving a clean insurance company cheque for themselves.</p>
-
-      <h3>5. Bogus Claims (Arson and Asset Destruction)</h3>
-      <p>A criminal purchases a legitimate business, then arranges for an insurance event — through arson or other means — to generate a claim. Crucially, money launderers using this method typically seek only to recover their premium investment (not inflated amounts that might attract suspicion), making them harder to spot than outright insurance fraudsters.</p>
-
-      <h3>6. Life Insurance as Loan Collateral</h3>
-      <p>Life policies with value can be used as collateral for a mortgage or loan. The loan proceeds appear clean (they come from a bank), while the underlying collateral is funded by criminal premiums. The ICA manual provides a detailed example:</p>
-
-      <div class="case-study">
-        <div class="case-label">📋 Case Study — The Protected Species Trader</div>
-        <h3>C: Trader in Illegal Wildlife Products</h3>
-        <p>C transfers criminal profits to an offshore bank account held by a company owned by a blind trust. The money funds premiums on two life insurance policies. Those policies are then used as collateral for a mortgage on a property, which is rented to a third party. The rental income — appearing perfectly legitimate — funds C's lifestyle.</p>
-        <p style="margin-top:10px">Result: criminal money → insurance premiums → loan collateral → mortgage → rental income → clean lifestyle. At every step, the source looks legitimate.</p>
-      </div>
-
-      <div class="exam-note">
-        <div class="exam-note-label">📘 ICA Exam Note — Insurance Red Flags</div>
-        <p>The ICA identifies the following as key red flags in insurance products. Memorise these — they are commonly tested:</p>
-        <ul>
-          <li>Early surrender of a policy, particularly where the client accepts a significant financial penalty</li>
-          <li>Payment of premiums from third-party sources (who is really funding this?)</li>
-          <li>Unexplained change in premium payment method</li>
-          <li>Reluctance to provide source of funds for large single-premium policies</li>
-          <li>Single large one-off premium payments, especially to investment-linked products</li>
-          <li>Overpayment of premiums</li>
-          <li>Requests to redirect payouts to third-party accounts</li>
-        </ul>
-      </div>
-
-      <div class="property-link">
-        <div class="property-label">🏠 Coadjute / Property Sector Link</div>
-        <p>Insurance may seem like a separate sector from property — but the two intersect. Consider a criminal who uses an insurance policy as collateral for a mortgage to purchase a property. Or one who inflates a claim on a property following arson in order to receive a "clean" payout. Your team may encounter clients referencing insurance payouts as a source of funds — this warrants careful source-of-funds questioning.</p>
-      </div>
-
-      <div class="qc-block">
-        <div class="qc-label">✋ Quick Check</div>
-        <div class="qc-q">A new client wants to purchase a property using funds from an early surrender of a life insurance policy. The client says the policy was with a major UK insurer. Should this immediately satisfy your source of funds concerns?</div>
-        <div class="qc-opts">
-          <button class="qc-btn" onclick="qc(this,false,'qc0')">Yes — funds from a major insurer are clearly legitimate</button>
-          <button class="qc-btn" onclick="qc(this,true,'qc0')">No — early surrender is a red flag; you must investigate how the premiums were originally funded</button>
-          <button class="qc-btn" onclick="qc(this,false,'qc0')">Yes, unless the policy was offshore</button>
-        </div>
-        <div class="qc-fb" id="qc0"></div>
-      </div>
-      <p style="font-size:.82rem;color:#889;margin-top:-8px">Correct answer: early surrender is explicitly listed as an insurance red flag. The original source of the premiums matters just as much as the identity of the insurer paying out.</p>
-
-      <div class="bottom-nav">
-        <button class="btn-prev" disabled>← Back</button>
-        <button class="btn-next" onclick="goTo(1)">Next: Investment Services →</button>
-      </div>
+    <div class="stage-card">
+      <div class="stage-icon">🔀</div>
+      <h3>Step 2: Layering</h3>
+      <p>Policy sits in force. Time passes. Trail between original criminal funds and current policy cools. Format has changed — funds are now "invested."</p>
     </div>
-
-    <!-- ═══════════════════════════════════════════════════════ -->
-    <!-- SECTION 1: INVESTMENT PRODUCTS -->
-    <!-- ═══════════════════════════════════════════════════════ -->
-    <div class="section" id="sec1">
-      <div class="lesson-tag">Module 04 — Section 2 of 6</div>
-      <div class="lesson-header">
-        <h1>Investment Products &amp; Services</h1>
-        <p class="lesson-intro">A common misconception is that investment products are not attractive to money launderers because "the money needs to keep moving." This is wrong — and the ICA is explicit about it.</p>
-      </div>
-
-      <h2>The Myth About Investment Products</h2>
-      <p>Many people in the investment industry hold two incorrect beliefs:</p>
-      <ul>
-        <li><strong>Myth 1:</strong> Criminals won't use investment funds because money needs to keep moving quickly.</li>
-        <li><strong>Myth 2:</strong> If a fund's rules require liquidated proceeds to be returned to the originating account, it can't be used for laundering.</li>
-      </ul>
-
-      <div class="callout warning">
-        <div class="callout-label">⚠️ ICA Critical Point — Both Myths Are Wrong</div>
-        <p>The ICA is direct on this: "Parking criminally derived funds in an investment fund where the money can accumulate steadily does provide a layer of concealment." Even if the money eventually goes back to the same account, it has been in a legitimate investment vehicle — and this change of format confuses the money trail.</p>
-        <p style="margin-top:8px">Also, a commercial driver complicates this further: relationship managers may allow commercial considerations to override their AML obligations. The desire to win and retain business can make people less willing to scrutinise whether they're helping a client launder proceeds.</p>
-      </div>
-
-      <h2>How Investment Products Are Used for Laundering</h2>
-
-      <h3>The "Change of Format" Layering Technique</h3>
-      <p>Once criminal money enters the system and purchases units in an investment fund, those funds have been converted from cash or bank balances into something different — units, shares, or interests in a fund. When eventually sold, the proceeds look like investment returns rather than criminal funds. This change of format is a classic layering technique.</p>
-
-      <h3>Strict vs. Flexible Remittance Rules</h3>
-      <p>Some investment funds require that any proceeds be paid back only to the account from which the original investment came. These are more secure. However:</p>
-      <ul>
-        <li>Funds with relaxed rules allowing payments to third parties or third-party accounts are significantly more vulnerable.</li>
-        <li>Even "strict remittance rule" funds don't eliminate risk — the criminal's account receiving the proceeds may itself be a step removed from the original crime.</li>
-      </ul>
-
-      <h3>Long-Term "Parking"</h3>
-      <p>Criminals are not always in a hurry. Placing funds in a long-term investment product — a pension wrapper, a bonds portfolio, an accumulation fund — allows those funds to sit legitimately for years, accumulating notional returns, before eventually being extracted as what appear to be long-term savings or investment proceeds.</p>
-
-      <div class="exam-note">
-        <div class="exam-note-label">📘 ICA Exam Note — Investment Red Flags</div>
-        <ul>
-          <li>Requests to redirect investment proceeds to third-party accounts not held by the investor</li>
-          <li>Unusual levels of interest in the AML controls of the firm (may indicate testing them)</li>
-          <li>Large single lump-sum investments with vague or no explanation of source of wealth</li>
-          <li>Requests to structure investments to avoid reporting thresholds</li>
-          <li>Early redemption requests shortly after investment, accepting penalties</li>
-          <li>Investment decisions inconsistent with the client's apparent financial profile</li>
-        </ul>
-      </div>
-
-      <div class="qc-block">
-        <div class="qc-label">✋ Quick Check</div>
-        <div class="qc-q">An investment manager's firm operates a fund with strict rules requiring all proceeds to be returned to the originating account. A compliance officer says this means the fund "cannot be used for money laundering." Is this correct?</div>
-        <div class="qc-opts">
-          <button class="qc-btn" onclick="qc(this,false,'qc1')">Yes — strict remittance rules prevent laundering entirely</button>
-          <button class="qc-btn" onclick="qc(this,true,'qc1')">No — even with strict rules, the change of format provides a layer of concealment, and the originating account may itself be part of a layered scheme</button>
-          <button class="qc-btn" onclick="qc(this,false,'qc1')">Yes, unless the client is a PEP</button>
-        </div>
-        <div class="qc-fb" id="qc1"></div>
-      </div>
-
-      <div class="callout info">
-        <div class="callout-label">ℹ️ Why This Matters for Coadjute</div>
-        <p>In property transactions, you will often encounter clients stating their source of funds as "investment proceeds" or "ISA withdrawal." These are legitimate for most clients — but your AML obligation is to understand the underlying source. Where did the money in the ISA or investment fund originally come from? Source of funds questions must go back to the original source, not just the most recent account.</p>
-      </div>
-
-      <div class="bottom-nav">
-        <button class="btn-prev" onclick="goTo(0)">← Back</button>
-        <button class="btn-next" onclick="goTo(2)">Next: Betting &amp; Gaming →</button>
-      </div>
+    <div class="stage-card">
+      <div class="stage-icon">✅</div>
+      <h3>Step 3: Integration</h3>
+      <p>Criminal surrenders policy. Receives a payment from the insurer — appearing entirely legitimate. Can use this as source-of-funds documentation.</p>
     </div>
+  </div>
 
-    <!-- ═══════════════════════════════════════════════════════ -->
-    <!-- SECTION 2: BETTING & GAMING -->
-    <!-- ═══════════════════════════════════════════════════════ -->
-    <div class="section" id="sec2">
-      <div class="lesson-tag">Module 04 — Section 3 of 6</div>
-      <div class="lesson-header">
-        <h1>Betting, Gaming &amp; Casinos</h1>
-        <p class="lesson-intro">The gambling sector offers launderers a powerful cover story: "I won it." The ability to convert cash into chips, gamble minimally, and cash out creates a credible-seeming legitimate source for criminal funds.</p>
-      </div>
+  <h2>The Early Surrender Red Flag</h2>
+  <p>One of the clearest indicators of insurance-based laundering is <strong>early surrender</strong> — cancelling a policy before its intended term, often accepting a financial penalty in doing so. This seems irrational for a genuine investor, because it means losing money. But for a launderer, the penalty is simply a cost of laundering — the price of receiving a clean payment from the insurer.</p>
+  <p>The ICA is explicit about this. Early surrender, particularly with acceptance of a penalty, is one of the top insurance sector red flags. If a client presents funds from an insurance surrender as their source of funds for a property purchase, you need to go one step further: how were the premiums originally funded?</p>
 
-      <h2>Why Gambling Is a High-Risk Sector</h2>
-      <p>The FATF highlighted the vulnerability of casinos and the gaming sector in a 2009 paper — and while dated, subsequent enforcement actions and enquiries have only confirmed the risks. The 2022 Cullen Commission in Canada — set up after millions of dollars were laundered through British Columbia casinos — brought 101 recommendations, demonstrating just how real and large-scale the problem is.</p>
+  <div class="exam-note">
+    <div class="exam-note-label">📘 ICA Exam Note — Insurance Red Flags</div>
+    <p>The ICA identifies the following as key red flags in insurance products. These are commonly tested — memorise them:</p>
+    <ul>
+      <li>Early surrender of a policy, especially where the client accepts a significant financial penalty</li>
+      <li>Payment of premiums from third-party sources (who is really funding this?)</li>
+      <li>Unexplained change in premium payment method</li>
+      <li>Single large one-off premium payments, especially to investment-linked products</li>
+      <li>Reluctance to provide source of funds for large single-premium policies</li>
+      <li>Overpayment of premiums</li>
+      <li>Requests to redirect payouts to third-party accounts</li>
+    </ul>
+  </div>
 
-      <div class="case-study">
-        <div class="case-label">🌍 Real World — The Cullen Commission (Canada, 2022)</div>
-        <h3>British Columbia Casino Money Laundering Scandal</h3>
-        <p>The Commission of Inquiry into Money Laundering in British Columbia was launched in 2019 and reported in 2022. It examined the laundering of millions of dollars through casinos, real estate, and luxury cars. Criminals would bring bags of cash to casinos, purchase chips, do minimal gambling, and cash out — receiving casino cheques as their "winnings."</p>
-        <p style="margin-top:10px">This example is significant for Coadjute: the same laundered funds then moved into property purchases — demonstrating the direct link between casino laundering and real estate vulnerabilities.</p>
-      </div>
+  <h2>Third-Party Premiums: A Deeper Red Flag</h2>
+  <p>When a third party pays premiums on someone else's policy, this should immediately raise questions. Legitimate reasons exist — a business might pay premiums on a key person policy, for example — but where the third-party relationship is unclear, or where the policyholder cannot explain who is funding their policy, this is a significant red flag.</p>
+  <p>The structure serves laundering perfectly: criminal A pays premiums on criminal B's policy, so even if A's funds are later investigated, the trail from A to the insurance payout appears to be a legitimate gift or arrangement. When B eventually surrenders the policy, the connection to A's criminal activity is obscured.</p>
 
-      <h2>The Basic Casino Laundering Technique</h2>
-      <p>The technique is disarmingly simple:</p>
-      <ol>
-        <li>Criminal arrives at casino with criminal cash.</li>
-        <li>Cash is exchanged for chips.</li>
-        <li>Minimal gambling occurs (sometimes deliberately losing a small amount to add credibility).</li>
-        <li>Remaining chips are cashed out — and the criminal receives a casino payment (often a cheque or bank transfer).</li>
-        <li>The funds now appear to be gambling winnings from a legitimate casino.</li>
-      </ol>
+  <div class="scenario-box">
+    <div class="scenario-label">📋 Property Sector Scenario</div>
+    <p>A client approaches your estate agency to purchase a £650,000 flat. Their stated source of funds is a surrender payment from a life insurance policy — £680,000 received from a major UK insurer 3 months ago. The client says they "needed the money for a property purchase."</p>
+    <p>Should this satisfy your source of funds obligation? <strong>No.</strong> The surrender is itself a red flag (deliberate liquidation). You must trace back to how the premiums were originally funded — the insurer's payment tells you nothing about the original source. Request documentation showing the premium payment source — ideally years of bank statements demonstrating regular funded payments from legitimate employment or other verified income.</p>
+  </div>
 
-      <div class="exam-note">
-        <div class="exam-note-label">📘 ICA Exam Note — Casino CDD Threshold (UK)</div>
-        <p>Under the UK Money Laundering Regulations 2017, casino operators <strong>must apply CDD measures for any transaction exceeding €2,000</strong>. This applies:</p>
-        <ul>
-          <li>Regardless of whether a business relationship exists</li>
-          <li>To single transactions and multiple transactions that appear to be linked</li>
-          <li>To non-remote casinos (token threshold), gaming machines (€2,000+), and remote casinos (deposit/withdrawal threshold of €2,000+)</li>
-        </ul>
-        <p style="margin-top:8px">Casino operators may take either a "verify all on entry" approach or the "threshold approach" (verify when the €2,000 threshold is reached).</p>
-      </div>
+  <div class="property-link">
+    <div class="property-label">🏠 Coadjute / Property Sector Link</div>
+    <p>Insurance may seem like a separate sector from property — but the two intersect directly. Consider: a criminal uses an insurance policy as collateral for a mortgage on a property purchase. Or one who inflates a claim on a property following arson to receive a "clean" payout. Your team will encounter clients referencing insurance payouts as a source of funds — every time, you must go back further and verify how the premiums were funded.</p>
+  </div>
 
-      <h2>AML Requirements in the Gaming Sector</h2>
-      <p>In the UK, the Money Laundering Regulations 2017 apply to casinos (remote and non-remote) licensed by the Gambling Commission. Key requirements include:</p>
-      <ul>
-        <li>A risk-sensitive approach to CDD</li>
-        <li>Risk assessment based on business and customer profile</li>
-        <li>Remote casinos must evaluate their specific risks (customers not seen face-to-face)</li>
-        <li>Relevant employees (not catering/bar staff) must receive AML training</li>
-        <li>Appointment of a "nominated officer" to review SARs — in the UK this person must hold a personal management licence from the Gambling Commission</li>
-        <li>Records kept for five years from end of business relationship</li>
-      </ul>
-
-      <h2>The Risk-Based Approach in Gaming</h2>
-      <p>FATF guidance emphasises that casinos should assess and manage their risks, not simply prohibit entire categories of business. The risk-based approach in gaming covers three areas: CDD; business internal control systems; and ongoing oversight and monitoring.</p>
-
-      <h3>Customer Risk</h3>
-      <p>The ICA identifies the following as higher-risk customer categories in the gaming sector:</p>
-      <ul>
-        <li>Politically Exposed Persons (PEPs)</li>
-        <li>High spenders</li>
-        <li>Disproportionate spenders (spending inconsistent with personal financial profile)</li>
-        <li>Casual or one-off customers (no ongoing relationship — harder to track)</li>
-        <li>Improper use of third parties</li>
-        <li>Junket operators (who bring groups of high-spending players, often from overseas)</li>
-        <li>Customers with multiple casino accounts or player-rating accounts</li>
-      </ul>
-
-      <h3>Transaction Risk</h3>
-      <p>Higher-risk transactions include:</p>
-      <ul>
-        <li>Cash transactions (especially large amounts)</li>
-        <li>Transfers between customers (passing funds between accounts)</li>
-        <li>Loan sharking at casinos (lending money to gamblers at inflated rates)</li>
-        <li>Use of casino deposit accounts</li>
-        <li>Redemption of chips using different payment methods than deposit (non-closed loop)</li>
-        <li>Online: multiple casino accounts or "casino wallets"</li>
-      </ul>
-
-      <h2>Red Flags and Suspicious Activity in Casinos</h2>
-      <p>The ICA does not prescribe a definitive list (since that could help criminals evade detection), but the following are recognised red flag indicators:</p>
-
-      <table class="rf-table">
-        <thead>
-          <tr><th>Red Flag</th><th>Why It's Suspicious</th></tr>
-        </thead>
-        <tbody>
-          <tr><td class="rf-flag">Low betting relative to account balance</td><td>Funds deposited and almost immediately withdrawn with minimal gambling activity</td></tr>
-          <tr><td class="rf-flag">Intentional loss of a game</td><td>Deliberately losing to transfer funds to another player disguises the movement</td></tr>
-          <tr><td class="rf-flag">Passing funds between clients</td><td>Funds moved from one account to another for no plausible reason</td></tr>
-          <tr><td class="rf-flag">Spending inconsistent with CDD profile</td><td>Gambling volumes incompatible with declared income or wealth</td></tr>
-          <tr><td class="rf-flag">Multiple identities</td><td>Same individual registers under different names or addresses across multiple accounts</td></tr>
-          <tr><td class="rf-flag">Non-closed loop withdrawals</td><td>Depositing via one method, withdrawing via a different one — avoids return to source</td></tr>
-        </tbody>
-      </table>
-
-      <div class="case-study">
-        <div class="case-label">📋 ICA Case Study — Multiple Identities (Online Casino)</div>
-        <h3>Customer A: £5M+ Laundered Across Four Accounts</h3>
-        <p>Customer A became a UK customer as "Fred Smith." Two years later, same surname but different address — and deposited £5,000,000 across both accounts. Two years after that, a European account opened under a different first name with €1,000,000. A fourth account, same surname again, UK address again.</p>
-        <p style="margin-top:10px">Total funds: over £6.5 million across four accounts, over several years. The multiple identities, addresses, and jurisdictions were designed to prevent any single account triggering a SAR — classic structuring applied to the casino context.</p>
-      </div>
-
-      <div class="qc-block">
-        <div class="qc-label">✋ Quick Check</div>
-        <div class="qc-q">A customer deposits £400,000 into their online casino account. Over three months, they bet occasionally but withdraw £395,000 — almost the entire balance. Is this suspicious?</div>
-        <div class="qc-opts">
-          <button class="qc-btn" onclick="qc(this,true,'qc2')">Yes — low betting relative to account balance is a recognised casino red flag indicating potential placement and withdrawal rather than genuine gambling</button>
-          <button class="qc-btn" onclick="qc(this,false,'qc2')">No — the customer may simply have changed their mind about gambling</button>
-          <button class="qc-btn" onclick="qc(this,false,'qc2')">Only if the customer is a PEP</button>
-        </div>
-        <div class="qc-fb" id="qc2"></div>
-      </div>
-
-      <div class="property-link">
-        <div class="property-label">🏠 Coadjute / Property Sector Link</div>
-        <p>The Cullen Commission showed directly that casino proceeds flowed into property purchases. When clients state gambling winnings as a source of funds for a property transaction, this demands enhanced scrutiny. Casino winnings should be verifiable — the casino will have records of payouts. Vague references to "a good run at the casino" without documentary evidence should not be accepted as source of funds.</p>
-      </div>
-
-      <div class="bottom-nav">
-        <button class="btn-prev" onclick="goTo(1)">← Back</button>
-        <button class="btn-next" onclick="goTo(3)">Next: Mobile Financial Services →</button>
-      </div>
+  <div class="qc-block">
+    <div class="qc-label">✋ Quick Check</div>
+    <div class="qc-q">A buyer presents a bank statement showing £480,000 received from a UK insurance company as a surrender payment. Does this satisfy your source of funds requirement?</div>
+    <div class="qc-opts">
+      <button class="qc-btn" onclick="qc(this,false,'qc0')">Yes — the payment is from a regulated insurer, so the funds are clearly legitimate</button>
+      <button class="qc-btn" onclick="qc(this,true,'qc0')">No — early surrender is a red flag; you must trace back how the original premiums were funded</button>
+      <button class="qc-btn" onclick="qc(this,false,'qc0')">Yes, unless the policy was taken out offshore</button>
     </div>
+    <div class="qc-fb" id="qc0"></div>
+  </div>
 
-    <!-- ═══════════════════════════════════════════════════════ -->
-    <!-- SECTION 3: MOBILE FINANCIAL SERVICES -->
-    <!-- ═══════════════════════════════════════════════════════ -->
-    <div class="section" id="sec3">
-      <div class="lesson-tag">Module 04 — Section 4 of 6</div>
-      <div class="lesson-header">
-        <h1>Mobile Financial Services &amp; Prepaid Cards</h1>
-        <p class="lesson-intro">Mobile financial services have revolutionised access to banking in the developing world — but have also created new channels for money laundering, especially where regulatory oversight is weak and agent networks are large.</p>
-      </div>
+  <div class="bottom-nav">
+    <button class="btn-prev" disabled>← Previous</button>
+    <button class="btn-next" onclick="goTo(1)">Next: Investment Products →</button>
+  </div>
+</div>
 
-      <h2>What Are Mobile Financial Services?</h2>
-      <p>The term "mobile financial services" (m-FS) covers a wide range of activity. The ICA identifies four main types:</p>
-      <ol>
-        <li><strong>m-Info</strong> — viewing financial information (e.g. checking a bank balance via an app)</li>
-        <li><strong>m-Banking</strong> — conducting bank transactions remotely (e.g. mobile banking with a traditional bank)</li>
-        <li><strong>m-Money</strong> — using mobile phones to store value (the main AML risk area)</li>
-        <li><strong>m-Payments</strong> — using mobile phones to make payments</li>
-      </ol>
-      <p>Types 1 and 2 are essentially existing banking products accessed via mobile — the AML risk comes from the underlying product. The ICA focuses its concern on Types 3 and 4, particularly <strong>m-Money</strong>, which has grown fastest in developing economies where large portions of the population have no access to traditional banking.</p>
+<!-- ══════════════════════════════════════════════ -->
+<!-- SECTION 1: INVESTMENT PRODUCTS -->
+<!-- ══════════════════════════════════════════════ -->
+<div class="section" id="sec1">
+  <div class="lesson-tag">Module 04 — Section 2 of 7</div>
+  <div class="lesson-header">
+    <h1>Investment Products</h1>
+    <p class="lesson-intro">Investment funds, shares, and retail financial products are often assumed to be protected by strict remittance rules. The ICA directly challenges this assumption — and understanding why matters for your day-to-day work.</p>
+  </div>
 
-      <div class="callout info">
-        <div class="callout-label">ℹ️ Global Scale</div>
-        <p>The World Bank estimates nearly three billion people worldwide have no access to traditional bank accounts. Services like M-Pesa (Kenya), MTN Mobile Money (Africa), G-Cash (Philippines), and others have signed up tens of millions of users — M-Pesa alone had 25 million users in Kenya by 2020, with over 430,000 agents across multiple countries.</p>
-      </div>
+  <h2>The Common Misconception</h2>
+  <p>There is a widespread belief — even among financial services professionals — that investment products cannot be used for money laundering if proceeds must return to the originating account. The logic seems sound: if the money goes out and comes back to the same place, what has been laundered?</p>
+  <p>The ICA explicitly addresses and rejects this reasoning. The critical point is that the <strong>format of the funds has changed</strong>. Criminal cash that enters an investment fund is converted into units, shares, or other instruments. When redeemed, even to the same account, the criminal now has documented investment income — not cash of unknown origin. This is layering.</p>
 
-      <h2>How m-Money Works</h2>
-      <p>A customer registers with an authorised agent (a retailer or outlet), receiving an electronic money account linked to their mobile number. They can load funds by paying an agent in cash, transfer funds to other account holders, pay bills, make retail purchases, and withdraw cash by visiting an agent.</p>
-      <p>Critically, the electronic money accounts are typically backed 100% by a pooled bank account held by the Mobile Network Operator (MNO) with a regulated bank — meaning the end liability is real money, not just digital tokens.</p>
+  <div class="callout info">
+    <div class="callout-label">📘 ICA Exam Note — The "Strict Remittance" Fallacy</div>
+    <p>"The investment manager who says 'I know funds can't be laundered through our products because there are strict remittance rules meaning proceeds can only go back to the originating account' is wrong." — ICA. Even with strict rules, the change of format is a layering technique. The originating account may itself be part of a layering scheme.</p>
+  </div>
 
-      <h2>The Four Risk Categories in m-FS</h2>
+  <h2>Why Investment Products Are Vulnerable</h2>
+  <p>Beyond the format-change technique, the ICA identifies several structural features that make investment products attractive to launderers:</p>
+  <ul>
+    <li><strong>Volume of transactions:</strong> Investment managers handle enormous transaction flows. Individually monitoring each one is practically difficult, creating opportunities to hide illicit transactions within normal volume.</li>
+    <li><strong>Complex products:</strong> The use of derivatives, structured products, and multi-layered investment vehicles can make tracing the ultimate source of funds extremely difficult.</li>
+    <li><strong>Commercial pressure:</strong> Investment managers face intense pressure to gather assets under management. This can create reluctance to ask probing questions of large investors, or to decline business on AML grounds. The ICA identifies this commercial pressure as a specific sector vulnerability.</li>
+    <li><strong>Disconnect from source:</strong> Retail investment products are often sold through intermediaries, meaning the investment manager may never have direct contact with the underlying client or their source of funds documentation.</li>
+  </ul>
 
-      <h3>1. Geographic Risk</h3>
-      <p>m-FS has grown fastest in jurisdictions that often have the weakest AML controls. The ICA identifies geographic risk factors as:</p>
-      <ul>
-        <li>Countries with weak or deficient AML regimes</li>
-        <li>Countries subject to international sanctions or embargoes</li>
-        <li>Countries with significant corruption, drug trafficking, human trafficking, or smuggling</li>
-        <li>Countries identified as providing support to terrorist organisations</li>
-      </ul>
+  <h2>Investment Red Flags</h2>
+  <table class="risk-table">
+    <thead><tr><th>Red Flag</th><th>Why Suspicious</th><th>Risk Level</th></tr></thead>
+    <tbody>
+      <tr><td>Early redemption shortly after investment</td><td>Genuine investor wouldn't liquidate immediately — using fund as a washing vehicle</td><td><span class="badge-high">HIGH</span></td></tr>
+      <tr><td>Request to redirect payout to third-party account</td><td>Proceeds going to someone other than the investor — breaking the trail</td><td><span class="badge-high">HIGH</span></td></tr>
+      <tr><td>Vague or absent source of wealth explanation</td><td>Cannot explain legitimate origin of large funds being invested</td><td><span class="badge-high">HIGH</span></td></tr>
+      <tr><td>Large, unexplained wire transfers funding investment</td><td>Funds arriving from multiple or offshore sources with no business rationale</td><td><span class="badge-high">HIGH</span></td></tr>
+      <tr><td>Investing in low-return, low-risk products inconsistently with stated wealth level</td><td>Genuine investor optimises return; launderer just wants to convert format</td><td><span class="badge-med">MEDIUM</span></td></tr>
+    </tbody>
+  </table>
 
-      <h3>2. Customer Risk</h3>
-      <p>The m-FS customer base presents unique challenges: many customers are low-income, may lack national identity documents, and operate primarily in cash. Risk factors include:</p>
-      <ul>
-        <li>Difficulty obtaining standard CDD documentation from customers without formal ID</li>
-        <li>Customers opening multiple accounts to bypass low transaction limits (smurfing via m-FS)</li>
-        <li>Use by unregistered consumers (withdrawing via third parties)</li>
-      </ul>
+  <h2>The Change-of-Format Technique in Property</h2>
+  <p>The change-of-format technique is directly relevant to property work. Consider a client who presents as their source of funds the proceeds of a portfolio of unit trusts redeemed over several years. The investment returns look legitimate. But the question is always: what funded the original investment? If that question cannot be answered satisfactorily — if the client cannot provide documentation showing the original source of the capital that went into the investments — the source of funds chain is broken.</p>
 
-      <h3>3. Agent Network Risk</h3>
-      <p>This is the ICA's most detailed risk category for m-FS. Agents are the direct point of contact with customers — and they are often small-scale retailers, geographically remote, with high staff turnover and limited AML training.</p>
+  <div class="property-link">
+    <div class="property-label">🏠 Coadjute / Property Sector Link</div>
+    <p>At Coadjute, you may encounter clients presenting investment accounts, ISA proceeds, or share portfolio sales as their source of funds for a property transaction. In each case, your obligation is the same: trace back to the original source. "I redeemed my investments" is not a source of funds — it is a description of the most recent transaction in the chain. You need to go back to where the investment capital originated.</p>
+  </div>
 
-      <div class="callout warning">
-        <div class="callout-label">⚠️ The Agent Problem</div>
-        <p>The ICA notes that agents from non-financial services backgrounds may have little exposure to AML compliance. In some developing countries, cultural norms — such as close kinship ties within communities — may actively discourage AML reporting. An agent may be reluctant to submit a SAR on a family member or community elder.</p>
-      </div>
-
-      <div class="exam-note">
-        <div class="exam-note-label">📘 ICA Exam Note — Agent Red Flags</div>
-        <ul>
-          <li>Agents conducting unusually high numbers of transactions (especially in high-risk geographic areas)</li>
-          <li>Agents with disproportionately high transaction values</li>
-          <li>Agents with poor CDD collection standards</li>
-          <li>Agents with seasonal fluctuations inconsistent with other agents (may indicate drug trafficking links)</li>
-          <li>Agents established as fronts for criminal activity</li>
-          <li>Agents not complying with internal AML procedures</li>
-        </ul>
-      </div>
-
-      <h3>4. Product Risk</h3>
-      <p>Product features that increase ML/TF risk include:</p>
-      <ul>
-        <li>Products favouring anonymity — minimal or no CDD at account opening</li>
-        <li>Products enabling withdrawals by unregistered consumers</li>
-        <li>Very high or unlimited transaction values</li>
-        <li>Functionality beyond domestic money transfers (international capability)</li>
-        <li>Ability for customers to open multiple accounts</li>
-        <li>Cross-border fund movement capabilities</li>
-        <li>Services operated in partnership between an MNO and a bank — creating ambiguity about who is responsible for AML</li>
-      </ul>
-
-      <h2>Prepaid Cards: Stored Value, Anonymous Risk</h2>
-      <p>Prepaid cards (also called "stored value cards") are a related risk. They allow users to load cash onto a card, which can then be used like a debit card — spending, withdrawals, or transfers — without requiring a traditional bank account.</p>
-
-      <div class="exam-note">
-        <div class="exam-note-label">📘 ICA Exam Note — Prepaid Card AML Risk</div>
-        <p>The primary risk: <strong>criminal cash can be loaded onto a prepaid card without triggering bank-level AML scrutiny</strong>. The card then provides an apparently legitimate payment method. Key risks:</p>
-        <ul>
-          <li>Anonymous loading with cash — no CDD required for small amounts</li>
-          <li>Multiple cards can be loaded and aggregated (structuring)</li>
-          <li>Cards can be transferred between individuals, effectively transferring value anonymously</li>
-          <li>International usability creates cross-border layering opportunities</li>
-          <li>Funds on the card are difficult to trace back to the original cash source</li>
-        </ul>
-        <p style="margin-top:8px">Mitigating factor: lower transaction limits on many prepaid card products restrict the scale of potential abuse.</p>
-      </div>
-
-      <h2>The Key Mitigating Factor: The Digital Trail</h2>
-      <p>Despite the risks, m-FS has one significant advantage over physical cash: it leaves a digital record. Every m-Money transaction is recorded — who sent what to whom, when, from which location. This makes m-FS more traceable than physical cash, and regulators can (with appropriate access) reconstruct transaction histories. This is a genuine mitigating factor that the ICA recognises.</p>
-
-      <div class="callout key">
-        <div class="callout-label">✅ Countering m-FS Risks</div>
-        <p>The ICA identifies the following as firm-level controls: agent due diligence (including ongoing monitoring of agent behaviour), CDD at account opening, watch lists and sanctions screening, staff training, automated transaction monitoring, and compliance monitoring programmes.</p>
-      </div>
-
-      <div class="qc-block">
-        <div class="qc-label">✋ Quick Check</div>
-        <div class="qc-q">Why does the ICA consider mobile financial services transactions less risky than physical cash, despite their vulnerabilities?</div>
-        <div class="qc-opts">
-          <button class="qc-btn" onclick="qc(this,false,'qc3')">Because m-FS always requires full identity verification</button>
-          <button class="qc-btn" onclick="qc(this,true,'qc3')">Because m-FS creates a digital audit trail that can be monitored and traced</button>
-          <button class="qc-btn" onclick="qc(this,false,'qc3')">Because m-FS transactions are limited to domestic use only</button>
-        </div>
-        <div class="qc-fb" id="qc3"></div>
-      </div>
-
-      <div class="bottom-nav">
-        <button class="btn-prev" onclick="goTo(2)">← Back</button>
-        <button class="btn-next" onclick="goTo(4)">Next: Virtual Currencies →</button>
-      </div>
+  <div class="qc-block">
+    <div class="qc-label">✋ Quick Check</div>
+    <div class="qc-q">An investment fund has a strict rule that all redemption proceeds must return to the same bank account that funded the original investment. The investment manager says this means their products cannot be used for money laundering. According to the ICA, is this correct?</div>
+    <div class="qc-opts">
+      <button class="qc-btn" onclick="qc(this,false,'qc1')">Yes — if proceeds return to the same account, the trail is unbroken and laundering is impossible</button>
+      <button class="qc-btn" onclick="qc(this,true,'qc1')">No — the change of format from cash to investment units and back is itself a layering technique; the originating account may be part of the scheme</button>
+      <button class="qc-btn" onclick="qc(this,false,'qc1')">Only partially — it prevents integration but not placement</button>
     </div>
+    <div class="qc-fb" id="qc1"></div>
+  </div>
 
-    <!-- ═══════════════════════════════════════════════════════ -->
-    <!-- SECTION 4: VIRTUAL CURRENCIES -->
-    <!-- ═══════════════════════════════════════════════════════ -->
-    <div class="section" id="sec4">
-      <div class="lesson-tag">Module 04 — Section 5 of 6</div>
-      <div class="lesson-header">
-        <h1>Virtual Currencies</h1>
-        <p class="lesson-intro">The growth of cryptocurrency and virtual currencies has created both legitimate innovation and significant AML vulnerabilities. The ICA dedicates substantial attention to this area — and it's a live issue in property transactions.</p>
-      </div>
+  <div class="bottom-nav">
+    <button class="btn-prev" onclick="goTo(0)">← Back</button>
+    <button class="btn-next" onclick="goTo(2)">Next: Betting &amp; Gaming →</button>
+  </div>
+</div>
 
-      <h2>What Are Virtual Currencies?</h2>
-      <p>The terminology has evolved. "Bitcoin" was originally used as shorthand for all cryptocurrencies, but "virtual currencies" (VCs) is now the preferred term, encompassing all types. Examples include:</p>
-      <ul>
-        <li><strong>Convertible/bilateral VCs</strong> — can be bought and sold for fiat money: Bitcoin, Ethereum, Litecoin, and thousands of others</li>
-        <li><strong>Unidirectional VCs</strong> — flow in only one direction; cannot easily be converted back: loyalty scheme points, Amazon Coins</li>
-        <li><strong>Corporate VCs</strong> — issued by major companies (Facebook's proposed Libra, now abandoned, was an example)</li>
-        <li><strong>Central Bank Digital Currencies (CBDCs)</strong> — nation-state issued VCs; emerging globally but the sector remains mostly unregulated</li>
-      </ul>
+<!-- ══════════════════════════════════════════════ -->
+<!-- SECTION 2: BETTING & GAMING -->
+<!-- ══════════════════════════════════════════════ -->
+<div class="section" id="sec2">
+  <div class="lesson-tag">Module 04 — Section 3 of 7</div>
+  <div class="lesson-header">
+    <h1>Betting &amp; Gaming</h1>
+    <p class="lesson-intro">Casinos, online betting, and gaming platforms have long been associated with money laundering. The Cullen Commission in British Columbia — examining corruption in BC casinos — provided the clearest documented case study of how directly casino laundering flows into property markets.</p>
+  </div>
 
-      <p>There are two main ways to obtain virtual currencies: purchase them with "real" (fiat) money, or earn them through trading, promotions, or surveys.</p>
+  <h2>Why the Gambling Sector is Vulnerable</h2>
+  <p>The gambling sector presents a unique combination of features that make it attractive to launderers:</p>
+  <ul>
+    <li><strong>Cash-based transactions:</strong> Traditional casinos accept large amounts of cash, which can be converted into chips and then back to a casino cheque — a document appearing to represent gambling winnings.</li>
+    <li><strong>Legitimate cover for large transactions:</strong> Gambling is a legitimate activity, and large wins are plausible. A casino cheque for £50,000 does not automatically look suspicious.</li>
+    <li><strong>Convertibility:</strong> Casino chips can be exchanged between players, effectively transferring value with minimal paper trail.</li>
+    <li><strong>International operations:</strong> Online gaming platforms may operate across multiple jurisdictions, complicating regulatory oversight.</li>
+  </ul>
 
-      <h2>Why VCs Are Attractive to Criminals</h2>
-      <p>The core appeal is pseudo-anonymity. On most public blockchains, transactions are recorded and publicly visible — but they are linked to wallet addresses, not real-world identities. Tracing a specific wallet address back to an individual requires either technical analysis or cooperation from an exchange that may have conducted KYC on the account.</p>
+  <h2>The Classic Casino Technique: Chip Washing</h2>
+  <p>The most well-documented casino laundering technique is <strong>chip washing</strong> (also called "chip dumping" in variations). The criminal purchases chips with criminal cash, gambles for a short period to create the appearance of gambling activity, then cashes out the chips — receiving a casino cheque that documents the payment as gambling winnings.</p>
+  <p>The acceptability of a loss is key to understanding why this works. If a launderer spends £80,000 in chips and cashes out £70,000, they have effectively paid a 12.5% commission on their laundering. They are happy to do this because the £70,000 cheque from a regulated casino is now entirely clean. The "loss" is the cost of laundering.</p>
 
-      <div class="callout warning">
-        <div class="callout-label">⚠️ ICA Position on Virtual Currency Risk</div>
-        <p>"Due to its reputation for anonymity and being untraceable, a virtual currency can be used for criminal activities such as laundering money, buying and selling illegal goods and services, and transferring money to support criminal or terror activities."</p>
-        <p style="margin-top:8px">The practice of using VCs to transfer illegal funds has grown substantially and is well documented — both for ML and TF.</p>
-      </div>
+  <div class="exam-note">
+    <div class="exam-note-label">📘 ICA Exam Note — Casino Red Flags</div>
+    <ul>
+      <li>Low betting relative to account/chip balance — depositing and withdrawing with minimal gambling</li>
+      <li>Intentional losing or passing funds to other players — transferring value disguised as losses</li>
+      <li>Multiple casino accounts or accounts in different names</li>
+      <li>Large cash buy-ins followed by early cash-out</li>
+      <li>Third parties cashing out on another's behalf</li>
+      <li>Requests to pay out in the form of a casino cheque rather than returning to original payment method</li>
+      <li>Structuring deposits below CDD thresholds across multiple visits</li>
+    </ul>
+    <p style="margin-top:10px"><strong>UK threshold:</strong> Under the Money Laundering Regulations 2017, UK casino operators must apply CDD when a customer conducts transactions totalling <strong>€2,000 or more</strong>.</p>
+  </div>
 
-      <h2>How Virtual Currencies Facilitate Money Laundering</h2>
+  <h2>Online Gaming and Sports Betting</h2>
+  <p>The shift to online gaming has created new vulnerabilities. The ability to create multiple accounts, use payment intermediaries, and operate across jurisdictions makes online platforms harder to monitor. The ICA notes several specific online gaming typologies:</p>
+  <ul>
+    <li><strong>Account funding and withdrawal:</strong> Funding an account, making minimal bets, and withdrawing — using the platform as a conduit rather than a genuine gambling environment.</li>
+    <li><strong>Matched betting laundering:</strong> Placing bets on all outcomes of an event via multiple accounts to guarantee a near-zero loss while converting the deposit into "winnings."</li>
+    <li><strong>Sports betting vouchers and tokens:</strong> Some platforms issue vouchers or tokens that can be transferred — creating an untracked store of value.</li>
+  </ul>
 
-      <h3>Step 1: Conversion to Crypto (Placement)</h3>
-      <p>Criminal cash is exchanged for virtual currency, often through a cryptocurrency exchange, peer-to-peer (P2P) trading platform, or Bitcoin ATM. Some exchanges have weak or no KYC — making this the most vulnerable entry point.</p>
+  <div class="scenario-box">
+    <div class="scenario-label">📋 Case Study: BC Casinos / Cullen Commission</div>
+    <p>The Cullen Commission in British Columbia (2020-2022) documented in detail how criminal cash — much of it linked to drug trafficking — was laundered through Lower Mainland casinos and then funnelled directly into the Vancouver real estate market. The Commission found casino operators had accepted known bags of suspicious cash from high-value gamblers, with some operators actively facilitating the process. Casino proceeds were traced directly into property purchases across BC.</p>
+    <p>This is the most significant documented case of casino-to-property laundering in recent history, and directly illustrates the property sector's exposure to gambling proceeds.</p>
+  </div>
 
-      <h3>Step 2: Layering via Crypto</h3>
-      <p>Once in the crypto ecosystem, layering techniques include:</p>
-      <ul>
-        <li><strong>Chain hopping</strong> — converting between different cryptocurrencies multiple times (e.g. Bitcoin → Ethereum → Monero) to confuse the trail</li>
-        <li><strong>Mixers / Tumblers</strong> — services that blend multiple users' transactions together, making it extremely difficult to trace the original source of any specific coins</li>
-        <li><strong>Privacy coins</strong> — currencies like Monero or Zcash designed with enhanced anonymity features that make tracing virtually impossible</li>
-        <li><strong>Decentralised exchanges (DEXs)</strong> — peer-to-peer trading without a central operator who might conduct KYC</li>
-        <li><strong>Multiple wallets</strong> — moving funds through dozens or hundreds of wallets before exit</li>
-      </ul>
+  <div class="property-link">
+    <div class="property-label">🏠 Coadjute / Property Sector Link</div>
+    <p>When a client states gambling winnings as a source of funds for a property transaction, this demands enhanced scrutiny. Casino winnings should be verifiable — the casino will have records of payouts. Vague references to "a good run at the casino" or "online poker winnings" without documentary evidence (casino cashier records, online account statements showing deposit and withdrawal history) should not be accepted. The volume of the win relative to the stated wealth of the client also matters — a £200,000 casino payout from a client with modest documented income is a significant red flag.</p>
+  </div>
 
-      <h3>Step 3: Back to Fiat (Integration)</h3>
-      <p>Eventually, the criminal wants clean spendable money. This may involve:</p>
-      <ul>
-        <li>Converting back to fiat through a compliant exchange (which may trigger KYC, so layering has been done first)</li>
-        <li>Spending directly on high-value assets — real estate, luxury goods, art — from sellers who accept cryptocurrency</li>
-        <li>Using crypto debit cards that convert at point of sale</li>
-        <li>Peer-to-peer cash sales (crypto sold for cash directly to individuals)</li>
-      </ul>
+  <div class="qc-block">
+    <div class="qc-label">✋ Quick Check</div>
+    <div class="qc-q">A customer deposits £400,000 into their online casino account. Over three months, they bet occasionally but withdraw £395,000 — almost the entire balance. Is this suspicious?</div>
+    <div class="qc-opts">
+      <button class="qc-btn" onclick="qc(this,true,'qc2')">Yes — low betting relative to account balance is a recognised casino red flag indicating potential placement and withdrawal rather than genuine gambling</button>
+      <button class="qc-btn" onclick="qc(this,false,'qc2')">No — the customer may simply have changed their mind about gambling</button>
+      <button class="qc-btn" onclick="qc(this,false,'qc2')">Only if the customer is a PEP or from a high-risk jurisdiction</button>
+    </div>
+    <div class="qc-fb" id="qc2"></div>
+  </div>
 
-      <div class="callout danger">
-        <div class="callout-label">🔴 Blockchain Immutability — The Double Edge</div>
-        <p>Once a transaction is confirmed on a blockchain, it cannot be reversed or deleted. This is both a risk and an opportunity. For investigators: the transaction record is permanent and public — forensic blockchain analysis firms (Chainalysis, Elliptic) can often trace funds across wallets. For criminals: once at integration stage with appropriately layered crypto, tracing becomes extremely challenging without exchange cooperation.</p>
-      </div>
+  <div class="bottom-nav">
+    <button class="btn-prev" onclick="goTo(1)">← Back</button>
+    <button class="btn-next" onclick="goTo(3)">Next: Mobile Financial Services →</button>
+  </div>
+</div>
 
-      <h2>Case Study: Liberty Reserve</h2>
-      <div class="case-study">
-        <div class="case-label">📋 ICA Case Study — Liberty Reserve (Shut down 2013)</div>
-        <h3>The Black-Market Bank</h3>
-        <p>Liberty Reserve, incorporated in Costa Rica in 2006, was shut down by US authorities in June 2013. It operated as, in the words of prosecutors, "essentially a black-market bank," and is reported to have masked more than $6 billion in criminal proceeds across millions of users.</p>
-        <p style="margin-top:10px">The platform allowed users to open accounts with minimal information and transfer "LR" currency anonymously. Drug traffickers, fraudsters, hackers, and child exploitation networks all used it. The case remains the definitive study in how unregulated virtual currency platforms enable large-scale, global money laundering.</p>
-      </div>
+<!-- ══════════════════════════════════════════════ -->
+<!-- SECTION 3: MOBILE FINANCIAL SERVICES -->
+<!-- ══════════════════════════════════════════════ -->
+<div class="section" id="sec3">
+  <div class="lesson-tag">Module 04 — Section 4 of 7</div>
+  <div class="lesson-header">
+    <h1>Mobile Financial Services &amp; Prepaid Cards</h1>
+    <p class="lesson-intro">Mobile financial services have transformed access to banking in the developing world — but they've also created new channels for money laundering where regulatory oversight is uneven and agent networks are large and hard to monitor.</p>
+  </div>
 
-      <h2>Silk Road: Crypto and Criminal Marketplaces</h2>
-      <p>Bitcoin attracted major adverse media attention following its association with Silk Road, an online marketplace for drugs and other criminal activity. Shut down by the FBI in 2013, Silk Road demonstrated that crypto could serve as the payment infrastructure for entire criminal economies operating openly online. Bitcoin's pseudo-anonymity was key to Silk Road's operation — and its seizure led to billions in confiscated Bitcoin.</p>
+  <h2>What Are Mobile Financial Services?</h2>
+  <p>Mobile financial services (m-FS) covers a wide range of activities:</p>
+  <ul>
+    <li><strong>Mobile money (m-Money):</strong> Services like M-Pesa (Kenya/Africa) that allow users to store and transfer funds via a mobile phone without a traditional bank account.</li>
+    <li><strong>Mobile banking:</strong> Accessing existing bank accounts via a smartphone app.</li>
+    <li><strong>Mobile payments:</strong> Making payments via phone (Apple Pay, Google Pay, etc.).</li>
+    <li><strong>Prepaid cards:</strong> Cards pre-loaded with a fixed value, often without full identity verification at the loading stage.</li>
+  </ul>
 
-      <div class="exam-note">
-        <div class="exam-note-label">📘 ICA Exam Note — Virtual Currency Red Flags</div>
-        <ul>
-          <li>Use of cryptocurrency mixing/tumbling services</li>
-          <li>Multiple wallet addresses used in rapid succession</li>
-          <li>Conversion between multiple cryptocurrencies (chain hopping)</li>
-          <li>Use of privacy coins (Monero, Zcash) where tracing is near-impossible</li>
-          <li>Use of peer-to-peer exchanges without KYC requirements</li>
-          <li>Unexplained large cryptocurrency holdings claimed as source of funds</li>
-          <li>Crypto-funded property purchases without clear exchange provenance</li>
-        </ul>
-        <p style="margin-top:8px">Key point: the sector is <strong>mostly unregulated</strong> globally. In the UK, crypto asset businesses must register with the FCA for AML purposes (not as authorised firms) — but international enforcement is patchy.</p>
-      </div>
+  <h2>The Four m-FS Risk Categories</h2>
+  <p>The ICA organises m-FS vulnerabilities into four distinct risk categories. These are testable — you need to know all four:</p>
 
-      <div class="property-link">
-        <div class="property-label">🏠 Coadjute / Property Sector Link — Crypto in Property</div>
-        <p>Crypto-funded property purchases are a live and growing AML risk. Where a client states they wish to fund a property purchase (partly or wholly) using cryptocurrency, you must establish:</p>
-        <ul>
-          <li>Which exchange was used to acquire the crypto (regulated, KYC-compliant?)</li>
-          <li>The original fiat source of the crypto purchase</li>
-          <li>Whether mixing services or privacy coins have been used (often untraceable)</li>
-          <li>Provenance documentation from the exchange (transaction records, KYC confirmation)</li>
-        </ul>
-        <p style="margin-top:8px">"I have Bitcoin" is not a source of funds — it's a current asset form. You need to go back further: where did the money come from to buy the Bitcoin in the first place?</p>
-      </div>
+  <table class="risk-table">
+    <thead><tr><th>Category</th><th>Key Risks</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Geographic Risk</strong></td><td>Services operating across borders or in countries with weak AML frameworks; large unbanked populations where cash is predominant</td></tr>
+      <tr><td><strong>Customer Risk</strong></td><td>Anonymous or pseudonymous users; customers using multiple SIM cards or accounts; customers whose identity cannot be reliably verified at onboarding</td></tr>
+      <tr><td><strong>Agent Risk</strong></td><td>Third-party agents distributing the service (especially in retail networks) who may facilitate fraudulent accounts, identity theft, or fail to apply required CDD</td></tr>
+      <tr><td><strong>Product Risk</strong></td><td>High transaction limits; cross-border transfer capability; minimal friction at account loading; ability to load anonymously with cash</td></tr>
+    </tbody>
+  </table>
 
-      <div class="qc-block">
-        <div class="qc-label">✋ Quick Check</div>
-        <div class="qc-q">A cryptocurrency "tumbler" or "mixer" service is used in money laundering primarily to achieve what objective?</div>
-        <div class="qc-opts">
-          <button class="qc-btn" onclick="qc(this,false,'qc4')">To convert cryptocurrency into fiat currency quickly</button>
-          <button class="qc-btn" onclick="qc(this,false,'qc4')">To speed up blockchain transaction confirmation times</button>
-          <button class="qc-btn" onclick="qc(this,true,'qc4')">To blend multiple users' transactions together, making it extremely difficult to trace the origin of specific funds</button>
-          <button class="qc-btn" onclick="qc(this,false,'qc4')">To earn interest on cryptocurrency holdings</button>
-        </div>
-        <div class="qc-fb" id="qc4"></div>
-      </div>
+  <h2>Agent Risk in Detail</h2>
+  <p>The <strong>agent network</strong> deserves particular attention. In m-FS models — especially in emerging markets — the service provider distributes through thousands of third-party agents (kiosks, shops, mobile phone dealers). These agents are the first point of contact with customers, and they are responsible for conducting customer due diligence at account opening.</p>
+  <p>The problems are obvious: agents may be inadequately trained, may be corrupt, may be colluding with criminal customers, or may face competitive pressure to onboard customers quickly without proper checks. A corrupt agent can create accounts for criminal customers using false identities, and the transaction records will appear entirely legitimate from the service provider's perspective.</p>
 
-      <div class="bottom-nav">
-        <button class="btn-prev" onclick="goTo(3)">← Back</button>
-        <button class="btn-next" onclick="goTo(5)">Next: Red Flags &amp; Sector Summary →</button>
+  <div class="exam-note">
+    <div class="exam-note-label">📘 ICA Exam Note — m-FS Agent Risk Factors</div>
+    <ul>
+      <li>The agent is an intermediary — the service provider has no direct contact with the customer</li>
+      <li>Agents may not adequately understand or apply CDD requirements</li>
+      <li>Agents may be corrupt or colluding with criminals</li>
+      <li>Agents are incentivised to register customers quickly — commercial pressure reduces scrutiny</li>
+      <li>Multiple agents can register the same criminal customer under different identities</li>
+    </ul>
+  </div>
+
+  <h2>Prepaid Cards: The Anonymous Loading Problem</h2>
+  <p>Prepaid cards are one of the most direct tools available to launderers seeking to convert cash. The key vulnerability is <strong>anonymous cash loading</strong> — in many jurisdictions, prepaid cards can be loaded with cash at retail locations without full identity verification, up to certain limits. A criminal can load multiple cards, use them for purchases, and effectively convert cash into card payments without creating any identity-linked record.</p>
+  <p>Mitigating factors include loading limits, transaction limits, and requirements to register above certain thresholds — but these vary significantly by jurisdiction and product. The ICA notes that prepaid cards present particular challenges in cross-border money movement.</p>
+
+  <h2>Why m-FS is Less Risky Than Physical Cash</h2>
+  <p>Despite the vulnerabilities above, the ICA makes an important point: m-FS transactions are less risky than physical cash because <strong>every transaction creates a digital audit trail</strong>. Who sent what to whom, when, from which location — all of this is recorded. This makes m-FS considerably more traceable than physical cash, and regulators can (with appropriate access) reconstruct transaction histories.</p>
+
+  <div class="callout key">
+    <div class="callout-label">✅ Countering m-FS Risks — Firm-Level Controls</div>
+    <p>The ICA identifies the following as appropriate firm-level controls: agent due diligence including ongoing monitoring of agent behaviour; CDD at account opening; watch lists and sanctions screening; staff training; automated transaction monitoring; and compliance monitoring programmes.</p>
+  </div>
+
+  <div class="qc-block">
+    <div class="qc-label">✋ Quick Check</div>
+    <div class="qc-q">Why does the ICA consider mobile financial services transactions less risky than physical cash, despite their vulnerabilities?</div>
+    <div class="qc-opts">
+      <button class="qc-btn" onclick="qc(this,false,'qc3')">Because m-FS always requires full identity verification before transactions can occur</button>
+      <button class="qc-btn" onclick="qc(this,true,'qc3')">Because every m-FS transaction creates a digital audit trail that can be monitored and traced — unlike physical cash</button>
+      <button class="qc-btn" onclick="qc(this,false,'qc3')">Because m-FS transactions are restricted to domestic use only</button>
+    </div>
+    <div class="qc-fb" id="qc3"></div>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="btn-prev" onclick="goTo(2)">← Back</button>
+    <button class="btn-next" onclick="goTo(4)">Next: Virtual Currencies →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- SECTION 4: VIRTUAL CURRENCIES -->
+<!-- ══════════════════════════════════════════════ -->
+<div class="section" id="sec4">
+  <div class="lesson-tag">Module 04 — Section 5 of 7</div>
+  <div class="lesson-header">
+    <h1>Virtual Currencies</h1>
+    <p class="lesson-intro">Cryptocurrency and virtual currencies have created both legitimate financial innovation and significant AML vulnerabilities. This is a live and growing issue in property transactions — clients presenting crypto proceeds as source of funds is now commonplace.</p>
+  </div>
+
+  <h2>What Are Virtual Currencies?</h2>
+  <p>The ICA uses the term <strong>virtual currencies (VCs)</strong> as the preferred broad term, encompassing all types. This includes:</p>
+  <ul>
+    <li><strong>Bitcoin:</strong> The original and largest cryptocurrency. Pseudonymous — transactions tied to wallet addresses rather than identities, but all transactions publicly recorded on the blockchain.</li>
+    <li><strong>Privacy coins (Monero, Zcash):</strong> Designed specifically to obscure transaction details, offering significantly greater anonymity than Bitcoin. The ICA treats these as a heightened risk.</li>
+    <li><strong>Stablecoins:</strong> Cryptocurrencies pegged to a fiat currency (USD, GBP etc.). Reduce volatility but retain the transfer and pseudonymity features of other VCs.</li>
+    <li><strong>Tokens and NFTs:</strong> Digital assets issued on blockchain platforms. Can represent anything from gaming items to financial instruments.</li>
+  </ul>
+
+  <h2>Why Virtual Currencies Are Attractive for Laundering</h2>
+  <p>The ICA identifies three primary features that make VCs attractive to money launderers:</p>
+
+  <div class="stage-grid">
+    <div class="stage-card">
+      <div class="stage-icon">🎭</div>
+      <h3>Pseudonymity</h3>
+      <p>Transactions tied to wallet addresses — not names. On most blockchains, anyone can transact without identity verification at the protocol level.</p>
+    </div>
+    <div class="stage-card">
+      <div class="stage-icon">🌍</div>
+      <h3>Global Transfer</h3>
+      <p>Cross-border transfers occur in minutes, without bank intermediaries. Jurisdictional controls are easily bypassed.</p>
+    </div>
+    <div class="stage-card">
+      <div class="stage-icon">⚡</div>
+      <h3>Speed &amp; Irreversibility</h3>
+      <p>Transactions are often near-instant and irreversible. Once funds move, recovery is extremely difficult.</p>
+    </div>
+  </div>
+
+  <h2>Tumbling and Mixing Services</h2>
+  <p>A particularly important VC laundering technique is the use of <strong>tumbling</strong> or <strong>mixing</strong> services. These services take cryptocurrency from multiple users, pool and mix the transactions together, then redistribute equivalent amounts (minus a fee) to output addresses. The effect is to break the on-chain link between input and output addresses — making it extremely difficult for investigators to trace the origin of specific funds.</p>
+  <p>The ICA is explicit about mixers/tumblers: they serve no legitimate commercial purpose. Their sole function is to obscure the origin of funds. The use of a mixer or tumbler service should be treated as a significant red flag indicating potential laundering activity.</p>
+
+  <div class="exam-note">
+    <div class="exam-note-label">📘 ICA Exam Note — Liberty Reserve Case Study</div>
+    <p><strong>Liberty Reserve</strong> (shut down 2013) laundered over <strong>$6 billion</strong> across more than one million users. It operated as a centralised VC exchange requiring only a name, email address, and date of birth to register — with no verification of any of these. Transactions were processed through a network of third-party exchangers, allowing criminals to convert cash into LR dollars and move funds globally with minimal trail. Its shutdown by US authorities (SDNY) was the largest money laundering prosecution in US history at the time, and established the benchmark for VC ML regulation.</p>
+  </div>
+
+  <h2>Exchanges: Regulated vs Unregulated</h2>
+  <p>A key distinction in VC risk assessment is between <strong>regulated and unregulated exchanges</strong>. Regulated exchanges (registered with HMRC's cryptoasset register in the UK, or equivalent overseas) are required to apply CDD measures. They will have records of who opened accounts and, ideally, the original fiat source of funds.</p>
+  <p>However, not all exchanges are equal. A client who says "I bought Bitcoin on Binance" is making a different statement from one who says they transacted through a peer-to-peer platform with no KYC. Both require scrutiny, but the latter carries significantly higher risk. And crucially — the exchange is not the end of the trail. You need to establish where the fiat currency came from before it was converted into crypto.</p>
+
+  <div class="callout info">
+    <div class="callout-label">📘 ICA Exam Note — VC Red Flags</div>
+    <p>Key red flags identified by the ICA for virtual currencies:</p>
+    <ul style="margin-top:8px">
+      <li>Use of mixing/tumbling services (identified from blockchain analysis tools)</li>
+      <li>Use of privacy coins (Monero, Zcash) — designed for anonymity, not legitimate use</li>
+      <li>Transactions through unregulated or offshore exchanges with no KYC</li>
+      <li>Multiple small VC purchases below AML thresholds (structuring)</li>
+      <li>Converting VC proceeds to cash via multiple peer-to-peer transactions</li>
+      <li>Inability to explain the original fiat source of crypto holdings</li>
+    </ul>
+  </div>
+
+  <h2>Crypto Source of Funds: What You Actually Need</h2>
+  <p>When a client presents cryptocurrency proceeds as their source of funds for a property transaction, the question to ask is not "where did the crypto come from?" but rather <strong>"where did the money come from that was used to buy the crypto?"</strong> A client presenting a Coinbase statement showing proceeds of £900,000 needs to demonstrate:</p>
+  <ul>
+    <li>The exchange they used (regulated? KYC-compliant?)</li>
+    <li>The original fiat source that funded the crypto purchase — bank statements showing the transfer in</li>
+    <li>Whether any mixing services or privacy coins were involved</li>
+    <li>Provenance documentation from the exchange (transaction records, KYC confirmation)</li>
+  </ul>
+  <p>"I have Bitcoin" is not a source of funds — it is a current asset form. You always need to go back further.</p>
+
+  <div class="property-link">
+    <div class="property-label">🏠 Coadjute / Property Sector Link</div>
+    <p>Crypto-funded property purchases are increasingly common, particularly for higher-value London and South East properties. The risk is significant. The National Crime Agency has flagged crypto proceeds as a growing source of funds in property ML cases. Your firm's SOF process must be equipped to handle crypto — asking not just for the exchange statement but for the full fiat origin chain. If the chain cannot be established, the transaction should not proceed.</p>
+  </div>
+
+  <div class="qc-block">
+    <div class="qc-label">✋ Quick Check</div>
+    <div class="qc-q">A cryptocurrency "tumbler" or "mixer" service is used in money laundering primarily to achieve what objective?</div>
+    <div class="qc-opts">
+      <button class="qc-btn" onclick="qc(this,false,'qc4')">To convert cryptocurrency into fiat currency quickly and at low cost</button>
+      <button class="qc-btn" onclick="qc(this,false,'qc4')">To speed up blockchain transaction confirmation times</button>
+      <button class="qc-btn" onclick="qc(this,true,'qc4')">To blend multiple users' transactions together, making it extremely difficult to trace the origin of specific funds</button>
+      <button class="qc-btn" onclick="qc(this,false,'qc4')">To earn interest on cryptocurrency holdings during a holding period</button>
+    </div>
+    <div class="qc-fb" id="qc4"></div>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="btn-prev" onclick="goTo(3)">← Back</button>
+    <button class="btn-next" onclick="goTo(5)">Next: Red Flags &amp; Sector Summary →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- SECTION 5: RED FLAGS & SUMMARY -->
+<!-- ══════════════════════════════════════════════ -->
+<div class="section" id="sec5">
+  <div class="lesson-tag">Module 04 — Section 6 of 7</div>
+  <div class="lesson-header">
+    <h1>Red Flags &amp; Sector Summary</h1>
+    <p class="lesson-intro">Before the quiz, let's consolidate the key red flags across all sectors covered in this module — and consider how they connect to your work at Coadjute.</p>
+  </div>
+
+  <h2>The Common Thread: Why These Sectors Are Targeted</h2>
+  <p>Across insurance, investment products, gaming, mobile financial services, and virtual currencies, a common pattern emerges. Criminals seek sectors where:</p>
+  <ul>
+    <li>Cash or criminal funds can enter without triggering automatic suspicion</li>
+    <li>Value can be converted into a different format that obscures origins</li>
+    <li>Payouts appear legitimate — from insurers, investment accounts, casinos, or crypto exchanges</li>
+    <li>Regulatory oversight is weak or inconsistent</li>
+    <li>Transaction values can be structured to avoid reporting thresholds</li>
+  </ul>
+
+  <h2>Master Red Flags Table</h2>
+  <table class="risk-table">
+    <thead><tr><th>Sector</th><th>Key Red Flag</th><th>Why Suspicious</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Insurance</strong></td><td>Early policy surrender (accepting penalties)</td><td>Classic technique to extract "clean" insurer payment</td></tr>
+      <tr><td><strong>Insurance</strong></td><td>Third-party premium payments</td><td>Third party may be disguising true source of funds</td></tr>
+      <tr><td><strong>Insurance</strong></td><td>Large single-premium policies, vague source of funds</td><td>Placement of large criminal sum in one move</td></tr>
+      <tr><td><strong>Investment</strong></td><td>Redirect payout to third-party account</td><td>Proceeds going to someone other than the investor</td></tr>
+      <tr><td><strong>Investment</strong></td><td>Early redemption shortly after investment</td><td>Using fund as a washing vehicle, not genuine investing</td></tr>
+      <tr><td><strong>Investment</strong></td><td>Vague or absent source of wealth explanation</td><td>Cannot explain legitimate origin of funds invested</td></tr>
+      <tr><td><strong>Casino</strong></td><td>Low betting relative to account balance</td><td>Depositing and withdrawing with minimal gambling</td></tr>
+      <tr><td><strong>Casino</strong></td><td>Intentional losing / passing funds to other players</td><td>Transferring value between accounts disguised as losses</td></tr>
+      <tr><td><strong>Casino</strong></td><td>Multiple accounts or accounts in different names</td><td>Structuring across accounts to avoid thresholds</td></tr>
+      <tr><td><strong>m-FS / Prepaid</strong></td><td>Anonymous cash loading of prepaid cards</td><td>Converting untracked cash into electronic form</td></tr>
+      <tr><td><strong>m-FS / Prepaid</strong></td><td>Multiple accounts across different agents</td><td>Circumventing individual transaction limits</td></tr>
+      <tr><td><strong>Crypto</strong></td><td>Use of mixing/tumbling services</td><td>Sole purpose is to break the transaction trail</td></tr>
+      <tr><td><strong>Crypto</strong></td><td>Use of privacy coins (Monero, Zcash)</td><td>Designed for anonymity — no legitimate commercial need</td></tr>
+      <tr><td><strong>Crypto</strong></td><td>Unable to explain original fiat source of crypto</td><td>Chain of legitimate origin cannot be established</td></tr>
+    </tbody>
+  </table>
+
+  <h2>The Coadjute Principle: Follow the Money Back</h2>
+  <p>When a client presents source of funds documentation, your obligation is not just to accept the most recent payment — it's to understand the underlying origin. Insurance payouts, investment redemptions, gambling winnings, crypto sales — all of these are legitimate for many clients. But each requires you to go one step further: what was the original source of the funds that went into those products?</p>
+
+  <div class="callout key">
+    <div class="callout-label">✅ The Follow-the-Money Principle</div>
+    <p>Each high-risk sector creates a potential "laundry exit point" — a point at which dirty money emerges appearing clean. Your job is to trace the chain back <em>before</em> that exit point. The insurer, investment manager, or crypto exchange cannot tell you where the original criminal funds came from. Only rigorous source-of-funds questioning can do that.</p>
+  </div>
+
+  <div class="exam-note">
+    <div class="exam-note-label">📘 ICA Exam Note — Module 4 Core Knowledge</div>
+    <ul>
+      <li>The mechanism by which insurance products (especially life insurance) are used for laundering — placement via premiums, extraction via surrender/claim</li>
+      <li>UK casino CDD threshold: <strong>€2,000</strong></li>
+      <li>The four m-FS risk categories: Geographic, Customer, Agent, Product</li>
+      <li>Why m-FS is less risky than cash: digital audit trail</li>
+      <li>Key agent risk factors in m-FS networks</li>
+      <li>The primary AML risk of prepaid cards: anonymous cash loading</li>
+      <li>What a crypto mixer/tumbler does: blends transactions to prevent tracing</li>
+      <li>Liberty Reserve: $6bn+ laundered, shut down 2013 — the landmark VC laundering case</li>
+      <li>Investment products used for laundering even with strict remittance rules — change of format is a layering technique</li>
+      <li>Commercial pressure on investment managers is an identified sector vulnerability (ICA)</li>
+    </ul>
+  </div>
+
+  <div class="qc-block">
+    <div class="qc-label">✋ Final Quick Check</div>
+    <div class="qc-q">A client is purchasing a London flat and presents a bank statement showing £850,000 received from a cryptocurrency exchange as their source of funds. What is the most important next step?</div>
+    <div class="qc-opts">
+      <button class="qc-btn" onclick="qc(this,false,'qc5')">Accept the statement — funds from a regulated exchange are clearly fine</button>
+      <button class="qc-btn" onclick="qc(this,true,'qc5')">Request evidence of the original fiat source of the crypto purchase, and details of the exchange including its KYC standards</button>
+      <button class="qc-btn" onclick="qc(this,false,'qc5')">Reject the transaction — crypto funds cannot be used for property purchases</button>
+    </div>
+    <div class="qc-fb" id="qc5"></div>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="btn-prev" onclick="goTo(4)">← Back</button>
+    <button class="btn-next cta" onclick="goTo(6)">Proceed to Module Quiz →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════ -->
+<!-- SECTION 6: QUIZ -->
+<!-- ══════════════════════════════════════════════ -->
+<div class="section" id="sec6">
+  <div class="lesson-tag">Module 04 — Assessment</div>
+  <div class="lesson-header">
+    <h1>Module 4 Quiz</h1>
+    <p class="lesson-intro">15 questions · ICA-style · Pass mark: 70% (11/15) · Detailed explanations on every answer</p>
+  </div>
+
+  <div id="quiz-intro">
+    <div class="callout info">
+      <div class="callout-label">ℹ️ Before You Begin</div>
+      <p>This quiz covers all sections of Module 4: Insurance, Investment Products, Betting &amp; Gaming, Mobile Financial Services, Prepaid Cards, and Virtual Currencies. You need 11 correct answers out of 15 (70%) to pass.</p>
+    </div>
+    <div style="text-align:center;margin:32px 0">
+      <button class="btn-next cta" style="padding:16px 48px;font-size:1rem" onclick="startQuiz()">Start Quiz →</button>
+    </div>
+  </div>
+
+  <div id="quiz-shell" style="display:none">
+    <div class="quiz-header">
+      <h1 id="q-header">Question 1 of 15</h1>
+      <p id="q-prog-lbl">Progress: 0 of 15 answered</p>
+    </div>
+    <div id="q-mount"></div>
+  </div>
+
+  <div class="quiz-results" id="quiz-results" style="display:none">
+    <div style="font-size:3rem;margin-bottom:8px">🎓</div>
+    <div class="res-score" id="res-score"></div>
+    <div class="res-pct" id="res-pct"></div>
+    <div class="res-verdict" id="res-verdict"></div>
+
+    <!-- PASS state -->
+    <div id="result-pass" style="display:none;margin-top:20px">
+      <p id="pass-score-msg" style="margin-bottom:20px;font-size:.95rem;color:#445"></p>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+        <a href="index.html" class="btn-dashboard">✓ Back to Dashboard</a>
+        <button class="btn-retry-secondary" onclick="retakeQuiz()">Retake for a Better Score</button>
       </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════════════════ -->
-    <!-- SECTION 5: RED FLAGS & SUMMARY -->
-    <!-- ═══════════════════════════════════════════════════════ -->
-    <div class="section" id="sec5">
-      <div class="lesson-tag">Module 04 — Section 6 of 6</div>
-      <div class="lesson-header">
-        <h1>Red Flags &amp; Sector Summary</h1>
-        <p class="lesson-intro">Before the quiz, let's consolidate the key red flags across all the sectors covered in this module — and consider how they intersect with your work at Coadjute.</p>
-      </div>
-
-      <h2>The Common Thread: Why These Sectors Are Targeted</h2>
-      <p>Across insurance, investment products, gaming, mobile financial services, and virtual currencies, a common pattern emerges. Criminals seek sectors where:</p>
-      <ul>
-        <li><strong>Cash can enter</strong> without triggering automatic suspicion</li>
-        <li><strong>Value can be converted</strong> into a different format that obscures its origins</li>
-        <li><strong>Payouts appear legitimate</strong> — from insurers, investment accounts, casinos, or crypto exchanges</li>
-        <li><strong>Regulatory oversight is weak or inconsistent</strong> — particularly in emerging sectors like crypto</li>
-        <li><strong>Transaction values can be structured</strong> to avoid reporting thresholds</li>
-      </ul>
-
-      <h2>Master Red Flags Table</h2>
-
-      <table class="rf-table">
-        <thead>
-          <tr><th>Sector</th><th>Key Red Flag</th><th>Why Suspicious</th></tr>
-        </thead>
-        <tbody>
-          <tr><td><strong>Insurance</strong></td><td>Early policy surrender (accepting penalties)</td><td>Classic technique to extract "clean" insurer payment</td></tr>
-          <tr><td><strong>Insurance</strong></td><td>Third-party premium payments</td><td>Third party may be disguising true source of funds</td></tr>
-          <tr><td><strong>Insurance</strong></td><td>Large single-premium policies, vague source of funds</td><td>Placement of large criminal sum in one move</td></tr>
-          <tr><td><strong>Investment</strong></td><td>Redirect payout to third-party account</td><td>Proceeds going to someone other than the investor</td></tr>
-          <tr><td><strong>Investment</strong></td><td>Early redemption shortly after investment</td><td>Not genuinely investing — using fund as a washing vehicle</td></tr>
-          <tr><td><strong>Investment</strong></td><td>Vague or absent source of wealth explanation</td><td>Inability to explain legitimate origin of funds invested</td></tr>
-          <tr><td><strong>Casino</strong></td><td>Low betting relative to account balance</td><td>Depositing and withdrawing with minimal gambling</td></tr>
-          <tr><td><strong>Casino</strong></td><td>Intentional losing / passing funds to other players</td><td>Transferring value between accounts disguised as losses</td></tr>
-          <tr><td><strong>Casino</strong></td><td>Multiple casino accounts</td><td>Avoiding detection across accounts / jurisdictions</td></tr>
-          <tr><td><strong>m-FS</strong></td><td>Agent with disproportionate transaction volumes</td><td>Agent may be facilitating criminal activity</td></tr>
-          <tr><td><strong>m-FS</strong></td><td>Multiple accounts to bypass transaction limits</td><td>Classic structuring applied to mobile money</td></tr>
-          <tr><td><strong>Prepaid Cards</strong></td><td>Cash loading of multiple cards in sequence</td><td>Structuring to avoid CDD triggers</td></tr>
-          <tr><td><strong>Crypto</strong></td><td>Use of mixing/tumbling services</td><td>Designed to eliminate traceability of fund origin</td></tr>
-          <tr><td><strong>Crypto</strong></td><td>Chain-hopping through multiple currencies</td><td>Obfuscating the blockchain audit trail</td></tr>
-          <tr><td><strong>Crypto</strong></td><td>Unexplained large crypto holdings as source of funds</td><td>Origin of the crypto purchase not established</td></tr>
-        </tbody>
-      </table>
-
-      <h2>How These Sectors Intersect with Property</h2>
-      <p>At Coadjute, you work at the intersection of all of these. Property is a classic integration stage — criminals who have laundered money through insurance, gambling, or crypto may ultimately invest in real estate. This makes property one of the most important sectors for spotting the end result of complex laundering schemes.</p>
-
-      <div class="callout key">
-        <div class="callout-label">✅ The Coadjute Principle: Follow the Money Back</div>
-        <p>When a client presents source of funds documentation, your obligation is not just to accept the most recent payment — it's to understand the underlying origin. Insurance payouts, investment redemptions, gambling winnings, crypto sales — all of these are legitimate for many clients. But each requires you to go one step further: what was the original source of the funds that went into those products?</p>
-      </div>
-
-      <h2>Exam Essentials: What the ICA Expects You to Know</h2>
-
-      <div class="exam-note">
-        <div class="exam-note-label">📘 ICA Exam Note — Module 4 Core Knowledge</div>
-        <ul>
-          <li>The mechanism by which insurance products (especially life insurance) are used for laundering — placement via premiums, extraction via surrender/claim</li>
-          <li>UK casino CDD threshold: <strong>€2,000</strong></li>
-          <li>The four m-FS risk categories: Geographic, Customer, Agent, Product</li>
-          <li>Why m-FS is less risky than cash: digital audit trail</li>
-          <li>Key agent risk factors in m-FS networks</li>
-          <li>The primary AML risk of prepaid cards: anonymous cash loading</li>
-          <li>What a crypto mixer/tumbler does: blends transactions to prevent tracing</li>
-          <li>Liberty Reserve: $6bn+ laundered, shut down 2013 — the landmark VC laundering case</li>
-          <li>Investment products are used for laundering even with strict remittance rules — change of format is a layering technique</li>
-          <li>Commercial pressure on investment managers reduces their willingness to scrutinise clients — recognised by the ICA as a sector vulnerability</li>
-        </ul>
-      </div>
-
-      <div class="qc-block">
-        <div class="qc-label">✋ Final Quick Check</div>
-        <div class="qc-q">A client is purchasing a London flat and presents a bank statement showing £850,000 received from a cryptocurrency exchange as their source of funds. What is the most important next step?</div>
-        <div class="qc-opts">
-          <button class="qc-btn" onclick="qc(this,false,'qc5')">Accept the statement — funds from a regulated exchange are clearly fine</button>
-          <button class="qc-btn" onclick="qc(this,true,'qc5')">Request evidence of the original fiat source of the crypto purchase, and details of the exchange including its KYC standards</button>
-          <button class="qc-btn" onclick="qc(this,false,'qc5')">Reject the transaction — crypto funds cannot be used for property purchases</button>
-        </div>
-        <div class="qc-fb" id="qc5"></div>
-      </div>
-
-      <div class="bottom-nav">
-        <button class="btn-prev" onclick="goTo(4)">← Back</button>
-        <button class="btn-next cta" onclick="goTo(6)">Proceed to Module Quiz →</button>
+    <!-- FAIL state -->
+    <div id="result-fail" style="display:none;margin-top:20px">
+      <p id="fail-score-msg" style="margin-bottom:20px;font-size:.95rem;color:#445"></p>
+      <div style="display:flex;gap:12px;justify-content:center">
+        <button class="btn-retry" onclick="retakeQuiz()">↺ Try Again</button>
       </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════════════════ -->
-    <!-- SECTION 6: QUIZ -->
-    <!-- ═══════════════════════════════════════════════════════ -->
-    <div class="section" id="sec6">
-      <div class="lesson-tag">Module 04 — Assessment</div>
-      <div class="lesson-header">
-        <h1>Module 4 Quiz</h1>
-        <p class="lesson-intro">15 questions · ICA-style · Pass mark: 70% (11/15)</p>
-      </div>
+    <div class="res-breakdown" id="res-breakdown" style="margin-top:28px"></div>
+  </div>
 
-      <div id="quiz-start">
-        <div class="callout info">
-          <div class="callout-label">ℹ️ Before You Begin</div>
-          <p>This quiz covers all sections of Module 4: Insurance, Investment Products, Betting &amp; Gaming, Mobile Financial Services, Prepaid Cards, and Virtual Currencies. You need 11 correct answers out of 15 (70%) to pass. Detailed explanations are provided for every question.</p>
-        </div>
-        <div style="text-align:center;margin:32px 0">
-          <button class="btn-next cta" style="padding:16px 48px;font-size:1rem" onclick="startQuiz()">Start Quiz →</button>
-        </div>
-      </div>
+  <div class="bottom-nav">
+    <button class="btn-prev" onclick="goTo(5)">← Back to Content</button>
+    <div></div>
+  </div>
+</div>
 
-      <div id="quiz-shell" style="display:none">
-        <div class="quiz-header">
-          <h2 id="q-header">Question 1 of 15</h2>
-          <p id="q-progress-bar-label">Progress: 0 of 15</p>
-        </div>
-        <div id="q-mount"></div>
-      </div>
-
-      <div class="quiz-results" id="quiz-results" style="display:none">
-        <div style="font-size:3rem">🎓</div>
-        <div class="result-score" id="res-score"></div>
-        <div class="result-msg" id="res-msg"></div>
-        <div class="result-breakdown" id="res-breakdown"></div>
-        <div style="margin-top:16px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-          <button class="btn-prev" onclick="retake()">↩ Retake Quiz</button>
-          <div class="completion-banner" id="comp-banner">
-            <h3>✅ Module 4 Complete!</h3>
-            <p>You've passed. Well done — this module's content is now firmly in your toolkit for the ICA exam.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="bottom-nav">
-        <button class="btn-prev" onclick="goTo(5)">← Back to Content</button>
-        <div></div>
-      </div>
-    </div>
-
-  </main>
+</main>
 </div>
 
 <script>
-// ── QUIZ DATA ──────────────────────────────────────────────
-const Qs=[
+// ══ SECTIONS CONFIG ══
+const SECS = [
+  {label:"Insurance Products",      sub:"Life insurance & investment policies"},
+  {label:"Investment Products",     sub:"Funds, shares & the remittance fallacy"},
+  {label:"Betting & Gaming",        sub:"Casinos, chip washing & online gaming"},
+  {label:"Mobile Financial Services",sub:"m-Money, prepaid cards & agent risk"},
+  {label:"Virtual Currencies",      sub:"Crypto, mixers & blockchain risk"},
+  {label:"Red Flags & Summary",     sub:"Bringing it all together"},
+  {label:"Module 4 Quiz",           sub:"15 questions · 70% to pass"}
+];
+
+let cur = 0, unlockedTo = 0;
+
+// ══ SIDEBAR BUILD ══
+function buildSidebar() {
+  const nav = document.getElementById('sideNav');
+  nav.innerHTML = '';
+  SECS.forEach((s, i) => {
+    const div = document.createElement('div');
+    const isActive = i === cur;
+    const isLocked = i > unlockedTo;
+    const isDone   = i < cur;
+    div.className = 'nav-item' + (isActive ? ' active' : '') + (isDone ? ' completed' : '') + (isLocked ? ' locked' : '');
+    div.onclick = isLocked ? null : () => goTo(i);
+    let icon = i < cur ? '<span class="tick-icon">✓</span>' : (isLocked ? '<span class="lock-icon">🔒</span>' : '');
+    div.innerHTML = `
+      <div class="nav-icon">${isActive ? (i+1) : (isDone ? '✓' : (i+1))}</div>
+      <div class="nav-text">
+        <div class="nav-label">${s.label}</div>
+        <div class="nav-sublabel">${s.sub}</div>
+      </div>
+      ${isLocked ? '<span class="lock-icon">🔒</span>' : (isDone ? '<span class="tick-icon">✓</span>' : '')}`;
+    nav.appendChild(div);
+  });
+  updateProgress();
+}
+
+function updateProgress() {
+  const pct = Math.round((cur / (SECS.length - 1)) * 100);
+  document.getElementById('topFill').style.width = pct + '%';
+  document.getElementById('topPct').textContent = pct + '% complete';
+  document.getElementById('progFill').style.width = pct + '%';
+  document.getElementById('progLabel').textContent = cur + ' of ' + SECS.length + ' sections complete';
+}
+
+function goTo(n) {
+  if (n > unlockedTo) return;
+  document.getElementById('sec' + cur).classList.remove('active');
+  cur = n;
+  if (n > unlockedTo) unlockedTo = n;
+  if (n + 1 > unlockedTo) unlockedTo = Math.min(n + 1, SECS.length - 1);
+  document.getElementById('sec' + n).classList.add('active');
+  buildSidebar();
+  window.scrollTo(0, 0);
+}
+
+// ══ QUICK CHECKS ══
+const QC_EXPLS = {
+  qc0: "Early surrender is an explicit ICA insurance red flag. The payment coming from a regulated insurer tells you nothing about where the premiums came from — you must trace back to the original funding source.",
+  qc1: "The ICA explicitly rejects this reasoning. The change of format from cash to investment units and back is itself a layering technique. The originating account may also be part of the scheme.",
+  qc2: "Low betting relative to account balance is one of the clearest casino red flags in ICA material. Depositing £400,000, betting occasionally, then withdrawing £395,000 is not genuine gambling — it's using the platform as a conduit.",
+  qc3: "Despite its vulnerabilities, m-FS creates a digital audit trail for every transaction — who sent what, to whom, when, from where. Physical cash creates no such trail, making m-FS considerably more traceable.",
+  qc4: "Mixers/tumblers take crypto from multiple users, blend transactions together, and redistribute equivalent amounts to output addresses — breaking the blockchain link between sender and recipient. The ICA states they serve no legitimate commercial purpose.",
+  qc5: "The exchange statement only shows the most recent step. You must go back further: what was the original fiat source that funded the crypto purchase? You also need details of the exchange (regulated? KYC-compliant?) and confirmation no mixing services were used."
+};
+
+function qc(btn, correct, id) {
+  const parent = btn.closest('.qc-opts') || btn.parentElement;
+  const btns = parent.querySelectorAll('.qc-btn');
+  btns.forEach(b => { b.disabled = true; b.onclick = null; });
+  btn.classList.add(correct ? 'correct' : 'wrong');
+  const fb = document.getElementById(id);
+  fb.className = 'qc-fb show ' + (correct ? 'c' : 'w');
+  fb.innerHTML = '<strong>' + (correct ? '✓ Correct! ' : '✗ Not quite. ') + '</strong>' + QC_EXPLS[id];
+}
+
+// ══ QUIZ DATA ══
+const Qs = [
   {
-    q:"Which feature of life insurance products makes them attractive for money laundering?",
-    opts:["They pay out upon death only, preventing premature access","Criminal funds can be placed as premiums and later surrendered as a clean payment from the insurer","They are completely unregulated in the UK","They do not require any identity verification"],
+    q:"Which feature of life insurance products makes them particularly attractive for money laundering?",
+    opts:["They pay out only upon death, making premature access impossible","Criminal funds can be placed as premiums and later surrendered to receive a clean payment from the insurer","They are completely unregulated in the UK","They do not require any identity verification at the point of sale"],
     ans:1,
-    expl:"Life insurance allows criminal funds to be placed as premium payments. When the policy is surrendered (even early, accepting a penalty), the criminal receives a payment from the insurance company — creating an apparently legitimate source of funds. The ICA describes this as breaking the money trail."
+    expl:"Life insurance allows criminal funds to be placed as premium payments. When the policy is surrendered — even early, accepting a penalty — the criminal receives a payment from the insurance company, creating an apparently legitimate source of funds. The ICA describes this as 'breaking the money trail.'"
   },
   {
-    q:"A client pays a large single-premium life insurance policy, then requests an early surrender six months later, accepting a 15% penalty. Which of the following BEST describes this situation?",
-    opts:["Normal behaviour — many customers change their financial plans","A red flag — early surrender accepting a penalty is one of the ICA's listed insurance red flags","Only suspicious if the client is a PEP","Only suspicious if the premium was paid in cash"],
+    q:"A client pays a large single-premium life insurance policy, then requests early surrender six months later, accepting a 15% financial penalty. Which BEST describes this?",
+    opts:["Normal behaviour — many customers change their financial plans","A red flag — early surrender accepting a penalty is an ICA-listed insurance red flag","Only suspicious if the client is a PEP","Only suspicious if the premium was paid in cash rather than by bank transfer"],
     ans:1,
-    expl:"Early surrender of a policy, particularly where the client accepts a financial penalty, is explicitly listed by the ICA as a key insurance red flag. The criminal accepts the penalty as the cost of laundering. This pattern should trigger enhanced due diligence and consideration of a SAR."
+    expl:"Early surrender of a policy, particularly where the client accepts a financial penalty, is explicitly listed by the ICA as a key insurance red flag. The criminal accepts the penalty as the cost of laundering. This should trigger enhanced due diligence and consideration of a SAR."
   },
   {
     q:"The ICA states that investment funds with strict remittance rules — requiring proceeds to go back only to the originating account — 'cannot be used for money laundering.' Is this correct?",
     opts:["Yes — if money must return to the original account, laundering is impossible","No — even with strict rules, the change of format provides a layer of concealment, and the originating account may itself be part of the layering scheme","Yes, unless the investor is offshore","No — but only because the ICA definition of laundering is very broad"],
     ans:1,
-    expl:"The ICA explicitly addresses and rejects this misconception. Even if funds return to the originating account, placing criminal money in an investment product converts it into a different format (units, shares, etc.) — which is itself a layering technique. The originating account may also be several steps removed from the original crime."
+    expl:"The ICA explicitly rejects this misconception. Even if funds return to the originating account, placing criminal money in an investment product converts it into a different format (units, shares etc.) — which is itself a layering technique. The originating account may also be several steps removed from the original crime."
   },
   {
     q:"At what transaction value must UK casino operators apply CDD measures under the Money Laundering Regulations 2017?",
-    opts:["£5,000","€2,000","£10,000","€5,000"],
-    ans:1,
-    expl:"Under MLR 2017, casino operators must apply CDD for any transaction exceeding €2,000. This applies regardless of whether a business relationship exists, and covers single or multiple linked transactions. This threshold applies to non-remote casinos (tokens and gaming machines) and remote casinos (deposits/withdrawals)."
-  },
-  {
-    q:"A casino customer deposits £500,000 into their online account. Over several months, they make small bets but withdraw £495,000 — almost the full balance. This pattern is BEST described as:",
-    opts:["Legitimate — a customer is entitled to withdraw their own funds","Suspicious — low betting relative to account balance and size of withdrawals is a recognised casino red flag","Only suspicious if the customer is from a high-risk jurisdiction","Only suspicious if payments were made in cash"],
-    ans:1,
-    expl:"This closely mirrors the ICA's 'Lack of betting, no closed loop' case study. Depositing large sums and immediately withdrawing most of it with minimal gambling is a classic ML indicator — the casino account is being used as a laundering vehicle, not for genuine gambling. This should trigger a SAR."
-  },
-  {
-    q:"In the gaming sector, what is a 'junket operator' and why does the ICA flag them as higher-risk?",
-    opts:["A casino software provider — higher risk because they can manipulate games","An operator who brings groups of high-spending players (often from overseas) to casinos — higher risk because of the third-party relationship and potential for overseas criminal funds","A loan shark operating within casinos","A casino employee who processes large chip exchanges"],
-    ans:1,
-    expl:"Junket operators bring groups of players (typically high rollers, often from overseas) to casinos and manage their accounts. This creates third-party risk — the junket operator may conduct their own CDD on players, which the casino cannot directly verify. The overseas dimension adds geographic risk. The ICA lists junket operators as a higher-risk customer category."
-  },
-  {
-    q:"The four main risk categories identified by the ICA for mobile financial services are:",
-    opts:["Regulatory, Operational, Credit, and Market risk","Geographic, Customer, Agent, and Product risk","Domestic, International, Retail, and Wholesale risk","Platform, Network, Currency, and Credit risk"],
-    ans:1,
-    expl:"The ICA specifically identifies four m-FS risk categories: Geographic risk (use in jurisdictions with weak AML regimes); Customer risk (difficulty obtaining CDD, multiple accounts); Agent risk (remote agents with poor CDD standards); and Product risk (features favouring anonymity, unlimited transactions, cross-border capability)."
-  },
-  {
-    q:"Why is agent network risk considered particularly significant in mobile financial services?",
-    opts:["Agents can manipulate transaction records in their favour","Remote agents may apply CDD less rigorously than central office staff, and cultural factors may discourage SAR filing","All agents operate in sanctioned jurisdictions","Agents are always anonymous — they cannot be identified"],
-    ans:1,
-    expl:"The ICA highlights that m-FS agents often come from non-financial backgrounds with little AML training. In some communities, kinship ties may discourage reporting. An agent in a small village may be reluctant to file a SAR on a family member. Remote location, high staff turnover, and scale of networks compound these risks."
-  },
-  {
-    q:"Which feature of a mobile financial services product would INCREASE its money laundering risk according to the ICA?",
-    opts:["Requiring face-to-face registration with a regulated agent","A facility for customers to open multiple accounts","Backing customer accounts 100% with a pooled bank account","Requiring a PIN for all transactions"],
-    ans:1,
-    expl:"The ability for customers to open multiple accounts is specifically listed by the ICA as an ML risk — it enables structuring (splitting transactions across accounts to stay below any single threshold or avoid triggering monitoring)."
-  },
-  {
-    q:"The primary ML risk associated with prepaid cards is that:",
-    opts:["They have no spending limits in any jurisdiction","Criminal cash can be loaded onto the card without triggering bank-level AML scrutiny","They can only be used domestically","They always display the cardholder's name"],
-    ans:1,
-    expl:"The ICA's core point on prepaid cards is the ability to load criminal cash without the AML checks that would apply at a regulated bank. This provides an apparently legitimate payment instrument funded by criminal proceeds."
-  },
-  {
-    q:"Why does the ICA consider mobile financial services transactions less risky than physical cash, despite other vulnerabilities?",
-    opts:["m-FS always requires government-issued ID for all transactions","m-FS transactions leave a digital audit trail that can be monitored and traced","m-FS can only be used for domestic transfers","m-FS providers are all regulated as banks"],
-    ans:1,
-    expl:"The ICA explicitly notes this as a key mitigating factor: unlike physical cash, m-FS creates a digital record. Every transaction is recorded — who, when, from where, to whom. This makes m-FS more traceable than cash, providing investigators with an evidence base that physical cash cannot provide."
-  },
-  {
-    q:"A cryptocurrency 'mixer' or 'tumbler' service is used in money laundering primarily to:",
-    opts:["Convert cryptocurrency into fiat currency at the best exchange rate","Speed up blockchain transaction confirmation times","Blend multiple users' transactions together, making it extremely difficult to trace the original source of specific funds","Reduce the tax liability on cryptocurrency gains"],
+    opts:["£1,000 or more","£5,000 or more","€2,000 or more","€10,000 or more"],
     ans:2,
-    expl:"Mixers/tumblers receive cryptocurrency from multiple users and redistribute equivalent amounts, breaking the blockchain audit trail. After tumbling, tracing the original source of specific coins back to a criminal wallet becomes extremely difficult. This is a classic layering technique in the crypto context."
+    expl:"UK casino operators must apply CDD when a customer conducts transactions totalling €2,000 or more. This threshold applies whether the transaction is in a single go or across multiple transactions within a session."
   },
   {
-    q:"What was Liberty Reserve, and why is it significant in the context of virtual currency AML?",
-    opts:["A legitimate cryptocurrency exchange shut down for tax evasion","A Costa Rica-based platform that operated as effectively a black-market bank, masking more than $6bn in criminal proceeds before being shut down in 2013","A blockchain technology company acquired by the US Treasury","A licensed financial institution that failed due to poor investment decisions"],
+    q:"A casino customer deposits £200,000 in chips, places a few small bets, then cashes out £190,000 as a casino cheque made payable to a different person. Which combination of red flags does this display?",
+    opts:["None — casino winnings are always legitimate","Low betting relative to account balance, and redirection of proceeds to a third party","Only the third-party payment is suspicious","Only suspicious if the original deposit was in cash"],
     ans:1,
-    expl:"Liberty Reserve, incorporated in Costa Rica, allowed users to transfer funds with minimal identification. US prosecutors described it as 'essentially a black-market bank.' It masked over $6 billion in criminal proceeds from drug traffickers, fraudsters, hackers, and child exploitation networks. Shut down by US authorities in 2013, it remains the landmark case in VC-enabled money laundering."
+    expl:"This scenario shows two classic casino red flags: (1) low betting relative to account balance — the hallmark of using the casino as a conduit rather than genuinely gambling; and (2) requesting payout to a third party — directing the 'clean' payment away from the original depositor to obscure the trail."
   },
   {
-    q:"A client wishes to purchase a £1.2m property and states their source of funds as 'cryptocurrency proceeds from selling Bitcoin.' What is the minimum you must do in terms of AML due diligence?",
-    opts:["Accept the statement — cryptocurrency proceeds are a legitimate source of funds","Establish the exchange used, whether it is regulated and KYC-compliant, and trace the original fiat source of the Bitcoin purchase","Refuse to proceed — crypto funds cannot be used for UK property transactions","Accept if the client has a tax return showing the crypto gains"],
-    ans:1,
-    expl:"'I sold Bitcoin' is not a complete source of funds answer. You must understand: which exchange was used (regulated, with KYC?); whether mixing or privacy coins were involved; and crucially, the original fiat source that was used to purchase the Bitcoin. The ICA's principle is to trace funds back to their ultimate legitimate origin."
+    q:"The ICA identifies four risk categories for mobile financial services. Which of the following is NOT one of them?",
+    opts:["Geographic risk","Agent risk","Regulatory risk","Customer risk"],
+    ans:2,
+    expl:"The ICA's four m-FS risk categories are: Geographic, Customer, Agent, and Product risk. 'Regulatory risk' is not one of the four named categories, though regulatory gaps may be a component of geographic or product risk."
   },
   {
-    q:"A commercial factor that the ICA specifically identifies as a vulnerability in the investment sector is:",
-    opts:["Investment managers are not subject to AML regulations","Relationship managers may allow commercial considerations to affect their willingness to scrutinise potential ML risks","Investment products always offer anonymity","Investment firms never conduct source of funds checks"],
+    q:"What makes mobile financial services less risky than physical cash, according to the ICA?",
+    opts:["m-FS requires a bank account, which is subject to CDD","m-FS transactions always require biometric verification","Every m-FS transaction creates a digital record that can be monitored and traced","m-FS is restricted to small transaction values by regulation"],
+    ans:2,
+    expl:"The ICA specifically identifies the digital audit trail as the key mitigating factor: every m-FS transaction is recorded — who sent what to whom, when, from which location. Physical cash creates no equivalent trail."
+  },
+  {
+    q:"In a mobile financial services agent network, why is the agent a particular AML risk factor?",
+    opts:["Agents are not permitted to conduct CDD under FATF rules","Agents are intermediaries between the service provider and the customer — they may be inadequately trained, corrupt, or colluding with criminal customers","Agents always deal only in cash transactions","Agents are required to report all transactions above £50 to the FCA"],
     ans:1,
-    expl:"The ICA explicitly states that there is 'a tendency for traders or relationship managers in particular to allow commercial considerations to affect their willingness to consider the extent to which they may be assisting clients to launder the proceeds of crime.' Coupled with the widespread (incorrect) belief that investment products are not attractive to launderers, this adds to their vulnerability."
+    expl:"The agent sits between the service provider and the customer. The service provider never has direct contact with the customer — they rely on the agent to apply CDD. Agents may be inadequately trained, commercially incentivised to onboard customers quickly, or actively corrupt and colluding with criminals."
+  },
+  {
+    q:"The primary AML risk of prepaid cards (as identified by the ICA) is:",
+    opts:["They can be used internationally without restriction","Anonymous cash loading — cards can be loaded with cash without full identity verification","They cannot be monitored by banks","They are always issued by unregulated entities"],
+    ans:1,
+    expl:"The ICA identifies anonymous cash loading as the primary prepaid card risk. Where cards can be loaded with cash at retail locations without identity verification, criminals can convert untracked physical cash into electronic payment capability — effectively achieving placement with minimal paper trail."
+  },
+  {
+    q:"A cryptocurrency 'tumbler' or 'mixer' service is used in money laundering to achieve which primary objective?",
+    opts:["To convert cryptocurrency into fiat currency at low cost","To speed up blockchain transaction confirmation times","To blend multiple users' transactions together, making it extremely difficult to trace the origin of specific funds","To earn interest on cryptocurrency holdings during a holding period"],
+    ans:2,
+    expl:"Mixing/tumbling services pool cryptocurrency from multiple users, blend the transactions, and redistribute equivalent amounts to output addresses. The effect is to break the blockchain link between input and output, making it extremely difficult for investigators to trace the origin of specific funds. The ICA states they serve no legitimate commercial purpose."
+  },
+  {
+    q:"Liberty Reserve — the landmark virtual currency money laundering case — was shut down in:",
+    opts:["2008","2011","2013","2016"],
+    ans:2,
+    expl:"Liberty Reserve was shut down in 2013. At the time, it was the largest money laundering prosecution in US history. It laundered over $6 billion across more than one million users by requiring only a name, email, and date of birth to register — with no verification of any details."
+  },
+  {
+    q:"A client presents a regulated exchange statement showing £900,000 in Bitcoin proceeds as their source of funds for a property purchase. What is the minimum additional information you should obtain?",
+    opts:["Nothing further — a regulated exchange statement is sufficient documentation","The client's passport and a utility bill for identity purposes","The original fiat source that funded the Bitcoin purchase, exchange KYC details, and confirmation no mixing services were used","Only the exchange statement is needed if the exchange is FCA-registered"],
+    ans:2,
+    expl:"The exchange statement only documents the most recent transaction step. You must establish: (1) the original fiat source that funded the crypto purchase; (2) whether the exchange was KYC-compliant; (3) whether any mixing services or privacy coins were used. 'I have Bitcoin' is not a source of funds — it is a current asset form."
+  },
+  {
+    q:"Which of the following is a recognised money laundering typology in the online gambling sector?",
+    opts:["Winning consistently at skill-based games","Using chips as currency — buying in with cash, gambling minimally, then cashing out to obtain a casino cheque","Playing exclusively on regulated platforms with documented accounts","Using a credit card to fund a gambling account"],
+    ans:1,
+    expl:"Chip washing involves purchasing casino chips with criminal cash, gambling for a short time to create cover, then cashing out and receiving a casino cheque. The cheque converts criminal cash into an apparently legitimate gaming winnings receipt. The ICA explicitly identifies this as a classic integration technique."
+  },
+  {
+    q:"The ICA identifies commercial pressure as an AML vulnerability in the investment products sector. This refers to:",
+    opts:["Pressure from regulators to increase AML compliance budgets","Pressure on investment managers to gather assets under management, which can create reluctance to apply rigorous CDD on large clients","Pressure from clients to reduce investment management fees","Pressure from competitors to match product returns"],
+    ans:1,
+    expl:"The ICA identifies commercial pressure as a specific vulnerability: investment managers under pressure to gather AUM may be reluctant to ask probing CDD questions of large clients, or to decline business on AML grounds. This is compounded by the widespread (incorrect) belief that investment products cannot be used for laundering."
+  },
+  {
+    q:"Across insurance, investment, gaming, m-FS, and virtual currency sectors, the ICA identifies a common pattern of why these sectors are targeted. Which of the following BEST captures this pattern?",
+    opts:["These sectors are all exclusively cash-based","These sectors allow criminals to convert criminal proceeds into a different format that appears legitimate, exploiting weak oversight or commercial pressure to reduce scrutiny","These sectors are all unregulated in most jurisdictions","These sectors all involve international transactions that cannot be monitored by domestic authorities"],
+    ans:1,
+    expl:"The common thread is format conversion under cover of legitimacy: in each sector, criminal funds can be placed in, converted into a different format (insurance payout, investment units, casino cheque, crypto etc.), and extracted looking clean. Weak oversight, commercial pressure, and complexity in each sector create the conditions for this to work."
   }
 ];
 
-// ── QUIZ STATE ───────────────────────────────────────────
-let qIdx=0,score=0,answered=[];
+// ══ QUIZ STATE ══
+let qIdx = 0, score = 0, answered = [];
 
-function startQuiz(){
-  qIdx=0;score=0;answered=[];
-  document.getElementById('quiz-start').style.display='none';
-  document.getElementById('quiz-shell').style.display='block';
+function startQuiz() {
+  qIdx = 0; score = 0; answered = [];
+  document.getElementById('quiz-intro').style.display = 'none';
+  document.getElementById('quiz-shell').style.display = 'block';
   renderQ();
 }
 
-function renderQ(){
-  const Q=Qs[qIdx];
-  document.getElementById('q-header').textContent=`Question ${qIdx+1} of ${Qs.length}`;
-  document.getElementById('q-progress-bar-label').textContent=`Progress: ${qIdx} of ${Qs.length} answered`;
-  const m=document.getElementById('q-mount');
-  const letters=['A','B','C','D'];
-  m.innerHTML=`
+function renderQ() {
+  const Q = Qs[qIdx];
+  document.getElementById('q-header').textContent = 'Question ' + (qIdx+1) + ' of ' + Qs.length;
+  document.getElementById('q-prog-lbl').textContent = 'Progress: ' + qIdx + ' of ' + Qs.length + ' answered';
+  const L = ['A','B','C','D'];
+  document.getElementById('q-mount').innerHTML = `
     <div class="q-block" id="qblock">
       <div class="q-num">Question ${qIdx+1}</div>
       <div class="q-text">${Q.q}</div>
-      ${Q.opts.map((o,i)=>`<div class="a-opt" onclick="selectOpt(this,${i})" id="opt${i}"><span class="let">${letters[i]}</span><span>${o}</span></div>`).join('')}
+      ${Q.opts.map((o,i) => `<div class="a-opt" onclick="pick(this,${i})" id="opt${i}"><span class="let">${L[i]}</span><span>${o}</span></div>`).join('')}
       <div class="q-fb" id="qfb"></div>
-      <div class="q-next" id="qnext" style="display:none"><button class="btn-qnext" onclick="nextQ()">${qIdx===Qs.length-1?'See Results →':'Next Question →'}</button></div>
+      <div class="q-next" id="qnext" style="display:none"><button class="btn-qnext" onclick="nextQ()">${qIdx === Qs.length-1 ? 'See Results →' : 'Next Question →'}</button></div>
     </div>`;
 }
 
-function selectOpt(el,i){
-  const Q=Qs[qIdx];
-  const opts=document.querySelectorAll('.a-opt');
-  opts.forEach(o=>o.onclick=null);
-  const fb=document.getElementById('qfb');
-  const correct=i===Q.ans;
-  el.classList.add(correct?'correct':'wrong');
-  document.getElementById('opt'+Q.ans).classList.add('correct');
-  fb.className='q-fb show '+(correct?'c':'w');
-  fb.innerHTML='<strong>'+(correct?'✓ Correct!':'✗ Incorrect.')+' </strong>'+Q.expl;
-  document.getElementById('qnext').style.display='flex';
-  if(correct)score++;
-  answered.push({q:Q.q,correct,right:Q.opts[Q.ans]});
+function pick(el, i) {
+  const Q = Qs[qIdx];
+  document.querySelectorAll('.a-opt').forEach(o => o.onclick = null);
+  const correct = i === Q.ans;
+  el.classList.add(correct ? 'correct' : 'wrong');
+  document.getElementById('opt' + Q.ans).classList.add('correct');
+  const fb = document.getElementById('qfb');
+  fb.className = 'q-fb show ' + (correct ? 'c' : 'w');
+  fb.innerHTML = '<strong>' + (correct ? '✓ Correct! ' : '✗ Incorrect. ') + '</strong>' + Q.expl;
+  document.getElementById('qnext').style.display = 'flex';
+  if (correct) score++;
+  answered.push({q: Q.q, correct, right: Q.opts[Q.ans]});
 }
 
-function nextQ(){
+function nextQ() {
   qIdx++;
-  if(qIdx>=Qs.length){showResults();return;}
+  if (qIdx >= Qs.length) { showResults(); return; }
   renderQ();
 }
 
-function showResults(){
-  document.getElementById('quiz-shell').style.display='none';
-  const r=document.getElementById('quiz-results');
-  r.style.display='block';
-  const pct=Math.round((score/Qs.length)*100);
-  const pass=pct>=70;
-  document.getElementById('res-score').textContent=`${score}/${Qs.length}`;
-  document.getElementById('res-msg').innerHTML=`<strong>${pct}%</strong> — <span class="${pass?'result-pass':'result-fail'}">${pass?'✓ PASS — well done! Module 4 complete.':'✗ FAIL — review the content and try again. You need 70% to pass.'}</span>`;
-  const bd=document.getElementById('res-breakdown');
-  bd.innerHTML='<strong style="display:block;margin-bottom:12px;font-size:.9rem">Question Breakdown</strong>';
-  answered.forEach((a,i)=>{
-    const d=document.createElement('div');
-    d.className='rb-item';
-    d.innerHTML=`<span style="min-width:24px;font-weight:700;font-size:.8rem">${i+1}.</span><span class="${a.correct?'rb-correct':'rb-wrong'}" style="min-width:20px">${a.correct?'✓':'✗'}</span><span style="flex:1"><strong>${a.q}</strong>${!a.correct?`<br><span style="color:#889;font-size:.8rem">Correct: ${a.right}</span>`:''}</span>`;
+function showResults() {
+  document.getElementById('quiz-shell').style.display = 'none';
+  const r = document.getElementById('quiz-results');
+  r.style.display = 'block';
+  const pct = Math.round((score / Qs.length) * 100);
+  const pass = pct >= 70;
+  document.getElementById('res-score').textContent = score + '/' + Qs.length;
+  document.getElementById('res-pct').textContent = pct + '%';
+  const verd = document.getElementById('res-verdict');
+  verd.className = 'res-verdict ' + (pass ? 'pass' : 'fail');
+  verd.textContent = pass ? '✓ Pass — well done!' : '✗ Not passed — review content and try again';
+
+  if (pass) {
+    document.getElementById('result-pass').style.display = 'block';
+    document.getElementById('pass-score-msg').textContent = `You scored ${score}/${Qs.length} (${pct}%) — excellent work. Module 4 is complete.`;
+  } else {
+    document.getElementById('result-fail').style.display = 'block';
+    document.getElementById('fail-score-msg').textContent = `You scored ${score}/${Qs.length} (${pct}%). You need 70% (11/15) to pass. Review the sections and try again.`;
+  }
+
+  const bd = document.getElementById('res-breakdown');
+  bd.innerHTML = '<strong style="display:block;margin-bottom:12px;font-size:.9rem">Question Breakdown</strong>';
+  answered.forEach((a, i) => {
+    const d = document.createElement('div');
+    d.className = 'rb-row';
+    d.innerHTML = `<span style="min-width:24px;font-weight:700;font-size:.8rem">${i+1}.</span>
+      <span style="min-width:20px;font-weight:700;color:${a.correct?'#22aa66':'#cc2255'}">${a.correct?'✓':'✗'}</span>
+      <span style="flex:1;font-size:.83rem"><strong>${a.q.substring(0,80)}…</strong>${!a.correct ? `<br><span style="color:#889;font-size:.8rem">Correct: ${a.right}</span>` : ''}</span>`;
     bd.appendChild(d);
   });
-  if(pass) document.getElementById('comp-banner').classList.add('show');
-  unlockSidebar(6);
-  updateProgress();
 }
 
-function retake(){
-  document.getElementById('quiz-results').style.display='none';
-  document.getElementById('quiz-start').style.display='block';
+function retakeQuiz() {
+  document.getElementById('quiz-results').style.display = 'none';
+  document.getElementById('result-pass').style.display = 'none';
+  document.getElementById('result-fail').style.display = 'none';
+  document.getElementById('quiz-intro').style.display = 'block';
 }
 
-// ── SECTION NAVIGATION ───────────────────────────────────
-let unlockedUpTo=0;
-
-function goTo(n){
-  if(n>unlockedUpTo+1) return;
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.getElementById('sec'+n).classList.add('active');
-  updateSidebarHighlight(n);
-  if(n>unlockedUpTo){unlockSidebar(n);}
-  updateProgress();
-  document.getElementById('main-content').scrollTop=0;
-  window.scrollTo(0,0);
-}
-
-function unlockSidebar(n){
-  if(n>unlockedUpTo)unlockedUpTo=n;
-  document.querySelectorAll('.snav-item').forEach((el,i)=>{
-    el.classList.remove('active','locked');
-    if(i>unlockedUpTo)el.classList.add('locked');
-  });
-}
-
-function updateSidebarHighlight(n){
-  document.querySelectorAll('.snav-item').forEach((el,i)=>{
-    el.classList.remove('active');
-    if(i===n)el.classList.add('active');
-  });
-}
-
-function updateProgress(){
-  const pct=Math.round((unlockedUpTo/6)*100);
-  document.getElementById('progress-fill').style.width=pct+'%';
-  document.getElementById('sp-fill').style.width=pct+'%';
-  document.getElementById('sp-pct').textContent=(unlockedUpTo)+' of 7 sections';
-}
-
-// ── QUICK CHECK ──────────────────────────────────────────
-const qcExpls={
-  qc0:"Early surrender is an explicit ICA insurance red flag. The fact the payment comes from a reputable insurer doesn't tell you where the premiums came from. Your obligation is to trace the source of funds back to the original legitimate source.",
-  qc1:"The 'strict remittance rule' misconception is specifically addressed by the ICA. Even returning funds to the same account doesn't eliminate the laundering — the format has changed, the trail has been broken, and the originating account may itself be part of a layering scheme.",
-  qc2:"Low betting relative to account balance is one of the clearest casino red flags in the ICA material. This customer deposited, did almost nothing, and withdrew. A SAR should be considered.",
-  qc3:"The digital audit trail is the ICA's stated mitigating factor for m-FS. Unlike physical cash, m-FS transactions are recorded — creating an evidence base for investigators.",
-  qc4:"Mixers blend transactions from multiple users, making it impossible (or very difficult) to trace any individual's coins back to their source. This is pure layering in the crypto world.",
-  qc5:"'Funds from a crypto exchange' is not a complete source of funds answer. You need: which exchange (regulated?); original fiat source; no mixing involved. The ICA is clear — follow the money back to the legitimate original source."
-};
-
-function qc(btn,correct,id){
-  const btns=btn.parentElement.querySelectorAll('.qc-btn');
-  btns.forEach(b=>{b.disabled=true});
-  btn.classList.add(correct?'correct':'wrong');
-  const fb=document.getElementById(id);
-  fb.className='qc-fb show '+(correct?'correct':'wrong');
-  fb.innerHTML=(correct?'<strong>✓ Correct!</strong> ':'<strong>✗ Not quite.</strong> ')+qcExpls[id];
-}
+// ══ INIT ══
+buildSidebar();
+// Unlock sec 0 → 1 on load so first nav item is navigable
+unlockedTo = 0;
+buildSidebar();
 </script>
 </body>
 </html>
