@@ -808,12 +808,14 @@ function submitQuiz(){
   });
 
   if(passed){
+    localStorage.setItem('module_2_complete', 'true'); // ← add this
     document.getElementById('pass-score-msg').textContent=`You scored ${score}/${total} (${pct}%) — well done!`;
     document.getElementById('pass-breakdown').innerHTML=bdHTML;
     document.getElementById('result-pass').style.display='block';
     completed.add(current);
     updateProgress();
     buildNav();
+}
   } else {
     document.getElementById('fail-score-msg').textContent=`You scored ${score}/${total} (${pct}%). You need 70% to pass. Review the sections and try again.`;
     document.getElementById('fail-breakdown').innerHTML=bdHTML;
@@ -845,3 +847,4 @@ window.advance=function(i){
 </script>
 </body>
 </html>
+
