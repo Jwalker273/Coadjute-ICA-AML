@@ -1,0 +1,939 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 8 – Risk-Based Approach & Management Obligations | Coadjute AML</title>
+<style>
+:root{
+  --ink:#002846;--lilac:#C17FFF;--pink:#FF44D6;--orange:#FF6D3D;
+  --active:#4EEFF9;--l1:#DFBEFF;--l2:#F2E5FF;--l3:#F9F2FF;
+  --grey:#EEE8F1;--white:#fff;
+  --grad:linear-gradient(90deg,#C17FFF 0%,#FF44D6 50%,#FF6D3D 100%);
+  --sidebar:272px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f4f8;color:var(--ink);line-height:1.75}
+
+/* TOPBAR */
+.topbar{height:56px;background:var(--ink);display:flex;align-items:center;padding:0 24px;gap:16px;position:fixed;top:0;left:0;right:0;z-index:200;box-shadow:0 2px 12px rgba(0,0,0,.3)}
+.tb-logo{font-weight:800;font-size:1rem;color:#fff;letter-spacing:-.3px}
+.tb-logo span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.tb-sep{color:rgba(255,255,255,.25);font-size:1.1rem}
+.tb-title{color:rgba(255,255,255,.6);font-size:.8rem}
+.tb-right{margin-left:auto;display:flex;align-items:center;gap:14px}
+.tb-pct{color:var(--active);font-size:.8rem;font-weight:700;white-space:nowrap}
+.tb-bar{width:130px;height:4px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden}
+.tb-fill{height:100%;background:var(--grad);border-radius:2px;transition:width .5s ease;width:0%}
+.tb-back{background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);font-size:.75rem;padding:5px 12px;border-radius:20px;cursor:pointer;transition:.2s}
+.tb-back:hover{background:rgba(255,255,255,.1);color:#fff}
+
+/* LAYOUT */
+.layout{display:flex;margin-top:56px;min-height:calc(100vh - 56px)}
+
+/* SIDEBAR */
+.sidebar{width:var(--sidebar);background:var(--ink);position:fixed;top:56px;left:0;bottom:0;overflow-y:auto;z-index:100;display:flex;flex-direction:column}
+.sidebar::-webkit-scrollbar{width:3px}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.12);border-radius:2px}
+.sb-header{padding:22px 20px 14px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sb-tag{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--active);margin-bottom:5px}
+.sb-title{font-size:.92rem;font-weight:700;color:#fff;line-height:1.35}
+.sb-nav{padding:8px 0 24px}
+.nav-item{display:flex;align-items:flex-start;gap:10px;padding:10px 18px;cursor:pointer;border-left:3px solid transparent;transition:all .2s;position:relative}
+.nav-item:hover{background:rgba(255,255,255,.05)}
+.nav-item.active{background:rgba(193,127,255,.12);border-left-color:var(--lilac)}
+.nav-item.done{border-left-color:var(--active)}
+.nav-item.locked{opacity:.42;cursor:default;pointer-events:none}
+.nav-num{min-width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:700;color:rgba(255,255,255,.5);flex-shrink:0;margin-top:1px;transition:.2s}
+.nav-item.active .nav-num{background:var(--lilac);color:#fff}
+.nav-item.done .nav-num{background:var(--active);color:var(--ink)}
+.nav-label{font-size:.78rem;color:rgba(255,255,255,.65);line-height:1.35}
+.nav-item.active .nav-label{color:#fff;font-weight:600}
+.nav-sublabel{font-size:.68rem;color:rgba(255,255,255,.35);margin-top:2px}
+.sb-divider{height:1px;background:rgba(255,255,255,.06);margin:8px 18px}
+.sb-quiz-item{margin:12px 14px 0;background:rgba(193,127,255,.1);border:1px solid rgba(193,127,255,.2);border-radius:8px;padding:11px 14px;cursor:pointer;transition:.2s}
+.sb-quiz-item:hover{background:rgba(193,127,255,.18)}
+.sb-quiz-item.locked{opacity:.35;cursor:default;pointer-events:none}
+.sb-quiz-label{font-size:.68rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--lilac);margin-bottom:3px}
+.sb-quiz-title{font-size:.8rem;color:#fff}
+
+/* MAIN */
+.main{margin-left:var(--sidebar);flex:1;padding:48px 52px 80px;max-width:calc(100% - var(--sidebar))}
+.section{display:none}
+.section.active{display:block}
+
+/* CONTENT TYPOGRAPHY */
+.lesson-tag{font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--lilac);margin-bottom:10px}
+h1.section-title{font-size:2rem;font-weight:800;color:var(--ink);line-height:1.2;margin-bottom:8px}
+.section-intro{font-size:1.05rem;color:#3a5068;margin-bottom:32px;max-width:680px;line-height:1.7}
+h2.sub-title{font-size:1.25rem;font-weight:700;color:var(--ink);margin:36px 0 12px}
+h3.sub-sub{font-size:1rem;font-weight:700;color:var(--ink);margin:24px 0 8px}
+p{margin-bottom:14px;color:#1a2f42;max-width:720px}
+ul,ol{padding-left:22px;margin-bottom:16px;max-width:700px}
+li{margin-bottom:6px;color:#1a2f42}
+
+/* CALLOUT BOXES */
+.callout{border-radius:10px;padding:18px 20px;margin:22px 0;max-width:720px}
+.callout-label{font-size:.7rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
+.callout.exam{background:var(--l2);border-left:4px solid var(--lilac)}
+.callout.exam .callout-label{color:var(--lilac)}
+.callout.key{background:#e8f7f9;border-left:4px solid var(--active)}
+.callout.key .callout-label{color:#0a7a85}
+.callout.warn{background:#fff4f0;border-left:4px solid var(--orange)}
+.callout.warn .callout-label{color:var(--orange)}
+.callout.consider{background:#f9f2ff;border-left:4px solid #9b4dff}
+.callout.consider .callout-label{color:#7320cc}
+.callout.property{background:linear-gradient(135deg,#002846 0%,#0d3d5e 100%);border-radius:10px;padding:22px 24px;color:#fff;max-width:720px;margin:22px 0}
+.callout.property .callout-label{color:var(--active)}
+.callout.property p,.callout.property li{color:rgba(255,255,255,.85);max-width:none}
+.callout.property h4{color:#fff;font-size:1rem;margin-bottom:10px}
+.case-study{background:var(--l3);border:1px solid var(--l1);border-radius:10px;padding:22px 24px;margin:22px 0;max-width:720px}
+.case-study-label{font-size:.68rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:var(--pink);margin-bottom:10px}
+.case-study h4{font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:10px}
+blockquote{border-left:4px solid var(--lilac);padding:14px 20px;background:var(--l3);border-radius:0 8px 8px 0;margin:20px 0;max-width:680px;font-style:italic;color:#2a3f55;font-size:.95rem}
+
+/* QUICK CHECK */
+.quick-check{background:var(--l2);border:1px solid var(--l1);border-radius:10px;padding:22px 24px;margin:28px 0;max-width:720px}
+.qc-tag{font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--lilac);margin-bottom:8px}
+.qc-q{font-size:.95rem;font-weight:600;color:var(--ink);margin-bottom:14px}
+.qc-options{display:flex;flex-direction:column;gap:8px}
+.qc-btn{background:#fff;border:1.5px solid var(--l1);border-radius:8px;padding:10px 14px;text-align:left;font-size:.85rem;color:var(--ink);cursor:pointer;transition:.2s}
+.qc-btn:hover:not(:disabled){border-color:var(--lilac);background:var(--l3)}
+.qc-btn.correct{background:#e6f9f0;border-color:#2eb87a;color:#1a6644}
+.qc-btn.wrong{background:#fef0ee;border-color:var(--orange);color:#8b2a10}
+.qc-feedback{margin-top:12px;font-size:.85rem;padding:10px 14px;border-radius:7px;display:none}
+.qc-feedback.show{display:block}
+.qc-feedback.correct-fb{background:#e6f9f0;color:#1a6644}
+.qc-feedback.wrong-fb{background:#fef0ee;color:#8b2a10}
+
+/* SECTION NAV */
+.sec-nav{display:flex;align-items:center;justify-content:space-between;margin-top:52px;padding-top:24px;border-top:1px solid var(--grey)}
+.nav-btn{padding:11px 26px;border-radius:8px;font-size:.85rem;font-weight:600;cursor:pointer;transition:.2s;border:none}
+.btn-prev{background:var(--grey);color:var(--ink)}
+.btn-prev:hover{background:#ddd8e5}
+.btn-next{background:var(--grad);color:#fff;box-shadow:0 4px 14px rgba(193,127,255,.35)}
+.btn-next:hover{opacity:.9;transform:translateY(-1px)}
+.btn-next:disabled{opacity:.4;cursor:default;transform:none}
+
+/* PROGRESS DOTS */
+.progress-dots{display:flex;gap:6px;align-items:center}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--grey);transition:.2s}
+.dot.done{background:var(--active)}
+.dot.active{background:var(--lilac);width:10px;height:10px}
+
+/* QUIZ */
+.quiz-wrap{max-width:720px}
+.quiz-intro{text-align:center;padding:40px 0 32px}
+.quiz-intro h2{font-size:1.5rem;font-weight:800;color:var(--ink);margin-bottom:8px}
+.quiz-intro p{color:#3a5068;max-width:480px;margin:0 auto 24px}
+.start-btn{background:var(--grad);color:#fff;border:none;padding:14px 40px;border-radius:8px;font-size:.95rem;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(193,127,255,.4);transition:.2s}
+.start-btn:hover{opacity:.9;transform:translateY(-1px)}
+.quiz-q-block{display:none;background:#fff;border:1px solid var(--grey);border-radius:12px;padding:28px 28px 22px;margin-bottom:16px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.quiz-q-block.active{display:block}
+.q-num{font-size:.68rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--lilac);margin-bottom:8px}
+.q-text{font-size:.98rem;font-weight:600;color:var(--ink);margin-bottom:18px;line-height:1.5}
+.q-options{display:flex;flex-direction:column;gap:9px}
+.q-opt{background:#f9f8fc;border:1.5px solid #e0d8ef;border-radius:8px;padding:11px 16px;font-size:.87rem;color:var(--ink);cursor:pointer;text-align:left;transition:.2s}
+.q-opt:hover:not(:disabled){border-color:var(--lilac);background:var(--l3)}
+.q-opt.selected{border-color:var(--lilac);background:var(--l2)}
+.q-opt.correct{background:#e6f9f0;border-color:#2eb87a;color:#1a6644}
+.q-opt.wrong{background:#fef0ee;border-color:var(--orange);color:#8b2a10}
+.q-explanation{margin-top:14px;background:var(--l3);border-left:3px solid var(--lilac);padding:12px 16px;border-radius:0 8px 8px 0;font-size:.83rem;color:#2a3f55;display:none}
+.q-explanation.show{display:block}
+.quiz-nav{display:flex;justify-content:space-between;align-items:center;margin-top:20px}
+.q-counter{font-size:.82rem;color:#6a7f90}
+.submit-btn{background:var(--grad);color:#fff;border:none;padding:12px 32px;border-radius:8px;font-weight:700;cursor:pointer;font-size:.88rem}
+.submit-btn:disabled{opacity:.4;cursor:default}
+.results-panel{display:none;background:#fff;border:1px solid var(--grey);border-radius:14px;padding:40px;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.08)}
+.results-panel.show{display:block}
+.results-score{font-size:3rem;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px}
+.results-label{font-size:1rem;color:#3a5068;margin-bottom:20px}
+.results-pass{font-size:1.25rem;font-weight:700;margin-bottom:24px}
+.results-pass.pass{color:#1a9e5f}
+.results-pass.fail{color:var(--orange)}
+.retry-btn{background:var(--grey);color:var(--ink);border:none;padding:11px 28px;border-radius:8px;font-weight:600;cursor:pointer;margin-right:12px}
+.complete-btn{background:var(--grad);color:#fff;border:none;padding:11px 28px;border-radius:8px;font-weight:700;cursor:pointer}
+
+/* TABLES */
+table{width:100%;max-width:720px;border-collapse:collapse;margin:18px 0;font-size:.85rem}
+th{background:var(--ink);color:#fff;padding:10px 14px;text-align:left;font-size:.78rem;letter-spacing:.03em}
+td{padding:10px 14px;border-bottom:1px solid var(--grey)}
+tr:nth-child(even) td{background:var(--l3)}
+
+/* COMPLETION BANNER */
+.completion-banner{display:none;background:linear-gradient(135deg,var(--ink) 0%,#1a3d5c 100%);border-radius:12px;padding:32px 36px;text-align:center;margin-top:32px;max-width:720px}
+.completion-banner.show{display:block}
+.completion-banner h3{color:var(--active);font-size:1.3rem;margin-bottom:8px}
+.completion-banner p{color:rgba(255,255,255,.75);max-width:none;margin-bottom:20px}
+.completion-banner a{display:inline-block;background:var(--grad);color:#fff;text-decoration:none;padding:12px 32px;border-radius:8px;font-weight:700;font-size:.9rem}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="tb-logo">Coadjute <span>AML</span></div>
+  <div class="tb-sep">|</div>
+  <div class="tb-title">ICA Certificate in AML</div>
+  <div class="tb-right">
+    <div class="tb-pct" id="pct-label">0% complete</div>
+    <div class="tb-bar"><div class="tb-fill" id="tb-fill"></div></div>
+    <button class="tb-back" onclick="history.back()">← Dashboard</button>
+  </div>
+</header>
+
+<div class="layout">
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sb-header">
+    <div class="sb-tag">Module 08 · Week 4</div>
+    <div class="sb-title">Risk-Based Approach &amp; Management Obligations</div>
+  </div>
+  <nav class="sb-nav" id="sidebar-nav">
+    <div class="nav-item active" data-section="0" onclick="goTo(0)">
+      <div class="nav-num">1</div>
+      <div><div class="nav-label">The Risk-Based Approach</div><div class="nav-sublabel">Rationale, four stages, risk factors</div></div>
+    </div>
+    <div class="nav-item locked" data-section="1" onclick="goTo(1)">
+      <div class="nav-num">2</div>
+      <div><div class="nav-label">Formulating an AML Policy</div><div class="nav-sublabel">Content, approval, window dressing</div></div>
+    </div>
+    <div class="nav-item locked" data-section="2" onclick="goTo(2)">
+      <div class="nav-num">3</div>
+      <div><div class="nav-label">AML Procedures in Practice</div><div class="nav-sublabel">CDD, reporting, record-keeping</div></div>
+    </div>
+    <div class="nav-item locked" data-section="3" onclick="goTo(3)">
+      <div class="nav-num">4</div>
+      <div><div class="nav-label">Monitoring Compliance</div><div class="nav-sublabel">MLRO report, remedial action</div></div>
+    </div>
+    <div class="nav-item locked" data-section="4" onclick="goTo(4)">
+      <div class="nav-num">5</div>
+      <div><div class="nav-label">Resources &amp; the Objective Test</div><div class="nav-sublabel">Staffing, volume, legal exposure</div></div>
+    </div>
+    <div class="nav-item locked" data-section="5" onclick="goTo(5)">
+      <div class="nav-num">6</div>
+      <div><div class="nav-label">Corporate Culture</div><div class="nav-sublabel">Indicators, tone from the top</div></div>
+    </div>
+    <div class="sb-divider"></div>
+    <div class="sb-quiz-item locked" id="quiz-nav-item" onclick="goTo(6)">
+      <div class="sb-quiz-label">📝 Module Quiz</div>
+      <div class="sb-quiz-title">15 questions · 70% pass mark</div>
+    </div>
+  </nav>
+</aside>
+
+<!-- MAIN CONTENT -->
+<main class="main">
+
+<!-- ═══════════════ SECTION 0: THE RISK-BASED APPROACH ═══════════════ -->
+<div class="section active" id="sec-0">
+  <div class="lesson-tag">Module 08 — Section 1</div>
+  <h1 class="section-title">The Risk-Based Approach</h1>
+  <p class="section-intro">The Risk-Based Approach (RBA) is the cornerstone of modern AML regulation. Rather than applying identical controls to every customer and transaction, the RBA requires firms to understand their own risk landscape and concentrate resources where money laundering risk is greatest.</p>
+
+  <h2 class="sub-title">Why the RBA Exists</h2>
+  <p>Regulators including FATF and the EU have increasingly promoted risk-based controls for AML because a one-size-fits-all approach is both inefficient and ineffective. The logic is straightforward: all firms have finite resources, and those resources will achieve maximum effect if targeted at the highest-risk areas.</p>
+  <p>The 4th Money Laundering Directive (4MLD) places particular emphasis on the concept that all firms must adopt a "risk-sensitive" approach to CDD. This means that senior management must actively identify and assess money laundering risks, then take steps to mitigate and monitor those risks on an ongoing basis.</p>
+
+  <div class="callout exam">
+    <div class="callout-label">📘 ICA Exam Note — RBA Definition</div>
+    <p><strong>"A risk-based approach means that firms ensure that their systems and controls are proportionate to their particular risks of money laundering."</strong></p>
+    <p style="margin-top:10px">The aim is to move away from a 'one-size-fits-all' approach. Firms facing lower risk may apply simplified due diligence; firms facing higher risk must apply enhanced due diligence. <strong>Critical caveat:</strong> the RBA is <em>not</em> an opportunity to avoid appropriate identification, verification and monitoring — all required standards must still be met.</p>
+  </div>
+
+  <div class="callout property">
+    <div class="callout-label">🏠 Coadjute Context — RBA in Property AML</div>
+    <h4>What does risk-sensitivity mean for estate agents and conveyancers?</h4>
+    <p>At Coadjute, we apply the RBA on behalf of our estate agent and conveyancer clients. In practice, this means we don't treat a first-time buyer purchasing a £180,000 flat with a mortgage the same way we treat a cash buyer purchasing a £3.5 million property through a corporate structure registered in a non-EEA jurisdiction. The former may qualify for simplified CDD; the latter demands enhanced due diligence and potentially a Defence Against Money Laundering (DAML) SAR.</p>
+    <p style="margin-top:10px">The RBA is what justifies that distinction — and it's what protects our clients from being prosecuted for applying CDD proportionately.</p>
+  </div>
+
+  <h2 class="sub-title">The Four Components of a Risk-Based Approach</h2>
+  <p>The ICA identifies four key components that together constitute a proper RBA framework. All four must be present — missing any one of them undermines the entire structure.</p>
+
+  <div class="callout key">
+    <div class="callout-label">💡 The Four RBA Components (Exam Essential)</div>
+    <ol style="padding-left:20px;margin-top:8px">
+      <li style="margin-bottom:10px"><strong>Risk Assessment</strong> — A detailed, documented understanding of the money laundering and terrorist financing risks your firm faces, and the level of risk you consider acceptable (your risk appetite).</li>
+      <li style="margin-bottom:10px"><strong>Risk Mitigation</strong> — A comprehensive set of policies and procedures designed to mitigate identified risks as far as possible. Note: it is unlikely you can remove all risk entirely.</li>
+      <li style="margin-bottom:10px"><strong>Effective Implementation</strong> — The policies and procedures must actually be put into practice. A policy that sits in a drawer serves no purpose.</li>
+      <li><strong>Monitoring &amp; Review</strong> — A comprehensive ongoing monitoring process that identifies further improvements, tests whether controls are working, and adjusts the framework as the risk landscape evolves.</li>
+    </ol>
+  </div>
+
+  <h2 class="sub-title">Risk Assessment: What Factors Must You Consider?</h2>
+  <p>Before you can mitigate risk, you must understand it. The ICA sets out the key risk factors that should inform a firm's risk assessment:</p>
+
+  <table>
+    <tr><th>Risk Factor</th><th>Questions to Ask</th></tr>
+    <tr><td><strong>Product types</strong></td><td>What services do we offer? Which carry higher ML risk?</td></tr>
+    <tr><td><strong>Distribution channels</strong></td><td>Do we deal with clients face-to-face or remotely? Via intermediaries?</td></tr>
+    <tr><td><strong>Jurisdictions</strong></td><td>Where are our clients based? Where do funds originate? FATF blacklist/greylist?</td></tr>
+    <tr><td><strong>Customer types</strong></td><td>Are customers individuals, companies, trusts, PEPs, charities?</td></tr>
+    <tr><td><strong>Transaction volumes/sizes</strong></td><td>Large cash transactions? High volumes that make individual scrutiny harder?</td></tr>
+    <tr><td><strong>Risk appetite</strong></td><td>What level of residual risk is the firm willing to accept?</td></tr>
+  </table>
+
+  <div class="callout property">
+    <div class="callout-label">🏠 Property Sector Risk Factors in Practice</div>
+    <p>In residential property, Coadjute's risk assessment considers: whether the purchase is cash or mortgage-funded (cash is higher risk); whether the buyer is a UK resident individual or an overseas corporate entity; whether the property price is significantly above or below market value; whether there are multiple parties in the chain with complex ownership structures; and whether any solicitor or estate agent in the chain has previously been flagged for AML concerns.</p>
+  </div>
+
+  <h2 class="sub-title">Risk Mitigation</h2>
+  <p>Once risks are identified, controls must be designed to mitigate them. The ICA is clear: you cannot eliminate risk entirely, but you must reduce it as far as possible. Controls must be proportionate — applying maximum scrutiny to every transaction would make business unworkable, but applying no scrutiny creates criminal exposure.</p>
+  <p>Mitigation in practice means applying SDD to lower-risk business, standard CDD to the majority of customers, and EDD to higher-risk categories. It also means setting up internal reporting lines, training staff, maintaining records and screening against sanctions lists.</p>
+
+  <h2 class="sub-title">Risk Monitoring: A Continuous Process</h2>
+  <p>The RBA is not a one-off exercise. Risk profiles change — a customer who was standard risk when onboarded may become high risk following a change in their business activities, a media report, or a change in the political situation in their home country. Controls that were adequate last year may be inadequate today as criminal typologies evolve.</p>
+
+  <div class="callout warn">
+    <div class="callout-label">⚠️ Common Mistake</div>
+    <p>Firms sometimes conduct an excellent initial risk assessment and then leave it untouched for years. This is dangerous. The ICA is explicit that monitoring must be continuous — the risk profile must be regularly reviewed to ensure it remains accurate, and controls must be updated accordingly.</p>
+  </div>
+
+  <h2 class="sub-title">Record-Keeping: The Audit Trail</h2>
+  <p>The fourth element of the RBA — record-keeping — is often underestimated. A firm that has conducted a thorough risk assessment, implemented appropriate controls and monitored them effectively is in a strong position with regulators, <em>but only if it can prove it</em>. Without documentation, none of the above happened as far as the regulator is concerned.</p>
+  <p>Records of risk assessments, control decisions, monitoring activity and the management information produced from that monitoring must all be retained. Effective record-keeping provides assurance to regulators and gives senior management a powerful tool for developing and improving systems and controls.</p>
+
+  <div class="quick-check" id="qc1">
+    <div class="qc-tag">⚡ Quick Check</div>
+    <div class="qc-q">The RBA allows a firm to skip CDD on a low-risk customer altogether. True or false?</div>
+    <div class="qc-options">
+      <button class="qc-btn" onclick="checkQC('qc1',0,1)">True — the RBA means low-risk customers need no CDD</button>
+      <button class="qc-btn" onclick="checkQC('qc1',1,1)">False — the RBA allows simplified CDD, but minimum standards still apply to all customers</button>
+    </div>
+    <div class="qc-feedback" id="qc1-fb"></div>
+  </div>
+
+  <div class="sec-nav">
+    <div></div>
+    <div class="progress-dots" id="dots-0"></div>
+    <button class="nav-btn btn-next" onclick="nextSection()">Next Section →</button>
+  </div>
+</div>
+
+<!-- ═══════════════ SECTION 1: FORMULATING AN AML POLICY ═══════════════ -->
+<div class="section" id="sec-1">
+  <div class="lesson-tag">Module 08 — Section 2</div>
+  <h1 class="section-title">Formulating an AML Policy</h1>
+  <p class="section-intro">Every organisation subject to AML regulation must have a formal AML and CFT policy, approved at the most senior level. This isn't a box-ticking exercise — a well-crafted policy is a public statement of an organisation's ethics, its risk appetite, and its commitment to preventing financial crime.</p>
+
+  <h2 class="sub-title">Why the Policy Matters</h2>
+  <p>The ICA makes a striking point: an organisation's attitude towards combating money laundering is increasingly viewed as indicative of the ethics with which it conducts all of its business. In other words, how seriously you take AML says something about how you run your company generally — and regulators, law enforcement, clients and counterparties are all watching.</p>
+  <p>A formal AML policy serves as a clear statement of corporate intent, communicated to four audiences:</p>
+  <ul>
+    <li><strong>Employees</strong> — so they understand the firm's obligations and their own role</li>
+    <li><strong>Clients</strong> — so they know what to expect during onboarding and throughout the relationship</li>
+    <li><strong>Regulatory authorities</strong> — demonstrating that the firm takes compliance seriously</li>
+    <li><strong>Law enforcement</strong> — signalling willingness to cooperate where required</li>
+  </ul>
+
+  <div class="callout exam">
+    <div class="callout-label">📘 ICA Exam Note — Policy Approval Level</div>
+    <p>The ICA is explicit: the AML policy must be <strong>approved at the most senior level</strong> within the organisation — typically the board of directors. This is not a matter for the compliance function alone. Senior-level approval signals genuine corporate intent rather than a delegated compliance exercise.</p>
+  </div>
+
+  <h2 class="sub-title">The "Window Dressing" Warning</h2>
+  <p>The ICA includes a specific and pointed warning about a common failure mode: firms that simply pay external consultants to draft an AML policy, which is then adopted at board level without any internal consideration or genuine discussion.</p>
+
+  <div class="callout warn">
+    <div class="callout-label">⚠️ The Window Dressing Problem</div>
+    <p>A policy produced without meaningful internal input risks being irrelevant to the firm's actual operations and risks. Staff won't recognise themselves in it; procedures won't map to it; and when a regulator examines it, the gap between the policy and practice will be immediately apparent. The ICA's phrase for this: such policies "do little more than window dress."</p>
+    <p style="margin-top:10px">The danger is compounded when a regulator or law enforcement authority discovers that an organisation has failed to comply with its <em>own</em> policy. That is far more damaging than having no policy at all, because it shows the firm's stated standards existed but were simply ignored.</p>
+  </div>
+
+  <h2 class="sub-title">What Must an AML Policy Contain?</h2>
+  <p>The ICA sets out a minimum framework that management must address when formulating a policy. It begins with four analytical questions about the organisation itself:</p>
+  <ul>
+    <li>The nature, scale and complexity of its business</li>
+    <li>The diversity of its operations, including geographical diversity</li>
+    <li>The volumes and sizes of its transactions</li>
+    <li>The degree of ML/TF risk associated with each area of operation</li>
+  </ul>
+
+  <p>Having answered those questions, the policy should then set out at least the following ten commitments:</p>
+
+  <div class="callout exam">
+    <div class="callout-label">📘 ICA Exam Note — Ten Minimum Policy Elements</div>
+    <ol style="padding-left:20px;margin-top:8px;line-height:1.8">
+      <li>Compliance with all applicable legislation, secondary legislation and best-practice guidance</li>
+      <li>Cooperation with law enforcement and investigating authorities where required</li>
+      <li>Respect for client confidentiality — breached only where legally required</li>
+      <li>Clearly defined responsibilities and accountabilities for AML prevention within the business</li>
+      <li>A statement of the firm's willingness to provide sufficient resources for AML work</li>
+      <li>Acceptance of new business only subject to appropriate CDD and risk assessment</li>
+      <li>Continuation of existing business only where CDD, risk assessment and monitoring requirements are met</li>
+      <li>A clear approach to staff education, training and awareness maintenance</li>
+      <li>A statement of the firm's attitude towards persistent non-compliance with AML procedures</li>
+      <li>An indication of the prevailing cultural attitude the firm wishes to create around AML prevention</li>
+    </ol>
+  </div>
+
+  <h2 class="sub-title">Going Beyond the Minimum</h2>
+  <p>The ICA notes that it is always open to a firm to exceed these minimum requirements. In fact, for firms operating across multiple jurisdictions, a sensible approach is to adopt "global standards" that meet the requirements of the most stringent national framework with which the firm must comply. Attempting to play jurisdictions off against each other — sometimes called "jurisdiction shopping" or "regulatory arbitrage" — is described by the ICA as short-sighted, and from an organisational perspective makes no sense.</p>
+
+  <div class="callout property">
+    <div class="callout-label">🏠 Coadjute Context — What Our AML Policy Covers</div>
+    <p>At Coadjute, our AML policy sets out our commitment to conducting AML on behalf of estate agents and conveyancers to the standard required by the Money Laundering Regulations 2017 and the Proceeds of Crime Act 2002. It defines the role of our MLRO, the CDD standards we apply, the process for internal suspicious activity reporting, and our training obligations. Every member of staff who interacts with AML processes must understand this policy — not just be aware it exists.</p>
+  </div>
+
+  <div class="quick-check" id="qc2">
+    <div class="qc-tag">⚡ Quick Check</div>
+    <div class="qc-q">A firm's AML policy is drafted by an external law firm and adopted by the board without internal discussion. According to the ICA, this is:</div>
+    <div class="qc-options">
+      <button class="qc-btn" onclick="checkQC('qc2',0,2)">Best practice — external expertise adds legal rigour</button>
+      <button class="qc-btn" onclick="checkQC('qc2',1,2)">Acceptable as long as the board has read it</button>
+      <button class="qc-btn" onclick="checkQC('qc2',2,2)">An example of "window dressing" — risky and operationally ineffective</button>
+    </div>
+    <div class="qc-feedback" id="qc2-fb"></div>
+  </div>
+
+  <div class="sec-nav">
+    <button class="nav-btn btn-prev" onclick="prevSection()">← Back</button>
+    <div class="progress-dots" id="dots-1"></div>
+    <button class="nav-btn btn-next" onclick="nextSection()">Next Section →</button>
+  </div>
+</div>
+
+<!-- ═══════════════ SECTION 2: AML PROCEDURES ═══════════════ -->
+<div class="section" id="sec-2">
+  <div class="lesson-tag">Module 08 — Section 3</div>
+  <h1 class="section-title">AML Procedures in Practice</h1>
+  <p class="section-intro">An AML policy sets out the "what" and "why" — the organisation's goals and commitments. AML procedures translate those commitments into the "how" — the practical, day-to-day operational steps that staff actually follow. Without robust procedures, even the best policy is just words.</p>
+
+  <h2 class="sub-title">The Relationship Between Policy and Procedures</h2>
+  <p>The ICA draws a clear distinction: the policy is the statement of intent; procedures are the operational engine. Some procedures are required by secondary legislation (the MLRs); others are designed to give the firm more robust protection than the minimum legal requirement. Both types matter.</p>
+  <p>A MLRO designing an effective internal AML regime should build procedures that cover every stage of the client relationship lifecycle — from initial onboarding through to exit — and every type of risk that the firm has identified in its risk assessment.</p>
+
+  <h2 class="sub-title">Client Identification and CDD Procedures</h2>
+  <p>The first and most fundamental category of procedures covers how the firm identifies and verifies clients. The ICA sets out a comprehensive list of what this must include:</p>
+
+  <div class="callout exam">
+    <div class="callout-label">📘 ICA Exam Note — What CDD Procedures Must Cover</div>
+    <ul style="margin-top:8px">
+      <li>Establishment and satisfactory verification of the identity of all clients — both natural persons and legal entities</li>
+      <li>Identification of any person with a beneficial interest in the property or assets handled</li>
+      <li>Identification of any person able to exercise control over the property</li>
+      <li>Documented CDD information including: source of funds, source of wealth, commercial rationale for the relationship, occupation, nature of business interests, and identity of any beneficial owners</li>
+    </ul>
+  </div>
+
+  <h2 class="sub-title">Risk Assessment Procedures for New Clients</h2>
+  <p>Before accepting a new client, the firm must assess their risk profile against a range of factors. The ICA identifies eleven risk dimensions to consider:</p>
+
+  <table>
+    <tr><th>#</th><th>Risk Dimension</th><th>Example Consideration</th></tr>
+    <tr><td>i</td><td>Geography</td><td>Is the client based in, or transacting through, a FATF-blacklisted or greylist country?</td></tr>
+    <tr><td>ii</td><td>Nature of business interests</td><td>Are they in a high-risk sector (construction, cash-intensive business)?</td></tr>
+    <tr><td>iii</td><td>Sensitive activities</td><td>Are they defined as sensitive by the regulator?</td></tr>
+    <tr><td>iv</td><td>Value of assets</td><td>Is the transaction value consistent with known income/wealth?</td></tr>
+    <tr><td>v</td><td>Client type</td><td>Is this a listed company (lower risk) or an HNW individual (higher scrutiny)?</td></tr>
+    <tr><td>vi</td><td>PEP status</td><td>Is the individual or their family a Politically Exposed Person?</td></tr>
+    <tr><td>vii</td><td>Nature of assets</td><td>Is the property in a high-value jurisdiction or unusual structure?</td></tr>
+    <tr><td>viii</td><td>Source of introduction</td><td>How did this client come to us?</td></tr>
+    <tr><td>ix</td><td>Intermediary involvement</td><td>Is an introducer involved — are they regulated and in an equivalent jurisdiction?</td></tr>
+    <tr><td>x</td><td>Nature of service</td><td>What exactly are we being asked to do?</td></tr>
+    <tr><td>xi</td><td>Complexity of arrangement</td><td>Are there multiple layers, special purpose vehicles, or trust structures involved?</td></tr>
+  </table>
+
+  <h2 class="sub-title">Operational AML Procedures: The Full List</h2>
+  <p>Beyond CDD, the ICA sets out a substantial list of operational procedures that a well-designed AML regime should include. Many of these may surprise people — particularly the annual leave requirement:</p>
+
+  <div class="callout exam">
+    <div class="callout-label">📘 ICA Exam Note — Required AML Procedures (Learn This List)</div>
+    <ul style="margin-top:8px;line-height:1.9">
+      <li>Independent authorisation prior to acceptance of new clients</li>
+      <li>Documented client acceptance procedures</li>
+      <li>Verification of intermediaries and business introducers</li>
+      <li>CDD profile creation for each client</li>
+      <li>30-, 60- or 90-day client reviews for consistency with CDD profile</li>
+      <li>Risk-based ongoing monitoring of relationship activity</li>
+      <li>Enhanced due diligence procedures for higher-risk clients</li>
+      <li>Automatic transaction-based reporting for unusual transactions</li>
+      <li>Annual client reviews — ideally by someone other than the relationship manager</li>
+      <li>A "meet the client" policy (face-to-face requirement for certain client types)</li>
+      <li>Written internal suspicious transaction/relationship reporting system</li>
+      <li>Dual authorisation policy for significant transactions</li>
+      <li>Full supporting documentation for all payment requests</li>
+      <li>Checklists for fund receipts/payments flagging movements from/to non-compliant jurisdictions</li>
+      <li>Annual MLRO reports to the board on risk status and controls</li>
+      <li>Register of Powers of Attorney and third-party signatories</li>
+      <li>Procedures for managing files relating to suspect relationships</li>
+      <li>PEP policy including board approval for accepting PEPs</li>
+      <li>Procedure for exceptions and deviations — requiring independent risk assessment and approval</li>
+      <li>Comprehensive staff education and training strategy</li>
+      <li>Procedures to verify staff awareness and competence</li>
+      <li><strong>Staff minimum annual leave requirement</strong> (to detect fraud and suspicious activity concealed by the employee)</li>
+      <li>AML audits</li>
+      <li>Regular cross-checking of client names against sanctions lists and embargoed jurisdictions</li>
+      <li>Monitoring of fund transfers from/to FATF non-compliant jurisdictions or shell banks</li>
+      <li>Verification of signatures procedure</li>
+      <li>Record-keeping procedures</li>
+    </ul>
+  </div>
+
+  <div class="case-study">
+    <div class="case-study-label">📋 Why Annual Leave Is an AML Control</div>
+    <h4>The "Absence Exposes Fraud" Principle</h4>
+    <p>The requirement that all staff take a minimum level of annual leave is a well-established fraud and AML control — yet many people are surprised to see it on an AML procedures list. The logic is straightforward: an employee engaged in suspicious activity — whether fraudulent or in facilitating money laundering — may need to be at their desk to maintain the deception. Enforced absence creates a gap in which colleagues or managers may pick up their responsibilities and notice irregularities. Several significant financial fraud cases have been uncovered precisely because the perpetrator was unexpectedly absent.</p>
+  </div>
+
+  <div class="callout key">
+    <div class="callout-label">💡 Procedures Must Be Dynamic, Not Static</div>
+    <p>"Once an AML framework is in place it needs to be continually monitored, tested, reported upon and adjusted. An effective internal system of control is not fixed or a one-off event; instead it is dynamic and constantly evolving to take account of changing threats and emerging weaknesses." — ICA</p>
+  </div>
+
+  <div class="quick-check" id="qc3">
+    <div class="qc-tag">⚡ Quick Check</div>
+    <div class="qc-q">According to the ICA, which of the following is a legitimate AML procedure?</div>
+    <div class="qc-options">
+      <button class="qc-btn" onclick="checkQC('qc3',0,1)">Exempting long-standing clients from annual CDD reviews</button>
+      <button class="qc-btn" onclick="checkQC('qc3',1,1)">Requiring all staff to take a minimum amount of annual leave each year</button>
+      <button class="qc-btn" onclick="checkQC('qc3',2,1)">Allowing relationship managers to self-authorise transactions for their key clients</button>
+    </div>
+    <div class="qc-feedback" id="qc3-fb"></div>
+  </div>
+
+  <div class="sec-nav">
+    <button class="nav-btn btn-prev" onclick="prevSection()">← Back</button>
+    <div class="progress-dots" id="dots-2"></div>
+    <button class="nav-btn btn-next" onclick="nextSection()">Next Section →</button>
+  </div>
+</div>
+
+<!-- ═══════════════ SECTION 3: MONITORING COMPLIANCE ═══════════════ -->
+<div class="section" id="sec-3">
+  <div class="lesson-tag">Module 08 — Section 4</div>
+  <h1 class="section-title">Monitoring Compliance with the Policy</h1>
+  <p class="section-intro">Adopting a policy is only the beginning. The harder challenge — and the one where many organisations fall down — is ensuring that the policy is actually followed in practice. This is where the MLRO's monitoring role becomes critical.</p>
+
+  <h2 class="sub-title">The Monitoring Obligation</h2>
+  <p>The ICA states clearly: once a policy is adopted, it must be communicated, implemented, and adherence to it must be monitored. All three elements are essential. A policy that is communicated but not implemented is useless. A policy that is implemented but not monitored will drift over time as staff take shortcuts and pressures build.</p>
+
+  <div class="callout exam">
+    <div class="callout-label">📘 ICA Exam Note — The MLRO's Monitoring Role</div>
+    <p>Management should expect the MLRO (or Money Laundering Prevention Officer — MLPO) to:</p>
+    <ul style="margin-top:8px">
+      <li>Monitor compliance with the AML policy on an ongoing basis</li>
+      <li>Report regularly to the board on the organisation's performance against that policy</li>
+      <li>Provide this information as part of the <strong>MLRO Annual Report</strong></li>
+    </ul>
+    <p style="margin-top:10px">Where the firm is failing to comply with its own policy, management must be able to formulate appropriate remedial action, and a clear record of those enhancements must be retained.</p>
+  </div>
+
+  <h2 class="sub-title">When Management Is Part of the Problem</h2>
+  <p>The ICA acknowledges a particularly difficult scenario: what happens when individual members of management have themselves contributed to the organisation's failure to comply with its own policy? This creates an obvious conflict of interest in the remedial process and may require escalation beyond the immediate management team — potentially to the board, or to the regulator.</p>
+
+  <div class="case-study">
+    <div class="case-study-label">📋 Case Study — The Fund Manager and the VIP Client</div>
+    <h4>When Policy Is Bypassed for a "Important" Client</h4>
+    <p>A is an employee of a fund management company. X is a very important investor in a range of the firm's funds. The fund rules state explicitly that redemptions must always be paid back to the "originating account" — the account from which the funds were received, as a core anti-laundering control.</p>
+    <p style="margin-top:10px">X requests that a large redemption be paid to a different account. A's manager — unwilling to upset a VIP client — authorises the deviation from procedure without following the exceptions process. The transfer is made. A month later, it emerges that the recipient account belongs to a sanctioned entity.</p>
+    <p style="margin-top:10px"><strong>The ICA's point:</strong> The manager who authorised the bypass is personally exposed. The objective test of suspicion means the law can disregard explanations like "they were an important client" or "it wasn't my call." If a reasonable person in that role should have applied the procedure, the failure to do so is legally significant.</p>
+  </div>
+
+  <h2 class="sub-title">What the Compliance Function Should Provide</h2>
+  <p>Management should look to the compliance function or MLRO to provide regular reports covering:</p>
+  <ul>
+    <li>The way in which controls are functioning within the business</li>
+    <li>Whether those controls are operating adequately</li>
+    <li>Where controls are inadequate, specific recommendations for adjustment to the risk control framework</li>
+    <li>Documentation of all enhancements made</li>
+  </ul>
+
+  <h2 class="sub-title">The MLRO Annual Report</h2>
+  <p>The MLRO Annual Report is the key document through which the MLRO reports to the board on the effectiveness of the firm's AML framework. It typically covers the number of internal SARs received and filed externally, any regulatory developments requiring policy changes, training completion rates, significant compliance incidents, and an assessment of whether the current risk rating framework remains appropriate.</p>
+
+  <div class="callout property">
+    <div class="callout-label">🏠 Coadjute Context — Monitoring in a PropTech Context</div>
+    <p>At Coadjute, monitoring compliance means ensuring that our AML checks are completed to the required standard across every transaction we process. Our MLRO is responsible for reviewing the quality of CDD decisions, tracking any cases where enhanced due diligence was triggered and how it was resolved, and reporting to leadership on the overall AML performance of the platform. Where we identify systematic gaps — for example, a category of transaction where CDD is consistently weaker — we adjust our procedures and document the change.</p>
+  </div>
+
+  <div class="quick-check" id="qc4">
+    <div class="qc-tag">⚡ Quick Check</div>
+    <div class="qc-q">A regulatory authority discovers that a firm's actual practices have repeatedly deviated from its own AML policy. According to the ICA, this situation is:</div>
+    <div class="qc-options">
+      <button class="qc-btn" onclick="checkQC('qc4',0,2)">A minor concern — having a policy at all is what matters</button>
+      <button class="qc-btn" onclick="checkQC('qc4',1,2)">Acceptable provided the MLRO has documented the deviations</button>
+      <button class="qc-btn" onclick="checkQC('qc4',2,2)">Extremely damaging — failing to comply with your own policy is worse than having no policy</button>
+    </div>
+    <div class="qc-feedback" id="qc4-fb"></div>
+  </div>
+
+  <div class="sec-nav">
+    <button class="nav-btn btn-prev" onclick="prevSection()">← Back</button>
+    <div class="progress-dots" id="dots-3"></div>
+    <button class="nav-btn btn-next" onclick="nextSection()">Next Section →</button>
+  </div>
+</div>
+
+<!-- ═══════════════ SECTION 4: RESOURCES ═══════════════ -->
+<div class="section" id="sec-4">
+  <div class="lesson-tag">Module 08 — Section 5</div>
+  <h1 class="section-title">Resources &amp; the Objective Test</h1>
+  <p class="section-intro">AML compliance costs money and staff time. In commercial organisations under pressure to generate revenue, the compliance function is often viewed as a cost centre or even a "business prevention" function. The ICA is uncompromising on this point — inadequate resourcing of AML functions is not a defence.</p>
+
+  <h2 class="sub-title">The Resource Obligation</h2>
+  <p>One of the ten minimum elements of an AML policy is a statement of the organisation's willingness to provide sufficient resources for money laundering prevention. This is more than a commitment on paper — it requires that in practice, the AML function has enough skilled staff, enough time, and enough technology to perform its functions adequately.</p>
+  <p>The pressures on resources are real. High transaction volumes, staff turnover, competing commercial priorities, and cost pressures can all lead to AML functions being under-resourced. This creates risk — both regulatory risk and criminal risk for individual employees.</p>
+
+  <div class="callout warn">
+    <div class="callout-label">⚠️ "I Was Too Busy" Is Not a Defence</div>
+    <p>The ICA highlights the legal concept of the <strong>objective test of suspicion</strong>. This test assesses not what the individual actually knew or suspected, but what a reasonable person in their position <em>ought</em> to have known or suspected. Crucially, factors such as volume of work, lack of resources, and time pressure are irrelevant to this test. If a reasonable person in the same role, facing the same facts, should have been suspicious — the law treats that individual as having had grounds for suspicion, regardless of how busy they were.</p>
+  </div>
+
+  <div class="case-study">
+    <div class="case-study-label">📋 Case Study — Director C and the Routine Authorisation</div>
+    <h4>The Danger of "Rubber Stamping"</h4>
+    <p>Director C is responsible for authorising transactions across 600 client company bank accounts. On a particularly busy day, a payment instruction crosses her desk. Under pressure and running late for a meeting, she authorises it without scrutinising it in detail — she trusts that the client relationship manager has checked it. A fellow director co-signs, relying on Director C's apparent review rather than performing an independent check.</p>
+    <p style="margin-top:10px">One month later, it emerges that the transfer was made to an account in the name of a company featured on a list of suspect organisations linked to money laundering.</p>
+    <p style="margin-top:10px"><strong>The objective test:</strong> Could a reasonable person in Director C's role, with access to the same information, have spotted warning signs? If yes — volume of work is irrelevant. Both Director C and her co-signatory may face personal liability.</p>
+    <p style="margin-top:10px">The ICA's broader point: this case should prompt management to ask whether they are "cutting corners at the expense of protecting a business and its employees from exposure to money laundering activity."</p>
+  </div>
+
+  <h2 class="sub-title">Staff Training as a Resource Requirement</h2>
+  <p>Resources are not just about headcount. Training is a critical resource, and it's specifically required under the MLRs. Staff who don't understand how to identify suspicious activity, how to complete CDD, or how to make an internal report cannot do their jobs effectively — regardless of how much time they have.</p>
+  <p>The ICA emphasises that training must be:</p>
+  <ul>
+    <li><strong>Comprehensive</strong> — covering all relevant staff, not just those in designated "compliance" roles</li>
+    <li><strong>Ongoing</strong> — initial training is not sufficient; awareness must be maintained as regulations and typologies evolve</li>
+    <li><strong>Verified</strong> — firms must have procedures to check that staff have completed and understood training</li>
+  </ul>
+
+  <div class="callout property">
+    <div class="callout-label">🏠 Coadjute Context — This Course as a Resource</div>
+    <p>This e-learning course is itself part of Coadjute's AML resource commitment. By completing the ICA Certificate in AML, Coadjute staff develop the technical knowledge needed to perform AML functions to a high standard. The investment in this training programme is a direct fulfilment of the firm's policy commitment to providing sufficient resources for AML prevention.</p>
+  </div>
+
+  <h2 class="sub-title">The Dual Authorisation Control</h2>
+  <p>One specific resource-related procedure worth highlighting is the dual authorisation policy — requiring two separate individuals to authorise significant transactions. This is both a fraud control and an AML control: it prevents any single individual from processing a suspicious transaction unilaterally, and it creates a second opportunity for suspicion to be identified and raised. As the Director C case study illustrates, however, dual authorisation only works if both signatories actually perform independent scrutiny — not if one rubber-stamps the other's apparent approval.</p>
+
+  <div class="quick-check" id="qc5">
+    <div class="qc-tag">⚡ Quick Check</div>
+    <div class="qc-q">An employee processes a suspicious transaction but argues they didn't report it because they were handling 200 other transactions that day. Under the objective test, this means:</div>
+    <div class="qc-options">
+      <button class="qc-btn" onclick="checkQC('qc5',0,1)">They have a valid defence — volume of work is a recognised mitigating factor</button>
+      <button class="qc-btn" onclick="checkQC('qc5',1,1)">Workload is irrelevant — if a reasonable person in their role should have been suspicious, the law treats them as having had grounds for suspicion</button>
+      <button class="qc-btn" onclick="checkQC('qc5',2,1)">The firm is liable but the employee is protected as an individual</button>
+    </div>
+    <div class="qc-feedback" id="qc5-fb"></div>
+  </div>
+
+  <div class="sec-nav">
+    <button class="nav-btn btn-prev" onclick="prevSection()">← Back</button>
+    <div class="progress-dots" id="dots-4"></div>
+    <button class="nav-btn btn-next" onclick="nextSection()">Next Section →</button>
+  </div>
+</div>
+
+<!-- ═══════════════ SECTION 5: CORPORATE CULTURE ═══════════════ -->
+<div class="section" id="sec-5">
+  <div class="lesson-tag">Module 08 — Section 6</div>
+  <h1 class="section-title">Corporate Culture &amp; Tone from the Top</h1>
+  <p class="section-intro">Rules, policies and procedures are necessary — but they're not sufficient. The most important determinant of whether an AML framework actually works is the culture of the organisation. Culture is what happens when no one is watching. It's the difference between staff who file internal SARs because they understand why it matters and staff who avoid doing so because they fear upsetting a fee-generating relationship.</p>
+
+  <h2 class="sub-title">Why Culture Is Hard to Get Right</h2>
+  <p>Unlike a policy document or a procedure, culture is intangible. You can't point to it in a folder. You can't audit it on a checklist. The ICA acknowledges that culture is therefore often overlooked when organisations assess the quality of their AML controls — and that this oversight is dangerous, because negative cultural attitudes can be just as damaging as gaps in written procedures.</p>
+  <p>The challenge is particularly acute in commercial organisations that exist to generate business and revenue. AML procedures can come to be seen as obstacles — "business prevention" — rather than as tools that protect both the firm and its people. A genuinely positive AML culture reframes this: good AML controls help firms attract good clients and repel bad ones.</p>
+
+  <div class="callout exam">
+    <div class="callout-label">📘 ICA Exam Note — Culture Obligations</div>
+    <p>"It is vitally important that everybody within an organisation, of whatever seniority, appreciates the important role that they can play in protecting the organisation against the risk."</p>
+    <p style="margin-top:10px">Management must:</p>
+    <ul style="margin-top:6px">
+      <li>Encourage staff to communicate concerns to the MLRO — even against contrary management pressure</li>
+      <li>Make the MLRO approachable and easily accessible</li>
+      <li>Ensure there is no environment of fear around raising suspicions</li>
+    </ul>
+  </div>
+
+  <h2 class="sub-title">The Four Indicators of Poor Compliance Culture</h2>
+  <p>The ICA identifies four specific warning signs that a firm's culture is working against its AML objectives:</p>
+
+  <div class="callout warn">
+    <div class="callout-label">⚠️ Signs of a Poor AML Culture</div>
+    <ol style="padding-left:20px;margin-top:8px;line-height:2">
+      <li><strong>"My suspicion doesn't count"</strong> — Junior staff assume that because they're remote from senior client relationships, any concern they have will already have been spotted by someone more senior. This is usually false. Junior staff are often <em>closer</em> to transactional activity than their managers.</li>
+      <li><strong>Management pressure to transact</strong> — When managers make clear, explicitly or implicitly, that completing a deal is more important than AML compliance, staff will behave accordingly. This is one of the most dangerous cultural failures.</li>
+      <li><strong>"Compliance is not my responsibility"</strong> — The view that AML is a compliance team problem, not something that everyone in the business owns. This attitude leads to risk being concentrated in the compliance function while operational staff disengage.</li>
+      <li><strong>Territorial attitudes towards key clients</strong> — Relationship managers or senior staff who resist scrutiny of their clients, block enhanced due diligence, or fail to pass on suspicious transaction reports because they don't want their client relationships disrupted.</li>
+    </ol>
+  </div>
+
+  <h2 class="sub-title">The "My Suspicion Doesn't Count" Problem in Detail</h2>
+  <p>This is the most pervasive cultural problem in larger organisations, and the ICA addresses it specifically. Junior staff process transactions. They see the detail. A senior relationship director may never actually look at a specific payment instruction — a junior analyst does. That analyst's suspicion is as legally significant as the director's. If the analyst spots something that a reasonable person in their position should report and doesn't because they assume "someone more senior must have already dealt with this" — they are personally exposed under the objective test.</p>
+
+  <div class="case-study">
+    <div class="case-study-label">📋 Case Study — The Junior Analyst Who Said Nothing</div>
+    <h4>Assuming Someone Else Has Spotted It</h4>
+    <p>A junior compliance analyst at an estate agency notices that a buyer has provided source of funds documentation showing income from a business in a jurisdiction on FATF's grey list. She also notices that the purchase price is significantly above the local market rate. She doesn't raise it internally because the buyer has been introduced by a senior director who has worked with them for years — she assumes the director has already conducted enhanced due diligence.</p>
+    <p style="margin-top:10px">No one else has raised it. The transaction completes. Eighteen months later, the buyer is investigated for money laundering.</p>
+    <p style="margin-top:10px"><strong>The question:</strong> Should the analyst have raised an internal SAR? Under the objective test, almost certainly yes. Her assumption that someone senior must have dealt with it is not a defence. The director's long relationship with the client doesn't immunise the transaction from scrutiny — if anything, it is itself a warning sign of the "territorial attitudes" cultural indicator.</p>
+  </div>
+
+  <h2 class="sub-title">Tone from the Top</h2>
+  <p>Culture is set by leadership. Tracey McDermott, formerly of the FCA, made a famous speech that the ICA uses to close this topic — a fitting reminder that AML is a shared professional and societal obligation, not just a regulatory burden:</p>
+
+  <blockquote>"Let's make it [the financial services industry] a hostile place for the criminal." — Tracey McDermott, formerly of the FCA</blockquote>
+
+  <p>For this to be more than a slogan, senior management must actively model the culture they want: celebrating staff who raise internal SARs rather than treating it as a nuisance; backing the MLRO when they push back on commercial pressure; and making clear that AML compliance is non-negotiable at every level of the business.</p>
+
+  <div class="callout key">
+    <div class="callout-label">💡 Summary: What Good AML Culture Looks Like</div>
+    <ul style="margin-top:8px">
+      <li>Every staff member understands that AML is part of their job — not just the compliance team's problem</li>
+      <li>Staff at all levels feel safe and encouraged to raise concerns and file internal SARs</li>
+      <li>The MLRO is accessible, respected, and backed by senior management</li>
+      <li>Management does not apply pressure — explicit or implicit — to complete transactions that raise compliance concerns</li>
+      <li>Key client relationships do not receive reduced AML scrutiny compared to other clients</li>
+      <li>AML procedures are seen as tools for protecting the business, not barriers to revenue</li>
+    </ul>
+  </div>
+
+  <div class="callout property">
+    <div class="callout-label">🏠 Coadjute Context — Culture in a PropTech Team</div>
+    <p>At Coadjute, our AML culture means that every team member who touches a transaction — whether they're reviewing CDD documents, processing data, or building the systems that support AML checks — understands that their role contributes to preventing financial crime. We don't expect every person to be an AML expert, but we do expect everyone to know how to escalate a concern and to feel confident doing so. That's the standard the ICA sets, and it's the standard we hold ourselves to.</p>
+  </div>
+
+  <div class="quick-check" id="qc6">
+    <div class="qc-tag">⚡ Quick Check</div>
+    <div class="qc-q">A junior employee at an estate agency notices unusual source of funds documentation on a transaction introduced by a senior director. They decide not to raise it, assuming the director has already handled due diligence. According to the ICA, this is:</div>
+    <div class="qc-options">
+      <button class="qc-btn" onclick="checkQC('qc6',0,2)">Sensible — deference to senior colleagues is appropriate</button>
+      <button class="qc-btn" onclick="checkQC('qc6',1,2)">A grey area — depends on what the director has done</button>
+      <button class="qc-btn" onclick="checkQC('qc6',2,2)">Dangerous — junior staff must raise their own concerns; their suspicion is as legally significant as any director's</button>
+    </div>
+    <div class="qc-feedback" id="qc6-fb"></div>
+  </div>
+
+  <div class="sec-nav">
+    <button class="nav-btn btn-prev" onclick="prevSection()">← Back</button>
+    <div class="progress-dots" id="dots-5"></div>
+    <button class="nav-btn btn-next" onclick="nextSection()">Proceed to Quiz →</button>
+  </div>
+</div>
+
+<!-- ═══════════════ SECTION 6: QUIZ ═══════════════ -->
+<div class="section" id="sec-6">
+  <div class="lesson-tag">Module 08 — Assessment</div>
+  <h1 class="section-title">Module 8 Quiz</h1>
+
+  <div class="quiz-wrap">
+    <div class="quiz-intro" id="quiz-intro">
+      <h2>Ready to Test Your Knowledge?</h2>
+      <p>15 questions · ICA-style · 70% pass mark (11/15)<br>Detailed explanations provided on every answer.</p>
+      <button class="start-btn" onclick="startQuiz()">Start Quiz →</button>
+    </div>
+
+    <div id="quiz-questions" style="display:none">
+      <!-- Questions rendered by JS -->
+    </div>
+
+    <div class="results-panel" id="results-panel">
+      <div class="results-score" id="results-score"></div>
+      <div class="results-label" id="results-label"></div>
+      <div class="results-pass" id="results-pass"></div>
+      <button class="retry-btn" onclick="retryQuiz()">Retry Quiz</button>
+      <button class="complete-btn" id="complete-btn" onclick="markComplete()" style="display:none">Mark Complete ✓</button>
+    </div>
+
+    <div class="completion-banner" id="completion-banner">
+      <h3>🎉 Module 8 Complete!</h3>
+      <p>You've finished the final content module of the ICA Certificate in AML course. The Mock Exam is your final step — good luck!</p>
+      <a href="mock-exam.html">Proceed to Mock Exam →</a>
+    </div>
+  </div>
+
+  <div class="sec-nav" style="margin-top:40px">
+    <button class="nav-btn btn-prev" onclick="prevSection()">← Back to Content</button>
+    <div></div><div></div>
+  </div>
+</div>
+
+</main>
+</div>
+
+<script>
+// ═══ STATE ═══
+const TOTAL_SECTIONS = 6; // content sections (0-5)
+let current = 0;
+let unlocked = [true,false,false,false,false,false,false]; // 7 items: 6 sections + quiz
+let sectionDone = [false,false,false,false,false,false];
+
+// ═══ NAVIGATION ═══
+function goTo(idx){
+  if(!unlocked[idx]) return;
+  document.getElementById('sec-'+current).classList.remove('active');
+  current = idx;
+  document.getElementById('sec-'+current).classList.add('active');
+  updateSidebar();
+  updateProgress();
+  window.scrollTo(0,0);
+}
+function nextSection(){
+  sectionDone[current] = true;
+  let next = current+1;
+  unlocked[next] = true;
+  goTo(next);
+}
+function prevSection(){ if(current>0) goTo(current-1); }
+
+function updateSidebar(){
+  document.querySelectorAll('.nav-item').forEach((el,i)=>{
+    el.classList.remove('active','done','locked');
+    if(i===current) el.classList.add('active');
+    else if(sectionDone[i]) el.classList.add('done');
+    else if(!unlocked[i]) el.classList.add('locked');
+  });
+  const qi = document.getElementById('quiz-nav-item');
+  if(unlocked[6]){qi.classList.remove('locked');}
+  if(current===6) qi.style.background='rgba(193,127,255,.25)';
+  else qi.style.background='';
+  // update nav-nums
+  document.querySelectorAll('.nav-item').forEach((el,i)=>{
+    const num = el.querySelector('.nav-num');
+    if(num){
+      if(sectionDone[i] && i!==current) num.textContent='✓';
+      else num.textContent=i+1;
+    }
+  });
+}
+
+function updateProgress(){
+  const done = sectionDone.filter(Boolean).length;
+  const pct = Math.round((done/TOTAL_SECTIONS)*100);
+  document.getElementById('pct-label').textContent = pct+'% complete';
+  document.getElementById('tb-fill').style.width = pct+'%';
+}
+
+// ═══ QUICK CHECKS ═══
+const QC_DATA = {
+  qc1:{correct:1,fb:{c:'Correct! The RBA permits simplified CDD for lower-risk customers, but minimum verification standards always apply. The RBA is not a get-out clause.',w:'Incorrect. The RBA allows proportionate CDD — simplified for lower risk — but minimum standards still apply to every customer. You cannot skip CDD entirely.'}},
+  qc2:{correct:2,fb:{c:'Correct. The ICA warns specifically against externally-drafted policies adopted without internal discussion — they "do little more than window dress" and are operationally meaningless.',w:'Incorrect. The ICA is explicit that policies drafted by external advisers without meaningful internal discussion are examples of "window dressing" — they look good but don\'t work.'}},
+  qc3:{correct:1,fb:{c:'Correct! Annual leave requirements are a recognised AML control — enforced absence can reveal suspicious activity that an employee was concealing by staying at their desk.',w:'Incorrect. The ICA specifically includes a minimum annual leave requirement as a legitimate and important AML procedure. Enforced absence can expose fraud or suspicious activity that an employee may be concealing.'}},
+  qc4:{correct:2,fb:{c:'Correct. Failing to comply with your own stated policy is extremely damaging — it demonstrates that stated standards exist but were simply ignored, which is worse than having no policy at all.',w:'Incorrect. The ICA is clear that circumstances in which a regulatory authority discovers an organisation has not complied with its own policy are "extremely damaging." It is worse than having no policy.'}},
+  qc5:{correct:1,fb:{c:'Correct. The objective test is indifferent to workload. If a reasonable person in that position should have been suspicious, the employee is treated as having had grounds for suspicion — regardless of how many other transactions they were processing.',w:'Incorrect. The objective test of suspicion specifically disregards factors like volume of work and lack of resources. The question is whether a reasonable person in the same role ought to have been suspicious.'}},
+  qc6:{correct:2,fb:{c:'Correct. The ICA is explicit: junior staff must raise their own concerns. The assumption that someone more senior has "already dealt with it" is described as a dangerous cultural attitude based on a false premise.',w:'Incorrect. The ICA specifically flags "my suspicion doesn\'t count" as a dangerous cultural indicator. Junior staff are often closest to transactional detail — their suspicions are legally as significant as any director\'s.'}}
+};
+
+function checkQC(id,chosen,correct){
+  const qc = document.getElementById(id);
+  const btns = qc.querySelectorAll('.qc-btn');
+  const fb = document.getElementById(id+'-fb');
+  const data = QC_DATA[id];
+  btns.forEach(b=>b.disabled=true);
+  btns[chosen].classList.add(chosen===data.correct?'correct':'wrong');
+  if(chosen===data.correct) btns[data.correct].classList.add('correct');
+  else btns[data.correct].classList.add('correct');
+  fb.textContent = chosen===data.correct ? data.fb.c : data.fb.w;
+  fb.className = 'qc-feedback show '+(chosen===data.correct?'correct-fb':'wrong-fb');
+}
+
+// ═══ QUIZ ═══
+const QUESTIONS = [
+  {q:"What is the primary rationale for adopting a risk-based approach to AML?",opts:["It removes the obligation to conduct CDD on low-risk clients","Firms have finite resources and should concentrate them on higher-risk areas","It allows firms to choose which regulations to comply with","It satisfies the minimum requirements of the 3rd Money Laundering Directive"],a:1,exp:"The ICA is explicit: the rationale is simple — firms have finite resources and those resources achieve maximum benefit when targeted at higher-risk areas. The RBA promotes proportionality, not avoidance."},
+  {q:"Which of the following statements about the risk-based approach is TRUE?",opts:["The RBA allows low-risk clients to be accepted without any CDD","The RBA is an opportunity to bypass regulatory requirements for smaller clients","The RBA is not an opportunity to avoid appropriate identification and verification — minimum standards still apply","The RBA was first introduced by the 6th Money Laundering Directive"],a:2,exp:"The ICA is emphatic: the RBA is NOT an opportunity to avoid completing appropriate identification, verification and monitoring. Even simplified CDD must still meet minimum standards."},
+  {q:"Which four components does the ICA identify as constituting a proper risk-based approach?",opts:["Risk assessment, risk mitigation, effective implementation, and ongoing monitoring/record-keeping","Client identification, SAR filing, staff training, and board approval","CDD, EDD, SDD, and ongoing monitoring","Risk appetite, jurisdiction review, PEP screening, and sanctions checking"],a:0,exp:"The four ICA components are: (i) a documented risk assessment; (ii) policies and procedures to mitigate identified risks; (iii) effective implementation of those procedures; and (iv) a comprehensive monitoring process, supported by record-keeping."},
+  {q:"An AML policy must be approved at which level of an organisation?",opts:["The compliance team","The MLRO","The most senior level — typically the board","The business unit manager level"],a:2,exp:"The ICA is explicit that AML policy must be approved at the most senior level — typically the board. This signals genuine corporate intent, not just a compliance exercise."},
+  {q:"The ICA uses the term 'window dressing' to describe:",opts:["A technique for assessing client risk profiles","AML policies approved by the board without genuine internal engagement or discussion","Regulatory guidance on the presentation of AML documentation","A method of presenting SARs to the NCA"],a:1,exp:"The ICA warns specifically against firms paying external advisers to draft policies that are adopted without internal consideration. Such policies 'do little more than window dress' — they look good but are operationally irrelevant."},
+  {q:"Which of the following is NOT listed by the ICA as one of the four audiences for an AML policy?",opts:["Employees","Clients","Shareholders","Law enforcement bodies"],a:2,exp:"The ICA identifies four audiences for an AML policy: employees, clients, regulatory authorities, and law enforcement bodies. Shareholders are not specifically listed as a primary audience."},
+  {q:"According to the ICA, which of the following should be included in AML procedures?",opts:["Guidance on investment returns for high-value clients","A staff minimum annual leave requirement","Customer pricing structures for premium services","Marketing strategies for high-net-worth individuals"],a:1,exp:"Staff minimum annual leave is a recognised AML control — enforced absence creates a gap during which colleagues may discover suspicious activity that the employee was concealing by remaining at their desk."},
+  {q:"Which of the following BEST describes the role of the MLRO Annual Report?",opts:["A financial performance report for the year","A record of the MLRO's personal continuing professional development","A report to the board on the organisation's performance in meeting its AML policy obligations","A statutory submission to the NCA summarising all SARs filed"],a:2,exp:"The MLRO Annual Report is the mechanism through which the MLRO reports to the board on the effectiveness of the firm's AML framework, including compliance with policy, monitoring data, and any significant incidents."},
+  {q:"The 'objective test of suspicion' means that:",opts:["Employees are only liable if they personally and actually knew about suspicious activity","Regulators assess suspicion based on what a reasonable person in the employee's role ought to have known or suspected","Volume of work is a valid defence if it explains why suspicious activity was missed","Only senior staff are subject to the suspicion standard"],a:1,exp:"The objective test assesses what a reasonable person in the employee's position ought to have known or suspected. Volume of work, lack of resources, and time pressure are all legally irrelevant to this test."},
+  {q:"A firm's AML policy states that all redemptions must be paid to the originating account. A manager bypasses this for a VIP client without following the exceptions process. According to the ICA, this is:",opts:["Acceptable — commercial judgment may override procedural requirements for important clients","A permissible exercise of the risk-based approach","A serious compliance failure that may expose the manager to personal legal liability","A matter for the compliance team to note in the next annual review"],a:2,exp:"Bypassing a stated procedure without following the exceptions process is a serious compliance failure. The ICA case study on this point shows that the objective test may expose the manager personally, regardless of commercial motivation."},
+  {q:"Which of the following is identified by the ICA as a sign of POOR compliance culture?",opts:["Junior staff regularly filing internal suspicious activity reports","The MLRO being consulted on significant new client decisions","Management applying pressure to complete transactions despite compliance concerns","The board reviewing the MLRO Annual Report annually"],a:2,exp:"Management pressure to transact is one of the ICA's four specific indicators of poor compliance culture. It creates an environment where staff feel that completing deals takes priority over AML compliance."},
+  {q:"The ICA emphasises the importance of junior staff suspicions because:",opts:["Junior staff are more likely to be targeted by criminals directly","Junior staff are often closer to transactional detail than senior colleagues and may spot red flags first","Junior staff are legally required to file SARs directly with the NCA","Junior staff have personal criminal immunity from ML offences"],a:1,exp:"The ICA is explicit: junior staff are often closer to transactional activity than their senior colleagues. A director may never see a specific payment instruction; a junior analyst processes it. Their suspicion is as legally significant as any director's."},
+  {q:"A firm operates in three jurisdictions. According to the ICA, the best approach to AML standards is:",opts:["Apply the AML framework of the least stringent jurisdiction to minimise cost","Apply different standards in each jurisdiction based on local regulation only","Adopt 'global standards' that meet at least the requirements of the most stringent framework","Delegate AML standards to local compliance teams with no central oversight"],a:2,exp:"The ICA recommends that firms with multi-jurisdiction operations adopt 'global standards' that meet at a minimum the requirements of the most stringent national framework. 'Jurisdiction shopping' — using different group entities to accept business rejected elsewhere — is described as short-sighted."},
+  {q:"An effective AML system of internal control is BEST described as:",opts:["A fixed set of procedures established once and followed indefinitely","A dynamic and constantly evolving framework, continually monitored, tested, and adjusted","A compliance function responsibility that does not involve operational staff","A regulatory minimum that firms should not exceed to avoid over-compliance"],a:1,exp:"The ICA is clear: 'An effective internal system of control is not fixed or a one-off event; instead it is dynamic and constantly evolving to take account of changing threats and emerging weaknesses.'"},
+  {q:"Which of the following BEST reflects a positive AML corporate culture?",opts:["Staff avoid filing internal SARs unless they are completely certain of wrongdoing, to minimise disruption to client relationships","Compliance procedures are seen as 'business prevention' tools that should be streamlined to maximise revenue","The MLRO is easily accessible, management backs compliance over commercial pressure, and all staff understand AML is part of their role","Senior relationship managers are exempt from AML scrutiny in respect of their own long-standing clients"],a:2,exp:"The ICA describes a positive AML culture as one where: everyone understands their role in AML regardless of seniority; the MLRO is approachable and backed by management; commercial pressure does not override compliance obligations; and AML is viewed as a tool for attracting good business rather than 'business prevention'."}
+];
+
+let userAnswers = [];
+let quizActive = false;
+
+function startQuiz(){
+  document.getElementById('quiz-intro').style.display='none';
+  quizActive = true;
+  userAnswers = new Array(QUESTIONS.length).fill(null);
+  renderQuestions();
+}
+
+function renderQuestions(){
+  const wrap = document.getElementById('quiz-questions');
+  wrap.style.display='block';
+  wrap.innerHTML = QUESTIONS.map((q,i)=>`
+    <div class="quiz-q-block active" id="qblock-${i}">
+      <div class="q-num">Question ${i+1} of ${QUESTIONS.length}</div>
+      <div class="q-text">${q.q}</div>
+      <div class="q-options">
+        ${q.opts.map((o,j)=>`<button class="q-opt" id="qopt-${i}-${j}" onclick="selectAnswer(${i},${j})">${o}</button>`).join('')}
+      </div>
+      <div class="q-explanation" id="qexp-${i}">${q.exp}</div>
+    </div>
+  `).join('') + `
+    <div style="text-align:right;margin-top:20px">
+      <button class="submit-btn" id="submit-btn" onclick="submitQuiz()" disabled>Submit Answers</button>
+    </div>
+  `;
+}
+
+function selectAnswer(qi,oi){
+  if(!quizActive) return;
+  userAnswers[qi]=oi;
+  for(let j=0;j<4;j++){
+    const el=document.getElementById('qopt-'+qi+'-'+j);
+    if(el) el.classList.toggle('selected',j===oi);
+  }
+  const allAnswered = userAnswers.every(a=>a!==null);
+  document.getElementById('submit-btn').disabled = !allAnswered;
+}
+
+function submitQuiz(){
+  quizActive = false;
+  let correct = 0;
+  QUESTIONS.forEach((q,i)=>{
+    const chosen = userAnswers[i];
+    const opts = document.querySelectorAll(`#qblock-${i} .q-opt`);
+    opts.forEach(o=>o.disabled=true);
+    opts[q.a].classList.add('correct');
+    if(chosen===q.a){ correct++; }
+    else if(chosen!==null){ opts[chosen].classList.add('wrong'); }
+    document.getElementById('qexp-'+i).classList.add('show');
+  });
+  const pct = Math.round((correct/QUESTIONS.length)*100);
+  const pass = pct>=70;
+  document.getElementById('quiz-questions').style.display='none';
+  const rp = document.getElementById('results-panel');
+  rp.classList.add('show');
+  document.getElementById('results-score').textContent = correct+'/'+QUESTIONS.length;
+  document.getElementById('results-label').textContent = pct+'% — '+correct+' correct out of '+QUESTIONS.length;
+  document.getElementById('results-pass').textContent = pass ? '✓ Pass — well done!' : '✗ Not quite — review the explanations and try again';
+  document.getElementById('results-pass').className = 'results-pass '+(pass?'pass':'fail');
+  if(pass){
+    document.getElementById('complete-btn').style.display='inline-block';
+  }
+}
+
+function retryQuiz(){
+  document.getElementById('results-panel').classList.remove('show');
+  document.getElementById('quiz-intro').style.display='block';
+  document.getElementById('quiz-questions').innerHTML='';
+  document.getElementById('quiz-questions').style.display='none';
+}
+
+function markComplete(){
+  sectionDone[5]=true; // mark last content section
+  unlocked[6]=true;
+  updateProgress();
+  updateSidebar();
+  document.getElementById('completion-banner').classList.add('show');
+  document.getElementById('complete-btn').style.display='none';
+}
+
+// ═══ INIT ═══
+updateSidebar();
+updateProgress();
+</script>
+</body>
+</html>

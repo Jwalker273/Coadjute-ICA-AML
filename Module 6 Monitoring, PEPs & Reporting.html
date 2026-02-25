@@ -1,0 +1,1171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Module 6 – Monitoring, PEPs & Reporting | Coadjute AML</title>
+<style>
+  /* ═══ BRAND TOKENS ═══ */
+  :root{
+    --ink:#002846;--lilac:#C17FFF;--pink:#FF44D6;--orange:#FF6D3D;
+    --active:#4EEFF9;--l10:#DFBEFF;--l20:#F2E5FF;--l30:#F9F2FF;
+    --grey:#EEE8F1;--white:#fff;
+    --grad:linear-gradient(90deg,#C17FFF,#FF44D6,#FF6D3D);
+    --sidebar:240px;--topbar:56px;
+  }
+
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f0fa;color:var(--ink);min-height:100vh;display:flex;flex-direction:column}
+
+  /* ═══ TOP BAR ═══ */
+  .topbar{position:fixed;top:0;left:0;right:0;height:var(--topbar);background:var(--ink);display:flex;align-items:center;justify-content:space-between;padding:0 24px;z-index:200}
+  .topbar-logo{font-weight:800;font-size:1rem;color:var(--white);letter-spacing:-.01em}
+  .topbar-logo span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .topbar-mod{font-size:.8rem;color:rgba(255,255,255,.55)}
+
+  /* ═══ PROGRESS BAR ═══ */
+  .prog-bar{position:fixed;top:var(--topbar);left:0;right:0;height:3px;background:rgba(255,255,255,.1);z-index:199}
+  .prog-fill{height:100%;background:var(--grad);transition:width .4s}
+
+  /* ═══ LAYOUT ═══ */
+  .layout{display:flex;margin-top:calc(var(--topbar)+3px);min-height:calc(100vh - var(--topbar) - 3px);position:relative}
+
+  /* ═══ SIDEBAR ═══ */
+  .sidebar{width:var(--sidebar);background:var(--ink);position:fixed;top:calc(var(--topbar) + 3px);bottom:0;left:0;overflow-y:auto;padding:24px 0 40px}
+  .sidebar-title{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:rgba(255,255,255,.4);padding:0 20px 16px}
+  .nav-item{display:flex;align-items:flex-start;gap:10px;padding:10px 20px;cursor:pointer;border-left:3px solid transparent;transition:.2s;text-decoration:none}
+  .nav-item:hover{background:rgba(255,255,255,.05)}
+  .nav-item.active{background:rgba(193,127,255,.15);border-left-color:var(--lilac)}
+  .nav-item.locked{opacity:.4;cursor:not-allowed;pointer-events:none}
+  .nav-item.done .nav-num{background:var(--active);color:var(--ink)}
+  .nav-num{min-width:26px;height:26px;border-radius:50%;background:rgba(255,255,255,.12);display:flex;align-items:center;justify-content:center;font-size:.65rem;font-weight:800;color:rgba(255,255,255,.7);flex-shrink:0;margin-top:1px;transition:.2s}
+  .nav-item.active .nav-num{background:var(--lilac);color:var(--ink)}
+  .nav-label{display:flex;flex-direction:column;gap:2px}
+  .nav-label strong{font-size:.78rem;font-weight:700;color:var(--white);line-height:1.3}
+  .nav-label span{font-size:.68rem;color:rgba(255,255,255,.45);line-height:1.3}
+
+  /* ═══ MAIN CONTENT ═══ */
+  .main{margin-left:var(--sidebar);flex:1;padding:48px 56px 80px;max-width:900px}
+
+  .section{display:none}
+  .section.active{display:block}
+
+  /* ═══ TYPOGRAPHY ═══ */
+  .lesson-tag{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--lilac);margin-bottom:10px}
+  h1{font-size:2rem;font-weight:900;line-height:1.2;margin-bottom:8px;color:var(--ink)}
+  .lesson-intro{font-size:1.05rem;color:rgba(0,40,70,.65);margin-bottom:32px;line-height:1.6}
+  h2{font-size:1.25rem;font-weight:800;margin:32px 0 12px;color:var(--ink)}
+  h3{font-size:1rem;font-weight:700;margin:24px 0 8px;color:var(--ink)}
+  p{font-size:.93rem;line-height:1.7;color:rgba(0,40,70,.85);margin-bottom:14px}
+  ul,ol{margin:10px 0 16px 20px}
+  li{font-size:.93rem;line-height:1.7;color:rgba(0,40,70,.85);margin-bottom:6px}
+  strong{font-weight:700}
+  em{font-style:italic}
+
+  /* ═══ CALLOUTS ═══ */
+  .exam-note{background:var(--l20);border-left:4px solid var(--lilac);border-radius:0 10px 10px 0;padding:18px 20px;margin:20px 0}
+  .exam-note-label{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--lilac);margin-bottom:8px}
+  .exam-note p,.exam-note li{font-size:.88rem;color:var(--ink)}
+
+  .callout{border-radius:10px;padding:16px 20px;margin:20px 0}
+  .callout-label{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;margin-bottom:7px}
+  .callout p,.callout li{font-size:.88rem;line-height:1.65}
+  .callout.warning{background:#fff3f5;border:1px solid #ffb8c8}.callout.warning .callout-label{color:#cc2255}
+  .callout.info{background:#e8f7ff;border:1px solid #9dd8f7}.callout.info .callout-label{color:#0077aa}
+  .callout.prop{background:linear-gradient(135deg,#f9f2ff,#fff0f8);border:1px solid var(--l10)}.callout.prop .callout-label{color:var(--pink)}
+  .callout.consider{background:#fff8ec;border:1px solid #ffd580}.callout.consider .callout-label{color:#b07800}
+  .callout.danger{background:#fff0f0;border:1px solid #ffb0b0}.callout.danger .callout-label{color:#cc2222}
+  .callout.success{background:#f0fff8;border:1px solid #7addb5}.callout.success .callout-label{color:#157a45}
+
+  /* ═══ TABLE ═══ */
+  .doc-table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.85rem}
+  .doc-table th{background:var(--ink);color:#fff;padding:10px 14px;text-align:left;font-weight:700}
+  .doc-table td{padding:10px 14px;border-bottom:1px solid var(--grey);vertical-align:top}
+  .doc-table tr:last-child td{border-bottom:none}
+  .doc-table tr:nth-child(even) td{background:var(--l30)}
+  .doc-table td:first-child{font-weight:600}
+
+  /* ═══ QUICK CHECK ═══ */
+  .qc{background:var(--white);border:2px solid var(--grey);border-radius:12px;padding:22px;margin:24px 0}
+  .qc-label{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--lilac);margin-bottom:10px}
+  .qc-q{font-weight:700;font-size:.95rem;margin-bottom:14px;color:var(--ink)}
+  .qc-opts{display:flex;flex-direction:column;gap:8px}
+  .qc-btn{text-align:left;padding:12px 16px;background:var(--l30);border:2px solid var(--grey);border-radius:8px;cursor:pointer;font-size:.88rem;color:var(--ink);transition:.15s;font-family:inherit}
+  .qc-btn:hover:not([disabled]){border-color:var(--lilac);background:var(--l20)}
+  .qc-btn.correct{background:#f0fff8;border-color:#22aa66;color:#157a45;font-weight:700;cursor:default}
+  .qc-btn.wrong{background:#fff0f5;border-color:#cc2255;color:#aa1144;cursor:default}
+  .qc-fb{margin-top:12px;padding:12px 14px;border-radius:8px;font-size:.87rem;display:none;line-height:1.6}
+  .qc-fb.show-c{display:block;background:#f0fff8;border:1px solid #7addb5;color:#157a45}
+  .qc-fb.show-w{display:block;background:#fff0f5;border:1px solid #ffb8c8;color:#aa1144}
+
+  /* ═══ CASE STUDY / SCENARIO ═══ */
+  .scenario{background:var(--ink);border-radius:12px;padding:24px;margin:24px 0;color:#fff}
+  .scenario-label{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--active);margin-bottom:10px}
+  .scenario h3{color:#fff;margin-top:0}
+  .scenario p,.scenario li{color:rgba(255,255,255,.85);font-size:.9rem}
+
+  /* ═══ PERSON CARDS ═══ */
+  .cards-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+  .card{background:var(--white);border:1px solid var(--grey);border-radius:10px;padding:16px}
+  .card h4{font-size:.9rem;font-weight:800;color:var(--ink);margin-bottom:4px}
+  .card p{font-size:.83rem;color:rgba(0,40,70,.7);margin:0}
+
+  /* ═══ STEP LIST ═══ */
+  .steps{margin:16px 0}
+  .step{display:flex;gap:14px;margin-bottom:16px;align-items:flex-start}
+  .step-num{min-width:32px;height:32px;border-radius:50%;background:var(--grad);display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.85rem;color:var(--ink);flex-shrink:0}
+  .step-body strong{display:block;font-size:.93rem;color:var(--ink);margin-bottom:3px}
+  .step-body p{margin:0;font-size:.87rem}
+
+  /* ═══ NAV ═══ */
+  .bottom-nav{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--grey)}
+  .btn-prev,.btn-next{padding:12px 26px;border-radius:8px;border:none;cursor:pointer;font-size:.88rem;font-weight:700;transition:.2s;font-family:inherit}
+  .btn-prev{background:var(--grey);color:var(--ink)}.btn-prev:hover{background:#d8d0e2}
+  .btn-next{background:var(--ink);color:#fff}.btn-next:hover{background:#003a6a}
+  .btn-next.cta{background:var(--grad);color:var(--ink)}
+  .btn-prev:disabled{opacity:.35;cursor:not-allowed}
+
+  /* ═══ QUIZ ═══ */
+  .quiz-header{background:var(--grad);border-radius:12px;padding:20px 24px;margin-bottom:24px}
+  .quiz-header h2{font-size:1.15rem;font-weight:800;color:var(--ink);margin-bottom:4px}
+  .quiz-header p{font-size:.82rem;color:rgba(0,40,70,.6)}
+  .q-block{background:#fff;border-radius:10px;padding:20px 22px;margin-bottom:16px;border:2px solid var(--grey)}
+  .q-block.ans-correct{border-color:#22aa66;background:#f0fff8}
+  .q-block.ans-wrong{border-color:#cc2255;background:#fff0f5}
+  .q-num{font-size:.68rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--lilac);margin-bottom:6px}
+  .q-text{font-weight:700;font-size:.93rem;color:var(--ink);margin-bottom:12px;line-height:1.5}
+  .a-opt{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:var(--l30);border:2px solid var(--grey);border-radius:6px;cursor:pointer;margin-bottom:7px;font-size:.87rem;transition:.15s;color:var(--ink);font-family:inherit;text-align:left;width:100%}
+  .a-opt:hover:not([disabled]){border-color:var(--lilac);background:var(--l20)}
+  .a-opt .let{font-weight:800;color:var(--lilac);min-width:18px;margin-top:1px;flex-shrink:0}
+  .a-opt.correct{border-color:#22aa66;background:#f0fff8}.a-opt.correct .let{color:#22aa66}
+  .a-opt.wrong{border-color:#cc2255;background:#fff0f5}.a-opt.wrong .let{color:#cc2255}
+  .q-fb{margin-top:10px;padding:12px 14px;border-radius:8px;font-size:.86rem;display:none;line-height:1.6}
+  .q-fb.show{display:block}
+  .q-fb.c{background:#f0fff8;border:1px solid #7addb5;color:#157a45}
+  .q-fb.w{background:#fff0f5;border:1px solid #ffb8c8;color:#aa1144}
+  #qnext{display:none;margin-top:12px;justify-content:flex-end}
+  .quiz-results{background:#fff;border-radius:12px;padding:32px;text-align:center;border:2px solid var(--grey)}
+  .result-score{font-size:3.5rem;font-weight:900;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin:12px 0}
+  .result-msg{font-size:1rem;margin-bottom:24px}
+  .result-pass{color:#157a45;font-weight:800}
+  .result-fail{color:#cc2255;font-weight:800}
+  .result-breakdown{text-align:left;margin-top:24px;border-top:1px solid var(--grey);padding-top:16px}
+  .rb-item{display:flex;align-items:flex-start;gap:8px;padding:8px 0;border-bottom:1px solid var(--grey);font-size:.85rem}
+  .rb-correct{color:#22aa66;font-weight:800}
+  .rb-wrong{color:#cc2255;font-weight:800}
+  .completion-banner{background:linear-gradient(135deg,var(--l20),#fff0f8);border:2px solid var(--l10);border-radius:10px;padding:20px;margin-top:20px}
+  .completion-banner h3{color:var(--ink);font-size:1.1rem}
+  .completion-banner p{font-size:.87rem;color:rgba(0,40,70,.7);margin-top:6px}
+
+  /* ═══ HIGHLIGHT BOX ═══ */
+  .highlight{background:var(--grad);border-radius:10px;padding:18px 22px;margin:20px 0}
+  .highlight p,.highlight li{font-size:.9rem;color:var(--ink);font-weight:600}
+
+  /* ═══ PROCESS FLOW ═══ */
+  .flow{display:flex;flex-direction:column;gap:0;margin:20px 0}
+  .flow-item{background:#fff;border:2px solid var(--grey);border-radius:8px;padding:14px 18px;position:relative}
+  .flow-item::after{content:'↓';display:block;text-align:center;font-size:1.2rem;color:var(--lilac);margin:4px 0;font-weight:900}
+  .flow-item:last-child::after{display:none}
+  .flow-item strong{color:var(--ink);font-size:.9rem;display:block;margin-bottom:3px}
+  .flow-item p{font-size:.84rem;color:rgba(0,40,70,.7);margin:0}
+
+  /* ═══ TAG ═══ */
+  .tag{display:inline-block;background:var(--l20);border:1px solid var(--l10);border-radius:20px;padding:3px 10px;font-size:.75rem;font-weight:700;color:var(--lilac);margin:2px}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-logo">Coadjute <span>AML Training</span></div>
+  <div class="topbar-mod">Module 6 — Monitoring, PEPs &amp; Reporting</div>
+</div>
+<div class="prog-bar"><div class="prog-fill" id="prog" style="width:0%"></div></div>
+
+<div class="layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-title">Module 6</div>
+
+    <a class="nav-item active" onclick="goTo(0)" id="nav0">
+      <div class="nav-num">01</div>
+      <div class="nav-label"><strong>Ongoing Monitoring</strong><span>Risk-based, Reg 28, ATM systems</span></div>
+    </a>
+    <a class="nav-item locked" onclick="goTo(1)" id="nav1">
+      <div class="nav-num">02</div>
+      <div class="nav-label"><strong>Beneficial Ownership</strong><span>Unwrapping structures, registers</span></div>
+    </a>
+    <a class="nav-item locked" onclick="goTo(2)" id="nav2">
+      <div class="nav-num">03</div>
+      <div class="nav-label"><strong>PEP Risk</strong><span>Who they are, EDD requirements</span></div>
+    </a>
+    <a class="nav-item locked" onclick="goTo(3)" id="nav3">
+      <div class="nav-num">04</div>
+      <div class="nav-label"><strong>Suspicious Activity</strong><span>What triggers a suspicion</span></div>
+    </a>
+    <a class="nav-item locked" onclick="goTo(4)" id="nav4">
+      <div class="nav-num">05</div>
+      <div class="nav-label"><strong>The SAR Process</strong><span>Internal reporting, MLRO, NCA</span></div>
+    </a>
+    <a class="nav-item locked" onclick="goTo(5)" id="nav5">
+      <div class="nav-num">06</div>
+      <div class="nav-label"><strong>Confidentiality &amp; Tipping Off</strong><span>Safe harbour, the offence</span></div>
+    </a>
+    <a class="nav-item locked" onclick="goTo(6)" id="nav6">
+      <div class="nav-num">07</div>
+      <div class="nav-label"><strong>Module 6 Quiz</strong><span>15 questions · 70% to pass</span></div>
+    </a>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SEC 0: ONGOING MONITORING -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="section active" id="sec0">
+      <div class="lesson-tag">Module 06 — Section 1 of 7</div>
+      <h1>Ongoing Monitoring</h1>
+      <p class="lesson-intro">Completing CDD at onboarding is only the beginning. Regulation 28 of the Money Laundering Regulations 2017 (MLR 2017) requires firms to monitor client activity <em>throughout</em> the relationship — not just at the start.</p>
+
+      <div class="exam-note">
+        <div class="exam-note-label">📘 ICA Exam Note — The Regulation 28 Requirement</div>
+        <p>Ongoing monitoring means two things under Regulation 28, MLR 2017:</p>
+        <ul>
+          <li><strong>Scrutiny of transactions</strong> to ensure they are consistent with the firm's knowledge of the customer, their business, and risk profile — including source of funds where necessary.</li>
+          <li><strong>Keeping CDD documents, data and information up to date</strong> on a risk-sensitive basis.</li>
+        </ul>
+        <p style="margin-top:8px">This does <em>not</em> mean reviewing every single transaction. It means adopting a <strong>risk-based programme</strong> — higher-risk relationships get more frequent, more intensive monitoring.</p>
+      </div>
+
+      <h2>What "Risk-Sensitive Monitoring" Actually Means</h2>
+      <p>In practice, the frequency and depth of monitoring is calibrated to risk:</p>
+
+      <table class="doc-table">
+        <thead><tr><th>Risk Level</th><th>Monitoring Frequency</th><th>Trigger for Review</th></tr></thead>
+        <tbody>
+          <tr><td>Low risk</td><td>Periodic — annually or less</td><td>Material change in circumstances or transaction pattern</td></tr>
+          <tr><td>Standard risk</td><td>Quarterly or semi-annually</td><td>Significant transactions, adverse media, CDD document expiry</td></tr>
+          <tr><td>High risk (incl. PEPs)</td><td>Monthly or more frequent; enhanced scrutiny of each transaction</td><td>Any change; potentially real-time for highest-risk</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout warning">
+        <div class="callout-label">⚠️ The Fixed Review Cycle Trap</div>
+        <p>A firm that reviews <em>all</em> client CDD on a flat 5-year cycle — and does nothing in between — is <strong>not</strong> meeting its Regulation 28 obligations. Monitoring must be <strong>responsive to change</strong>, not just time-based. If material changes occur, an immediate review is required regardless of when the last review was.</p>
+      </div>
+
+      <h2>What Triggers a CDD Update?</h2>
+      <p>CDD information has a shelf life. A client who was low-risk at onboarding can become high-risk because:</p>
+      <ul>
+        <li>They have taken on a new role that makes them a <strong>PEP</strong></li>
+        <li><strong>Adverse media</strong> has appeared linking them to criminal conduct</li>
+        <li>Their country of residence or business has changed to a <strong>high-risk jurisdiction</strong></li>
+        <li>Their <strong>transaction patterns</strong> have changed significantly</li>
+        <li>Their <strong>ID documents have expired</strong></li>
+        <li>The <strong>nature of the business relationship</strong> has changed materially</li>
+        <li>A <strong>new beneficial owner</strong> has been identified</li>
+      </ul>
+
+      <h2>Automated Transaction Monitoring Systems</h2>
+      <p>Larger firms use automated systems (ATM systems) to flag potentially suspicious transactions. The FCA published a comprehensive report on these systems in 2007, which the ICA cites as guidance on best practice.</p>
+
+      <div class="exam-note">
+        <div class="exam-note-label">📘 ICA Exam Note — FCA Guidance on ATM Systems</div>
+        <p>The FCA's 2007 guidance on automated transaction monitoring systems states:</p>
+        <ul>
+          <li>Senior management must be able to <strong>monitor the performance</strong> of TM systems — especially where there are operational issues</li>
+          <li>Business unit stakeholders and IT must be <strong>closely involved</strong> in system implementation</li>
+          <li>The MLRO/compliance team must have clear <strong>allocation of responsibilities</strong> for reviewing, investigating and reporting alerts</li>
+          <li>Staff responsible for managing alerts must have <strong>appropriate skills</strong> and be subject to effective quality assurance</li>
+          <li>A <strong>backlog of unreviewed alerts</strong> is a regulatory failure and a sign of inadequate resources</li>
+        </ul>
+      </div>
+
+      <p>Exception reports advise supervisors of unusual transactions for review. More sophisticated systems use "case management" tools that track and record all outputs, enquiries made, and conclusions reached — creating an audit trail.</p>
+
+      <div class="callout consider">
+        <div class="callout-label">⚠️ Managing System Output</div>
+        <p>The ICA is explicit: <em>"Every aspect of the transaction monitoring process must be actively managed, regularly reviewed and effectively maintained."</em> Generating alerts means nothing if nobody is reviewing them. Quality assurance of alert review is just as important as the system itself.</p>
+      </div>
+
+      <h2>Ongoing Monitoring in the Property Sector</h2>
+      <p>Property transactions are typically discrete events rather than continuous banking relationships — but ongoing monitoring still applies. At Coadjute, we need to think about monitoring across several touchpoints:</p>
+
+      <div class="callout prop">
+        <div class="callout-label">🏠 Coadjute Context — Ongoing Monitoring</div>
+        <ul>
+          <li><strong>Transaction-level monitoring:</strong> Does the structure, price, and funding of the transaction match what we know about the client? Are there late changes to purchase price, parties, or funding sources?</li>
+          <li><strong>Multi-instruction patterns:</strong> A client buying multiple properties in quick succession, or changing details repeatedly, may warrant review</li>
+          <li><strong>Adverse media screening:</strong> If new information emerges about a client mid-transaction, CDD must be revisited</li>
+          <li><strong>Source of funds changes:</strong> If a buyer who declared one funding source introduces a different one late in the transaction, that is a red flag requiring re-assessment</li>
+          <li><strong>Sanctions screening:</strong> Ongoing sanctions screening through the transaction, not just at the start</li>
+        </ul>
+      </div>
+
+      <div class="qc">
+        <div class="qc-label">✋ Quick Check</div>
+        <div class="qc-q">A conveyancing client was assessed as low-risk at onboarding. Six months later, during a new transaction, an internet search reveals adverse media linking them to a fraud investigation. The firm's next scheduled review is in 18 months. What must the firm do?</div>
+        <div class="qc-opts">
+          <button class="qc-btn" onclick="qc(this,false,'qc0')">Wait for the scheduled 18-month review — the review cycle has been set and should be followed consistently</button>
+          <button class="qc-btn" onclick="qc(this,true,'qc0')">Conduct an immediate CDD review now — adverse media is a material change that triggers an immediate obligation to reassess, regardless of the scheduled review cycle</button>
+          <button class="qc-btn" onclick="qc(this,false,'qc0')">File a SAR immediately without reviewing the CDD</button>
+        </div>
+        <div class="qc-fb" id="qc0"></div>
+      </div>
+
+      <div class="bottom-nav">
+        <button class="btn-prev" disabled>← Back</button>
+        <button class="btn-next" onclick="goTo(1)">Next: Beneficial Ownership →</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SEC 1: BENEFICIAL OWNERSHIP -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="section" id="sec1">
+      <div class="lesson-tag">Module 06 — Section 2 of 7</div>
+      <h1>Beneficial Ownership</h1>
+      <p class="lesson-intro">One of the most powerful tools available to money launderers is placing assets — including property — in the name of a legal entity rather than their own. Beneficial ownership rules exist to look through these structures to find the real human being in control.</p>
+
+      <div class="exam-note">
+        <div class="exam-note-label">📘 ICA Exam Note — Beneficial Owner Definition</div>
+        <p>A <strong>beneficial owner</strong> is the <em>natural person</em> who ultimately owns or controls the customer, or on whose behalf a transaction is conducted.</p>
+        <p style="margin-top:8px">FATF Recommendation 10 requires that CDD includes identifying any beneficial owner, and taking reasonable measures to <strong>verify</strong> their identity so that the firm is satisfied it knows who the beneficial owner is.</p>
+        <p style="margin-top:8px">The standard threshold: typically <strong>more than 25%</strong> of shares or voting rights, though this varies by jurisdiction.</p>
+      </div>
+
+      <h2>Why Beneficial Ownership Matters: The Layering Problem</h2>
+      <p>A company, trust, or other legal entity is not a human being. It cannot have criminal intent — but it can be used by human beings to disguise their ownership of property. Consider what a simple corporate structure can do:</p>
+
+      <div class="scenario">
+        <div class="scenario-label">🏠 Property Sector Example — Corporate Layering</div>
+        <h3>The Chain of Companies</h3>
+        <p>A property worth £3.2m is purchased by "Sunrise Holdings Ltd," a UK company. The sole shareholder of Sunrise Holdings is "Meridian Capital BV," a Dutch company. Meridian Capital's sole shareholder is "Pacific Nominees Inc.," a Cayman Islands company. Pacific Nominees issues bearer shares — so there is no registered shareholder at all.</p>
+        <p style="margin-top:10px">Who owns the property? Without beneficial ownership investigation, nobody knows. The property could be held for the benefit of a corrupt politician, a sanctions-designated individual, or an organised crime figure — all while appearing on paper to be owned by a legitimate UK registered company.</p>
+        <p style="margin-top:10px">This is precisely the structure the Panama Papers and Pandora Papers revealed at global scale.</p>
+      </div>
+
+      <h2>Unwrapping Complex Structures</h2>
+      <p>The ICA makes clear that firms must look <em>through</em> corporate structures to identify the individual who ultimately owns or controls the entity. The key principle:</p>
+
+      <div class="callout consider">
+        <div class="callout-label">⚠️ ICA Principle — Unduly Complex Structures</div>
+        <p>The common difference between a potentially legitimate structure and one designed for concealment is <strong>whether there is a genuine business need</strong> for the complexity. A legitimate multinational may have many holding companies for tax or operational reasons. A private individual purchasing a single UK property through three offshore entities has no obvious legitimate need for that structure. The complexity itself is the red flag.</p>
+      </div>
+
+      <h2>The Beneficial Ownership Registers</h2>
+      <p>In response to high-profile scandals, many countries have introduced public registers of beneficial ownership:</p>
+
+      <div class="exam-note">
+        <div class="exam-note-label">📘 ICA Exam Note — UK Register of Overseas Entities</div>
+        <p>The UK's Register of Overseas Entities (ROE), introduced by the Economic Crime (Transparency and Enforcement) Act 2022, requires overseas entities that own or buy UK property to disclose their beneficial owners to Companies House. This was directly prompted by concerns about anonymous overseas property purchases used for money laundering.</p>
+        <p style="margin-top:8px">The broader UK register — the <strong>People with Significant Control (PSC) register</strong> — requires UK companies to disclose individuals with more than 25% ownership, significant influence or control.</p>
+        <p style="margin-top:8px">The ICA also notes that the <strong>Panama, Pandora and Paradise Papers</strong> have brought international pressure on governments to create transparency around beneficial ownership globally.</p>
+      </div>
+
+      <h2>Who Can Access Beneficial Ownership Information?</h2>
+      <p>The FATF standard requires that beneficial ownership registers allow access to:</p>
+      <ul>
+        <li>Competent authorities (police, prosecutors, regulators)</li>
+        <li>Financial Intelligence Units (FIUs)</li>
+        <li>Professional sectors subject to AML rules (banks, lawyers, property professionals)</li>
+        <li>Anyone who can demonstrate a legitimate interest (by written request)</li>
+      </ul>
+
+      <h2>Beneficial Ownership in the Property Sector</h2>
+      <div class="callout prop">
+        <div class="callout-label">🏠 Coadjute Context — Beneficial Ownership</div>
+        <p>When Coadjute carries out AML on behalf of estate agents and conveyancers, beneficial ownership is often the most complex and important issue to resolve. Key obligations:</p>
+        <ul style="margin-top:10px">
+          <li>Where the buyer or seller is a company, identify the <strong>ultimate beneficial owner</strong> — the natural person</li>
+          <li>Do not accept the company itself as the "customer" without looking through the structure</li>
+          <li>For overseas entities, check the <strong>Register of Overseas Entities</strong> on Companies House</li>
+          <li>For UK companies, check the <strong>PSC register</strong></li>
+          <li>Treat nominee directors and shareholders as red flags requiring deeper investigation</li>
+          <li>Where a trust is involved, identify the settlor, trustees, and all beneficiaries</li>
+          <li>Document your investigation — regulators want to see <em>how</em> you unwrapped the structure</li>
+        </ul>
+      </div>
+
+      <div class="qc">
+        <div class="qc-label">✋ Quick Check</div>
+        <div class="qc-q">A property purchase is being made by a UK company. The only shareholder listed is another company registered in the British Virgin Islands. What should you do?</div>
+        <div class="qc-opts">
+          <button class="qc-btn" onclick="qc(this,false,'qc1')">Accept the UK company as the customer and verify its registration at Companies House — your obligation ends there</button>
+          <button class="qc-btn" onclick="qc(this,false,'qc1')">Verify the BVI company's registration and accept it as the customer</button>
+          <button class="qc-btn" onclick="qc(this,true,'qc1')">Look through both companies to identify the natural person(s) who ultimately own or control them — the beneficial owner(s). The BVI structure is itself a red flag warranting enhanced scrutiny.</button>
+        </div>
+        <div class="qc-fb" id="qc1"></div>
+      </div>
+
+      <div class="bottom-nav">
+        <button class="btn-prev" onclick="goTo(0)">← Back</button>
+        <button class="btn-next" onclick="goTo(2)">Next: PEP Risk →</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SEC 2: PEP RISK -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="section" id="sec2">
+      <div class="lesson-tag">Module 06 — Section 3 of 7</div>
+      <h1>Politically Exposed Persons (PEPs)</h1>
+      <p class="lesson-intro">PEPs represent one of the most significant risks in AML — and also one of the most frequently examined topics. High-profile cases involving corrupt officials and stolen state assets have made PEP risk a central concern for regulators worldwide.</p>
+
+      <div class="exam-note">
+        <div class="exam-note-label">📘 ICA Exam Note — PEP Definition</div>
+        <p>A <strong>PEP</strong> is an individual who is or has been entrusted with a <em>prominent public function</em>. The definition is extended to include their <strong>immediate family members</strong> and <strong>known close associates</strong>.</p>
+        <p style="margin-top:8px">Categories of PEPs include:</p>
+        <ul>
+          <li>Heads of state and government</li>
+          <li>Senior politicians (ministers, senior members of governing bodies)</li>
+          <li>Senior government, judicial and military officials</li>
+          <li>Senior executives of state-owned enterprises</li>
+          <li>Important political party officials</li>
+        </ul>
+        <p style="margin-top:8px">Former PEPs retain their status during a <strong>cooling-off period</strong> after leaving office. The duration is risk-assessed — there is no fixed statutory period.</p>
+      </div>
+
+      <h2>Why Are PEPs High Risk?</h2>
+      <p>The danger is straightforward: a PEP may have used their public position to acquire wealth through corruption — bribery, embezzlement of state funds, fraud, or other abuses of office. That wealth then needs to be laundered. Property is a common vehicle because:</p>
+      <ul>
+        <li>High-value property holdings appear legitimate and prestigious</li>
+        <li>Property purchased through offshore companies obscures the true owner</li>
+        <li>Property in stable, rule-of-law countries (like the UK) is seen as a safe store of value</li>
+        <li>Rental income provides a legitimate-looking income stream</li>
+      </ul>
+
+      <div class="callout danger">
+        <div class="callout-label">🔴 Notable PEP Cases — Property Sector</div>
+        <p>These real-world cases illustrate the scale of the risk:</p>
+      </div>
+
+      <div class="cards-grid">
+        <div class="card"><h4>Zamira Hajiyeva (UK)</h4><p>Wife of a jailed Azerbaijani banker. Subject of the UK's first Unexplained Wealth Order (2018). Spent £16m at Harrods; multiple UK properties suspected. UWO required her to explain her assets.</p></div>
+        <div class="card"><h4>General Sani Abacha (Nigeria)</h4><p>Former military ruler. Approximately $5bn looted and moved through European private banks and property acquisitions.</p></div>
+        <div class="card"><h4>Teodoro Obiang (Equatorial Guinea)</h4><p>Son of the President. US investigations revealed luxury assets — including property — purchased with state funds channelled through US banks.</p></div>
+        <div class="card"><h4>Isabel dos Santos (Angola)</h4><p>Daughter of Angola's former President. Luanda Leaks (2020) exposed billions in allegedly fraudulent dealings, including European property.</p></div>
+      </div>
+
+      <h2>Domestic vs Foreign PEPs — The 4MLD Change</h2>
+
+      <div class="exam-note">
+        <div class="exam-note-label">📘 ICA Exam Note — 3MLD vs 4MLD on Domestic PEPs</div>
+        <p>The <strong>Third EU Money Laundering Directive (3MLD)</strong> required EDD for PEPs, but this originally applied mainly to <em>foreign</em> PEPs. There was a previous anomaly: domestic PEPs (those from your own jurisdiction) were treated differently.</p>
+        <p style="margin-top:8px">The <strong>Fourth EU Money Laundering Directive (4MLD)</strong> removed this distinction. After 4MLD (incorporated into UK law via MLR 2017), <strong>domestic PEPs are also PEPs</strong> — though firms may assess them as lower-risk than foreign PEPs if there is reasonable, documented justification. In practice, most UK firms were already treating senior domestic officials as high-risk, so the practical impact was limited.</p>
+      </div>
+
+      <h2>EDD Requirements for PEPs</h2>
+      <p>Once a client is identified as a PEP, EDD is mandatory throughout the relationship. The ICA identifies four key CDD elements that must be examined:</p>
+
+      <div class="exam-note">
+        <div class="exam-note-label">📘 ICA Exam Note — The 4 Key EDD Elements for PEPs</div>
+        <ol>
+          <li><strong>Geography</strong> — what country/jurisdiction is the PEP associated with? High-risk jurisdictions require greater scrutiny.</li>
+          <li><strong>Source of wealth</strong> — how did the PEP build their total wealth? Does this align with what is publicly known about their salary and position?</li>
+          <li><strong>Source of funds</strong> — where did the specific money in this transaction come from?</li>
+          <li><strong>Commercial rationale</strong> — does the nature of the transaction make sense for this PEP?</li>
+        </ol>
+      </div>
+
+      <p>The Monetary Authority of Singapore (MAS) guidance, cited by the ICA, also requires:</p>
+      <ul>
+        <li><strong>Senior management approval</strong> before establishing or continuing business with a PEP</li>
+        <li><strong>Enhanced monitoring</strong> — increased degree and nature of transaction monitoring throughout the relationship</li>
+        <li>Verification of source of wealth and source of funds "by appropriate and reasonable means"</li>
+      </ul>
+
+      <h2>PEP Risk at Coadjute</h2>
+      <div class="callout prop">
+        <div class="callout-label">🏠 Coadjute Context — PEPs in Property Transactions</div>
+        <p>The UK property market is a known destination for PEP-linked wealth. When carrying out AML checks, if a buyer or seller is identified as a PEP (or a close family member or associate of a PEP):</p>
+        <ul style="margin-top:10px">
+          <li>EDD is mandatory — not optional</li>
+          <li>Source of wealth must be investigated and evidenced, not just asserted</li>
+          <li>Source of funds for the specific purchase must be verified</li>
+          <li>Check adverse media — Transparency International's Corruption Perceptions Index can assist with geography risk</li>
+          <li>Senior sign-off is required before proceeding</li>
+          <li>The estate agent and conveyancer must be informed if EDD reveals concerns that affect the transaction</li>
+        </ul>
+      </div>
+
+      <div class="qc">
+        <div class="qc-label">✋ Quick Check</div>
+        <div class="qc-q">A buyer claims that their source of wealth is "business income." They are identified as a close associate of a foreign head of state. Is this source of wealth description adequate for EDD purposes?</div>
+        <div class="qc-opts">
+          <button class="qc-btn" onclick="qc(this,false,'qc2')">Yes — business income is a legitimate and common source of wealth</button>
+          <button class="qc-btn" onclick="qc(this,true,'qc2')">No — for EDD, a bare assertion of "business income" is inadequate. You need to know what business, the nature of the income, and obtain supporting documentation. Vague descriptions are starting points for enquiry, not answers.</button>
+          <button class="qc-btn" onclick="qc(this,false,'qc2')">Yes, provided the client is not on any sanctions list</button>
+        </div>
+        <div class="qc-fb" id="qc2"></div>
+      </div>
+
+      <div class="bottom-nav">
+        <button class="btn-prev" onclick="goTo(1)">← Back</button>
+        <button class="btn-next" onclick="goTo(3)">Next: Suspicious Activity →</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SEC 3: SUSPICIOUS ACTIVITY -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="section" id="sec3">
+      <div class="lesson-tag">Module 06 — Section 4 of 7</div>
+      <h1>Identifying Suspicious Activity</h1>
+      <p class="lesson-intro">You are not expected to be a detective. But you are expected to know your clients, remain alert, and report when something does not add up. This section covers what "suspicion" means in law, and the kinds of activity that should trigger it.</p>
+
+      <div class="exam-note">
+        <div class="exam-note-label">📘 ICA Exam Note — The Standard of Suspicion</div>
+        <p>The level of evidence required to form a suspicion is deliberately low. You are entitled to assume clients are honest unless and until information comes to your attention that leads you to <strong>know or suspect</strong> criminality.</p>
+        <p style="margin-top:8px">You are not expected to suspect a particular type of crime, nor to prove that a crime has been committed. <strong>Suspicion of criminality in the broadest sense is sufficient.</strong></p>
+        <p style="margin-top:8px">The ICA distinguishes between:</p>
+        <ul>
+          <li><strong>Subjective suspicion</strong> — you personally believe something is wrong</li>
+          <li><strong>Objective suspicion</strong> — a reasonable person in your position, with the same information, would have formed a suspicion</li>
+        </ul>
+        <p style="margin-top:8px">You can be found to have had reasonable grounds to suspect <em>even if you did not personally notice anything wrong</em>. Willful blindness — deliberately shutting your eyes to the obvious — is treated the same as actual knowledge.</p>
+      </div>
+
+      <h2>What Counts as Suspicious Activity?</h2>
+      <p>The ICA provides the following common examples of suspicious activity:</p>
+
+      <ul>
+        <li>A transaction that is <strong>unusually large</strong> given what you know about the client</li>
+        <li>Activity or transactions that are <strong>out of line</strong> with what is normally seen from this client, or compared to similar client profiles</li>
+        <li><strong>Inconsistencies or discrepancies</strong> in the CDD provided (e.g., stated profession does not match income level)</li>
+      </ul>
+
+      <p>More specifically, in the property sector, the following patterns have been identified as red flags:</p>
+
+      <div class="callout prop">
+        <div class="callout-label">🏠 Property Sector Red Flags</div>
+        <ul>
+          <li>Purchase at significantly above or below market value</li>
+          <li>Cash purchase of high-value property with no clear source of funds</li>
+          <li>Buyer using a complex chain of companies, particularly offshore</li>
+          <li>Late changes to the purchase price, parties to the transaction, or funding source</li>
+          <li>Third-party funding (someone other than the buyer paying for the property)</li>
+          <li>Unusual urgency to complete with no commercial explanation</li>
+          <li>Multiple rapid purchases and re-sales (rapid resale / price cycling)</li>
+          <li>The buyer shows no interest in the property itself (never visits, never discusses details)</li>
+          <li>Requesting that the title be put in a different name from the buyer</li>
+          <li>Client reluctant or unable to explain the source of funds</li>
+          <li>Significant refurbishment costs settled in cash</li>
+        </ul>
+      </div>
+
+      <h2>Knowing Your Client — The Foundation of Suspicion</h2>
+      <p>Recognising suspicious activity is only possible if you know what "normal" looks like for a given client. This is why CDD is the foundation of everything — you cannot identify something unusual without a baseline. The ICA requires that you:</p>
+
+      <div class="exam-note">
+        <div class="exam-note-label">📘 ICA Exam Note — The Four Obligations</div>
+        <ol>
+          <li><strong>Know your clients</strong> — establish and understand their profile</li>
+          <li><strong>Remain alert</strong> to the threat of money laundering or terrorist financing</li>
+          <li><strong>Consider</strong> whether any activity is unusual and potentially suspicious</li>
+          <li><strong>Report when necessary</strong> — following your organisation's reporting process</li>
+        </ol>
+        <p style="margin-top:8px">Unless your role specifically includes monitoring responsibilities, you are not expected to <em>actively search</em> for suspicious information. But when something comes to your attention, you must consider it and report if necessary.</p>
+      </div>
+
+      <h2>Suspicion Across the Organisation</h2>
+      <p>The duty to report suspicions applies universally — to every employee at every level. This is one of the ICA's most important points:</p>
+
+      <div class="callout info">
+        <div class="callout-label">ℹ️ ICA Principle — Universal Reporting Obligation</div>
+        <p>Many employees mistakenly believe that if their managers do not appear suspicious about a client, there is no need for them to be suspicious. <strong>This is wrong.</strong></p>
+        <p style="margin-top:8px">Different employees with different roles are exposed to different aspects of the same relationship. More junior staff are often in a <em>better position</em> to formulate suspicions — they are more closely involved with day-to-day transactional activity that senior managers may be unaware of.</p>
+        <p style="margin-top:8px">The ICA is explicit: <em>"Your suspicions are as valuable as those of the chairperson or managing director of your organisation."</em></p>
+      </div>
+
+      <div class="callout consider">
+        <div class="callout-label">⚠️ The "If in Doubt, Report" Principle</div>
+        <p>The adage "if in doubt, report" is endorsed by the ICA. The reporting threshold is deliberately low. It is <em>always</em> better to make an internal report to the MLRO and have it reviewed than to suppress a concern. Failing to report is an offence; making a good-faith report is protected.</p>
+      </div>
+
+      <div class="qc">
+        <div class="qc-label">✋ Quick Check</div>
+        <div class="qc-q">A junior member of staff notices that a buyer's stated occupation as a "teacher" seems inconsistent with their purchase of a £2.8m property for cash, but their senior manager seems unconcerned. What should the junior staff member do?</div>
+        <div class="qc-opts">
+          <button class="qc-btn" onclick="qc(this,false,'qc3')">Defer to the senior manager's judgement — they have more experience and will have assessed the risk</button>
+          <button class="qc-btn" onclick="qc(this,true,'qc3')">Report their concern internally to the MLRO. The reporting obligation applies universally — the junior employee's suspicion is as valuable as the senior manager's, and they are not required to defer to others before reporting.</button>
+          <button class="qc-btn" onclick="qc(this,false,'qc3')">Wait and see if any further red flags emerge before taking action</button>
+        </div>
+        <div class="qc-fb" id="qc3"></div>
+      </div>
+
+      <div class="bottom-nav">
+        <button class="btn-prev" onclick="goTo(2)">← Back</button>
+        <button class="btn-next" onclick="goTo(4)">Next: The SAR Process →</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SEC 4: SAR PROCESS -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="section" id="sec4">
+      <div class="lesson-tag">Module 06 — Section 5 of 7</div>
+      <h1>The SAR Process</h1>
+      <p class="lesson-intro">Once a suspicion is formed, what happens next? The Suspicious Activity Report (SAR) is the formal mechanism through which your suspicion enters the financial intelligence system. This section covers how the process works — from the initial suspicion to the NCA.</p>
+
+      <div class="exam-note">
+        <div class="exam-note-label">📘 ICA Exam Note — What Is a SAR?</div>
+        <p>A <strong>Suspicious Activity Report (SAR)</strong> is the formal written report of a suspicion that money laundering or terrorist financing is occurring. In some jurisdictions, the term <strong>Suspicious Transaction Report (STR)</strong> is used instead — they are the same thing.</p>
+        <p style="margin-top:8px">In the UK, external SARs are submitted by the MLRO to the <strong>National Crime Agency (NCA)</strong>. The NCA is the UK's financial intelligence unit.</p>
+      </div>
+
+      <h2>The Two-Stage Reporting Process</h2>
+      <p>In most organisations, SAR reporting happens in two stages:</p>
+
+      <div class="flow">
+        <div class="flow-item">
+          <strong>Stage 1 — Internal SAR (Employee to MLRO)</strong>
+          <p>You form a suspicion. You complete your organisation's internal SAR template and submit it in writing to the MLRO (also called the Nominated Officer). Writing is essential — it provides statutory protection and creates an audit trail. The MLRO investigates.</p>
+        </div>
+        <div class="flow-item">
+          <strong>Stage 2 — External SAR (MLRO to NCA)</strong>
+          <p>If the MLRO, after investigation, determines that the threshold of suspicion is met, they submit an external SAR to the NCA. If the MLRO decides not to escalate, they must document their reasoning. If the employee disagrees, they may still escalate directly in certain circumstances.</p>
+        </div>
+        <div class="flow-item">
+          <strong>NCA Review — Consent or DAML</strong>
+          <p>If the firm needs to proceed with a transaction while the SAR is under review, they may seek a <strong>Defence Against Money Laundering (DAML)</strong> — essentially, requesting consent from the NCA to proceed. The NCA has 7 days to respond (with a possible moratorium of a further 31 days). Proceeding without consent where criminal property is involved can constitute a money laundering offence.</p>
+        </div>
+      </div>
+
+      <div class="exam-note">
+        <div class="exam-note-label">📘 ICA Exam Note — Quality of SARs</div>
+        <p>The ICA emphasises that the <strong>best quality SARs</strong> contain <em>"soft intelligence"</em> — contextual information about what the customer has said or done, not just dry transaction data. A SAR that explains <em>why</em> something is suspicious, with reference to what the client told you and how it contradicts known facts, is far more useful to the NCA than a bare list of transactions.</p>
+        <p style="margin-top:8px">Key point: <strong>It is never too late to submit a SAR</strong>. However, you are obliged to report as soon as reasonably practicable once you have formed a suspicion. Delay can itself constitute a failure.</p>
+      </div>
+
+      <h2>Who Can Be the Subject of a SAR?</h2>
+      <div class="callout info">
+        <div class="callout-label">ℹ️ Broad Scope of Reporting Obligation</div>
+        <p>SARs are not limited to existing clients. The duty to report applies to <strong>anybody encountered in the course of regulated activities</strong> — including:</p>
+        <ul>
+          <li>Prospective clients who approach you and then withdraw</li>
+          <li>Third parties involved in a transaction (e.g., a vendor or their solicitor)</li>
+          <li>Counterparties in a deal</li>
+        </ul>
+        <p style="margin-top:8px">Even if you turn a client away, a SAR may be required if you have formed a suspicion in the process.</p>
+      </div>
+
+      <h2>Protecting the Identity of the Reporter</h2>
+      <p>The case of <strong>HSBC v Shah</strong> (High Court, 2012) is a landmark case cited by the ICA. Shah filed a complaint against HSBC for delaying payments, and sought to discover who had filed the SAR against him. The key ruling:</p>
+
+      <div class="callout success">
+        <div class="callout-label">✅ HSBC v Shah — Key Principle</div>
+        <p>The UK Court of Appeal ruled that a bank does <strong>not</strong> have to disclose the identity of employees who make internal SARs. The name of a member of staff submitting a SAR should not be disclosed, even to regulatory or law enforcement authorities.</p>
+        <p style="margin-top:8px">This protects employees who report in good faith. Staff should be reassured that their identity is protected when they report concerns.</p>
+      </div>
+
+      <h2>The DAML Process at Coadjute</h2>
+      <div class="callout prop">
+        <div class="callout-label">🏠 Coadjute Context — SARs and Property Transactions</div>
+        <p>Property transactions create a particular tension around SARs: a transaction is often time-sensitive, with exchange and completion dates fixed. If a SAR is filed mid-transaction, proceeding to exchange or completion could constitute the "acquisition, use or possession" of criminal property under POCA 2002 s.329.</p>
+        <p style="margin-top:10px">In practice, this means:</p>
+        <ul>
+          <li>If a suspicion arises mid-transaction, a DAML must be sought from the NCA before proceeding</li>
+          <li>The NCA has 7 working days to grant or refuse consent (+ potential 31-day moratorium for further investigation)</li>
+          <li>During this period, the transaction must be paused — which inevitably leads to client questions</li>
+          <li>How to handle those client questions without tipping off is covered in Section 6</li>
+        </ul>
+      </div>
+
+      <div class="qc">
+        <div class="qc-label">✋ Quick Check</div>
+        <div class="qc-q">An employee submits an internal SAR to the MLRO. The MLRO investigates and concludes there is no need to escalate to the NCA. The employee remains convinced there is a genuine suspicion. What should the employee do?</div>
+        <div class="qc-opts">
+          <button class="qc-btn" onclick="qc(this,false,'qc4')">Accept the MLRO's decision — they are the nominated officer and have the authority to make the final call</button>
+          <button class="qc-btn" onclick="qc(this,true,'qc4')">The employee should document their concern. In exceptional circumstances, an employee may consider escalating directly — and the fact they made a written internal report provides them with statutory protection. The adage is: if in doubt, report. The MLRO's decision does not necessarily extinguish the employee's own legal exposure.</button>
+          <button class="qc-btn" onclick="qc(this,false,'qc4')">Contact the NCA directly without telling the MLRO</button>
+        </div>
+        <div class="qc-fb" id="qc4"></div>
+      </div>
+
+      <div class="bottom-nav">
+        <button class="btn-prev" onclick="goTo(3)">← Back</button>
+        <button class="btn-next" onclick="goTo(5)">Next: Confidentiality &amp; Tipping Off →</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SEC 5: CONFIDENTIALITY & TIPPING OFF -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="section" id="sec5">
+      <div class="lesson-tag">Module 06 — Section 6 of 7</div>
+      <h1>Client Confidentiality &amp; Tipping Off</h1>
+      <p class="lesson-intro">Financial services businesses owe their clients a duty of confidentiality. But the law creates an important exception — and a criminal offence — that every AML professional must understand thoroughly.</p>
+
+      <h2>The Confidentiality Duty</h2>
+      <p>All financial services businesses owe clients a contractual obligation to maintain the confidentiality of their personal information. In some jurisdictions (notably Switzerland) breaching client confidentiality is itself a criminal offence. This creates an apparent conflict:</p>
+
+      <div class="callout consider">
+        <div class="callout-label">⚠️ The Apparent Conflict</div>
+        <p>How can you reconcile the duty to report your suspicions about a client with the duty of confidentiality you owe them?</p>
+      </div>
+
+      <div class="exam-note">
+        <div class="exam-note-label">📘 ICA Exam Note — The Safe Harbour Clause</div>
+        <p>The law provides complete protection against any action for breach of client confidentiality where you report knowledge or suspicion of criminal conduct <strong>in good faith</strong>. This is known as the <strong>safe harbour</strong> provision.</p>
+        <p style="margin-top:8px">In other words: making a SAR in good faith completely overrides and dissolves the duty of confidentiality. You cannot be sued for breach of confidentiality as a result of a good-faith SAR.</p>
+        <p style="margin-top:8px">This safe harbour exists so that individuals can help in the fight against crime and money laundering without fear of civil action from clients.</p>
+      </div>
+
+      <h2>The Tipping Off Offence</h2>
+      <p>The flip side of the safe harbour is a serious criminal offence: <strong>tipping off</strong>. It arises when someone tells the subject of a SAR (or anyone else) that a report has been made, in a way that is likely to prejudice any investigation.</p>
+
+      <div class="exam-note">
+        <div class="exam-note-label">📘 ICA Exam Note — Tipping Off Under POCA 2002</div>
+        <p>Tipping off occurs when a person:</p>
+        <ol>
+          <li>Knows or suspects that a SAR has been made (internally or to the NCA)</li>
+          <li>Discloses to another person information that is likely to prejudice any investigation that might be conducted</li>
+        </ol>
+        <p style="margin-top:8px"><strong>Critically</strong>, the offence can be committed by communicating prejudicial information to people other than the suspect — including:</p>
+        <ul>
+          <li>Family members of the suspected launderer</li>
+          <li>Their lawyers or advisers</li>
+          <li>Other third parties such as journalists</li>
+        </ul>
+        <p style="margin-top:8px">The obligation not to tip off <strong>overrides the normal duty of client confidentiality</strong>. If a client asks why their transaction is delayed, you must not indicate a SAR has been filed — even hinting at it can constitute tipping off.</p>
+      </div>
+
+      <h2>Normal Enquiries Do NOT Constitute Tipping Off</h2>
+      <p>This is an important nuance the ICA specifically addresses. Making routine commercial enquiries of a client — asking about the source of funds, asking about the nature of a transaction — does <em>not</em> constitute tipping off, even if it might alert a criminal that they are under scrutiny. In fact, such enquiries may actually remove the suspicion.</p>
+
+      <div class="callout success">
+        <div class="callout-label">✅ Key Distinction</div>
+        <p><strong>Asking questions</strong> of a client as part of due diligence = acceptable and often necessary.</p>
+        <p style="margin-top:6px"><strong>Telling a client</strong> that a SAR has been filed, or that they are under investigation, = tipping off.</p>
+        <p style="margin-top:6px">The ICA notes that routine enquiries are "often key to uncovering criminal activity." Don't confuse asking legitimate questions with tipping off.</p>
+      </div>
+
+      <h2>How to Handle Client Queries When a SAR Is Filed</h2>
+      <p>If a transaction is paused because a SAR has been filed and a DAML is being sought from the NCA, clients will inevitably ask what is happening. This requires careful handling:</p>
+
+      <div class="callout warning">
+        <div class="callout-label">⚠️ Practical Guidance — Client Queries During a SAR</div>
+        <ul>
+          <li><strong>Do not</strong> say "we have filed a report about you" or anything indicating a SAR exists</li>
+          <li><strong>Do not</strong> hint that money laundering is suspected</li>
+          <li>A carefully worded response about "internal compliance checks" or "regulatory requirements" is appropriate</li>
+          <li>All employees should seek guidance from the MLRO or management on how to respond</li>
+          <li>You <em>can</em> continue to talk to the client — you just cannot discuss the SAR or the investigation</li>
+        </ul>
+      </div>
+
+      <div class="scenario">
+        <div class="scenario-label">🏠 Coadjute Scenario — Tipping Off Risk</div>
+        <h3>The Delayed Completion</h3>
+        <p>A buyer's conveyancer calls to ask why Coadjute has requested additional information about the source of funds and why the completion is being delayed. The MLRO has filed a DAML with the NCA. What do you say?</p>
+        <p style="margin-top:10px"><strong>Acceptable:</strong> "We have some internal compliance procedures to complete in line with our regulatory obligations. We'll be in touch as soon as we're in a position to proceed. We understand this is frustrating and we're working to resolve it as quickly as possible."</p>
+        <p style="margin-top:10px"><strong>Not acceptable:</strong> "We've filed a suspicious activity report about your client and we're waiting for consent from the NCA." — this is tipping off and a criminal offence.</p>
+      </div>
+
+      <div class="qc">
+        <div class="qc-label">✋ Quick Check</div>
+        <div class="qc-q">A colleague who is not involved in the SAR process asks why a particular transaction has been delayed. You know a SAR has been filed. What should you do?</div>
+        <div class="qc-opts">
+          <button class="qc-btn" onclick="qc(this,false,'qc5')">Tell your colleague in confidence — they work for the same firm and can be trusted</button>
+          <button class="qc-btn" onclick="qc(this,true,'qc5')">Do not disclose that a SAR has been filed. The tipping off risk applies to anyone — not just the client. Refer your colleague to the MLRO for any information they genuinely need. Discuss with the MLRO how best to handle internal communications about the delay.</button>
+          <button class="qc-btn" onclick="qc(this,false,'qc5')">Tell them it is a "compliance matter" — this is sufficient disclosure</button>
+        </div>
+        <div class="qc-fb" id="qc5"></div>
+      </div>
+
+      <div class="bottom-nav">
+        <button class="btn-prev" onclick="goTo(4)">← Back</button>
+        <button class="btn-next cta" onclick="goTo(6)">Proceed to Module Quiz →</button>
+      </div>
+    </div>
+
+    <!-- ═══════════════════════════════════════════ -->
+    <!-- SEC 6: QUIZ -->
+    <!-- ═══════════════════════════════════════════ -->
+    <div class="section" id="sec6">
+      <div class="lesson-tag">Module 06 — Assessment</div>
+      <h1>Module 6 Quiz</h1>
+      <p class="lesson-intro">15 questions · ICA-style · Pass mark: 70% (11/15)</p>
+
+      <div id="quiz-start">
+        <div class="callout info">
+          <div class="callout-label">ℹ️ Before You Begin</div>
+          <p>This quiz covers all sections of Module 6: ongoing monitoring (Regulation 28), beneficial ownership, PEP risk and EDD, identifying suspicious activity, the SAR process (including DAML and HSBC v Shah), and tipping off. You need 11/15 (70%) to pass.</p>
+        </div>
+        <div style="text-align:center;margin:32px 0">
+          <button class="btn-next cta" style="padding:16px 48px;font-size:1rem" onclick="startQuiz()">Start Quiz →</button>
+        </div>
+      </div>
+
+      <div id="quiz-shell" style="display:none">
+        <div class="quiz-header">
+          <h2 id="q-header">Question 1 of 15</h2>
+          <p id="q-prog-label">Progress: 0 of 15 answered</p>
+        </div>
+        <div id="q-mount"></div>
+        <div id="qnext"><button class="btn-next" onclick="nextQ()">Next Question →</button></div>
+      </div>
+
+      <div class="quiz-results" id="quiz-results" style="display:none">
+        <div style="font-size:3rem">🎓</div>
+        <div class="result-score" id="res-score"></div>
+        <div class="result-msg" id="res-msg"></div>
+        <div class="result-breakdown" id="res-breakdown"></div>
+        <div style="margin-top:16px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
+          <button class="btn-prev" onclick="retakeQuiz()">↩ Retake Quiz</button>
+          <div class="completion-banner" id="comp-banner">
+            <h3>✅ Module 6 Complete!</h3>
+            <p>Excellent work — Monitoring, PEPs and Reporting are among the most important practical skills in AML.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="bottom-nav">
+        <button class="btn-prev" onclick="goTo(5)">← Back to Content</button>
+        <div></div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+// ═══════════════════════════════════════════
+// QUIZ DATA
+// ═══════════════════════════════════════════
+const Qs = [
+  {
+    q: "Regulation 28 of the Money Laundering Regulations 2017 requires ongoing monitoring of business relationships. Which of the following best describes what this obligation involves?",
+    opts: [
+      "A. Reviewing every transaction in real time, regardless of risk level",
+      "B. Conducting a comprehensive CDD review for all clients every 5 years",
+      "C. Scrutinising transactions on a risk-sensitive basis and keeping CDD information up to date, with higher-risk relationships receiving more frequent and intensive monitoring",
+      "D. Monitoring only those clients who have previously been flagged as suspicious"
+    ],
+    ans: 2,
+    expl: "Regulation 28 requires ongoing monitoring throughout the business relationship — scrutinising transactions consistent with the firm's knowledge of the customer, and keeping CDD up to date. The key word is 'risk-sensitive': higher-risk relationships require more frequent review. It is not a blanket real-time obligation, nor a fixed 5-year cycle."
+  },
+  {
+    q: "A client was assessed as low-risk three years ago. They have just been named in an adverse media report linking them to a criminal investigation. The firm's next scheduled CDD review is in 18 months. What must the firm do?",
+    opts: [
+      "A. Wait for the scheduled review — consistent application of the review cycle is important",
+      "B. File a SAR immediately without first updating the CDD",
+      "C. Conduct an immediate CDD review — adverse media is a material change requiring prompt reassessment regardless of the review schedule",
+      "D. Close the client relationship immediately without further investigation"
+    ],
+    ans: 2,
+    expl: "Ongoing monitoring must be responsive to material changes, not just time-based. Adverse media linking a client to criminal activity is a clear material change that triggers an immediate obligation to reassess their risk rating and CDD information. Fixed review cycles are a floor, not a substitute for responsiveness."
+  },
+  {
+    q: "What is a 'beneficial owner' in AML terms?",
+    opts: [
+      "A. The legal owner of property as registered at the Land Registry",
+      "B. The natural person who ultimately owns or controls the customer, or on whose behalf a transaction is conducted",
+      "C. The director of the company purchasing a property",
+      "D. Any shareholder with more than 10% of shares"
+    ],
+    ans: 1,
+    expl: "The beneficial owner is the real human being behind a legal entity — the natural person who ultimately exercises control or receives the benefit. Directors may be nominees. The 10% threshold is incorrect; the standard FATF trigger is more than 25%. Legal registered ownership (e.g. at the Land Registry) does not establish beneficial ownership."
+  },
+  {
+    q: "A property is purchased by a UK company. The sole shareholder is a company in the British Virgin Islands. The BVI company has nominee shareholders. How should you approach beneficial ownership?",
+    opts: [
+      "A. Verify the UK company at Companies House — your obligation ends there",
+      "B. Verify the BVI company — that is the direct shareholder and therefore the beneficial owner",
+      "C. Look through both corporate layers to identify the natural person(s) who ultimately own or control the structure — and treat the multi-layered offshore structure as a red flag warranting enhanced scrutiny",
+      "D. Rely on the client's solicitors to confirm beneficial ownership"
+    ],
+    ans: 2,
+    expl: "AML obligations require looking through corporate structures to identify the natural person in ultimate control. A chain of companies — particularly one including BVI nominees — is itself a significant red flag. The obligation to 'unwrap' does not stop at the first company."
+  },
+  {
+    q: "The UK's Register of Overseas Entities (ROE) was introduced by which legislation?",
+    opts: [
+      "A. Proceeds of Crime Act 2002",
+      "B. Money Laundering Regulations 2017",
+      "C. Economic Crime (Transparency and Enforcement) Act 2022",
+      "D. Companies Act 2006"
+    ],
+    ans: 2,
+    expl: "The Register of Overseas Entities was introduced by the Economic Crime (Transparency and Enforcement) Act 2022, directly in response to concerns about anonymous overseas ownership of UK property being used for money laundering."
+  },
+  {
+    q: "Who is classified as a PEP?",
+    opts: [
+      "A. Any high-net-worth individual with more than £1m in assets",
+      "B. An individual who is or has been entrusted with a prominent public function, and their close family members and known associates",
+      "C. Only foreign heads of state and their immediate family",
+      "D. Any client who has a bank account in a high-risk jurisdiction"
+    ],
+    ans: 1,
+    expl: "The ICA definition of PEP covers individuals entrusted with prominent public functions (politicians, senior officials, military officers, executives of state enterprises) and is extended to include close family members and known associates. It is not limited to foreign PEPs or heads of state, nor does it use an asset threshold."
+  },
+  {
+    q: "The Fourth EU Money Laundering Directive (4MLD) changed PEP rules by:",
+    opts: [
+      "A. Removing the requirement for EDD on foreign PEPs",
+      "B. Introducing the concept of PEPs for the first time",
+      "C. Removing the previous distinction between foreign and domestic PEPs, requiring firms to apply PEP status to individuals from their own jurisdiction too",
+      "D. Exempting UK domestic PEPs from EDD requirements"
+    ],
+    ans: 2,
+    expl: "Prior to 4MLD, there was an anomaly where 'domestic' PEPs were treated differently from foreign ones. 4MLD removed this distinction, requiring firms to apply PEP rules to domestic politicians and officials too. Firms may assess domestic PEPs as lower risk than foreign PEPs where there is documented, justifiable rationale."
+  },
+  {
+    q: "The four key CDD elements that the ICA identifies as most important when managing PEP risk are:",
+    opts: [
+      "A. Identity, address, nationality, and occupation",
+      "B. Geography, source of wealth, source of funds, and commercial rationale",
+      "C. Transaction value, frequency, purpose, and counterparty",
+      "D. CDD tier, risk score, review date, and sanctions status"
+    ],
+    ans: 1,
+    expl: "The ICA specifically identifies these four elements as the most important CDD considerations for PEPs: (1) geography — risk profile of the jurisdiction; (2) source of wealth — how they built their total wealth; (3) source of funds — where the specific transaction money came from; (4) commercial rationale — does the arrangement make sense?"
+  },
+  {
+    q: "A client seeking to purchase a £3m property states their source of wealth as 'savings.' They are identified as a close family member of a PEP. Is this source of wealth description adequate?",
+    opts: [
+      "A. Yes — savings is a legitimate and clearly understood source of wealth",
+      "B. Yes, provided they can provide a bank statement",
+      "C. No — 'savings' is explicitly identified by the ICA as an insufficient source of wealth description for EDD purposes. Further investigation is required: saved from what income, over what period, and can it be documented?",
+      "D. Yes — EDD only requires verifying identity, not source of wealth"
+    ],
+    ans: 2,
+    expl: "The ICA explicitly identifies 'savings' (alongside 'profits from investments,' 'inheritance,' 'business dealings,' and 'sale of business') as insufficient SOW descriptions for EDD purposes. They are starting points for enquiry, not answers. EDD requires understanding the underlying source and obtaining supporting documentation."
+  },
+  {
+    q: "What is the minimum legal threshold of evidence needed to formulate a suspicion that triggers a reporting obligation?",
+    opts: [
+      "A. Proof on the balance of probabilities that money laundering has occurred",
+      "B. Evidence of a specific predicate offence",
+      "C. Deliberately low — reasonable grounds to suspect criminality in the broadest sense; you need not suspect a particular offence or have proof",
+      "D. A formal finding by the MLRO that money laundering is occurring"
+    ],
+    ans: 2,
+    expl: "The threshold for forming a suspicion is deliberately low. You do not need to suspect a particular type of crime, nor do you need to prove anything. The standard is whether a reasonable person in your position, with the same information, would have reasonable grounds to suspect ML. 'If in doubt, report' is the endorsed principle."
+  },
+  {
+    q: "An employee working in an administrative role notices that a buyer's stated profession (part-time retail worker) seems inconsistent with their ability to fund a £1.5m cash purchase. Their line manager appears unconcerned. What should the employee do?",
+    opts: [
+      "A. Defer to the line manager — they have more experience and seniority",
+      "B. Report their concern internally to the MLRO — the reporting obligation applies universally to all employees, regardless of seniority, and the junior employee's suspicion is as valuable as the manager's",
+      "C. Raise the concern informally with colleagues to gather more opinion before acting",
+      "D. Do nothing — they are not in an AML role and it is not their responsibility"
+    ],
+    ans: 1,
+    expl: "The ICA is explicit that the reporting obligation applies to all employees at every level. Junior staff are often in a better position to form suspicions because they are closer to transactional activity. A manager's lack of concern does not extinguish the employee's personal obligation. 'If in doubt, report to the MLRO' is the correct approach."
+  },
+  {
+    q: "In the UK, external SARs are submitted to which body?",
+    opts: [
+      "A. The Financial Conduct Authority (FCA)",
+      "B. HM Revenue & Customs (HMRC)",
+      "C. The Serious Fraud Office (SFO)",
+      "D. The National Crime Agency (NCA)"
+    ],
+    ans: 3,
+    expl: "In the UK, external SARs are submitted to the National Crime Agency (NCA), which is the UK's Financial Intelligence Unit. The NCA manages the UK Financial Intelligence Unit (UKFIU) and processes SARs under the consent and DAML regime."
+  },
+  {
+    q: "What is a Defence Against Money Laundering (DAML), and when is it required?",
+    opts: [
+      "A. A legal defence available to a defendant at trial when accused of money laundering",
+      "B. A regulatory exemption available to low-risk firms",
+      "C. A request for consent from the NCA before proceeding with a transaction that is suspected of involving criminal property",
+      "D. A staff training certificate required before carrying out AML activities"
+    ],
+    ans: 2,
+    expl: "A DAML is a request to the NCA for consent to proceed with a transaction where you suspect it may involve criminal property. Without consent (or if you proceed before the NCA's decision window expires), proceeding could itself constitute a money laundering offence. The NCA has 7 working days to respond, with a potential moratorium of a further 31 days."
+  },
+  {
+    q: "The tipping off offence under POCA 2002 occurs when:",
+    opts: [
+      "A. A SAR contains too much information and prejudices the intelligence value of the report",
+      "B. A firm shares ML typologies with another firm for training purposes",
+      "C. A person discloses to the subject of a SAR (or any third party) information likely to prejudice any investigation — knowing or suspecting that a SAR has been made",
+      "D. An employee fails to report their suspicion promptly"
+    ],
+    ans: 2,
+    expl: "Tipping off occurs when someone who knows or suspects that a SAR has been made (internally or to the NCA) discloses information likely to prejudice an investigation. Critically, the offence can be committed by disclosing to the client, their family, their lawyers, or third parties like journalists — not only to the subject directly."
+  },
+  {
+    q: "The UK Court of Appeal ruling in HSBC v Shah (2012) established which important principle?",
+    opts: [
+      "A. A bank must disclose the name of the employee who files a SAR to avoid unfair treatment of the suspect",
+      "B. A bank does not have to disclose the identity of employees who make internal SARs — protecting the reporter's anonymity",
+      "C. Employees have no right to file SARs without their manager's approval",
+      "D. SARs filed internally are not protected by privilege"
+    ],
+    ans: 1,
+    expl: "HSBC v Shah is a landmark case cited by the ICA. The UK Court of Appeal ruled that a bank does not have to disclose the identity of employees who make internal SARs. This protects staff who report in good faith and should give employees confidence that reporting is safe."
+  }
+];
+
+// ═══════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════
+let currentSection = 0;
+const TOTAL = 7;
+const unlockedSections = new Set([0]);
+const completedSections = new Set();
+let qIdx = 0, score = 0, answered = [];
+
+// ═══════════════════════════════════════════
+// NAVIGATION
+// ═══════════════════════════════════════════
+function goTo(n) {
+  if (!unlockedSections.has(n)) return;
+  document.getElementById('sec' + currentSection).classList.remove('active');
+  document.getElementById('nav' + currentSection).classList.remove('active');
+  currentSection = n;
+  document.getElementById('sec' + n).classList.add('active');
+  const nav = document.getElementById('nav' + n);
+  nav.classList.add('active');
+  nav.classList.remove('locked');
+  updateProgress();
+  window.scrollTo(0,0);
+}
+
+function unlock(n) {
+  unlockedSections.add(n);
+  completedSections.add(n - 1);
+  const nav = document.getElementById('nav' + (n-1));
+  if (nav) nav.classList.add('done');
+  const nextNav = document.getElementById('nav' + n);
+  if (nextNav) nextNav.classList.remove('locked');
+}
+
+function updateProgress() {
+  const pct = Math.round((currentSection / (TOTAL - 1)) * 100);
+  document.getElementById('prog').style.width = pct + '%';
+}
+
+// ═══════════════════════════════════════════
+// QUICK CHECK
+// ═══════════════════════════════════════════
+function qc(btn, correct, fbId) {
+  const parent = btn.closest('.qc');
+  parent.querySelectorAll('.qc-btn').forEach(b => { b.disabled = true; b.classList.remove('correct','wrong'); });
+  btn.classList.add(correct ? 'correct' : 'wrong');
+  const fb = document.getElementById(fbId);
+  if (correct) {
+    fb.textContent = '✓ Correct! ' + getQCFeedback(fbId, true);
+    fb.className = 'qc-fb show-c';
+    // unlock next section when QC in last section before quiz is answered
+    const secNum = parseInt(btn.closest('.section').id.replace('sec',''));
+    if (!unlockedSections.has(secNum + 1)) unlock(secNum + 1);
+  } else {
+    fb.textContent = '✗ Not quite. ' + getQCFeedback(fbId, false);
+    fb.className = 'qc-fb show-w';
+    // still unlock on wrong — allow progression
+    const secNum = parseInt(btn.closest('.section').id.replace('sec',''));
+    if (!unlockedSections.has(secNum + 1)) unlock(secNum + 1);
+  }
+}
+
+const QC_FB = {
+  qc0: { t: 'Adverse media is a material change requiring immediate CDD review — Regulation 28 is risk-sensitive, not just time-based.', f: 'Regulation 28 requires monitoring that is responsive to material changes. Adverse media is exactly such a change. The 18-month scheduled review is irrelevant when material new information has emerged.' },
+  qc1: { t: 'You must look through the entire corporate structure to find the natural person in ultimate control. The BVI layer itself is a significant red flag.', f: 'AML obligations require looking through all corporate layers to identify the natural person who ultimately owns or controls the property. A BVI company with nominee shareholders is a classic high-risk structure.' },
+  qc2: { t: '"Business income" for a PEP-linked client is wholly inadequate for EDD. You need to know what business, verify the income, and obtain supporting documentation.', f: 'For EDD, bare assertions of source of wealth are never sufficient. You need specifics, corroboration, and documentation. "Business income" is a starting point, not an answer.' },
+  qc3: { t: 'The reporting obligation is universal. Junior employees are often best placed to spot inconsistencies — their suspicion is as valuable as any senior manager\'s.', f: 'The ICA is explicit: the obligation to report applies to all employees regardless of seniority. A manager\'s apparent lack of concern does not extinguish the junior employee\'s own obligation.' },
+  qc4: { t: 'Making a written internal report provides statutory protection. The MLRO\'s decision does not automatically extinguish the reporting employee\'s legal exposure in all circumstances.', f: 'While the MLRO has authority to decide on external SARs, the employee\'s own protection comes from having made a good-faith written internal report. In exceptional cases, direct escalation may be warranted.' },
+  qc5: { t: 'The tipping off risk is not limited to the client — it extends to colleagues who don\'t need to know. All SAR-related communications must be managed carefully.', f: 'Disclosing that a SAR has been filed — even internally to a colleague without a genuine need to know — can constitute tipping off or at minimum undermine the integrity of the investigation.' },
+};
+
+function getQCFeedback(id, correct) {
+  const fb = QC_FB[id];
+  return fb ? (correct ? fb.t : fb.f) : '';
+}
+
+// ═══════════════════════════════════════════
+// QUIZ
+// ═══════════════════════════════════════════
+function startQuiz() {
+  qIdx = 0; score = 0; answered = [];
+  document.getElementById('quiz-start').style.display = 'none';
+  document.getElementById('quiz-shell').style.display = 'block';
+  document.getElementById('quiz-results').style.display = 'none';
+  renderQ();
+}
+
+function renderQ() {
+  const Q = Qs[qIdx];
+  document.getElementById('q-header').textContent = 'Question ' + (qIdx+1) + ' of ' + Qs.length;
+  document.getElementById('q-prog-label').textContent = 'Progress: ' + qIdx + ' of ' + Qs.length + ' answered';
+  document.getElementById('qnext').style.display = 'none';
+  const lets = ['A','B','C','D'];
+  document.getElementById('q-mount').innerHTML = `
+    <div class="q-block" id="qblock">
+      <div class="q-num">Question ${qIdx+1} of ${Qs.length}</div>
+      <div class="q-text">${Q.q}</div>
+      ${Q.opts.map((o,i) => `<button class="a-opt" onclick="pick(this,${i})" id="opt${i}"><span class="let">${lets[i]}</span>${o.replace(/^[A-D]\.\s*/,'')}</button>`).join('')}
+      <div class="q-fb" id="qfb"></div>
+    </div>`;
+}
+
+function pick(btn, i) {
+  const Q = Qs[qIdx];
+  document.querySelectorAll('.a-opt').forEach(b => { b.onclick = null; });
+  const ok = i === Q.ans;
+  btn.classList.add(ok ? 'correct' : 'wrong');
+  document.getElementById('opt' + Q.ans).classList.add('correct');
+  const fb = document.getElementById('qfb');
+  fb.className = 'q-fb show ' + (ok ? 'c' : 'w');
+  fb.innerHTML = '<strong>' + (ok ? '✓ Correct!' : '✗ Incorrect.') + '</strong> ' + Q.expl;
+  document.getElementById('qnext').style.display = 'flex';
+  if (ok) score++;
+  answered.push({ q: Q.q, correct: ok, right: Q.opts[Q.ans] });
+}
+
+function nextQ() {
+  qIdx++;
+  if (qIdx >= Qs.length) { showResults(); return; }
+  renderQ();
+}
+
+function showResults() {
+  document.getElementById('quiz-shell').style.display = 'none';
+  const r = document.getElementById('quiz-results');
+  r.style.display = 'block';
+  const pct = Math.round((score / Qs.length) * 100);
+  const pass = pct >= 70;
+  document.getElementById('res-score').textContent = score + '/' + Qs.length;
+  document.getElementById('res-msg').innerHTML = '<strong>' + pct + '%</strong> — <span class="' + (pass ? 'result-pass' : 'result-fail') + '">' + (pass ? '✓ PASS — excellent work! Module 6 complete.' : '✗ FAIL — review the content and try again. You need 70% (11/15) to pass.') + '</span>';
+  const bd = document.getElementById('res-breakdown');
+  bd.innerHTML = '<strong style="display:block;margin-bottom:12px;font-size:.9rem">Question Breakdown</strong>';
+  answered.forEach((a, i) => {
+    const d = document.createElement('div');
+    d.className = 'rb-item';
+    d.innerHTML = '<span style="min-width:24px;font-weight:700;font-size:.8rem">' + (i+1) + '.</span><span class="' + (a.correct ? 'rb-correct' : 'rb-wrong') + '" style="min-width:20px">' + (a.correct ? '✓' : '✗') + '</span><span style="font-size:.84rem;color:rgba(0,40,70,.75)">' + a.q.substring(0, 90) + (a.q.length > 90 ? '…' : '') + '</span>';
+    bd.appendChild(d);
+  });
+  if (!pass) document.getElementById('comp-banner').style.display = 'none';
+}
+
+function retakeQuiz() {
+  document.getElementById('quiz-results').style.display = 'none';
+  document.getElementById('quiz-start').style.display = 'block';
+  document.getElementById('comp-banner').style.display = 'block';
+}
+
+// Unlock sections as user progresses through nav
+document.querySelectorAll('.nav-item:not(.locked)').forEach((el, i) => {
+  el.addEventListener('click', () => {
+    if (i < currentSection || unlockedSections.has(i)) goTo(i);
+  });
+});
+
+// Allow next-button navigation to unlock sections
+const originalGoTo = goTo;
+window.goTo = function(n) {
+  unlockedSections.add(n);
+  const nav = document.getElementById('nav' + n);
+  if (nav) nav.classList.remove('locked');
+  originalGoTo(n);
+};
+
+updateProgress();
+</script>
+</body>
+</html>

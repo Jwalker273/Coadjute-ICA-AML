@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 2 – Terrorist Financing & Sanctions</title>
+<style>
+:root{--ink:#002846;--lilac:#C17FFF;--pink:#FF44D6;--orange:#FF6D3D;--active:#4EEFF9;--l50:#DFBEFF;--l20:#F2E5FF;--l10:#F9F2FF;--grey:#EEE8F1;--white:#FFFFFF;--grad:linear-gradient(90deg,var(--lilac) 0%,var(--pink) 60%,var(--orange) 100%);--sidebar-w:270px}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--ink);line-height:1.7;display:flex;flex-direction:column;min-height:100vh}
+
+/* TOPBAR */
+.topbar{background:var(--ink);height:56px;display:flex;align-items:center;padding:0 24px;gap:16px;position:fixed;top:0;left:0;right:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.topbar-logo{font-weight:800;font-size:1.1rem;color:var(--white);letter-spacing:-.5px}
+.topbar-logo span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.topbar-course{font-size:.8rem;color:rgba(255,255,255,.5);margin-left:8px;border-left:1px solid rgba(255,255,255,.15);padding-left:14px}
+.topbar-progress{margin-left:auto;display:flex;align-items:center;gap:10px}
+.topbar-pct{font-size:.8rem;color:rgba(255,255,255,.6)}
+.topbar-bar{width:120px;height:4px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden}
+.topbar-bar-fill{height:100%;background:var(--grad);border-radius:2px;transition:width .4s}
+
+/* LAYOUT */
+.layout{display:flex;margin-top:56px;min-height:calc(100vh - 56px)}
+
+/* SIDEBAR */
+.sidebar{width:var(--sidebar-w);background:var(--ink);position:fixed;top:56px;left:0;bottom:0;overflow-y:auto;display:flex;flex-direction:column;z-index:90}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px}
+.sidebar-header{padding:20px 20px 12px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sidebar-header h2{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.4);margin-bottom:4px}
+.sidebar-header h3{font-size:.95rem;color:var(--white);font-weight:700;line-height:1.3}
+.sidebar-nav{padding:12px 0;flex:1}
+.nav-item{display:flex;align-items:center;gap:12px;padding:11px 20px;cursor:pointer;transition:.15s;border-left:3px solid transparent}
+.nav-item:hover:not(.locked){background:rgba(255,255,255,.06)}
+.nav-item.active{background:rgba(193,127,255,.12);border-left-color:var(--lilac)}
+.nav-item.completed{border-left-color:var(--active)}
+.nav-item.locked{opacity:.45;cursor:not-allowed}
+.nav-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0;transition:.2s}
+.nav-item.active .nav-icon{background:var(--lilac);color:var(--ink)}
+.nav-item.completed .nav-icon{background:var(--active);color:var(--ink)}
+.nav-item:not(.active):not(.completed):not(.locked) .nav-icon{background:rgba(255,255,255,.1);color:rgba(255,255,255,.5)}
+.nav-item.locked .nav-icon{background:rgba(255,255,255,.06);color:rgba(255,255,255,.3)}
+.nav-label{font-size:.82rem;color:var(--white);font-weight:500;line-height:1.3}
+.nav-item.active .nav-label{color:var(--lilac)}
+.nav-item.completed .nav-label{color:rgba(255,255,255,.75)}
+.nav-item.locked .nav-label{color:rgba(255,255,255,.3)}
+.nav-sublabel{font-size:.7rem;color:rgba(255,255,255,.3);margin-top:1px}
+.sidebar-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,.08)}
+.module-progress-label{font-size:.72rem;color:rgba(255,255,255,.4);margin-bottom:6px}
+.module-progress-bar{height:3px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
+.module-progress-fill{height:100%;background:var(--grad);border-radius:2px;transition:width .4s}
+
+/* MAIN */
+.main{margin-left:var(--sidebar-w);flex:1;padding:32px 40px 80px}
+.section{display:none}
+.section.active{display:block}
+
+/* SECTION HEADER */
+.section-tag{display:inline-block;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--lilac);margin-bottom:8px}
+.section-header h2{font-size:1.6rem;font-weight:800;color:var(--ink);line-height:1.2;margin-bottom:8px}
+.section-divider{height:3px;width:48px;background:var(--grad);border-radius:2px;margin-bottom:16px}
+.section-intro{color:#4a5568;font-size:.97rem;margin-bottom:4px}
+
+/* CARD */
+.card{background:var(--white);border-radius:12px;padding:24px 28px;margin-bottom:20px;box-shadow:0 1px 4px rgba(0,40,70,.07)}
+h3{font-size:1.05rem;font-weight:700;color:var(--ink);margin:22px 0 10px}
+p{margin-bottom:12px}
+
+/* CALLOUTS */
+.callout{border-radius:0 10px 10px 0;padding:16px 20px;margin:20px 0}
+.callout .clabel{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.exam-note{background:var(--l20);border-left:4px solid var(--lilac)}
+.exam-note .clabel{color:var(--lilac)}
+.exam-note blockquote{font-style:italic;color:#4a3f6b;font-size:.93rem;line-height:1.6;margin-top:6px}
+.exam-note .note-foot{font-size:.83rem;color:#6b5a90;margin-top:8px}
+.important{background:#fff8f0;border-left:4px solid var(--orange)}
+.important .clabel{color:var(--orange)}
+.consider{background:#f0fff8;border-left:4px solid var(--active)}
+.consider .clabel{color:#009a9e}
+.note-box{background:var(--l10);border-left:4px solid var(--l50)}
+.note-box .clabel{color:#7c5cbf}
+.prop-eg{background:linear-gradient(135deg,#fff8f0,#fff2fb);border-left:4px solid var(--pink)}
+.prop-eg .clabel{color:var(--pink)}
+.case-study-box{background:var(--ink);color:var(--white);border-radius:10px;padding:20px 22px;margin:16px 0}
+.case-study-box .cs-label{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--active);margin-bottom:6px}
+.case-study-box p{color:rgba(255,255,255,.8);font-size:.88rem;margin-bottom:8px}
+.case-study-box p:last-child{margin:0}
+
+/* COMPARISON TABLE */
+.compare-grid{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:20px 0;border-radius:10px;overflow:hidden;border:2px solid var(--grey)}
+.cg-header{background:var(--ink);color:var(--white);padding:12px 16px;font-weight:700;font-size:.88rem;text-align:center}
+.cg-header.tf{background:linear-gradient(135deg,var(--lilac),var(--pink))}
+.cg-cell{padding:12px 16px;font-size:.87rem;border-bottom:1px solid var(--grey);border-right:1px solid var(--grey)}
+.cg-cell:nth-child(even){border-right:none;background:var(--l10)}
+.cg-cell:nth-child(odd){background:var(--white)}
+.cg-row-label{font-weight:700;color:var(--ink);font-size:.8rem;text-transform:uppercase;letter-spacing:.04em;background:var(--grey)!important;padding:8px 16px}
+
+/* SANCTIONS REGIME CARDS */
+.regime-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:14px;margin:16px 0}
+.regime-card{background:var(--white);border-radius:10px;padding:18px;border-top:4px solid;box-shadow:0 1px 4px rgba(0,40,70,.07)}
+.regime-card.un{border-color:#1a73e8}
+.regime-card.eu{border-color:#003399}
+.regime-card.us{border-color:#b22234}
+.regime-card.uk{border-color:#012169}
+.regime-card .rc-flag{font-size:1.4rem;margin-bottom:6px}
+.regime-card h4{font-size:.92rem;font-weight:700;color:var(--ink);margin-bottom:8px}
+.regime-card p{font-size:.83rem;color:#4a5568;margin:0;line-height:1.5}
+.regime-card .rc-tag{display:inline-block;font-size:.7rem;font-weight:700;padding:2px 8px;border-radius:10px;margin-bottom:8px;color:var(--white)}
+.un .rc-tag{background:#1a73e8}
+.eu .rc-tag{background:#003399}
+.us .rc-tag{background:#b22234}
+.uk .rc-tag{background:#012169}
+
+/* SANCTIONS TARGETS */
+.target-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:14px 0}
+.target-card{background:var(--l10);border-radius:8px;padding:14px 16px;border-left:3px solid var(--lilac)}
+.target-card h4{font-size:.85rem;font-weight:700;color:var(--ink);margin-bottom:4px}
+.target-card p{font-size:.8rem;color:#4a5568;margin:0;line-height:1.4}
+
+/* COUNTRY CARDS */
+.country-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:14px 0}
+.country-card{background:var(--white);border-radius:8px;padding:16px;box-shadow:0 1px 3px rgba(0,40,70,.07);border-left:4px solid}
+.country-card.iran{border-color:#009a44}
+.country-card.nk{border-color:#024fa2}
+.country-card.russia{border-color:#e53e3e}
+.country-card.other{border-color:var(--orange)}
+.country-card h4{font-size:.9rem;font-weight:700;color:var(--ink);margin-bottom:6px}
+.country-card p{font-size:.82rem;color:#4a5568;margin:0;line-height:1.5}
+
+/* METHODS */
+.method-card{background:var(--l10);border-radius:8px;padding:14px 18px;margin-bottom:10px;border-left:3px solid var(--lilac)}
+.method-card h4{font-size:.9rem;font-weight:700;color:var(--ink);margin-bottom:4px}
+.method-card p{font-size:.85rem;color:#4a5568;margin:0}
+
+/* TAGS */
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+.tag{background:var(--l20);color:var(--ink);padding:5px 13px;border-radius:20px;font-size:.8rem;font-weight:600;border:1px solid var(--l50)}
+
+/* SCENARIO */
+.scenario{background:var(--white);border:2px solid var(--grey);border-radius:10px;padding:18px 20px;margin-bottom:14px}
+.scenario-q{font-weight:600;color:var(--ink);margin-bottom:14px;font-size:.93rem;line-height:1.5}
+.yn-btns{display:flex;gap:10px}
+.yn-btn{padding:8px 24px;border-radius:6px;border:2px solid;cursor:pointer;font-weight:700;font-size:.88rem;transition:.2s;background:var(--white)}
+.yn-yes{border-color:#38a169;color:#38a169}.yn-yes:hover{background:#38a169;color:#fff}
+.yn-no{border-color:#e53e3e;color:#e53e3e}.yn-no:hover{background:#e53e3e;color:#fff}
+.yn-btn:disabled{opacity:.6;cursor:default}
+.scenario-reveal{margin-top:12px;padding:14px;background:var(--l10);border-radius:8px;font-size:.88rem;color:#4a3f6b;display:none;border:1px solid var(--l50)}
+.scenario-reveal.show{display:block}
+
+/* QUICK CHECK */
+.quick-check{background:var(--l10);border:2px solid var(--l50);border-radius:10px;padding:20px;margin:24px 0}
+.quick-check h4{color:var(--ink);margin-bottom:4px;font-size:.95rem}
+.quick-check p{font-size:.88rem;color:#4a5568;margin-bottom:14px}
+.qc-opt{display:block;width:100%;text-align:left;padding:10px 14px;background:var(--white);border:2px solid var(--grey);border-radius:6px;cursor:pointer;margin-bottom:8px;font-size:.88rem;transition:.15s;color:var(--ink)}
+.qc-opt:hover:not(:disabled){border-color:var(--lilac);background:var(--l10)}
+.qc-opt.correct{border-color:#38a169;background:#f0fff8;color:#276749}
+.qc-opt.wrong{border-color:#e53e3e;background:#fff5f5;color:#c53030}
+.qc-fb{margin-top:10px;padding:12px;border-radius:6px;font-size:.85rem;display:none}
+.qc-fb.show{display:block}
+.qc-fb.c{background:#f0fff8;color:#276749;border:1px solid #9ae6b4}
+.qc-fb.w{background:#fff5f5;color:#c53030;border:1px solid #feb2b2}
+
+/* BOTTOM NAV */
+.bottom-nav{display:flex;justify-content:space-between;align-items:center;margin-top:36px;padding-top:24px;border-top:1px solid var(--grey)}
+.btn-prev,.btn-next{padding:12px 26px;border-radius:8px;border:none;cursor:pointer;font-size:.9rem;font-weight:700;transition:.2s}
+.btn-prev{background:var(--grey);color:var(--ink)}.btn-prev:hover{background:#d8d0e2}
+.btn-prev:disabled{opacity:.35;cursor:not-allowed}
+.btn-next{background:var(--ink);color:var(--white)}.btn-next:hover{background:#00396a}
+.btn-next.cta{background:var(--grad);color:var(--ink)}
+
+/* QUIZ */
+.quiz-header{background:var(--grad);border-radius:12px;padding:22px 26px;margin-bottom:24px;color:var(--ink)}
+.quiz-header h2{font-size:1.2rem;font-weight:800;margin-bottom:4px}
+.quiz-header p{font-size:.85rem;opacity:.8}
+.q-block{background:var(--white);border-radius:10px;padding:20px 22px;margin-bottom:16px;border:2px solid var(--grey);transition:.2s}
+.q-block.ans-correct{border-color:#38a169;background:#f0fff8}
+.q-block.ans-wrong{border-color:#e53e3e;background:#fff5f5}
+.q-num{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--lilac);margin-bottom:6px}
+.q-text{font-weight:600;color:var(--ink);margin-bottom:14px;font-size:.93rem;line-height:1.5}
+.a-opt{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:var(--l10);border:2px solid var(--grey);border-radius:6px;cursor:pointer;margin-bottom:8px;font-size:.88rem;transition:.15s;color:var(--ink)}
+.a-opt:hover:not([style*="none"]){border-color:var(--lilac);background:var(--l20)}
+.a-opt .let{font-weight:700;color:var(--lilac);min-width:18px;margin-top:1px}
+.a-opt.correct{border-color:#38a169;background:#f0fff8}.a-opt.correct .let{color:#38a169}
+.a-opt.wrong{border-color:#e53e3e;background:#fff5f5}.a-opt.wrong .let{color:#e53e3e}
+.q-fb{margin-top:10px;padding:12px 14px;border-radius:6px;font-size:.84rem;display:none;line-height:1.5}
+.q-fb.show{display:block}
+.q-fb.c{background:#f0fff8;color:#276749;border:1px solid #9ae6b4}
+.q-fb.w{background:#fff5f5;color:#c53030;border:1px solid #feb2b2}
+.submit-btn{width:100%;padding:14px;background:var(--ink);color:var(--white);border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:8px;transition:.2s}
+.submit-btn:hover:not(:disabled){background:#00396a}
+.submit-btn:disabled{opacity:.35;cursor:not-allowed}
+.result{border-radius:12px;overflow:hidden;display:none;margin-top:20px}
+.result.show{display:block}
+.result-top{padding:28px;text-align:center}
+.result-top.pass{background:linear-gradient(135deg,var(--active),#00c9d4)}
+.result-top.fail{background:linear-gradient(135deg,var(--orange),var(--pink))}
+.result-score{font-size:3.5rem;font-weight:800;color:var(--ink)}
+.result-msg{font-size:1rem;font-weight:700;color:var(--ink);margin-top:4px}
+.result-body{background:var(--white);padding:20px 28px;display:flex;justify-content:space-between;align-items:center}
+.result-body p{color:#4a5568;font-size:.9rem}
+.retry-btn{padding:11px 24px;background:var(--ink);color:var(--white);border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:.9rem}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-logo"><span>Coadjute</span></div>
+  <div class="topbar-course">AML Certificate — Module 2 of 8</div>
+  <div class="topbar-progress">
+    <span class="topbar-pct" id="topPct">0% complete</span>
+    <div class="topbar-bar"><div class="topbar-bar-fill" id="topFill" style="width:0%"></div></div>
+  </div>
+</div>
+
+<div class="layout">
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>Module 2</h2>
+      <h3>Terrorist Financing &amp; Sanctions</h3>
+    </div>
+    <nav class="sidebar-nav" id="sideNav"></nav>
+    <div class="sidebar-footer">
+      <div class="module-progress-label" id="sideProgressLabel">0 of 7 sections complete</div>
+      <div class="module-progress-bar"><div class="module-progress-fill" id="sideProgressFill" style="width:0%"></div></div>
+    </div>
+  </aside>
+
+  <main class="main">
+
+    <!-- S0: TF vs ML -->
+    <div class="section active" id="sec0">
+      <div class="section-tag">Section 1 of 7</div>
+      <h2 style="font-size:1.6rem;font-weight:800;margin-bottom:8px">Terrorist Financing vs Money Laundering</h2>
+      <div class="section-divider"></div>
+      <p class="section-intro" style="margin-bottom:20px">Terrorist financing and money laundering share many techniques — but the flow of money works in fundamentally different directions. Understanding the distinction is a core ICA exam topic.</p>
+
+      <div class="card">
+        <p>The ICA manual frames the comparison across three dimensions: the <strong>source</strong> of funds, the <strong>destination</strong> of funds, and the <strong>purpose</strong> of the activity.</p>
+
+        <div class="compare-grid">
+          <div class="cg-header">Money Laundering</div>
+          <div class="cg-header tf">Terrorist Financing</div>
+
+          <div class="cg-cell cg-row-label" style="grid-column:1/-1">Source of Funds</div>
+          <div class="cg-cell">Always derived from criminal activity — drug deals, fraud, tax evasion, bribery, human trafficking, etc.</div>
+          <div class="cg-cell">May be criminal <em>or</em> entirely legitimate — salary, charity donations, personal savings. <strong>The source does not have to be criminal.</strong></div>
+
+          <div class="cg-cell cg-row-label" style="grid-column:1/-1">Destination of Funds</div>
+          <div class="cg-cell">Profits the criminal — described as <strong>"circular"</strong> (though funds may also end up with innocent recipients who have no idea of their origin).</div>
+          <div class="cg-cell">Sent to a terrorist or terrorist organisation — described as <strong>"linear"</strong>. The sender may not be a terrorist themselves.</div>
+
+          <div class="cg-cell cg-row-label" style="grid-column:1/-1">Purpose of the Activity</div>
+          <div class="cg-cell">To generate and enjoy profit from criminal activity.</div>
+          <div class="cg-cell">To support terrorist operations, fund attacks, purchase weapons.</div>
+        </div>
+
+        <div class="exam-note callout">
+          <div class="clabel">📘 ICA Exam Note — Money Laundering in Reverse</div>
+          <blockquote>"Terrorist financing is often seen as money laundering in reverse. Terrorists collect money from perfectly legitimate sources — clean money — which is then subsequently used for criminal purposes."</blockquote>
+          <div class="note-foot">This is the critical exam trap: because the <em>source</em> of terrorist funds can be legitimate, TF transactions can look indistinguishable from normal financial activity. You cannot rely on spotting "dirty money" — you must consider what the funds are <em>destined for</em>.</div>
+        </div>
+
+        <h3>What Terrorist Financing and Money Laundering Have in Common</h3>
+        <div class="tags">
+          <span class="tag">Both require the assistance of the financial sector</span>
+          <span class="tag">Both aim to disguise source or destination of funds</span>
+          <span class="tag">Both use the same techniques to move money</span>
+          <span class="tag">Both exploit legitimate businesses and structures</span>
+        </div>
+
+        <div class="consider callout">
+          <div class="clabel">💡 Consider</div>
+          <p>Many techniques used to disguise the <em>destination</em> of terrorist funds are identical to those used to disguise the <em>source</em> of criminal proceeds. You must stay alert to the possibility that property you handle may at some future point be used to fund terrorism — even if it arrived through apparently legitimate channels.</p>
+        </div>
+      </div>
+
+      <div class="bottom-nav">
+        <button class="btn-prev" disabled>← Previous</button>
+        <button class="btn-next" onclick="advance(1)">How Terrorist Financing Works →</button>
+      </div>
+    </div>
+
+    <!-- S1: HOW TF WORKS -->
+    <div class="section" id="sec1">
+      <div class="section-tag">Section 2 of 7</div>
+      <h2 style="font-size:1.6rem;font-weight:800;margin-bottom:8px">How Terrorist Financing Works</h2>
+      <div class="section-divider"></div>
+      <p class="section-intro" style="margin-bottom:20px">Terrorist organisations range from large, sophisticated networks to small cells operating on minimal budgets. Understanding how each raises and moves funds is essential to recognising the risk.</p>
+
+      <div class="card">
+        <h3>The Scale Varies Enormously</h3>
+        <p>Large terrorist organisations like ISIS and Al-Qaeda require significant ongoing funding — to pay fighters, acquire weapons, operate internationally. But many attacks are carried out for remarkably little money.</p>
+
+        <div class="case-study-box">
+          <div class="cs-label">📋 Case Studies — Low-Cost Attacks</div>
+          <p><strong>November 2015 Paris Attacks:</strong> The French government indicated the bombings and mass shootings cost no more than <strong>$10,000</strong> to execute.</p>
+          <p><strong>2019 Sri Lanka Easter Attacks:</strong> Similarly, devastating attacks were carried out at minimal financial cost.</p>
+          <p><strong>Other low-cost methods:</strong> Simply renting a vehicle or purchasing a knife to carry out attacks requires almost no financial infrastructure at all.</p>
+        </div>
+
+        <div class="important callout">
+          <div class="clabel">⚠️ Why This Makes Detection So Difficult</div>
+          <p>When a terrorist cell only needs $10,000, and that money may have come from legitimate employment income or small charitable donations, the transaction is almost impossible to distinguish from normal financial activity. There are no large suspicious cash deposits. No obvious red flags. This is why the financial sector must remain alert to <em>behavioural</em> patterns, not just transaction sizes.</p>
+        </div>
+
+        <h3>How Terrorist Organisations Raise Funds</h3>
+        <div class="method-card">
+          <h4>Charities and Front Organisations</h4>
+          <p>A classic method — a charity collects legitimate donations from well-meaning members of the public. Clean money is then channelled to a terrorist organisation. The donors may have no idea their money is funding terrorism.</p>
+        </div>
+        <div class="method-card">
+          <h4>Criminal Proceeds</h4>
+          <p>Terrorist groups also raise funds through criminal activity — drug trafficking, kidnapping for ransom, extortion, fraud. ISIS in particular generated significant revenue through oil sales, taxation of occupied territories, and looting.</p>
+        </div>
+        <div class="method-card">
+          <h4>Personal Funds and Employment Income</h4>
+          <p>Individual terrorists may fund their own activities from personal savings or salary. Small, irregular transfers to overseas accounts or individuals may be the only financial footprint.</p>
+        </div>
+        <div class="method-card">
+          <h4>State Sponsorship</h4>
+          <p>Some terrorist organisations receive funding from sympathetic state actors — transferred through diplomatic channels or state-controlled institutions that are harder to monitor.</p>
+        </div>
+
+        <h3>Methods Used to Move Terrorist Funds</h3>
+        <div class="method-card" style="border-color:var(--pink)">
+          <h4>Emerging Technologies</h4>
+          <p>The 2008 Mumbai attacks used VOIP (Voice Over Internet Protocol), prepaid and value-stored cards, and pre-loaded mobile phones to coordinate the attack logistics and move funds. Terrorists in the Gaza Strip have used virtual currencies to fund operations. Electronic and online payments are a growing resource for terrorists.</p>
+        </div>
+        <div class="method-card" style="border-color:var(--pink)">
+          <h4>Cash Smuggling</h4>
+          <p>Several high-profile attacks — including the Bali Bombings — bypassed the financial system entirely by using cash couriers to physically transport funds across borders to terrorist cells.</p>
+        </div>
+        <div class="method-card" style="border-color:var(--pink)">
+          <h4>Hawala and Informal Value Transfer</h4>
+          <p>An ancient money transfer system operating outside the formal banking system. A sender gives cash to a hawala broker in one country; the recipient collects an equivalent sum from a broker in another country. No money physically crosses borders — it is settled between brokers later. Transactions leave minimal records.</p>
+        </div>
+
+        <div class="prop-eg callout">
+          <div class="clabel">🏡 Property Sector Relevance</div>
+          <p>A property transaction involving a buyer linked to a front charity, or funds originating from a jurisdiction known for terrorist activity, may require enhanced due diligence even if the source of funds appears clean. The destination — not just the source — must be considered as part of your risk assessment.</p>
+        </div>
+
+        <div class="quick-check" id="qc1">
+          <h4>⚡ Quick Check</h4>
+          <p>A client transfers £8,000 of legitimately earned salary to an overseas account. The recipient turns out to be linked to a terrorist organisation. This transaction is best described as:</p>
+          <button class="qc-opt" onclick="qc('qc1','a','c')">a) Money laundering — the funds were used for criminal purposes</button>
+          <button class="qc-opt" onclick="qc('qc1','b','c')">b) Neither — the source of funds was legitimate</button>
+          <button class="qc-opt" onclick="qc('qc1','c','c')">c) Terrorist financing — clean funds directed to fund terrorism</button>
+          <button class="qc-opt" onclick="qc('qc1','d','c')">d) Sanctions evasion — not terrorist financing</button>
+          <div class="qc-fb" id="qc1-fb"></div>
+        </div>
+      </div>
+
+      <div class="bottom-nav">
+        <button class="btn-prev" onclick="advance(0)">← TF vs Money Laundering</button>
+        <button class="btn-next" onclick="advance(2)">What Are Sanctions? →</button>
+      </div>
+    </div>
+
+    <!-- S2: WHAT ARE SANCTIONS -->
+    <div class="section" id="sec2">
+      <div class="section-tag">Section 3 of 7</div>
+      <h2 style="font-size:1.6rem;font-weight:800;margin-bottom:8px">What Are Sanctions?</h2>
+      <div class="section-divider"></div>
+      <p class="section-intro" style="margin-bottom:20px">Sanctions are one of the primary tools used by governments and international bodies to combat money laundering, terrorist financing, and threats to national security. Understanding what they are and who they apply to is a core exam topic.</p>
+
+      <div class="card">
+        <div class="exam-note callout">
+          <div class="clabel">📘 ICA Exam Note — Definition</div>
+          <blockquote>Sanctions are legal restrictions prohibiting dealings with designated individuals, entities, countries, or industry sectors. In most jurisdictions it is a regulatory requirement for financial institutions to comply with sanctions controls — in addition to their AML and CFT obligations.</blockquote>
+        </div>
+
+        <h3>Who and What Can Be Sanctioned?</h3>
+        <div class="target-grid">
+          <div class="target-card">
+            <h4>🌍 Countries / Jurisdictions</h4>
+            <p>Iran, North Korea, Syria, Russia — broad sanctions prohibiting a wide range of activities with a long list of associated individuals and entities</p>
+          </div>
+          <div class="target-card">
+            <h4>👤 Individuals</h4>
+            <p>Politicians, drug traffickers, terrorists, and those who assist them — collectively known as Specially Designated Nationals (SDNs)</p>
+          </div>
+          <div class="target-card">
+            <h4>🏭 Industry Sectors</h4>
+            <p>E.g. Sectoral Sanctions Indicators (SSI) lists targeting Russian oil & gas, deep-sea drilling, and banking sectors</p>
+          </div>
+          <div class="target-card">
+            <h4>🏢 Entities</h4>
+            <p>Companies owned or controlled by sanctioned individuals or governments — e.g. Commercial Bank of Syria</p>
+          </div>
+          <div class="target-card">
+            <h4>🚢 Named Ships / Aircraft</h4>
+            <p>Vessels known to be involved in financial crime, terrorism, or owned by a sanctioned government</p>
+          </div>
+          <div class="target-card">
+            <h4>📦 Trading Activities</h4>
+            <p>Importing/exporting to sanctioned countries; trading in arms, diamonds, prohibited cultural property, agricultural products</p>
+          </div>
+        </div>
+
+        <div class="important callout">
+          <div class="clabel">⚠️ Why Sanctions Matter for Your Firm</div>
+          <p>A firm must not provide economic benefits or conduct impermissible business connected to sanctioned individuals, entities, or countries. This requires a sanctions compliance programme proportionate to the scale of your business — including screening, detection, training, risk assessment, and escalation procedures.</p>
+        </div>
+      </div>
+
+      <div class="bottom-nav">
+        <button class="btn-prev" onclick="advance(1)">← How Terrorist Financing Works</button>
+        <button class="btn-next" onclick="advance(3)">The Four Sanctions Regimes →</button>
+      </div>
+    </div>
+
+    <!-- S3: FOUR REGIMES -->
+    <div class="section" id="sec3">
+      <div class="section-tag">Section 4 of 7</div>
+      <h2 style="font-size:1.6rem;font-weight:800;margin-bottom:8px">The Four Key Sanctions Regimes</h2>
+      <div class="section-divider"></div>
+      <p class="section-intro" style="margin-bottom:20px">There are four main international sanctions regimes your firm must be familiar with. Each has different coverage, legal force, and — critically — different extraterritorial reach.</p>
+
+      <div class="card">
+        <div class="regime-grid">
+          <div class="regime-card un">
+            <div class="rc-flag">🇺🇳</div>
+            <span class="rc-tag" style="background:#1a73e8">Widest Reach</span>
+            <h4>United Nations (UN)</h4>
+            <p>Sanctions imposed via UN Security Council Resolutions (UNSCRs). Member states are required to implement them — though they are not always obliged to do so, and implementation can vary significantly between countries.</p>
+            <p style="margin-top:8px">The UN publishes names of individuals and organisations subject to financial sanctions specifically relating to ISIS (Da'esh), Al-Qaeda, and the Taliban. All UN member states must freeze the funds and assets of named parties and report suspected matches.</p>
+          </div>
+          <div class="regime-card eu">
+            <div class="rc-flag">🇪🇺</div>
+            <span class="rc-tag" style="background:#003399">All EU States</span>
+            <h4>European Union (EU)</h4>
+            <p>EU sanctions are issued under the Common Foreign and Security Policy (CFSP). Unlike UN sanctions, EU sanctions apply automatically to <em>all</em> EU member states and EU citizens — there is no opt-out.</p>
+            <p style="margin-top:8px">The EU also issues its own autonomous sanctions beyond what the UN requires — for example, against Syria, Russia's energy and banking sectors, and for human rights violations and cyberattacks.</p>
+          </div>
+          <div class="regime-card us">
+            <div class="rc-flag">🇺🇸</div>
+            <span class="rc-tag" style="background:#b22234">Extraterritorial</span>
+            <h4>OFAC (United States)</h4>
+            <p>The Office of Foreign Assets Control administers US sanctions targeting foreign countries, terrorists, narcotics traffickers, WMD proliferators, and other threats to US national security.</p>
+            <p style="margin-top:8px"><strong>Critical point for non-US firms:</strong> While OFAC doesn't directly apply to non-US firms outside the US, <strong>using US dollars automatically engages OFAC regulations</strong> — all USD transactions clear through New York, giving the US jurisdiction. OFAC publishes the SDN (Specially Designated Nationals) and SDGT (Specially Designated Global Terrorists) lists.</p>
+            <p style="margin-top:8px">CAATSA (2017) added sweeping sanctions against Iran, North Korea, and Russia. Breaches carry monetary fines, imprisonment, and loss of US market access.</p>
+          </div>
+          <div class="regime-card uk">
+            <div class="rc-flag">🇬🇧</div>
+            <span class="rc-tag" style="background:#012169">Post-Brexit</span>
+            <h4>UK / OFSI</h4>
+            <p>After Brexit (31 December 2020), the UK established its own independent sanctions regime. HM Treasury's Office of Financial Sanctions Implementation (OFSI) — established in 2016 — now administers UK financial sanctions independently of the EU.</p>
+            <p style="margin-top:8px">The UK Policing and Crime Act 2017 gives OFSI significant powers including monetary penalties and a maximum custodial sentence of <strong>seven years</strong> for breaching financial sanctions. The FCA retains separate powers to fine regulated firms for inadequate sanctions systems and controls.</p>
+            <p style="margin-top:8px">HM Treasury may add names to the UK list that don't appear on UN or EU lists — for example, under the Terrorism Orders relating to Al-Qaeda and the Taliban.</p>
+          </div>
+        </div>
+
+        <div class="exam-note callout" style="margin-top:20px">
+          <div class="clabel">📘 ICA Exam Note — The USD Trigger</div>
+          <blockquote>"While US sanctions do not directly apply to non-US firms outside the US, the use of the US dollar currency automatically engages OFAC regulations. US prosecutors take the view that if a financial transaction has cleared in the US (as all US dollar payments do, in New York City), the US has jurisdiction over the offence."</blockquote>
+          <div class="note-foot">This is frequently tested. A UK property firm accepting a USD payment from an overseas buyer could theoretically fall within OFAC's jurisdiction — even if it has no US operations whatsoever.</div>
+        </div>
+
+        <div class="quick-check" id="qc2">
+          <h4>⚡ Quick Check</h4>
+          <p>A UK-based conveyancer completes a transaction where the buyer's funds are transferred in US dollars. The buyer is later found to be on the OFAC SDN list. Can OFAC have jurisdiction over this transaction?</p>
+          <button class="qc-opt" onclick="qc('qc2','a','a')">a) Yes — the use of USD means the transaction cleared through New York, giving the US jurisdiction</button>
+          <button class="qc-opt" onclick="qc('qc2','b','a')">b) No — OFAC only has jurisdiction over US firms and US citizens</button>
+          <button class="qc-opt" onclick="qc('qc2','c','a')">c) No — the conveyancer is regulated by the FCA, not OFAC</button>
+          <button class="qc-opt" onclick="qc('qc2','d','a')">d) Only if the buyer is also on the UK OFSI list</button>
+          <div class="qc-fb" id="qc2-fb"></div>
+        </div>
+      </div>
+
+      <div class="bottom-nav">
+        <button class="btn-prev" onclick="advance(2)">← What Are Sanctions?</button>
+        <button class="btn-next" onclick="advance(4)">Country Restrictions →</button>
+      </div>
+    </div>
+
+    <!-- S4: COUNTRY RESTRICTIONS -->
+    <div class="section" id="sec4">
+      <div class="section-tag">Section 5 of 7</div>
+      <h2 style="font-size:1.6rem;font-weight:800;margin-bottom:8px">Country Restrictions</h2>
+      <div class="section-divider"></div>
+      <p class="section-intro" style="margin-bottom:20px">Several countries are subject to extensive sanctions regimes. Understanding the context behind each helps you apply them correctly — and recognise when a client's connections may require enhanced scrutiny.</p>
+
+      <div class="card">
+        <div class="country-grid">
+          <div class="country-card iran">
+            <h4>🇮🇷 Iran</h4>
+            <p>Sanctions in place since 1995 from UN, EU, US, and local regimes. Some restrictions were lifted in 2016 as part of the nuclear deal (JCPOA). However, the US re-imposed extensive sanctions in November 2018 — the largest ever single-day re-imposition, targeting over 700 individuals, entities, aircraft, and vessels. Many activities remain prohibited, including financial assistance for military goods. The situation continues to evolve.</p>
+          </div>
+          <div class="country-card nk">
+            <h4>🇰🇵 North Korea</h4>
+            <p>In September 2017, the UN imposed its harshest ever sanctions following North Korea's sixth nuclear test. Objectives include capping oil imports, banning textile exports, ending overseas labour contracts, suppressing smuggling, stopping joint ventures, and sanctioning government entities. Diplomatic attempts at resolution have so far failed.</p>
+          </div>
+          <div class="country-card russia">
+            <h4>🇷🇺 Russia</h4>
+            <p>Following Russia's invasion of Ukraine in February 2022, sweeping sanctions were imposed by the US, EU, UK, Canada, Japan, Australia, Switzerland, and New Zealand. Russia's FATF membership was suspended in February 2023. The sanctions landscape is dynamic — firms must stay current with guidance from relevant sanctions bodies. FATF currently counts Russia as suspended, not expelled.</p>
+          </div>
+          <div class="country-card other">
+            <h4>🌍 Other Jurisdictions</h4>
+            <p>Sanctions also apply to Syria, Sudan, Libya, Cuba, Myanmar, and others. The EU Syria sanctions include an oil embargo, asset freezes of the Syrian central bank, export restrictions on repression technology, and travel bans. Sanctions lists and restrictions change regularly — always refer to your firm's sanctions policy and the relevant regulatory body for current requirements.</p>
+          </div>
+        </div>
+
+        <div class="consider callout">
+          <div class="clabel">💡 Consider — Dynamic Landscape</div>
+          <p>A challenging aspect of sanctions compliance is that lists and restrictions change frequently. A client may not be on a sanctions list when you onboard them — but may be added later. Your firm's screening must account for ongoing changes, not just a one-time check at the start of the relationship.</p>
+        </div>
+
+        <div class="prop-eg callout">
+          <div class="clabel">🏡 Property Sector Example</div>
+          <p>A buyer of a UK property has a shareholding in a Russian oil company that falls under EU sectoral sanctions. Even if the buyer is not personally named on any list, your firm may be facilitating a sanctions breach by proceeding without enhanced scrutiny. Beneficial ownership checks are essential — sanctions can apply to entities <em>controlled by</em> a sanctioned party, not just the named individuals themselves.</p>
+        </div>
+      </div>
+
+      <div class="bottom-nav">
+        <button class="btn-prev" onclick="advance(3)">← The Four Sanctions Regimes</button>
+        <button class="btn-next" onclick="advance(5)">Sanctions Screening →</button>
+      </div>
+    </div>
+
+    <!-- S5: SCREENING -->
+    <div class="section" id="sec5">
+      <div class="section-tag">Section 6 of 7</div>
+      <h2 style="font-size:1.6rem;font-weight:800;margin-bottom:8px">Sanctions Screening</h2>
+      <div class="section-divider"></div>
+      <p class="section-intro" style="margin-bottom:20px">Knowing the sanctions regimes is one thing — being able to screen against them effectively is another. The ICA sets out clear requirements for how screening must be conducted.</p>
+
+      <div class="card">
+        <h3>Types of Sanctions Lists</h3>
+        <div class="method-card">
+          <h4>Public Domain Lists</h4>
+          <p>Available to all — OFAC's SDN list, UN lists, EU lists, HM Treasury (OFSI). Your firm must screen against these as a minimum.</p>
+        </div>
+        <div class="method-card">
+          <h4>Local Jurisdiction Lists</h4>
+          <p>Specific to individual countries. Some jurisdictions maintain their own lists that may include names not appearing on international lists.</p>
+        </div>
+        <div class="method-card">
+          <h4>Non-Public Global Lists</h4>
+          <p>Global lists that are not available in the public domain — shared within specific law enforcement or intelligence networks.</p>
+        </div>
+        <div class="method-card">
+          <h4>Internal Firm Lists</h4>
+          <p>Private lists maintained within individual firms, based on customer and transactional intelligence gathered internally. These supplement the public lists.</p>
+        </div>
+
+        <div class="exam-note callout">
+          <div class="clabel">📘 ICA Exam Note — Ongoing Obligation</div>
+          <blockquote>"Names should be screened at the outset of a relationship, and the whole database of existing customers should be screened frequently thereafter to account for changes to sanctions lists. A customer may not be on a sanctions list when a relationship is established, but they may be added later."</blockquote>
+          <div class="note-foot">A one-time check at onboarding is not sufficient. Screening must be continuous throughout the relationship.</div>
+        </div>
+
+        <h3>What Must Be Screened?</h3>
+        <div class="important callout">
+          <div class="clabel">⚠️ Scope of Screening</div>
+          <p>A robust sanctions programme must screen: <strong>all employees, all vendors, all third parties, all payment activity, all prospective clients, all beneficial owners, and all counterparties to transactions</strong> — including identifying the nature of goods and, where relevant, screening ships. Sanctions controls must be in place at all stages of the client lifecycle.</p>
+        </div>
+
+        <h3>Automated vs Manual Screening</h3>
+        <p>There is no legal requirement to screen automatically — but automated screening is industry best practice where high transaction volumes are involved (e.g. retail banking). Automated systems filter data — names, dates of birth, addresses — against sanctions lists to detect potential matches.</p>
+
+        <h3>Handling Matches — True vs False Positives</h3>
+        <p>Not every potential match is a genuine sanctions hit. Firms must have a clear investigation process. The ICA identifies three types of true match:</p>
+        <div class="tags">
+          <span class="tag">i. True matches to restricted countries</span>
+          <span class="tag">ii. True matches with payments rejected</span>
+          <span class="tag">iii. Other true matches — e.g. SDNs</span>
+        </div>
+        <div class="important callout">
+          <div class="clabel">⚠️ True Match Response</div>
+          <p>A clear process must be in place to respond to confirmed sanctions hits. This may include freezing the transaction, reporting to external authorities (OFSI in the UK), and considering whether a SAR should be filed. Failing to act on a confirmed hit is itself a sanctions breach.</p>
+        </div>
+
+        <h3>Quality Assurance</h3>
+        <p>All screening processes — manual and automated — must be subject to regular quality assurance checks to ensure investigations are completed in a timely manner, list updates are applied promptly, and the programme remains effective. Screening without proper QA is insufficient for regulatory purposes.</p>
+
+        <div class="quick-check" id="qc3">
+          <h4>⚡ Quick Check</h4>
+          <p>A property buyer completed a purchase six months ago. Your firm's automated system now flags that they have been added to the UK OFSI sanctions list. What should your firm do?</p>
+          <button class="qc-opt" onclick="qc('qc3','a','b')">a) Take no action — the transaction is already complete</button>
+          <button class="qc-opt" onclick="qc('qc3','b','b')">b) Investigate the match, report to OFSI, and consider filing a SAR</button>
+          <button class="qc-opt" onclick="qc('qc3','c','b')">c) Notify the buyer's solicitor and await their response</button>
+          <button class="qc-opt" onclick="qc('qc3','d','b')">d) Wait for HMRC guidance before taking action</button>
+          <div class="qc-fb" id="qc3-fb"></div>
+        </div>
+      </div>
+
+      <div class="bottom-nav">
+        <button class="btn-prev" onclick="advance(4)">← Country Restrictions</button>
+        <button class="btn-next btn-next cta" onclick="advance(6)">Take the Module Quiz →</button>
+      </div>
+    </div>
+
+    <!-- S6: QUIZ -->
+    <div class="section" id="sec6">
+      <div class="quiz-header">
+        <h2>✏️ Module 2 Quiz</h2>
+        <p>15 questions · ICA-style · 70% required to pass · Read each question carefully</p>
+      </div>
+      <div id="quizContainer"></div>
+      <button class="submit-btn" id="submitBtn" onclick="submitQuiz()" disabled>Submit All Answers</button>
+      <div class="result" id="resultPanel">
+        <div class="result-top" id="resultTop">
+          <div class="result-score" id="resultScore"></div>
+          <div class="result-msg" id="resultMsg"></div>
+        </div>
+        <div class="result-body">
+          <p id="resultDetail"></p>
+          <button class="retry-btn" onclick="resetQuiz()">Try Again</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+const SECTIONS=[
+  {label:"TF vs Money Laundering",sub:"Key differences & similarities"},
+  {label:"How Terrorist Financing Works",sub:"Methods, scale & techniques"},
+  {label:"What Are Sanctions?",sub:"Definition & targets"},
+  {label:"The Four Sanctions Regimes",sub:"UN, EU, OFAC, UK/OFSI"},
+  {label:"Country Restrictions",sub:"Iran, North Korea, Russia & others"},
+  {label:"Sanctions Screening",sub:"Lists, process & true matches"},
+  {label:"Module Quiz",sub:"15 questions · 70% to pass"}
+];
+let cur=0;
+const done=new Array(SECTIONS.length).fill(false);
+
+function buildSidebar(){
+  const nav=document.getElementById('sideNav');
+  nav.innerHTML='';
+  SECTIONS.forEach((s,i)=>{
+    const isLocked=i>0&&!done[i-1]&&i!==cur;
+    const isActive=i===cur;
+    const isDone=done[i];
+    const div=document.createElement('div');
+    div.className='nav-item'+(isActive?' active':'')+(isDone&&!isActive?' completed':'')+(isLocked?' locked':'');
+    div.onclick=()=>{if(!isLocked)goTo(i)};
+    const icon=isDone&&!isActive?'✓':isLocked?'🔒':(i+1);
+    div.innerHTML=`<div class="nav-icon">${icon}</div><div><div class="nav-label">${s.label}</div><div class="nav-sublabel">${s.sub}</div></div>`;
+    nav.appendChild(div);
+  });
+}
+
+function updateProgress(){
+  const n=done.filter(Boolean).length;
+  const pct=Math.round((n/SECTIONS.length)*100);
+  document.getElementById('topFill').style.width=pct+'%';
+  document.getElementById('topPct').textContent=pct+'% complete';
+  document.getElementById('sideProgressFill').style.width=pct+'%';
+  document.getElementById('sideProgressLabel').textContent=`${n} of ${SECTIONS.length} sections complete`;
+}
+
+function goTo(n){
+  document.getElementById('sec'+cur).classList.remove('active');
+  cur=n;
+  document.getElementById('sec'+n).classList.add('active');
+  buildSidebar();updateProgress();
+  window.scrollTo(0,0);
+}
+
+function advance(n){done[cur]=true;goTo(n);}
+
+function reveal(id){
+  document.getElementById(id).classList.add('show');
+  document.getElementById(id).parentElement.querySelectorAll('.yn-btn').forEach(b=>b.disabled=true);
+}
+
+const qcExp={
+  qc1:"Terrorist financing involves directing funds — clean or dirty — to a terrorist or terrorist organisation. The source being legitimate does not change the nature of the offence. This is the key distinction from money laundering.",
+  qc2:"Correct. The USD trigger is a critical ICA exam point. All USD transactions clear through New York, giving the US jurisdiction even over non-US firms. Using USD with a sanctioned party could expose a UK firm to OFAC enforcement.",
+  qc3:"Ongoing screening obligations mean firms must act even after a transaction is complete. A confirmed sanctions match requires reporting to OFSI and potentially filing a SAR. Inaction is itself a sanctions breach."
+};
+
+function qc(id,chosen,correct){
+  const el=document.getElementById(id);
+  const opts=el.querySelectorAll('.qc-opt');
+  const fb=document.getElementById(id+'-fb');
+  const letters=['a','b','c','d'];
+  opts.forEach((o,i)=>{
+    o.disabled=true;
+    if(letters[i]===correct)o.classList.add('correct');
+    else if(letters[i]===chosen&&chosen!==correct)o.classList.add('wrong');
+  });
+  fb.classList.add('show',chosen===correct?'c':'w');
+  fb.innerHTML=(chosen===correct?'✅ <strong>Correct!</strong> ':'❌ <strong>Not quite.</strong> ')+qcExp[id];
+}
+
+const Qs=[
+  {q:"What is the key difference between terrorist financing and money laundering?",o:["TF always involves larger sums of money","TF can involve legitimately sourced funds; ML always involves criminal proceeds","ML is a criminal offence; TF is not regulated","TF only occurs in conflict zones"],c:1,e:"Terrorist funds can come from entirely legitimate sources — salary, charity donations, personal savings. The crime is their intended use, not their origin. This makes TF transactions very difficult to detect."},
+  {q:"Terrorist financing is sometimes described as 'money laundering in reverse.' Why?",o:["Because the amounts involved are always smaller","Because clean money is used for criminal purposes, rather than criminal money being cleaned","Because it involves foreign jurisdictions rather than domestic ones","Because it only involves charities and front organisations"],c:1,e:"With ML, dirty money is cleaned. With TF, clean money is directed to criminal/terrorist purposes. The direction of the flow is reversed."},
+  {q:"The 2015 Paris attacks reportedly cost no more than $10,000. What is the key implication for financial services firms?",o:["Only large, suspicious transactions need monitoring","TF transactions can be indistinguishable from normal financial activity given their small size","Firms should focus resources only on high-value transactions","Cash transactions are the primary TF risk"],c:1,e:"Low-cost attacks mean TF activity may involve very small, unremarkable transactions — making behavioural patterns and customer context more important than transaction size alone."},
+  {q:"Which of the following BEST describes how a hawala transfer works?",o:["Funds are physically transported across borders by couriers","An equivalent sum is paid out in the destination country without money physically crossing borders","Funds are transferred via cryptocurrency between anonymous wallets","A bank executes a wire transfer on behalf of a terrorist organisation"],c:1,e:"Hawala is an informal value transfer system — a sender pays a broker locally, who instructs a correspondent broker overseas to pay the recipient. No money crosses the border; the brokers settle later. It leaves minimal financial records."},
+  {q:"UN sanctions are imposed through which mechanism?",o:["FATF Mutual Evaluations","EU Common Foreign and Security Policy Directives","UN Security Council Resolutions (UNSCRs)","OFAC executive orders"],c:2,e:"UN sanctions are imposed via UNSCRs. Member states are then required to implement them through their own legislation — though implementation can vary between countries."},
+  {q:"Unlike UN sanctions, EU sanctions apply to:",o:["Only EU-based financial institutions","All UN member states","All EU member states and EU citizens without exception","Only countries that have ratified the EU treaty"],c:2,e:"EU sanctions apply automatically to all EU member states and EU citizens. There is no opt-out, unlike UN sanctions which member states may implement differently."},
+  {q:"A UK firm with no US operations processes a USD payment for a client. The client is later found to be on the OFAC SDN list. Which statement is correct?",o:["OFAC has no jurisdiction — the firm has no US operations","The firm may be subject to OFAC enforcement because all USD transactions clear through New York","Only the client's bank is liable","The firm is only liable if it processes more than $50,000 in USD"],c:1,e:"The USD trigger is a core ICA exam point. All US dollar payments clear in New York City, which gives the US jurisdiction over the transaction — regardless of where the firm is located."},
+  {q:"After Brexit, which UK body is responsible for administering financial sanctions?",o:["OFAC","FATF","OFSI (Office of Financial Sanctions Implementation)","HMRC"],c:2,e:"OFSI — established by HM Treasury in 2016 — administers UK financial sanctions independently of the EU post-Brexit. The maximum custodial sentence for breach is seven years under the Policing and Crime Act 2017."},
+  {q:"SDN stands for:",o:["Sanctioned Domestic Nationals","Specially Designated Nationals","Suspected Drug Networkers","Sectoral Designation Notice"],c:1,e:"SDN — Specially Designated Nationals — is the OFAC list of individuals and entities whose assets are subject to blocking. Terrorists specifically may be listed as SDGTs (Specially Designated Global Terrorists)."},
+  {q:"Sectoral Sanctions Indicators (SSI lists) were issued against which country's oil, gas, and banking sectors?",o:["Iran","Syria","Russia","North Korea"],c:2,e:"SSI lists — issued by the US and EU — specifically targeted Russia's oil and gas, deep-sea drilling, and banking sectors, initially in response to the annexation of Crimea in 2014, extended significantly after the 2022 invasion of Ukraine."},
+  {q:"When should a firm screen its existing client database against updated sanctions lists?",o:["Only at the start of a new business relationship","Annually during AML audit","Frequently on an ongoing basis — a client may be added to a list after onboarding","Only when the client initiates a new transaction"],c:2,e:"Ongoing screening is a regulatory requirement. A client may not be on any list when onboarded but may be added later. The firm's screening system must capture these changes continuously."},
+  {q:"Which of the following does NOT need to be included in a robust sanctions screening programme?",o:["All employees","All vendors and third parties","All payment activity","All media coverage about the firm"],c:3,e:"A robust programme must screen employees, vendors, third parties, payment activity, beneficial owners, and prospective clients. Media coverage about the firm is not a sanctions screening obligation."},
+  {q:"A firm identifies a potential match to a sanctions list. After investigation it is confirmed as a true match. What must happen next?",o:["The firm may continue the transaction with enhanced monitoring","A clear response process must be followed, which may include freezing the transaction and reporting to external authorities","The firm should notify the client so they can appeal the listing","The firm should wait for legal advice before taking any action"],c:1,e:"A confirmed sanctions match requires a clear, pre-defined response — including freezing the relevant transaction and reporting to OFSI. Inaction following a confirmed hit is itself a sanctions breach."},
+  {q:"A buyer's funds originate from a legitimate charity, but the charity has been identified as a front for a terrorist organisation. How should this transaction be classified?",o:["Money laundering — the charity is a criminal entity","Terrorist financing — clean funds directed toward terrorism","A sanctions breach only if the charity is named on a list","Not a financial crime — the buyer's own funds are legitimate"],c:1,e:"This is a classic TF scenario. The funds themselves may be clean — but using a charity as a front to channel money to terrorism is terrorist financing, regardless of the source of the charitable donations."},
+  {q:"Which statement about the Taliban Sanctions Committee is correct?",o:["It permanently bans all named individuals","It has no power to remove individuals from the list","It can remove individuals who renounce violence and sever links with international terrorist organisations","It was dissolved following the Taliban's return to power in 2021"],c:2,e:"The UN's Taliban Sanctions Committee can remove individuals who renounce violence, sever links to international terrorist organisations, and respect the Afghanistan constitution. This reflects sanctions as a tool to change behaviour, not just to punish."}
+];
+
+let answered={};
+
+function buildQuiz(){
+  const c=document.getElementById('quizContainer');
+  c.innerHTML='';answered={};
+  document.getElementById('submitBtn').disabled=true;
+  document.getElementById('resultPanel').classList.remove('show');
+  const L=['A','B','C','D'];
+  Qs.forEach((q,qi)=>{
+    const div=document.createElement('div');
+    div.className='q-block';div.id='qb'+qi;
+    div.innerHTML=`<div class="q-num">Question ${qi+1} of ${Qs.length}</div><div class="q-text">${q.q}</div>${q.o.map((o,oi)=>`<div class="a-opt" id="opt_${qi}_${oi}" onclick="pick(${qi},${oi})"><span class="let">${L[oi]}</span><span>${o}</span></div>`).join('')}<div class="q-fb" id="fb_${qi}"></div>`;
+    c.appendChild(div);
+  });
+}
+
+function pick(qi,oi){
+  if(answered[qi]!==undefined)return;
+  answered[qi]=oi;
+  const q=Qs[qi];const L=['A','B','C','D'];
+  document.querySelectorAll(`[id^="opt_${qi}_"]`).forEach((o,i)=>{
+    o.style.pointerEvents='none';
+    if(i===q.c)o.classList.add('correct');
+    else if(i===oi&&oi!==q.c)o.classList.add('wrong');
+  });
+  const fb=document.getElementById('fb_'+qi);
+  const pass=oi===q.c;
+  fb.classList.add('show',pass?'c':'w');
+  fb.innerHTML=pass?`✅ <strong>Correct.</strong> ${q.e}`:`❌ <strong>Incorrect.</strong> The correct answer was <strong>${L[q.c]}</strong>. ${q.e}`;
+  document.getElementById('qb'+qi).classList.add(pass?'ans-correct':'ans-wrong');
+  if(Object.keys(answered).length===Qs.length)document.getElementById('submitBtn').disabled=false;
+}
+
+function submitQuiz(){
+  const correct=Qs.filter((_,i)=>answered[i]===Qs[i].c).length;
+  const pct=Math.round((correct/Qs.length)*100);
+  const pass=pct>=70;
+  document.getElementById('resultScore').textContent=pct+'%';
+  document.getElementById('resultMsg').textContent=pass?'✅ Pass — Module 2 Complete!':'❌ Not quite — 70% needed to pass';
+  document.getElementById('resultTop').className='result-top '+(pass?'pass':'fail');
+  document.getElementById('resultDetail').textContent=`You got ${correct} out of ${Qs.length} correct. ${pass?'Move on to Module 3: How Financial Institutions Are Exploited.':'Review the sections where you lost marks and try again.'}`;
+  document.getElementById('resultPanel').classList.add('show');
+  document.getElementById('submitBtn').disabled=true;
+  if(pass){done[cur]=true;buildSidebar();updateProgress();}
+  window.scrollTo(0,document.body.scrollHeight);
+}
+
+function resetQuiz(){buildQuiz();document.getElementById('resultPanel').classList.remove('show');window.scrollTo(0,0);}
+
+buildSidebar();updateProgress();buildQuiz();
+</script>
+</body>
+</html>

@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 1 – What is Money Laundering?</title>
+<style>
+/* ── COADJUTE TOKENS ── */
+:root {
+  --ink:      #002846;
+  --lilac:    #C17FFF;
+  --pink:     #FF44D6;
+  --orange:   #FF6D3D;
+  --active:   #4EEFF9;
+  --l50:      #DFBEFF;
+  --l20:      #F2E5FF;
+  --l10:      #F9F2FF;
+  --grey:     #EEE8F1;
+  --white:    #FFFFFF;
+  --grad:     linear-gradient(90deg, var(--lilac) 0%, var(--pink) 60%, var(--orange) 100%);
+  --sidebar-w: 270px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--ink);line-height:1.7;display:flex;flex-direction:column;min-height:100vh}
+
+/* ── TOPBAR ── */
+.topbar{background:var(--ink);height:56px;display:flex;align-items:center;padding:0 24px;gap:16px;position:fixed;top:0;left:0;right:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.topbar-logo{font-weight:800;font-size:1.1rem;color:var(--white);letter-spacing:-.5px}
+.topbar-logo span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.topbar-course{font-size:.8rem;color:rgba(255,255,255,.5);margin-left:8px;border-left:1px solid rgba(255,255,255,.15);padding-left:14px}
+.topbar-progress{margin-left:auto;display:flex;align-items:center;gap:10px}
+.topbar-pct{font-size:.8rem;color:rgba(255,255,255,.6)}
+.topbar-bar{width:120px;height:4px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden}
+.topbar-bar-fill{height:100%;background:var(--grad);border-radius:2px;transition:width .4s}
+
+/* ── LAYOUT ── */
+.layout{display:flex;margin-top:56px;min-height:calc(100vh - 56px)}
+
+/* ── SIDEBAR ── */
+.sidebar{width:var(--sidebar-w);background:var(--ink);position:fixed;top:56px;left:0;bottom:0;overflow-y:auto;display:flex;flex-direction:column;z-index:90}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px}
+.sidebar-header{padding:20px 20px 12px;border-bottom:1px solid rgba(255,255,255,.08)}
+.sidebar-header h2{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.4);margin-bottom:4px}
+.sidebar-header h3{font-size:.95rem;color:var(--white);font-weight:700;line-height:1.3}
+.sidebar-nav{padding:12px 0;flex:1}
+.nav-item{display:flex;align-items:center;gap:12px;padding:11px 20px;cursor:pointer;transition:.15s;border-left:3px solid transparent;position:relative}
+.nav-item:hover:not(.locked){background:rgba(255,255,255,.06)}
+.nav-item.active{background:rgba(193,127,255,.12);border-left-color:var(--lilac)}
+.nav-item.completed{border-left-color:var(--active)}
+.nav-item.locked{opacity:.45;cursor:not-allowed}
+.nav-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;flex-shrink:0;transition:.2s}
+.nav-item.active .nav-icon{background:var(--lilac);color:var(--ink)}
+.nav-item.completed .nav-icon{background:var(--active);color:var(--ink)}
+.nav-item:not(.active):not(.completed):not(.locked) .nav-icon{background:rgba(255,255,255,.1);color:rgba(255,255,255,.5)}
+.nav-item.locked .nav-icon{background:rgba(255,255,255,.06);color:rgba(255,255,255,.3)}
+.nav-text{flex:1}
+.nav-label{font-size:.82rem;color:var(--white);font-weight:500;line-height:1.3}
+.nav-item.active .nav-label{color:var(--lilac)}
+.nav-item.completed .nav-label{color:rgba(255,255,255,.75)}
+.nav-item.locked .nav-label{color:rgba(255,255,255,.3)}
+.nav-sublabel{font-size:.7rem;color:rgba(255,255,255,.3);margin-top:1px}
+.lock-icon{font-size:.7rem;color:rgba(255,255,255,.25)}
+.tick-icon{font-size:.75rem;color:var(--active)}
+.sidebar-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,.08)}
+.module-progress-label{font-size:.72rem;color:rgba(255,255,255,.4);margin-bottom:6px}
+.module-progress-bar{height:3px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
+.module-progress-fill{height:100%;background:var(--grad);border-radius:2px;transition:width .4s}
+
+/* ── MAIN CONTENT ── */
+.main{margin-left:var(--sidebar-w);flex:1;padding:32px 40px 80px}
+.section{display:none}
+.section.active{display:block}
+
+/* ── SECTION HEADER ── */
+.section-header{margin-bottom:28px}
+.section-tag{display:inline-block;font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--lilac);margin-bottom:8px}
+.section-header h2{font-size:1.6rem;font-weight:800;color:var(--ink);line-height:1.2;margin-bottom:8px}
+.section-divider{height:3px;width:48px;background:var(--grad);border-radius:2px;margin-bottom:16px}
+.section-intro{color:#4a5568;font-size:.97rem}
+
+/* ── CARDS ── */
+.card{background:var(--white);border-radius:12px;padding:24px 28px;margin-bottom:20px;box-shadow:0 1px 4px rgba(0,40,70,.07)}
+
+/* ── CALLOUT BOXES ── */
+.callout{border-radius:0 10px 10px 0;padding:16px 20px;margin:20px 0}
+.callout .clabel{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+
+.exam-note{background:var(--l20);border-left:4px solid var(--lilac)}
+.exam-note .clabel{color:var(--lilac)}
+.exam-note blockquote{font-style:italic;color:#4a3f6b;font-size:.93rem;line-height:1.6;margin-top:6px}
+.exam-note .note-foot{font-size:.83rem;color:#6b5a90;margin-top:8px}
+
+.important{background:#fff8f0;border-left:4px solid var(--orange)}
+.important .clabel{color:var(--orange)}
+
+.consider{background:#f0fff8;border-left:4px solid var(--active)}
+.consider .clabel{color:#009a9e}
+
+.note-box{background:var(--l10);border-left:4px solid var(--l50)}
+.note-box .clabel{color:#7c5cbf}
+
+.prop-eg{background:linear-gradient(135deg,#fff8f0,#fff2fb);border-left:4px solid var(--pink)}
+.prop-eg .clabel{color:var(--pink)}
+
+/* ── STAGE CARDS ── */
+.stage-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin:20px 0}
+.stage-card{border-radius:12px;padding:22px;position:relative;overflow:hidden}
+.stage-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px}
+.stage-card.s1{background:#fff5f5} .stage-card.s1::before{background:#e53e3e}
+.stage-card.s2{background:#fffbf0} .stage-card.s2::before{background:#d69e2e}
+.stage-card.s3{background:#f0fff8} .stage-card.s3::before{background:#38a169}
+.stage-card .s-icon{font-size:1.8rem;margin-bottom:10px}
+.stage-card h3{font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:8px}
+.stage-card p{font-size:.85rem;color:#4a5568;line-height:1.5}
+
+/* ── METHOD CARDS ── */
+.method-card{background:var(--l10);border-radius:8px;padding:16px 18px;margin-bottom:10px;border-left:3px solid var(--lilac)}
+.method-card h4{font-size:.9rem;font-weight:700;color:var(--ink);margin-bottom:4px}
+.method-card p{font-size:.85rem;color:#4a5568;margin:0}
+
+/* ── TAGS ── */
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0}
+.tag{background:var(--l20);color:var(--ink);padding:5px 13px;border-radius:20px;font-size:.8rem;font-weight:600;border:1px solid var(--l50)}
+
+/* ── INTERACTIVE SCENARIOS ── */
+.scenario{background:var(--white);border:2px solid var(--grey);border-radius:10px;padding:18px 20px;margin-bottom:14px;transition:.2s}
+.scenario-q{font-weight:600;color:var(--ink);margin-bottom:14px;font-size:.93rem;line-height:1.5}
+.yn-btns{display:flex;gap:10px}
+.yn-btn{padding:8px 24px;border-radius:6px;border:2px solid;cursor:pointer;font-weight:700;font-size:.88rem;transition:.2s;background:var(--white)}
+.yn-yes{border-color:#38a169;color:#38a169} .yn-yes:hover{background:#38a169;color:#fff}
+.yn-no{border-color:#e53e3e;color:#e53e3e} .yn-no:hover{background:#e53e3e;color:#fff}
+.yn-btn:disabled{opacity:.6;cursor:default}
+.scenario-reveal{margin-top:12px;padding:14px;background:var(--l10);border-radius:8px;font-size:.88rem;color:#4a3f6b;display:none;border:1px solid var(--l50)}
+.scenario-reveal.show{display:block}
+
+/* ── QUICK CHECK ── */
+.quick-check{background:var(--l10);border:2px solid var(--l50);border-radius:10px;padding:20px;margin:24px 0}
+.quick-check h4{color:var(--ink);margin-bottom:4px;font-size:.95rem}
+.quick-check p{font-size:.88rem;color:#4a5568;margin-bottom:14px}
+.qc-opt{display:block;width:100%;text-align:left;padding:10px 14px;background:var(--white);border:2px solid var(--grey);border-radius:6px;cursor:pointer;margin-bottom:8px;font-size:.88rem;transition:.15s;color:var(--ink)}
+.qc-opt:hover:not(:disabled){border-color:var(--lilac);background:var(--l10)}
+.qc-opt.correct{border-color:#38a169;background:#f0fff8;color:#276749}
+.qc-opt.wrong{border-color:#e53e3e;background:#fff5f5;color:#c53030}
+.qc-fb{margin-top:10px;padding:12px;border-radius:6px;font-size:.85rem;display:none}
+.qc-fb.show{display:block}
+.qc-fb.c{background:#f0fff8;color:#276749;border:1px solid #9ae6b4}
+.qc-fb.w{background:#fff5f5;color:#c53030;border:1px solid #feb2b2}
+
+/* ── TABLE ── */
+table{width:100%;border-collapse:collapse;margin:16px 0;font-size:.88rem}
+th{background:var(--ink);color:var(--white);padding:10px 14px;text-align:left;font-weight:600}
+td{padding:10px 14px;border-bottom:1px solid var(--grey);vertical-align:top}
+tr:nth-child(even) td{background:var(--l10)}
+
+/* ── CASE STUDIES ── */
+.case-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:16px 0}
+.case-card{background:var(--ink);border-radius:10px;padding:18px;position:relative;overflow:hidden}
+.case-card::after{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad)}
+.case-firm{font-size:.8rem;font-weight:700;color:var(--active);margin-bottom:4px;text-transform:uppercase;letter-spacing:.05em}
+.case-fine{font-size:1.35rem;font-weight:800;color:var(--white);margin-bottom:8px}
+.case-card p{font-size:.78rem;color:rgba(255,255,255,.65);line-height:1.4;margin:0}
+
+/* ── BOTTOM NAV ── */
+.bottom-nav{display:flex;justify-content:space-between;align-items:center;margin-top:36px;padding-top:24px;border-top:1px solid var(--grey)}
+.btn-prev,.btn-next{padding:12px 26px;border-radius:8px;border:none;cursor:pointer;font-size:.9rem;font-weight:700;transition:.2s}
+.btn-prev{background:var(--grey);color:var(--ink)} .btn-prev:hover{background:#d8d0e2}
+.btn-prev:disabled{opacity:.35;cursor:not-allowed}
+.btn-next{background:var(--ink);color:var(--white)} .btn-next:hover{background:#00396a}
+.btn-next:disabled{opacity:.35;cursor:not-allowed}
+.btn-next.cta{background:var(--grad);color:var(--ink)}
+
+/* ── QUIZ ── */
+.quiz-header{background:var(--grad);border-radius:12px;padding:22px 26px;margin-bottom:24px;color:var(--ink)}
+.quiz-header h2{font-size:1.2rem;font-weight:800;margin-bottom:4px}
+.quiz-header p{font-size:.85rem;opacity:.8}
+.q-block{background:var(--white);border-radius:10px;padding:20px 22px;margin-bottom:16px;border:2px solid var(--grey);transition:.2s}
+.q-block.ans-correct{border-color:#38a169;background:#f0fff8}
+.q-block.ans-wrong{border-color:#e53e3e;background:#fff5f5}
+.q-num{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--lilac);margin-bottom:6px}
+.q-text{font-weight:600;color:var(--ink);margin-bottom:14px;font-size:.93rem;line-height:1.5}
+.a-opt{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:var(--l10);border:2px solid var(--grey);border-radius:6px;cursor:pointer;margin-bottom:8px;font-size:.88rem;transition:.15s;color:var(--ink)}
+.a-opt:hover:not([disabled]){border-color:var(--lilac);background:var(--l20)}
+.a-opt .let{font-weight:700;color:var(--lilac);min-width:18px;margin-top:1px}
+.a-opt.correct{border-color:#38a169;background:#f0fff8} .a-opt.correct .let{color:#38a169}
+.a-opt.wrong{border-color:#e53e3e;background:#fff5f5} .a-opt.wrong .let{color:#e53e3e}
+.q-fb{margin-top:10px;padding:12px 14px;border-radius:6px;font-size:.84rem;display:none;line-height:1.5}
+.q-fb.show{display:block}
+.q-fb.c{background:#f0fff8;color:#276749;border:1px solid #9ae6b4}
+.q-fb.w{background:#fff5f5;color:#c53030;border:1px solid #feb2b2}
+.submit-btn{width:100%;padding:14px;background:var(--ink);color:var(--white);border:none;border-radius:8px;font-size:1rem;font-weight:700;cursor:pointer;margin-top:8px;transition:.2s}
+.submit-btn:hover:not(:disabled){background:#00396a}
+.submit-btn:disabled{opacity:.35;cursor:not-allowed}
+.result{border-radius:12px;overflow:hidden;display:none;margin-top:20px}
+.result.show{display:block}
+.result-top{padding:28px;text-align:center}
+.result-top.pass{background:linear-gradient(135deg,var(--active),#00c9d4)}
+.result-top.fail{background:linear-gradient(135deg,var(--orange),var(--pink))}
+.result-score{font-size:3.5rem;font-weight:800;color:var(--ink)}
+.result-msg{font-size:1rem;font-weight:700;color:var(--ink);margin-top:4px}
+.result-body{background:var(--white);padding:20px 28px;display:flex;justify-content:space-between;align-items:center}
+.result-body p{color:#4a5568;font-size:.9rem}
+.retry-btn{padding:11px 24px;background:var(--ink);color:var(--white);border:none;border-radius:8px;font-weight:700;cursor:pointer;font-size:.9rem}
+</style>
+</head>
+<body>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  <div class="topbar-logo"><span>Coadjute</span></div>
+  <div class="topbar-course">AML Certificate — Module 1 of 8</div>
+  <div class="topbar-progress">
+    <span class="topbar-pct" id="topPct">0% complete</span>
+    <div class="topbar-bar"><div class="topbar-bar-fill" id="topFill" style="width:0%"></div></div>
+  </div>
+</div>
+
+<!-- LAYOUT -->
+<div class="layout">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>Module 1</h2>
+      <h3>What is Money Laundering?</h3>
+    </div>
+    <nav class="sidebar-nav" id="sideNav"></nav>
+    <div class="sidebar-footer">
+      <div class="module-progress-label" id="sideProgressLabel">0 of 7 sections complete</div>
+      <div class="module-progress-bar"><div class="module-progress-fill" id="sideProgressFill" style="width:0%"></div></div>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <!-- S0: WHAT IS ML? -->
+    <div class="section active" id="sec0">
+      <div class="section-header">
+        <div class="section-tag">Section 1 of 7</div>
+        <h2>What is Money Laundering?</h2>
+        <div class="section-divider"></div>
+        <p class="section-intro">Most people have heard the term — but the real legal definition is far wider than "dirty money" or "drug money." Understanding exactly what the law means is the foundation of everything that follows.</p>
+      </div>
+
+      <div class="card">
+        <div class="exam-note callout">
+          <div class="clabel">📘 ICA Exam Note — Core Definition</div>
+          <blockquote>"Quite simply, money laundering occurs every time any transaction takes place, or any relationship is formed that involves any form of property or benefit that has come from any crime."</blockquote>
+          <div class="note-foot">This is deliberately wide. Any property. Any crime. A luxury watch bought with stolen cash. Fraud proceeds sitting in a bank account. Property purchased through a corrupt offshore company.</div>
+        </div>
+
+        <h3 style="margin:20px 0 10px;color:var(--ink)">The Three Key Objectives</h3>
+        <p style="margin-bottom:12px">Whatever the method, money laundering always pursues one or more of these goals:</p>
+        <div class="tags">
+          <span class="tag">i. Disguise the source of criminal property</span>
+          <span class="tag">ii. Conceal ownership of criminal property</span>
+          <span class="tag">iii. Control and benefit from the proceeds securely</span>
+        </div>
+
+        <div class="consider callout" style="margin-top:20px">
+          <div class="clabel">💡 Consider — Who Gets Caught Up?</div>
+          <p>You might assume that honest, reputable firms are rarely affected. The opposite is true. Criminals actively seek out legitimate businesses to process their funds. The ICA lists those at highest risk: banks, insurers, lawyers, accountants, trust companies, money transmitters, betting firms, <strong>real estate agents</strong>, high-value goods retailers, and virtual currency businesses.</p>
+          <p style="margin-top:8px">Reputational damage, criminal prosecution, regulatory censure, and civil proceedings can all follow — even for firms who had no idea what was happening.</p>
+        </div>
+
+        <h3 style="margin:22px 0 12px;color:var(--ink)">A Simple Example — How Far the Law Reaches</h3>
+        <div class="scenario">
+          <div class="scenario-q">A drug dealer gives £100 to a friend and asks them to hide it under their mattress until "the coast is clear." Is the friend laundering money?</div>
+          <div class="yn-btns">
+            <button class="yn-btn yn-yes" onclick="reveal('r0','yes')">Yes</button>
+            <button class="yn-btn yn-no" onclick="reveal('r0','no')">No</button>
+          </div>
+          <div class="scenario-reveal" id="r0"><strong>Yes.</strong> The friend has entered into an arrangement involving the drug dealer's proceeds of crime. Whether a <em>criminal offence</em> has been committed depends on what the friend knew or suspected — a critical distinction we cover in Section 4.</div>
+        </div>
+
+        <div class="exam-note callout" style="margin-top:20px">
+          <div class="clabel">📘 ICA Exam Note — AML vs CFT</div>
+          <blockquote><strong>AML (Anti Money Laundering)</strong> — legislation and procedures designed to detect and prevent criminals from disguising the proceeds of crime.<br><br><strong>CFT / CTF (Countering the Financing of Terrorism)</strong> — making it illegal to support terrorists financially and materially. Focus intensified significantly after 11 September 2001.</blockquote>
+          <div class="note-foot">While often grouped together, money laundering and terrorist financing are distinct — covered in Module 2.</div>
+        </div>
+      </div>
+
+      <div class="bottom-nav">
+        <button class="btn-prev" disabled>← Previous</button>
+        <button class="btn-next" onclick="advance(1)">The Three Stages →</button>
+      </div>
+    </div>
+
+    <!-- S1: THREE STAGES -->
+    <div class="section" id="sec1">
+      <div class="section-header">
+        <div class="section-tag">Section 2 of 7</div>
+        <h2>The Three Stages of Money Laundering</h2>
+        <div class="section-divider"></div>
+        <p class="section-intro">The three-stage model is fundamental to the ICA exam. You must be able to define each stage precisely, recognise real-world examples, and — critically — understand where the model breaks down.</p>
+      </div>
+
+      <div class="card">
+        <div class="stage-grid">
+          <div class="stage-card s1">
+            <div class="s-icon">💰</div>
+            <h3>1. Placement</h3>
+            <p>Cash from criminal activity is introduced into the financial system. Criminals are most vulnerable at this stage — cash may be contaminated with drugs, security dye, or forensic markers.</p>
+          </div>
+          <div class="stage-card s2">
+            <div class="s-icon">🔀</div>
+            <h3>2. Layering</h3>
+            <p>A series of transactions designed to hide the source and ownership of funds, confuse the audit trail, and create distance between the criminal and the money.</p>
+          </div>
+          <div class="stage-card s3">
+            <div class="s-icon">🏠</div>
+            <h3>3. Integration</h3>
+            <p>Laundered funds re-enter the legitimate economy appearing to come from a legitimate source. The property technically remains the proceeds of crime.</p>
+          </div>
+        </div>
+
+        <h3 style="margin:22px 0 12px;color:var(--ink)">Placement — Techniques in Practice</h3>
+        <p style="margin-bottom:14px">Direct cash deposits were once common, but modern AML legislation has made this dangerous. Cash transactions over threshold (£10,000 UK / $10,000 US / €10,000 EU) must be reported. Criminals have adapted:</p>
+
+        <div class="method-card">
+          <h4>Smurfing / Structured Deposits</h4>
+          <p>Large sums broken into smaller amounts — each below the reporting threshold — deposited across multiple accounts and banks. Requires a network of people ("smurfs") acting together.</p>
+        </div>
+        <div class="method-card">
+          <h4>Currency Conversion into High-Value Assets</h4>
+          <p>Cash used to buy real estate, precious metals, art, luxury watches, or motor vehicles — which are later sold for "clean" funds. Items can be transported internationally to add distance from the crime.</p>
+        </div>
+        <div class="method-card">
+          <h4>Cash-Intensive Business Commingling</h4>
+          <p>Criminal cash mixed with legitimate takings of a cash-heavy business (restaurants, car washes, nail bars) and declared as business income — almost impossible to separate after the fact.</p>
+        </div>
+
+        <div class="prop-eg callout" style="margin-top:20px">
+          <div class="clabel">🏡 Property Sector Example</div>
+          <p>A buyer arrives with a large cash deposit, splitting payment across multiple sources. This is a classic placement red flag. By the time your firm is involved, layering may already have begun — your CDD at this point is critical.</p>
+        </div>
+
+        <h3 style="margin:22px 0 12px;color:var(--ink)">Layering — Creating Distance</h3>
+        <p style="margin-bottom:12px">Once placed, criminals create as many transaction layers as possible: offshore accounts, shell companies, complex chains across multiple jurisdictions, and increasingly virtual currencies which add technical complexity. The goal is always to put maximum distance between the criminal and the money.</p>
+        <div class="note-box callout">
+          <div class="clabel">📝 Note</div>
+          <p>Even when proceeds are initially generated electronically (e.g. fraud), criminals often withdraw cash, transport it internationally, and redeposit it — deliberately creating a messy, multi-step paper trail to confuse investigators.</p>
+        </div>
+
+        <h3 style="margin:22px 0 12px;color:var(--ink)">Integration — Reintegration Methods</h3>
+        <p style="margin-bottom:14px">At integration, laundered money re-enters the economy looking legitimate. The ICA identifies specific methods you should know:</p>
+        <table>
+          <tr><th>Method</th><th>How It Works</th></tr>
+          <tr><td><strong>Loan-back</strong></td><td>Money transferred from an overseas account controlled by the launderer and presented as a legitimate loan to themselves</td></tr>
+          <tr><td><strong>Sham transactions</strong></td><td>Payments disguised as proceeds of a real estate deal, royalty, or purchase of goods/services that never existed — supported by false invoices at inflated prices</td></tr>
+          <tr><td><strong>Inheritance / Gift</strong></td><td>Funds in another country presented as an inheritance or gift when transferred home</td></tr>
+          <tr><td><strong>Insurance policy redemption</strong></td><td>Funds placed with an insurer as a lump sum; later cashed in so the payment appears to come from a legitimate financial institution</td></tr>
+          <tr><td><strong>Sale of assets</strong></td><td>A property, yacht, or vehicle originally purchased with criminal funds sold to a legitimate buyer — the sale proceeds appear entirely clean</td></tr>
+        </table>
+
+        <div class="prop-eg callout">
+          <div class="clabel">🏡 Property Sector — Rapid Resale</div>
+          <p>An offshore company purchases a property in cash. Six months later it is sold at full market value to a legitimate buyer. The sale proceeds are entirely "clean" — paid by an innocent party. Your firm may be the final step in a laundering chain without ever knowing it.</p>
+        </div>
+
+        <div class="quick-check" id="qc1">
+          <h4>⚡ Quick Check</h4>
+          <p>A fraudster uses stolen employer funds to buy a racehorse, then sells the horse at auction. Which stage of the three-stage model does the auction sale represent?</p>
+          <button class="qc-opt" onclick="qc('qc1','a','c')">a) Placement</button>
+          <button class="qc-opt" onclick="qc('qc1','b','c')">b) Layering</button>
+          <button class="qc-opt" onclick="qc('qc1','c','c')">c) Integration</button>
+          <button class="qc-opt" onclick="qc('qc1','d','c')">d) None — fraud proceeds can't be laundered this way</button>
+          <div class="qc-fb" id="qc1-fb"></div>
+        </div>
+      </div>
+
+      <div class="bottom-nav">
+        <button class="btn-prev" onclick="advance(0)">← What is Money Laundering?</button>
+        <button class="btn-next" onclick="advance(2)">Limitations of the Model →</button>
+      </div>
+    </div>
+
+    <!-- S2: LIMITATIONS -->
+    <div class="section" id="sec2">
+      <div class="section-header">
+        <div class="section-tag">Section 3 of 7</div>
+        <h2>Limitations of the Three-Stage Model</h2>
+        <div class="section-divider"></div>
+        <p class="section-intro">The three-stage model is a useful teaching tool — but the ICA is explicit that understanding its limitations is just as important as knowing the model itself. This is a tested exam topic.</p>
+      </div>
+
+      <div class="card">
+        <div class="exam-note callout">
+          <div class="clabel">📘 ICA Exam Note — Key Learning Point</div>
+          <blockquote>"Money laundering does not always occur in a manner that fits into the three-stage model."</blockquote>
+          <div class="note-foot">The model assumes all crime generates cash that is then deposited into the financial system. This is frequently not the case.</div>
+        </div>
+
+        <h3 style="margin:20px 0 12px;color:var(--ink)">Two Core Limitations</h3>
+        <div class="method-card" style="border-color:var(--pink)">
+          <h4>1. Not all crime produces cash</h4>
+          <p>Financial crime — fraud, insider trading, embezzlement — generates proceeds already within the financial system. There is no placement stage because there is no cash to place. The funds are criminal property from the moment they land in the account.</p>
+        </div>
+        <div class="method-card" style="border-color:var(--orange)">
+          <h4>2. Layering and integration can't always be separated</h4>
+          <p>The line between these stages is often impossible to draw in practice. "Integration" itself may involve further layering. The process is rarely a neat linear sequence — and money laundering can occur even where none of the three stages is clearly identifiable.</p>
+        </div>
+
+        <div class="important callout" style="margin-top:20px">
+          <div class="clabel">⚠️ Important</div>
+          <p>If you only look for the classic three-stage pattern, you will miss money laundering that doesn't fit the template. This is exactly what the ICA exam tests — the ability to recognise laundering even when it looks nothing like the textbook model.</p>
+        </div>
+
+        <h3 style="margin:22px 0 12px;color:var(--ink)">The Insider Trading Example</h3>
+        <div class="scenario">
+          <div class="scenario-q">Mr Jones uses inside information to sell stock early, avoiding a loss. The proceeds sit in his bank account. No withdrawals or third-party payments are made. Is Mr Jones laundering money through the bank?</div>
+          <div class="yn-btns">
+            <button class="yn-btn yn-yes" onclick="reveal('r1','yes')">Yes</button>
+            <button class="yn-btn yn-no" onclick="reveal('r1','no')">No</button>
+          </div>
+          <div class="scenario-reveal" id="r1"><strong>Yes.</strong> The proceeds of his insider trading crime sit in the account — they are criminal property. There is no placement, no obvious layering, no integration. Yet money laundering is occurring, and the bank is technically part of a money laundering relationship.</div>
+        </div>
+
+        <div class="exam-note callout" style="margin-top:20px">
+          <div class="clabel">📘 ICA Exam Note — The Critical Point</div>
+          <blockquote>"It is not necessary to actively manage the entire laundering process, or any particular stage of it, in order to commit a money laundering offence. All that is required is a contribution to the process by dealing in some way with another person's benefit from crime, however innocent this activity was."</blockquote>
+        </div>
+
+        <div class="quick-check" id="qc2">
+          <h4>⚡ Quick Check</h4>
+          <p>A solicitor receives tax fraud proceeds into a client account and uses them to buy a property. Which stage of the three-stage model best applies?</p>
+          <button class="qc-opt" onclick="qc('qc2','a','d')">a) Placement — funds entering the financial system</button>
+          <button class="qc-opt" onclick="qc('qc2','b','d')">b) Layering — funds being moved between accounts</button>
+          <button class="qc-opt" onclick="qc('qc2','c','d')">c) Integration — funds being used to acquire assets</button>
+          <button class="qc-opt" onclick="qc('qc2','d','d')">d) The three-stage model doesn't cleanly apply — the funds were never cash</button>
+          <div class="qc-fb" id="qc2-fb"></div>
+        </div>
+      </div>
+
+      <div class="bottom-nav">
+        <button class="btn-prev" onclick="advance(1)">← The Three Stages</button>
+        <button class="btn-next" onclick="advance(3)">Predicate Offences & Criminal Liability →</button>
+      </div>
+    </div>
+
+    <!-- S3: PREDICATE OFFENCES -->
+    <div class="section" id="sec3">
+      <div class="section-header">
+        <div class="section-tag">Section 4 of 7</div>
+        <h2>Predicate Offences &amp; Criminal Liability</h2>
+        <div class="section-divider"></div>
+        <p class="section-intro">This is the most examined distinction in the entire ICA course. The <em>act</em> of money laundering and the <em>criminal offence</em> of money laundering are not the same thing — and confusing them costs marks.</p>
+      </div>
+
+      <div class="card">
+        <div class="exam-note callout">
+          <div class="clabel">📘 ICA Exam Note — Memorise This</div>
+          <blockquote>"Criminal offences of money laundering are only committed when both the act of money laundering takes place AND the person or business that handles the property has the required state of mind, i.e., knows or suspects or has reasonable grounds to suspect, that the property derives from crime."</blockquote>
+          <div class="note-foot">The key phrase: <strong>required state of mind.</strong> Without it, the act may be occurring — but the person handling the funds may not have committed a criminal offence. Note: "reasonable grounds to suspect" is an <em>objective</em> test — you can be liable even if you personally claim not to have suspected anything.</div>
+        </div>
+
+        <h3 style="margin:22px 0 12px;color:var(--ink)">Five Scenarios — Act vs Criminal Offence</h3>
+        <p style="margin-bottom:14px">All five answers are "Yes — money laundering is occurring." The question for each is whether the professional has also committed a <em>criminal offence</em>.</p>
+
+        <div class="scenario">
+          <div class="scenario-q">1. A jeweller sells a luxury watch to a thief who uses proceeds from stolen goods. Is the jeweller involved in money laundering?</div>
+          <div class="yn-btns"><button class="yn-btn yn-yes" onclick="reveal('sc1','yes')">Yes</button><button class="yn-btn yn-no" onclick="reveal('sc1','no')">No</button></div>
+          <div class="scenario-reveal" id="sc1"><strong>Yes — the act of money laundering is occurring.</strong> The stolen goods have been converted into a watch. Whether the jeweller committed a <em>criminal offence</em> depends on whether they knew or suspected the money was stolen.</div>
+        </div>
+        <div class="scenario">
+          <div class="scenario-q">2. A drug dealer deposits £200,000 across 20 accounts in £10,000 batches. Are the banks laundering money?</div>
+          <div class="yn-btns"><button class="yn-btn yn-yes" onclick="reveal('sc2','yes')">Yes</button><button class="yn-btn yn-no" onclick="reveal('sc2','no')">No</button></div>
+          <div class="scenario-reveal" id="sc2"><strong>Yes — classic smurfing / placement.</strong> The banks are facilitating the placement even if individual cashiers suspect nothing. A bank with proper monitoring should detect the pattern. Criminal liability depends on what each bank knew or should have suspected.</div>
+        </div>
+        <div class="scenario">
+          <div class="scenario-q">3. An insider trader instructs his stockbroker to sell shares. Proceeds go to his bank. Did the stockbroker launder money? Did the bank?</div>
+          <div class="yn-btns"><button class="yn-btn yn-yes" onclick="reveal('sc3','yes')">Yes — both</button><button class="yn-btn yn-no" onclick="reveal('sc3','no')">No</button></div>
+          <div class="scenario-reveal" id="sc3"><strong>Yes — both.</strong> Insider trading proceeds are criminal property. The stockbroker executed the trade; the bank received the funds. Whether criminal offences were committed depends on each party's state of mind.</div>
+        </div>
+        <div class="scenario">
+          <div class="scenario-q">4. An employee defrauds her employer and uses the funds to buy an insurance contract. Did the bank launder money? What about the insurer?</div>
+          <div class="yn-btns"><button class="yn-btn yn-yes" onclick="reveal('sc4','yes')">Yes — both</button><button class="yn-btn yn-no" onclick="reveal('sc4','no')">No</button></div>
+          <div class="scenario-reveal" id="sc4"><strong>Yes — both.</strong> The fraud proceeds are criminal property. The bank processed them; the insurer accepted them as a premium. Criminal liability for each depends on their state of mind.</div>
+        </div>
+        <div class="scenario">
+          <div class="scenario-q">5. A corrupt politician places bribery proceeds into an offshore trust. Is the trustee laundering money?</div>
+          <div class="yn-btns"><button class="yn-btn yn-yes" onclick="reveal('sc5','yes')">Yes</button><button class="yn-btn yn-no" onclick="reveal('sc5','no')">No</button></div>
+          <div class="scenario-reveal" id="sc5"><strong>Yes.</strong> Whether the trustee committed a criminal offence depends on what they knew, suspected, or <em>should have suspected.</em> The objective "reasonable grounds to suspect" test means the trustee may be liable even if they claim not to have known the source of funds.</div>
+        </div>
+
+        <h3 style="margin:22px 0 12px;color:var(--ink)">Predicate Offences</h3>
+        <p>Money laundering requires an underlying crime — known as a predicate offence. These typically include drug trafficking, fraud, tax evasion, bribery, corruption, and many others. The list varies by jurisdiction.</p>
+
+        <div class="exam-note callout">
+          <div class="clabel">📘 ICA Exam Note — Single vs Dual Criminality</div>
+          <blockquote><strong>Single criminality</strong> — looks only at whether the conduct is criminal under the law of the country where laundering occurs, regardless of where the original crime took place.<br><br><strong>Dual criminality</strong> — requires the underlying conduct to be unlawful in <em>both</em> the country where the crime occurred AND the country where laundering takes place.</blockquote>
+        </div>
+
+        <h3 style="margin:22px 0 10px;color:var(--ink)">The SOCPA 2005 Defence (UK)</h3>
+        <p>SOCPA introduced a limited defence where overseas conduct was lawful in that jurisdiction — but only if the conduct would not be punishable in the UK by more than 12 months' imprisonment. This is the "bullfighter scenario": money earned legitimately from bullfighting abroad is not money laundering in the UK. However, for serious crimes like drug trafficking and tax evasion, this defence does not apply regardless of where the crime occurred.</p>
+
+        <div class="important callout">
+          <div class="clabel">⚠️ Your Personal Responsibility</div>
+          <p>Report any knowledge or suspicion of criminality to your MLRO. It is then the MLRO's responsibility — not yours — to decide whether to escalate to the authorities. Even if your report turns out to be nothing, it helps your firm manage risk and protects you personally.</p>
+        </div>
+      </div>
+
+      <div class="bottom-nav">
+        <button class="btn-prev" onclick="advance(2)">← Limitations of the Model</button>
+        <button class="btn-next" onclick="advance(4)">What Can Be Laundered? →</button>
+      </div>
+    </div>
+
+    <!-- S4: WHAT CAN BE LAUNDERED -->
+    <div class="section" id="sec4">
+      <div class="section-header">
+        <div class="section-tag">Section 5 of 7</div>
+        <h2>What Forms of Property Can Be Laundered?</h2>
+        <div class="section-divider"></div>
+        <p class="section-intro">The name "money laundering" suggests it only involves cash. This is one of the most common and dangerous misconceptions in the field.</p>
+      </div>
+
+      <div class="card">
+        <div class="exam-note callout">
+          <div class="clabel">📘 ICA Exam Note</div>
+          <blockquote>"There is a common misconception that the only form of property that can be laundered is cash. In fact, any form of property can be laundered."</blockquote>
+        </div>
+
+        <p style="margin:16px 0 12px">Proceeds can take any form — once criminal funds convert into any of the following, they become criminal property:</p>
+        <div class="tags">
+          <span class="tag">Cash</span><span class="tag">Bank account funds</span><span class="tag">Real estate</span>
+          <span class="tag">Luxury watches & jewellery</span><span class="tag">Art & antiques</span><span class="tag">Motor vehicles</span>
+          <span class="tag">Precious metals</span><span class="tag">Branded goods</span><span class="tag">Prepaid store cards</span>
+          <span class="tag">Gold</span><span class="tag">Virtual currencies</span><span class="tag">Insurance policies</span>
+        </div>
+
+        <h3 style="margin:22px 0 10px;color:var(--ink)">Why Real Estate Is Particularly High Risk</h3>
+        <p>Property combines high transaction values, relative anonymity (especially through corporate structures), and the ability to generate legitimate-looking income through rents and resale. The UK property market — particularly London — has been identified by FATF and the UK's own National Risk Assessments as a significant vulnerability for international money laundering.</p>
+
+        <div class="prop-eg callout">
+          <div class="clabel">🏡 Property Sector Example</div>
+          <p>A cash buyer uses an offshore company to purchase a London flat. The company's ultimate beneficial owner is unknown. Three years later, the flat is sold at a modest profit and proceeds wired to another jurisdiction. This is a complete laundering cycle using real estate — and your firm may be involved at both ends without ever knowing the true source of funds.</p>
+        </div>
+
+        <div class="quick-check" id="qc3">
+          <h4>⚡ Quick Check</h4>
+          <p>Which of the following does NOT constitute "property" that can be laundered?</p>
+          <button class="qc-opt" onclick="qc('qc3','a','d')">a) A luxury watch bought with drug proceeds</button>
+          <button class="qc-opt" onclick="qc('qc3','b','d')">b) An insurance policy funded by fraud proceeds</button>
+          <button class="qc-opt" onclick="qc('qc3','c','d')">c) A house purchased using tax evasion proceeds</button>
+          <button class="qc-opt" onclick="qc('qc3','d','d')">d) None of the above — all three are criminal property</button>
+          <div class="qc-fb" id="qc3-fb"></div>
+        </div>
+      </div>
+
+      <div class="bottom-nav">
+        <button class="btn-prev" onclick="advance(3)">← Predicate Offences</button>
+        <button class="btn-next" onclick="advance(5)">Why It Matters →</button>
+      </div>
+    </div>
+
+    <!-- S5: WHY IT MATTERS -->
+    <div class="section" id="sec5">
+      <div class="section-header">
+        <div class="section-tag">Section 6 of 7</div>
+        <h2>Why Money Laundering Matters</h2>
+        <div class="section-divider"></div>
+        <p class="section-intro">The consequences of being caught up in money laundering — even innocently — are severe and increasingly personal. The numbers below are real.</p>
+      </div>
+
+      <div class="card">
+        <h3 style="margin-bottom:12px;color:var(--ink)">The Scale of the Problem</h3>
+        <p>A UNODC study estimates that money laundered globally each year represents between 2–5% of global GDP — equivalent to <strong>$800 billion to $2 trillion</strong>. Illicit drugs account for roughly a fifth; human trafficking, fraud, bribery, and corruption make up the rest. The true figure is almost certainly higher — by its nature, money laundering is hidden.</p>
+
+        <div class="exam-note callout" style="margin-top:20px">
+          <div class="clabel">📘 ICA Exam Note — Four Forms of Damage</div>
+          <blockquote>A firm found to have laundered criminal property faces: (i) criminal prosecution, (ii) regulatory sanction, (iii) reputational damage, and (iv) commercial damage through loss of business. Note: the first three also apply to individuals personally — and you may lose your job.</blockquote>
+        </div>
+
+        <h3 style="margin:24px 0 14px;color:var(--ink)">Real Enforcement Cases</h3>
+        <div class="case-grid">
+          <div class="case-card"><div class="case-firm">HSBC</div><div class="case-fine">$1.9bn</div><p>US penalties for facilitating transactions for drug cartels and sanctioned states</p></div>
+          <div class="case-card"><div class="case-firm">BNP Paribas</div><div class="case-fine">$8.9bn</div><p>Processing transactions for sanctioned countries including Sudan and Iran</p></div>
+          <div class="case-card"><div class="case-firm">Westpac</div><div class="case-fine">$1.3bn</div><p>Australia's largest-ever corporate fine, including transactions linked to child exploitation</p></div>
+          <div class="case-card"><div class="case-firm">Goldman Sachs</div><div class="case-fine">$2.9bn</div><p>1MDB scandal — bribery and serious AML control failures. Two executives personally charged</p></div>
+          <div class="case-card"><div class="case-firm">Binance</div><div class="case-fine">$3.4bn</div><p>Largest ever FinCEN fine. CEO personally fined $50m and sentenced to prison</p></div>
+          <div class="case-card"><div class="case-firm">Wells Fargo</div><div class="case-fine">$3bn+</div><p>Fake account scandal. CEO John Stumpf personally fined $17.5m</p></div>
+        </div>
+
+        <div class="important callout" style="margin-top:20px">
+          <div class="clabel">⚠️ Personal Liability Is Increasing</div>
+          <p>A clear trend across these cases: regulators are increasingly targeting individuals, not just institutions. The Goldman Sachs and ING cases both involved personal prosecutions of senior executives. The Binance CEO received a prison sentence. The era of "fine the firm only" is ending.</p>
+        </div>
+
+        <div class="exam-note callout">
+          <div class="clabel">📘 ICA Exam Note — Three Reasons to Avoid Involvement</div>
+          <blockquote>i. It is morally and ethically wrong to facilitate the laundering of criminal property.<br>ii. Even without criminal liability, reputational damage can follow simply from being associated with a case.<br>iii. Regulated businesses have a legal obligation to take measures to protect against exposure to money laundering risk.</blockquote>
+        </div>
+      </div>
+
+      <div class="bottom-nav">
+        <button class="btn-prev" onclick="advance(4)">← What Can Be Laundered?</button>
+        <button class="btn-next btn-next cta" onclick="advance(6)">Take the Module Quiz →</button>
+      </div>
+    </div>
+
+    <!-- S6: QUIZ -->
+    <div class="section" id="sec6">
+      <div class="quiz-header">
+        <h2>✏️ Module 1 Quiz</h2>
+        <p>15 questions · ICA-style · 70% required to pass · Read each question carefully</p>
+      </div>
+      <div id="quizContainer"></div>
+      <button class="submit-btn" id="submitBtn" onclick="submitQuiz()" disabled>Submit All Answers</button>
+      <div class="result" id="resultPanel">
+        <div class="result-top" id="resultTop">
+          <div class="result-score" id="resultScore"></div>
+          <div class="result-msg" id="resultMsg"></div>
+        </div>
+        <div class="result-body">
+          <p id="resultDetail"></p>
+          <button class="retry-btn" onclick="resetQuiz()">Try Again</button>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<script>
+/* ── NAV CONFIG ── */
+const SECTIONS = [
+  {label:"What is Money Laundering?", sub:"Definition & scope"},
+  {label:"The Three Stages", sub:"Placement, layering, integration"},
+  {label:"Limitations of the Model", sub:"When it doesn't apply"},
+  {label:"Predicate Offences", sub:"Act vs criminal offence"},
+  {label:"What Can Be Laundered?", sub:"Beyond cash"},
+  {label:"Why It Matters", sub:"Consequences & cases"},
+  {label:"Module Quiz", sub:"15 questions · 70% to pass"}
+];
+
+let cur = 0;
+const done = new Array(SECTIONS.length).fill(false);
+
+function buildSidebar() {
+  const nav = document.getElementById('sideNav');
+  nav.innerHTML = '';
+  SECTIONS.forEach((s, i) => {
+    const div = document.createElement('div');
+    const isLocked = i > 0 && !done[i-1] && i !== cur;
+    const isActive = i === cur;
+    const isDone = done[i];
+    div.className = 'nav-item' + (isActive?' active':'') + (isDone && !isActive?' completed':'') + (isLocked?' locked':'');
+    div.onclick = () => { if (!isLocked) goTo(i); };
+    const iconContent = isDone && !isActive ? '✓' : isLocked ? '🔒' : (i+1);
+    div.innerHTML = `
+      <div class="nav-icon">${iconContent}</div>
+      <div class="nav-text">
+        <div class="nav-label">${s.label}</div>
+        <div class="nav-sublabel">${s.sub}</div>
+      </div>
+      ${isDone && !isActive ? '<span class="tick-icon">✓</span>' : isLocked ? '<span class="lock-icon">🔒</span>' : ''}
+    `;
+    nav.appendChild(div);
+  });
+}
+
+function updateProgress() {
+  const completed = done.filter(Boolean).length;
+  const pct = Math.round((completed / SECTIONS.length) * 100);
+  document.getElementById('topFill').style.width = pct + '%';
+  document.getElementById('topPct').textContent = pct + '% complete';
+  document.getElementById('sideProgressFill').style.width = pct + '%';
+  document.getElementById('sideProgressLabel').textContent = `${completed} of ${SECTIONS.length} sections complete`;
+}
+
+function goTo(n) {
+  document.getElementById('sec'+cur).classList.remove('active');
+  cur = n;
+  document.getElementById('sec'+n).classList.add('active');
+  buildSidebar();
+  updateProgress();
+  window.scrollTo(0, 0);
+}
+
+function advance(n) {
+  done[cur] = true;
+  goTo(n);
+}
+
+/* ── SCENARIO REVEALS ── */
+function reveal(id) {
+  document.getElementById(id).classList.add('show');
+  const btns = document.getElementById(id).parentElement.querySelectorAll('.yn-btn');
+  btns.forEach(b => b.disabled = true);
+}
+
+/* ── QUICK CHECKS ── */
+const qcExp = {
+  qc1:"The auction sale converts criminal property (the racehorse bought with stolen funds) into clean money from a legitimate buyer. This is integration — the final stage where laundered funds re-enter the economy.",
+  qc2:"Because the fraud proceeds were already within the financial system (not cash), the three-stage model doesn't cleanly apply. This is a key limitation. Financial crime bypasses the placement stage entirely.",
+  qc3:"All three are criminal property. Any form of property — a watch, an insurance policy, a house — can be laundered. The name 'money laundering' is misleading in this respect."
+};
+
+function qc(id, chosen, correct) {
+  const el = document.getElementById(id);
+  const opts = el.querySelectorAll('.qc-opt');
+  const fb = document.getElementById(id+'-fb');
+  const letters = ['a','b','c','d'];
+  opts.forEach((o,i) => {
+    o.disabled = true;
+    if (letters[i]===correct) o.classList.add('correct');
+    else if (letters[i]===chosen && chosen!==correct) o.classList.add('wrong');
+  });
+  fb.classList.add('show', chosen===correct?'c':'w');
+  fb.innerHTML = (chosen===correct?'✅ <strong>Correct!</strong> ':'❌ <strong>Not quite.</strong> ') + qcExp[id];
+}
+
+/* ── QUIZ ── */
+const Qs = [
+  {q:"Which of the following BEST captures the ICA's definition of money laundering?",o:["Depositing drug cash into a bank account","Any transaction or relationship involving property or benefit derived from any crime","Converting cash into high-value assets to avoid detection","Processing transactions for criminals through offshore companies"],c:1,e:"The ICA definition is deliberately wide: any transaction or relationship involving property from any crime. It is not limited to cash, drugs, or any particular method."},
+  {q:"Which is NOT one of the three key objectives of money laundering?",o:["Disguising the source of criminal property","Concealing ownership of criminal property","Generating interest on criminal funds in offshore accounts","Controlling and benefiting securely from the proceeds of crime"],c:2,e:"The three objectives are: disguise source, conceal ownership, and control/benefit securely. Generating interest may be incidental — it is not an objective."},
+  {q:"At which stage of the money laundering process are criminals most vulnerable to detection?",o:["Layering","Integration","Placement","All stages equally"],c:2,e:"Placement is the most dangerous stage for criminals. Cash may be forensically contaminated and large deposits trigger mandatory reporting. Once placed, subsequent stages are much harder to detect."},
+  {q:"A drug dealer breaks £500,000 into 50 deposits of £10,000 across multiple banks. What is this technique called?",o:["Integration","Loan-back","Smurfing / structured deposits","Currency conversion"],c:2,e:"Smurfing (also called structured deposits) involves splitting large amounts into smaller transactions, each below the reporting threshold, to avoid triggering large cash transaction reports."},
+  {q:"An employee steals £80,000 from her employer's bank account and transfers it to her own. Which stage of the three-stage model applies?",o:["Placement — the funds have just entered the financial system","Layering — the transfer between accounts is a classic layer","The three-stage model doesn't cleanly apply — the funds were already in the financial system","Integration — the funds are now in legitimate-looking accounts"],c:2,e:"This is a key limitation of the three-stage model. Financial crime generates proceeds already within the financial system — there is no cash to place."},
+  {q:"A trustee manages an offshore trust funded by a corrupt politician's bribery proceeds. Has money laundering taken place?",o:["No — trusts are excluded from AML rules","Only if the trustee knew the source of the funds","Yes — the act of money laundering is occurring regardless of what the trustee knew","Only if the trust is in a non-cooperative jurisdiction"],c:2,e:"The act of money laundering occurs regardless of the trustee's state of mind. Whether the trustee committed a criminal offence depends on what they knew, suspected, or should have suspected."},
+  {q:"What is the 'required state of mind' that separates the act of money laundering from the criminal offence?",o:["The person must have intentionally set up the laundering arrangement","The person knows, suspects, or has reasonable grounds to suspect that property derives from crime","The person must have received direct financial benefit","The person must have been aware of the specific crime that generated the proceeds"],c:1,e:"The ICA wording: the required state of mind is knowing, suspecting, or having reasonable grounds to suspect that property derives from crime. Note: 'reasonable grounds to suspect' is objective — you can be liable even without personal suspicion."},
+  {q:"Under the SOCPA 2005 defence in the UK, which would NOT be protected?",o:["Proceeds of bullfighting in a country where it is legal","Proceeds of a minor regulatory breach overseas","Proceeds of drug trafficking where certain drugs are decriminalised","Proceeds of legitimate professional gambling overseas"],c:2,e:"SOCPA only protects conduct that would not carry more than 12 months' imprisonment in the UK. Drug trafficking carries far greater sentences — the defence does not apply regardless of the overseas jurisdiction."},
+  {q:"'Dual criminality' means:",o:["Laundering must involve at least two criminal transactions","Underlying conduct must be unlawful in both the country of the original crime AND the country where laundering takes place","The launderer must have committed both the predicate offence and a laundering offence","Two regulators must both be satisfied laundering has occurred"],c:1,e:"Dual criminality requires unlawfulness in both jurisdictions. Single criminality looks only at the law of the country where laundering occurs."},
+  {q:"Which of the following is a reintegration (integration stage) method?",o:["Depositing cash below the reporting threshold","Moving funds through a series of offshore accounts","Presenting overseas funds controlled by the launderer as a 'loan'","Using a cash business to commingle criminal and legitimate funds"],c:2,e:"The loan-back method presents criminally controlled funds as a legitimate loan — creating a paper trail of repayments. The others are placement or layering techniques."},
+  {q:"An offshore company buys a property in cash, then sells it to a legitimate buyer at market value. What stage does the sale represent?",o:["Placement","Layering","Integration","The transaction is legitimate as the buyer paid market value"],c:2,e:"The sale of an asset originally purchased with criminal funds is classic integration. The sale proceeds appear entirely clean — but the 'market value' argument does not sanitise the transaction."},
+  {q:"The UNODC estimates money laundered globally each year represents approximately what proportion of global GDP?",o:["Less than 1%","2–5%","8–10%","15–20%"],c:1,e:"The UNODC estimate is 2–5% of global GDP — $800bn to $2 trillion. The true figure is likely higher given the clandestine nature of money laundering."},
+  {q:"Which of the following is NOT a recognised consequence for a firm found to have laundered criminal property?",o:["Criminal prosecution","Regulatory sanction","Mandatory government bailout","Reputational damage"],c:2,e:"The ICA identifies four consequences: criminal prosecution, regulatory sanction, reputational damage, and commercial damage through loss of business. There is no mandatory government bailout."},
+  {q:"A team member spots unusual structured deposits matching a known smurfing pattern. Who should they report to?",o:["The police directly","The client's solicitor","The Money Laundering Reporting Officer (MLRO)","The FCA"],c:2,e:"Always report suspicions to your MLRO (nominated officer). It is then the MLRO's responsibility — not the individual employee's — to decide whether to submit a SAR to the authorities."},
+  {q:"Which statement about personal liability for money laundering best reflects current enforcement trends?",o:["Regulators exclusively fine institutions — individuals are rarely targeted","Personal liability only applies to the MLRO and CEO","Regulators are increasingly targeting individuals as well as institutions","Personal fines are capped and carry no custodial risk"],c:2,e:"A clear trend from Goldman, ING, and Binance cases: regulators are increasingly pursuing individuals. The Binance CEO received a personal $50m fine and a prison sentence. The era of 'fine the firm only' is ending."}
+];
+
+let answered = {};
+
+function buildQuiz() {
+  const c = document.getElementById('quizContainer');
+  c.innerHTML = '';
+  answered = {};
+  document.getElementById('submitBtn').disabled = true;
+  document.getElementById('resultPanel').classList.remove('show');
+  const LETS = ['A','B','C','D'];
+  Qs.forEach((q,qi) => {
+    const div = document.createElement('div');
+    div.className = 'q-block';
+    div.id = 'qb'+qi;
+    div.innerHTML = `<div class="q-num">Question ${qi+1} of ${Qs.length}</div>
+      <div class="q-text">${q.q}</div>
+      ${q.o.map((o,oi)=>`<div class="a-opt" id="opt_${qi}_${oi}" onclick="pick(${qi},${oi})"><span class="let">${LETS[oi]}</span><span>${o}</span></div>`).join('')}
+      <div class="q-fb" id="fb_${qi}"></div>`;
+    c.appendChild(div);
+  });
+}
+
+function pick(qi,oi) {
+  if (answered[qi]!==undefined) return;
+  answered[qi] = oi;
+  const q = Qs[qi];
+  const LETS = ['A','B','C','D'];
+  document.querySelectorAll(`[id^="opt_${qi}_"]`).forEach((o,i)=>{
+    o.style.pointerEvents='none';
+    if(i===q.c) o.classList.add('correct');
+    else if(i===oi&&oi!==q.c) o.classList.add('wrong');
+  });
+  const fb = document.getElementById('fb_'+qi);
+  const pass = oi===q.c;
+  fb.classList.add('show', pass?'c':'w');
+  fb.innerHTML = pass ? `✅ <strong>Correct.</strong> ${q.e}` : `❌ <strong>Incorrect.</strong> The correct answer was <strong>${LETS[q.c]}</strong>. ${q.e}`;
+  document.getElementById('qb'+qi).classList.add(pass?'ans-correct':'ans-wrong');
+  if(Object.keys(answered).length===Qs.length) document.getElementById('submitBtn').disabled=false;
+}
+
+function submitQuiz() {
+  let correct = Qs.filter((_,i)=>answered[i]===Qs[i].c).length;
+  const pct = Math.round((correct/Qs.length)*100);
+  const pass = pct >= 70;
+  const panel = document.getElementById('resultPanel');
+  document.getElementById('resultScore').textContent = pct+'%';
+  document.getElementById('resultMsg').textContent = pass ? '✅ Pass — Module 1 Complete!' : '❌ Not quite — 70% needed to pass';
+  document.getElementById('resultTop').className = 'result-top '+(pass?'pass':'fail');
+  document.getElementById('resultDetail').textContent = `You got ${correct} out of ${Qs.length} correct. ${pass ? 'Well done — you can now move on to Module 2.' : 'Review the sections where you lost marks and try again.'}`;
+  panel.classList.add('show');
+  document.getElementById('submitBtn').disabled=true;
+  if(pass) { done[cur]=true; buildSidebar(); updateProgress(); }
+  window.scrollTo(0,document.body.scrollHeight);
+}
+
+function resetQuiz() {
+  buildQuiz();
+  document.getElementById('resultPanel').classList.remove('show');
+  window.scrollTo(0,0);
+}
+
+/* ── INIT ── */
+buildSidebar();
+updateProgress();
+buildQuiz();
+</script>
+</body>
+</html>
