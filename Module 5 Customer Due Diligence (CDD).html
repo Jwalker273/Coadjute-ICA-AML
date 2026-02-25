@@ -2,1115 +2,1100 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Module 5 – Customer Due Diligence | ICA Certificate in AML</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Module 5 – Customer Due Diligence | Coadjute AML</title>
 <style>
-  :root{
-    --ink:#002846;--lilac:#C17FFF;--pink:#FF44D6;--orange:#FF6D3D;
-    --active:#4EEFF9;--l10:#DFBEFF;--l20:#F2E5FF;--l30:#F9F2FF;
-    --grey:#EEE8F1;--white:#FFFFFF;
-    --grad:linear-gradient(90deg,#C17FFF 0%,#FF44D6 50%,#FF6D3D 100%);
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{font-family:'Segoe UI',system-ui,sans-serif;background:#f4f0f8;color:var(--ink);line-height:1.7;font-size:15px}
+/* ── COADJUTE TOKENS ── */
+:root {
+  --ink:#002846; --lilac:#C17FFF; --pink:#FF44D6; --orange:#FF6D3D;
+  --active:#4EEFF9; --l50:#DFBEFF; --l20:#F2E5FF; --l10:#F9F2FF;
+  --grey:#EEE8F1; --white:#fff;
+  --grad:linear-gradient(90deg,#C17FFF 0%,#FF44D6 60%,#FF6D3D 100%);
+  --sidebar-w:270px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--ink);line-height:1.7;display:flex;flex-direction:column;min-height:100vh}
 
-  .topnav{position:fixed;top:0;left:0;right:0;height:56px;background:var(--ink);display:flex;align-items:center;padding:0 24px;gap:16px;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.25)}
-  .nav-logo{font-size:.8rem;font-weight:800;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.5)}
-  .nav-module{font-size:.9rem;font-weight:700;color:var(--white);flex:1}
-  .nav-week{font-size:.75rem;color:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:3px 12px}
+/* ════ TOPBAR ════ */
+.topbar{background:var(--ink);height:56px;display:flex;align-items:center;padding:0 24px;gap:16px;position:fixed;top:0;left:0;right:0;z-index:100;box-shadow:0 2px 8px rgba(0,0,0,.25)}
+.topbar-logo{font-weight:800;font-size:1.1rem;color:var(--white);letter-spacing:-.5px;white-space:nowrap}
+.topbar-logo span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.topbar-course{font-size:.8rem;color:rgba(255,255,255,.5);margin-left:8px;border-left:1px solid rgba(255,255,255,.15);padding-left:14px;white-space:nowrap}
+.topbar-progress{margin-left:auto;display:flex;align-items:center;gap:10px}
+.topbar-pct{font-size:.8rem;color:rgba(255,255,255,.6);white-space:nowrap}
+.topbar-bar{width:120px;height:4px;background:rgba(255,255,255,.15);border-radius:2px;overflow:hidden}
+.topbar-bar-fill{height:100%;background:var(--grad);border-radius:2px;transition:width .4s}
+.topbar-back{color:rgba(255,255,255,.6);font-size:.8rem;text-decoration:none;padding:6px 14px;border:1px solid rgba(255,255,255,.2);border-radius:6px;margin-left:16px;white-space:nowrap;transition:color .2s,border-color .2s}
+.topbar-back:hover{color:var(--white);border-color:rgba(255,255,255,.45)}
 
-  .layout{display:flex;min-height:100vh;padding-top:56px}
+/* ════ LAYOUT ════ */
+.layout{display:flex;margin-top:56px;min-height:calc(100vh - 56px)}
 
-  .sidebar{width:280px;min-width:280px;background:var(--ink);position:fixed;top:56px;left:0;bottom:0;overflow-y:auto;padding:24px 0}
-  .sidebar-title{font-size:.65rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.35);padding:0 20px 12px}
-  .sidebar-module{font-size:.78rem;font-weight:700;color:var(--lilac);padding:0 20px 20px;line-height:1.4;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:8px}
-  .snav-item{display:flex;align-items:flex-start;gap:12px;padding:10px 20px;cursor:pointer;transition:.2s;color:rgba(255,255,255,.55);font-size:.82rem;border-left:3px solid transparent;user-select:none}
-  .snav-item:hover:not(.locked){color:var(--white);background:rgba(255,255,255,.06)}
-  .snav-item.active{color:var(--white);background:rgba(193,127,255,.15);border-left-color:var(--lilac)}
-  .snav-item.locked{color:rgba(255,255,255,.25);cursor:not-allowed}
-  .sn-num{font-size:.65rem;font-weight:800;letter-spacing:.08em;min-width:22px;color:var(--lilac);opacity:.7;padding-top:2px}
-  .snav-item.active .sn-num{opacity:1}
-  .snav-item.locked .sn-num{color:rgba(255,255,255,.2)}
-  .sn-sub{font-size:.68rem;color:rgba(255,255,255,.3);display:block;margin-top:2px}
-  .snav-item.active .sn-sub{color:rgba(193,127,255,.6)}
-  .sidebar-progress{padding:20px;border-top:1px solid rgba(255,255,255,.08);margin-top:12px}
-  .sp-label{font-size:.65rem;color:rgba(255,255,255,.35);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px}
-  .sp-bar{height:4px;background:rgba(255,255,255,.1);border-radius:4px;overflow:hidden}
-  .sp-fill{height:100%;background:var(--grad);border-radius:4px;transition:width .4s}
-  .sp-pct{font-size:.7rem;color:rgba(255,255,255,.4);margin-top:6px}
+/* ════ SIDEBAR ════ */
+.sidebar{width:var(--sidebar-w);background:var(--ink);position:fixed;top:56px;left:0;bottom:0;overflow-y:auto;display:flex;flex-direction:column;z-index:90}
+.sidebar::-webkit-scrollbar{width:4px}
+.sidebar::-webkit-scrollbar-thumb{background:rgba(255,255,255,.15);border-radius:2px}
+.sidebar-header{padding:20px 20px 12px;border-bottom:1px solid rgba(255,255,255,.08);flex-shrink:0}
+.sidebar-header h2{font-size:.75rem;text-transform:uppercase;letter-spacing:.08em;color:rgba(255,255,255,.4);margin-bottom:4px}
+.sidebar-header h3{font-size:.95rem;color:var(--white);font-weight:700;line-height:1.3}
+.sidebar-nav{padding:12px 0;flex:1}
+.nav-item{display:flex;align-items:center;gap:12px;padding:11px 20px;cursor:pointer;transition:background .15s;border-left:3px solid transparent}
+.nav-item:hover:not(.locked){background:rgba(255,255,255,.06)}
+.nav-item.active{background:rgba(193,127,255,.12);border-left-color:var(--lilac)}
+.nav-item.completed{border-left-color:var(--active)}
+.nav-item.locked{opacity:.45;cursor:not-allowed}
+.nav-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;flex-shrink:0;background:rgba(255,255,255,.1);color:rgba(255,255,255,.5);transition:background .2s,color .2s}
+.nav-item.active .nav-icon{background:var(--lilac);color:var(--ink)}
+.nav-item.completed .nav-icon{background:var(--active);color:var(--ink)}
+.nav-item.locked .nav-icon{background:rgba(255,255,255,.06);color:rgba(255,255,255,.3)}
+.nav-text{flex:1;min-width:0}
+.nav-label{font-size:.82rem;color:var(--white);font-weight:500;line-height:1.3}
+.nav-item.active .nav-label{color:var(--lilac)}
+.nav-item.completed .nav-label{color:rgba(255,255,255,.75)}
+.nav-item.locked .nav-label{color:rgba(255,255,255,.3)}
+.nav-sublabel{font-size:.7rem;color:rgba(255,255,255,.3);margin-top:1px}
+.lock-icon{font-size:.7rem;color:rgba(255,255,255,.25);flex-shrink:0}
+.tick-icon{font-size:.75rem;color:var(--active);flex-shrink:0}
+.sidebar-footer{padding:16px 20px;border-top:1px solid rgba(255,255,255,.08);flex-shrink:0}
+.module-progress-label{font-size:.72rem;color:rgba(255,255,255,.4);margin-bottom:6px}
+.module-progress-bar{height:3px;background:rgba(255,255,255,.1);border-radius:2px;overflow:hidden}
+.module-progress-fill{height:100%;background:var(--grad);border-radius:2px;transition:width .4s}
 
-  .main-content{margin-left:280px;flex:1;padding:40px 48px;max-width:900px}
+/* ════ MAIN ════ */
+.main{margin-left:var(--sidebar-w);flex:1;padding:40px 48px 80px;max-width:900px}
 
-  .section{display:none}
-  .section.active{display:block}
+/* ════ SECTIONS ════ */
+.section{display:none}
+.section.active{display:block}
 
-  .lesson-tag{font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--lilac);margin-bottom:10px}
-  .lesson-header{margin-bottom:28px}
-  .lesson-header h1{font-size:2rem;font-weight:800;color:var(--ink);line-height:1.2;margin-bottom:8px}
-  .lesson-intro{color:#556;font-size:1rem;line-height:1.6;margin-top:8px}
+/* ════ TYPOGRAPHY ════ */
+.lesson-tag{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--lilac);font-weight:700;margin-bottom:12px}
+h1{font-size:2rem;font-weight:800;color:var(--ink);line-height:1.2;margin-bottom:16px}
+h1 span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.lesson-intro{font-size:1.05rem;color:#445;line-height:1.7;margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid var(--grey)}
+h2{font-size:1.25rem;font-weight:700;color:var(--ink);margin:32px 0 12px}
+h3{font-size:1rem;font-weight:700;color:var(--ink);margin:20px 0 8px}
+p{margin-bottom:14px;color:#334}
+ul,ol{margin:10px 0 16px 24px;color:#334}
+li{margin-bottom:6px}
+strong{color:var(--ink)}
 
-  p{margin-bottom:16px;color:#334}
-  h2{font-size:1.25rem;font-weight:700;color:var(--ink);margin:28px 0 12px}
-  h3{font-size:1rem;font-weight:700;color:var(--ink);margin:20px 0 8px}
-  ul,ol{margin:12px 0 16px 24px}
-  li{margin-bottom:8px;color:#334}
-  strong{color:var(--ink)}
+/* ════ CALLOUTS ════ */
+.callout{border-radius:10px;padding:20px 24px;margin:24px 0}
+.callout.info{background:var(--l10);border-left:4px solid var(--lilac)}
+.callout.warn{background:#fff8f0;border-left:4px solid var(--orange)}
+.callout.key{background:var(--l20);border-left:4px solid var(--pink)}
+.callout-label{font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--lilac);margin-bottom:8px}
+.callout.warn .callout-label{color:var(--orange)}
+.callout.key .callout-label{color:var(--pink)}
 
-  .exam-note{background:linear-gradient(135deg,#f3e8ff,#fdf0ff);border:1px solid #d4a8ff;border-left:4px solid var(--lilac);border-radius:10px;padding:18px 22px;margin:20px 0}
-  .exam-note-label{font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#8b44cc;margin-bottom:10px}
-  .exam-note p,.exam-note li{color:#3d1870;font-size:.9rem}
-  .exam-note ul{margin:10px 0 0 18px}
+/* ════ EXAM NOTE ════ */
+.exam-note{background:linear-gradient(135deg,#f3eaff,#ffe8fa);border:1.5px solid var(--lilac);border-radius:10px;padding:20px 24px;margin:24px 0}
+.exam-note-label{font-size:.78rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--lilac);margin-bottom:10px}
+.exam-note p,.exam-note li{color:#3a2060;font-size:.93rem}
+.exam-note ul{margin-left:18px}
+.exam-note li{margin-bottom:5px}
 
-  .callout{border-radius:10px;padding:16px 20px;margin:20px 0;border-left:4px solid}
-  .callout-label{font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
-  .callout.warning{background:#fff7ed;border-color:var(--orange)}
-  .callout.warning .callout-label{color:#b84400}
-  .callout.warning p,.callout.warning li{color:#6b3300;font-size:.9rem}
-  .callout.info{background:#e8f7fd;border-color:var(--active)}
-  .callout.info .callout-label{color:#006b80}
-  .callout.info p,.callout.info li{color:#003d50;font-size:.9rem}
-  .callout.key{background:#f0fff8;border-color:#22aa66}
-  .callout.key .callout-label{color:#005530}
-  .callout.key p,.callout.key li{color:#003820;font-size:.9rem}
-  .callout.danger{background:#fff0f5;border-color:var(--pink)}
-  .callout.danger .callout-label{color:#a00060}
-  .callout.danger p,.callout.danger li{color:#600038;font-size:.9rem}
+/* ════ QUICK CHECK ════ */
+.qc{background:var(--ink);border-radius:12px;padding:24px 28px;margin:28px 0}
+.qc-tag{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--active);margin-bottom:10px}
+.qc-q{color:var(--white);font-weight:600;font-size:.95rem;margin-bottom:16px;line-height:1.5}
+.qc-opts{display:flex;flex-direction:column;gap:8px}
+.qc-btn{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);color:rgba(255,255,255,.85);padding:12px 16px;border-radius:8px;text-align:left;cursor:pointer;font-size:.88rem;line-height:1.4;transition:background .15s,border-color .15s}
+.qc-btn:hover:not(:disabled){background:rgba(193,127,255,.2);border-color:var(--lilac)}
+.qc-btn.correct{background:rgba(78,239,249,.15);border-color:var(--active);color:var(--active)}
+.qc-btn.wrong{background:rgba(255,68,214,.1);border-color:var(--pink);color:#ff9ee8}
+.qc-btn:disabled{cursor:default}
+.qc-fb{margin-top:14px;padding:14px 16px;border-radius:8px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.8);font-size:.87rem;display:none;line-height:1.6}
 
-  .case-study{background:var(--ink);border-radius:12px;padding:22px 24px;margin:20px 0;position:relative;overflow:hidden}
-  .case-study::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad)}
-  .case-label{font-size:.65rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--active);margin-bottom:8px}
-  .case-study h3{color:var(--white);font-size:.95rem;margin:0 0 10px}
-  .case-study p,.case-study li{color:rgba(255,255,255,.75);font-size:.88rem}
-  .case-study ul{margin-left:18px}
+/* ════ CASE STUDY ════ */
+.case-study{background:white;border-radius:10px;padding:24px;margin:24px 0;border:1px solid var(--grey);box-shadow:0 2px 8px rgba(0,40,70,.06)}
+.case-label{font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;color:var(--pink);margin-bottom:10px}
 
-  .scenario-box{background:var(--l20);border:1px solid #d4a8ff;border-radius:10px;padding:18px 22px;margin:20px 0}
-  .scenario-label{font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#8b44cc;margin-bottom:8px}
-  .scenario-box p,.scenario-box li{color:#3d1870;font-size:.9rem}
+/* ════ TABLES ════ */
+.table-wrap{overflow-x:auto;margin:20px 0}
+table{width:100%;border-collapse:collapse;font-size:.88rem}
+th{background:var(--ink);color:var(--white);padding:10px 14px;text-align:left;font-weight:600}
+td{padding:10px 14px;border-bottom:1px solid var(--grey);vertical-align:top}
+tr:nth-child(even) td{background:rgba(193,127,255,.05)}
 
-  .cdd-spectrum{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin:20px 0}
-  .spectrum-card{border-radius:10px;padding:16px;text-align:center}
-  .spectrum-card.sdd{background:#f0fff8;border:2px solid #22aa66}
-  .spectrum-card.std{background:var(--l30);border:2px solid var(--lilac)}
-  .spectrum-card.edd{background:#fff7ed;border:2px solid var(--orange)}
-  .spectrum-card h4{font-size:.85rem;font-weight:800;margin-bottom:6px}
-  .spectrum-card.sdd h4{color:#005530}
-  .spectrum-card.std h4{color:#5a20a0}
-  .spectrum-card.edd h4{color:#b84400}
-  .spectrum-card p{font-size:.78rem;margin:0;line-height:1.4}
-  .spectrum-card.sdd p{color:#003820}
-  .spectrum-card.std p{color:#3d1870}
-  .spectrum-card.edd p{color:#6b3300}
+/* ════ SPECTRUM CARDS ════ */
+.spectrum{display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin:20px 0}
+.sp-card{border-radius:10px;padding:20px;border:2px solid}
+.sp-card.sdd{background:#f0fff8;border-color:#2ecc71}
+.sp-card.std{background:var(--l10);border-color:var(--lilac)}
+.sp-card.edd{background:#fff4f0;border-color:var(--orange)}
+.sp-card h4{font-size:.9rem;font-weight:700;margin-bottom:8px}
+.sp-card.sdd h4{color:#219653}
+.sp-card.std h4{color:var(--lilac)}
+.sp-card.edd h4{color:var(--orange)}
+.sp-card p{font-size:.83rem;color:#445}
 
-  .property-link{background:linear-gradient(135deg,#e8f5ff,#f0f8ff);border:1px solid #a8d8ff;border-left:4px solid #2080cc;border-radius:10px;padding:16px 20px;margin:20px 0}
-  .property-label{font-size:.68rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:#1060aa;margin-bottom:8px}
-  .property-link p,.property-link li{color:#003055;font-size:.88rem}
-  .property-link ul{margin-left:18px}
+/* ════ NAV BUTTONS ════ */
+.bottom-nav{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:2px solid var(--grey)}
+.btn-prev,.btn-next{padding:12px 24px;border-radius:8px;font-size:.9rem;font-weight:600;cursor:pointer;border:none;transition:opacity .2s}
+.btn-prev{background:var(--grey);color:var(--ink)}
+.btn-prev:hover{opacity:.8}
+.btn-next{background:var(--grad);color:var(--white)}
+.btn-next:hover{opacity:.88}
 
-  .qc-block{background:var(--white);border:2px solid var(--grey);border-radius:12px;padding:22px;margin:24px 0;box-shadow:0 2px 8px rgba(0,40,70,.06)}
-  .qc-label{font-size:.65rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--lilac);margin-bottom:10px}
-  .qc-q{font-size:.95rem;font-weight:600;color:var(--ink);margin-bottom:16px;line-height:1.5}
-  .qc-opts{display:flex;flex-direction:column;gap:8px}
-  .qc-btn{background:var(--l30);border:2px solid var(--grey);border-radius:8px;padding:11px 16px;text-align:left;cursor:pointer;font-size:.88rem;color:var(--ink);transition:.15s}
-  .qc-btn:hover:not(:disabled){border-color:var(--lilac);background:var(--l20)}
-  .qc-btn.correct{background:#f0fff8;border-color:#22aa66;color:#005530}
-  .qc-btn.wrong{background:#fff0f5;border-color:#cc2255;color:#770033}
-  .qc-fb{margin-top:12px;padding:12px 16px;border-radius:8px;font-size:.85rem;line-height:1.55;display:none}
-  .qc-fb.show{display:block}
-  .qc-fb.correct{background:#f0fff8;color:#005530;border:1px solid #9ae6b4}
-  .qc-fb.wrong{background:#fff0f5;color:#770033;border:1px solid #ffb2cc}
+/* ════ QUIZ ════ */
+.quiz-start-box{background:white;border-radius:12px;padding:40px;text-align:center;border:1px solid var(--grey);box-shadow:0 2px 12px rgba(0,40,70,.08)}
+.quiz-start-box h2{font-size:1.5rem;font-weight:800;margin-bottom:12px}
+.quiz-start-box p{color:#556;margin-bottom:28px}
+.quiz-q-box{background:white;border-radius:12px;padding:32px;margin-bottom:20px;border:1px solid var(--grey);box-shadow:0 2px 8px rgba(0,40,70,.06)}
+.quiz-q-num{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:var(--lilac);margin-bottom:10px}
+.quiz-q-text{font-size:1rem;font-weight:600;color:var(--ink);margin-bottom:20px;line-height:1.5}
+.quiz-opts{display:flex;flex-direction:column;gap:10px}
+.quiz-opt{padding:14px 18px;border-radius:8px;border:2px solid var(--grey);background:white;text-align:left;cursor:pointer;font-size:.9rem;color:var(--ink);transition:border-color .15s,background .15s;line-height:1.4}
+.quiz-opt:hover:not(:disabled){border-color:var(--lilac);background:var(--l10)}
+.quiz-opt.correct{border-color:var(--active);background:#effffd;color:#005a54}
+.quiz-opt.wrong{border-color:var(--pink);background:#fff0fa;color:#7a003c}
+.quiz-opt:disabled{cursor:default}
+.quiz-expl{margin-top:16px;padding:16px;background:var(--l10);border-radius:8px;border-left:3px solid var(--lilac);font-size:.88rem;color:#3a2060;line-height:1.6;display:none}
+.quiz-nav{display:flex;justify-content:flex-end;margin-top:16px}
+.btn-next-q{padding:10px 22px;background:var(--grad);color:white;border:none;border-radius:8px;cursor:pointer;font-weight:600;font-size:.88rem}
+.quiz-progress-bar{height:4px;background:var(--grey);border-radius:2px;overflow:hidden;margin-bottom:24px}
+.quiz-progress-fill{height:100%;background:var(--grad);border-radius:2px;transition:width .4s}
 
-  table.doc-table{width:100%;border-collapse:collapse;margin:16px 0;border-radius:10px;overflow:hidden;box-shadow:0 2px 8px rgba(0,40,70,.08)}
-  table.doc-table th{background:var(--ink);color:var(--white);padding:12px 16px;text-align:left;font-size:.78rem;font-weight:700}
-  table.doc-table td{padding:11px 16px;font-size:.85rem;color:#334;border-bottom:1px solid var(--grey);vertical-align:top}
-  table.doc-table tr:nth-child(even) td{background:var(--l30)}
-  table.doc-table tr:last-child td{border-bottom:none}
-  table.doc-table td:first-child{font-weight:600;color:var(--ink)}
-
-  .bottom-nav{display:flex;justify-content:space-between;align-items:center;margin-top:48px;padding-top:24px;border-top:1px solid var(--grey)}
-  .btn-prev,.btn-next{padding:12px 26px;border-radius:8px;border:none;cursor:pointer;font-size:.9rem;font-weight:700;transition:.2s}
-  .btn-prev{background:var(--grey);color:var(--ink)}.btn-prev:hover{background:#d8d0e2}
-  .btn-prev:disabled{opacity:.35;cursor:not-allowed}
-  .btn-next{background:var(--ink);color:var(--white)}.btn-next:hover{background:#00396a}
-  .btn-next.cta{background:var(--grad);color:var(--ink)}
-
-  .module-progress-bar{height:3px;background:rgba(255,255,255,.15);position:fixed;top:56px;left:0;right:0;z-index:99}
-  .module-progress-fill{height:100%;background:var(--grad);transition:width .4s}
-
-  /* QUIZ */
-  .quiz-header{background:var(--grad);border-radius:12px;padding:22px 26px;margin-bottom:24px}
-  .quiz-header h2{font-size:1.2rem;font-weight:800;margin-bottom:4px;color:var(--ink)}
-  .quiz-header p{font-size:.85rem;color:rgba(0,40,70,.65)}
-  .q-block{background:var(--white);border-radius:10px;padding:20px 22px;margin-bottom:16px;border:2px solid var(--grey);transition:.2s}
-  .q-block.ans-correct{border-color:#22aa66;background:#f0fff8}
-  .q-block.ans-wrong{border-color:#cc2255;background:#fff0f5}
-  .q-num{font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em;color:var(--lilac);margin-bottom:6px}
-  .q-text{font-weight:600;color:var(--ink);margin-bottom:14px;font-size:.93rem;line-height:1.5}
-  .a-opt{display:flex;align-items:flex-start;gap:10px;padding:10px 14px;background:var(--l30);border:2px solid var(--grey);border-radius:6px;cursor:pointer;margin-bottom:8px;font-size:.88rem;transition:.15s;color:var(--ink)}
-  .a-opt:hover:not([disabled]){border-color:var(--lilac);background:var(--l20)}
-  .a-opt .let{font-weight:700;color:var(--lilac);min-width:18px;margin-top:1px}
-  .a-opt.correct{border-color:#22aa66;background:#f0fff8}.a-opt.correct .let{color:#22aa66}
-  .a-opt.wrong{border-color:#cc2255;background:#fff0f5}.a-opt.wrong .let{color:#cc2255}
-  .q-fb{margin-top:10px;padding:12px 14px;border-radius:6px;font-size:.84rem;display:none;line-height:1.5}
-  .q-fb.show{display:block}
-  .q-fb.c{background:#f0fff8;color:#005530;border:1px solid #9ae6b4}
-  .q-fb.w{background:#fff0f5;color:#770033;border:1px solid #ffb2cc}
-  .q-next{margin-top:16px;display:flex;justify-content:flex-end}
-  .btn-qnext{background:var(--ink);color:var(--white);border:none;border-radius:8px;padding:10px 22px;font-size:.88rem;font-weight:700;cursor:pointer;transition:.2s}
-  .btn-qnext:hover{background:#00396a}
-  .quiz-results{text-align:center;padding:32px 20px}
-  .result-score{font-size:4rem;font-weight:800;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin:12px 0}
-  .result-msg{font-size:1.05rem;color:#445;margin-bottom:24px}
-  .result-pass{color:#22aa66;font-weight:700}
-  .result-fail{color:#cc2255;font-weight:700}
-  .result-breakdown{text-align:left;background:var(--grey);border-radius:12px;padding:20px;margin:24px 0}
-  .rb-item{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #ddd;font-size:.85rem}
-  .rb-item:last-child{border-bottom:none}
-  .rb-correct{color:#22aa66;font-weight:700}
-  .rb-wrong{color:#cc2255;font-weight:700}
-  .completion-banner{background:linear-gradient(135deg,#22aa66,#00dd88);border-radius:12px;padding:20px 24px;margin-top:24px;color:var(--white);text-align:center;display:none}
-  .completion-banner.show{display:block}
-  .completion-banner h3{font-size:1.1rem;font-weight:800;margin-bottom:4px}
+/* Results */
+.result-pass-box{background:white;border-radius:12px;padding:48px;text-align:center;border:1px solid var(--grey)}
+.result-fail-box{background:white;border-radius:12px;padding:48px;text-align:center;border:1px solid var(--grey)}
+.result-emoji{font-size:3.5rem;margin-bottom:16px}
+.result-score{font-size:2.5rem;font-weight:800;margin-bottom:8px}
+.result-score.pass{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.result-msg{font-size:1rem;color:#556;margin-bottom:32px}
+.result-breakdown{text-align:left;margin:24px 0}
+.rb-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--grey);font-size:.87rem;align-items:flex-start}
+.rb-correct{color:var(--active);font-weight:700}
+.rb-wrong{color:var(--pink);font-weight:700}
+.btn-dashboard{display:inline-block;padding:14px 32px;background:var(--grad);color:var(--white);font-weight:700;font-size:.95rem;border-radius:8px;text-decoration:none;transition:opacity .2s}
+.btn-dashboard:hover{opacity:.88}
+.btn-retry-sec{display:inline-block;padding:13px 28px;background:transparent;color:var(--ink);font-weight:600;font-size:.9rem;border-radius:8px;border:2px solid var(--grey);cursor:pointer;transition:border-color .2s}
+.btn-retry-sec:hover{border-color:var(--lilac);color:var(--lilac)}
+.btn-retry-pri{display:inline-block;padding:14px 32px;background:var(--grad);color:var(--white);font-weight:700;font-size:.95rem;border-radius:8px;border:none;cursor:pointer;transition:opacity .2s}
+.btn-retry-pri:hover{opacity:.88}
 </style>
 </head>
 <body>
 
-<nav class="topnav">
-  <span class="nav-logo">ICA Certificate in AML</span>
-  <span class="nav-module">Module 5 — Customer Due Diligence</span>
-  <span class="nav-week">Week 3 of 4</span>
-</nav>
-<div class="module-progress-bar"><div class="module-progress-fill" id="progress-fill" style="width:0%"></div></div>
+<!-- ════ TOPBAR ════ -->
+<div class="topbar">
+  <div class="topbar-logo"><span>Coadjute</span></div>
+  <div class="topbar-course">AML Certificate — Module 5 of 8</div>
+  <div class="topbar-progress">
+    <span class="topbar-pct" id="topPct">0% complete</span>
+    <div class="topbar-bar"><div class="topbar-bar-fill" id="topFill" style="width:0%"></div></div>
+    <a href="index.html" class="topbar-back">← Dashboard</a>
+  </div>
+</div>
 
 <div class="layout">
-  <aside class="sidebar">
-    <div class="sidebar-title">Module Navigation</div>
-    <div class="sidebar-module">MODULE 05 — Customer Due Diligence</div>
-    <nav id="sidebar-nav">
-      <div class="snav-item active" onclick="goTo(0)" id="sn0">
-        <span class="sn-num">01</span>
-        <span><strong>What is CDD?</strong><span class="sn-sub">Definition, purpose &amp; when it applies</span></span>
-      </div>
-      <div class="snav-item locked" onclick="goTo(1)" id="sn1">
-        <span class="sn-num">02</span>
-        <span><strong>Standard CDD in Practice</strong><span class="sn-sub">Identifying &amp; verifying customers</span></span>
-      </div>
-      <div class="snav-item locked" onclick="goTo(2)" id="sn2">
-        <span class="sn-num">03</span>
-        <span><strong>Simplified Due Diligence</strong><span class="sn-sub">When &amp; how SDD applies</span></span>
-      </div>
-      <div class="snav-item locked" onclick="goTo(3)" id="sn3">
-        <span class="sn-num">04</span>
-        <span><strong>Enhanced Due Diligence</strong><span class="sn-sub">EDD triggers, source of wealth &amp; funds</span></span>
-      </div>
-      <div class="snav-item locked" onclick="goTo(4)" id="sn4">
-        <span class="sn-num">05</span>
-        <span><strong>Plausibility Testing</strong><span class="sn-sub">Applying common sense to CDD</span></span>
-      </div>
-      <div class="snav-item locked" onclick="goTo(5)" id="sn5">
-        <span class="sn-num">06</span>
-        <span><strong>Ongoing Monitoring</strong><span class="sn-sub">Reg 28, transaction scrutiny &amp; reviews</span></span>
-      </div>
-      <div class="snav-item locked" onclick="goTo(6)" id="sn6">
-        <span class="sn-num">07</span>
-        <span><strong>Identifying Suspicious Activity</strong><span class="sn-sub">Red flags, suspicion &amp; reporting triggers</span></span>
-      </div>
-      <div class="snav-item locked" onclick="goTo(7)" id="sn7">
-        <span class="sn-num">08</span>
-        <span><strong>Module 5 Quiz</strong><span class="sn-sub">15 questions · 70% to pass</span></span>
-      </div>
-    </nav>
-    <div class="sidebar-progress">
-      <div class="sp-label">Module Progress</div>
-      <div class="sp-bar"><div class="sp-fill" id="sp-fill" style="width:0%"></div></div>
-      <div class="sp-pct" id="sp-pct">0 of 8 sections</div>
+
+<!-- ════ SIDEBAR ════ -->
+<aside class="sidebar">
+  <div class="sidebar-header">
+    <h2>Module 5 of 8</h2>
+    <h3>Customer Due Diligence</h3>
+  </div>
+  <nav class="sidebar-nav" id="sideNav">
+    <div class="nav-item active" onclick="goTo(0)" id="ni0">
+      <div class="nav-icon">1</div>
+      <div class="nav-text"><div class="nav-label">What is CDD?</div><div class="nav-sublabel">Definition, purpose & when it applies</div></div>
     </div>
-  </aside>
-
-  <main class="main-content" id="main-content">
-
-    <!-- ══════════════════════════════════════════════ -->
-    <!-- SEC 0: WHAT IS CDD? -->
-    <!-- ══════════════════════════════════════════════ -->
-    <div class="section active" id="sec0">
-      <div class="lesson-tag">Module 05 — Section 1 of 7</div>
-      <div class="lesson-header">
-        <h1>What is Customer Due Diligence?</h1>
-        <p class="lesson-intro">CDD is the foundation of every firm's AML framework. It is not a one-time identity check — it is an ongoing process of knowing your customer well enough to spot when something is wrong.</p>
-      </div>
-
-      <h2>CDD in Plain English</h2>
-      <p>At its core, CDD is a risk assessment. It is the process by which a business obtains sufficient information about a client to assess the ML/TF risks that relationship poses — at the outset, and throughout.</p>
-      <p>The ICA is direct: without good CDD, you cannot understand the potential a relationship has for exposing your organisation to the risk of money laundering. CDD is your most effective weapon against being used to launder the proceeds of crime.</p>
-      <p>You may also hear it referred to as <strong>KYC — Know Your Customer</strong>. KYC is another term for the same concept: understanding the personal and financial circumstances of a client.</p>
-
-      <div class="callout info">
-        <div class="callout-label">ℹ️ CDD Serves Multiple Purposes</div>
-        <p>Beyond AML compliance, good CDD: protects genuine clients from being suspected of ML; guards against identity theft; protects the firm from reputational and financial risk; assists in detecting fraud; and is a legal obligation in the UK under the MLR 2017.</p>
-      </div>
-
-      <div class="exam-note">
-        <div class="exam-note-label">📘 ICA Exam Note — The FATF Definition of CDD</div>
-        <p>FATF defines CDD as comprising four elements. Memorise these — they are tested in multiple forms:</p>
-        <ul>
-          <li><strong>(a)</strong> Identifying the customer and verifying that customer's identity using reliable, independent source documents, data or information</li>
-          <li><strong>(b)</strong> Identifying the beneficial owner, and taking reasonable measures to verify the identity of the beneficial owner — for legal persons and arrangements, understanding the ownership and control structure</li>
-          <li><strong>(c)</strong> Understanding and, as appropriate, obtaining information on the purpose and intended nature of the business relationship</li>
-          <li><strong>(d)</strong> Conducting ongoing due diligence on the business relationship and scrutiny of transactions to ensure they are consistent with the institution's knowledge of the customer, their business and risk profile, including, where necessary, the source of funds</li>
-        </ul>
-      </div>
-
-      <h2>When Must CDD Be Applied?</h2>
-      <p>A firm must apply CDD measures in the following four situations:</p>
-      <ol>
-        <li>When <strong>establishing a business relationship</strong></li>
-        <li>When <strong>carrying out an occasional transaction</strong> (even a one-off)</li>
-        <li>When there are <strong>suspicions of ML or TF</strong>, regardless of any other trigger</li>
-        <li>When there are <strong>doubts about the veracity or adequacy</strong> of documents or information previously obtained for identification or verification purposes</li>
-      </ol>
-
-      <div class="callout warning">
-        <div class="callout-label">⚠️ ICA Non-Negotiable Rule</div>
-        <p><strong>"CDD must be completed in all cases before any transactions are completed for any client."</strong> There is no minimum transaction threshold, no grace period, no exception for trusted long-standing clients. CDD first — then the transaction.</p>
-      </div>
-
-      <h2>The Three-Tier CDD Framework</h2>
-      <p>Regulation expects a risk-based approach. Not every client carries the same risk, so CDD intensity varies across three levels:</p>
-
-      <div class="cdd-spectrum">
-        <div class="spectrum-card sdd">
-          <h4>Simplified (SDD)</h4>
-          <p>Reduced measures for genuinely low-risk situations. Still requires basic identification — NOT an exemption.</p>
-        </div>
-        <div class="spectrum-card std">
-          <h4>Standard (CDD)</h4>
-          <p>The default for most clients. Full identification, verification, understanding of business relationship and ongoing monitoring.</p>
-        </div>
-        <div class="spectrum-card edd">
-          <h4>Enhanced (EDD)</h4>
-          <p>Mandatory for PEPs, high-risk third countries, and any higher-risk situations. Deep-dive source of wealth, senior management sign-off.</p>
-        </div>
-      </div>
-
-      <div class="property-link">
-        <div class="property-label">🏠 Coadjute / Property Sector Context</div>
-        <p>At Coadjute, you apply CDD on behalf of estate agents and conveyancers. Every property transaction involves a buyer, a seller, and often a company or trust. Your CDD obligation is to identify who those people really are — and to understand where their money comes from. The property sector is specifically recognised as high-risk in UK AML regulations (MLR 2017), so standard CDD applies as a minimum for all transactions, with EDD required where risk indicators are present.</p>
-      </div>
-
-      <div class="qc-block">
-        <div class="qc-label">✋ Quick Check</div>
-        <div class="qc-q">Which of the following is NOT one of the four FATF components of CDD?</div>
-        <div class="qc-opts">
-          <button class="qc-btn" onclick="qc(this,false,'qc0')">Identifying the customer and verifying their identity</button>
-          <button class="qc-btn" onclick="qc(this,false,'qc0')">Conducting ongoing due diligence and scrutiny of transactions</button>
-          <button class="qc-btn" onclick="qc(this,true,'qc0')">Conducting a criminal background check on all customers</button>
-          <button class="qc-btn" onclick="qc(this,false,'qc0')">Understanding the purpose and intended nature of the business relationship</button>
-        </div>
-        <div class="qc-fb" id="qc0"></div>
-      </div>
-
-      <div class="bottom-nav">
-        <button class="btn-prev" disabled>← Back</button>
-        <button class="btn-next" onclick="goTo(1)">Next: Standard CDD in Practice →</button>
-      </div>
+    <div class="nav-item locked" onclick="goTo(1)" id="ni1">
+      <div class="nav-icon">2</div>
+      <div class="nav-text"><div class="nav-label">Standard CDD in Practice</div><div class="nav-sublabel">Identifying & verifying customers</div></div>
+      <span class="lock-icon" id="li1">🔒</span>
     </div>
-
-    <!-- ══════════════════════════════════════════════ -->
-    <!-- SEC 1: STANDARD CDD IN PRACTICE -->
-    <!-- ══════════════════════════════════════════════ -->
-    <div class="section" id="sec1">
-      <div class="lesson-tag">Module 05 — Section 2 of 7</div>
-      <div class="lesson-header">
-        <h1>Standard CDD in Practice</h1>
-        <p class="lesson-intro">Standard CDD is the default for most clients. Understanding what it requires — and how to calibrate it — is the core practical skill this module builds.</p>
-      </div>
-
-      <h2>The Core Building Blocks</h2>
-      <p>Standard CDD requires a firm to do three things:</p>
-      <ol>
-        <li><strong>Identify the client</strong> — including beneficial owners of any legal entity</li>
-        <li><strong>Verify that identity</strong> — using reliable, independent source documents, data or information</li>
-        <li><strong>Record sufficient additional information</strong> — to understand the relationship and assist in detecting suspicious activity</li>
-      </ol>
-
-      <p>That third element is often underweighted. The ICA is clear that identification and verification alone are not enough. You also need to understand the client's circumstances well enough that you can spot when something doesn't fit.</p>
-
-      <h2>What "Additional Information" Means in Practice</h2>
-      <p>For an individual, the additional information the ICA expects includes:</p>
-      <ul>
-        <li>The type of business or employment they are engaged in</li>
-        <li>Their industry or sector</li>
-        <li>Whether they are new or established in that business</li>
-        <li>Their stage of life (a 22-year-old buying a £2m property warrants more scrutiny than a 55-year-old)</li>
-        <li>The counterparties they deal with — who they pay and who pays them</li>
-        <li>The geographical areas in which they operate</li>
-        <li>The expected turnover on the account — values, volumes and frequency of money in and out</li>
-      </ul>
-
-      <p>This information creates a <strong>client profile</strong>. That profile is what allows you to detect when activity is unusual — because "unusual" only has meaning when you have a baseline expectation.</p>
-
-      <div class="case-study">
-        <div class="case-label">📋 ICA Scenario — Calibrating CDD Intensity</div>
-        <h3>Same Process, Very Different Depth</h3>
-        <p>The ICA illustrates how the same CDD framework applies at very different levels of depth:</p>
-        <p style="margin-top:10px"><strong>Client A:</strong> A salaried individual working for a multinational company who wants a credit card. Standard ID verification, basic income check — straightforward.</p>
-        <p style="margin-top:10px"><strong>Client B:</strong> A politician based in a country with a reputation for high levels of corruption and poor regulation, seeking trade finance and large term deposits. Extensive inquiry into source of wealth, source of funds, senior management sign-off, enhanced ongoing monitoring — a completely different undertaking.</p>
-        <p style="margin-top:10px">Both are applying CDD. The difference is the depth and rigour — driven by the risk profile.</p>
-      </div>
-
-      <h2>CDD for Individuals vs. Legal Entities</h2>
-
-      <h3>For Individuals</h3>
-      <p>Standard verification typically requires government-issued photo ID (passport or driving licence) plus evidence of address (utility bill, bank statement). The ICA notes that even standard documents can be fake — the emergence of websites supplying fraudulent utility bills and bank statements is a real challenge.</p>
-
-      <h3>For Companies and Legal Entities</h3>
-      <p>When the client is a company, the CDD obligation does not stop at the company's name. You must understand the <strong>ownership and control structure</strong> — who ultimately owns and controls the company. This means identifying the beneficial owner: the natural person who ultimately owns or controls the entity.</p>
-
-      <table class="doc-table">
-        <thead><tr><th>Client Type</th><th>What to Identify &amp; Verify</th><th>Key Risk</th></tr></thead>
-        <tbody>
-          <tr><td>Individual</td><td>Full name, address, date of birth, nationality; verify with reliable ID documents</td><td>Fake documents; identity theft</td></tr>
-          <tr><td>Company (UK)</td><td>Registered name, address, company number; directors; shareholders; ultimate beneficial owners (UBOs)</td><td>Nominee directors/shareholders; complex structures</td></tr>
-          <tr><td>Company (Overseas)</td><td>As above, plus understand the jurisdiction's legal framework and transparency standards</td><td>Secrecy jurisdictions; no public register of ownership</td></tr>
-          <tr><td>Trust</td><td>Settlor, trustees, protector (if any), beneficiaries; understand purpose and terms</td><td>Nominee settlors; discretionary trusts concealing true beneficiaries</td></tr>
-          <tr><td>Partnership</td><td>All partners; nature of business; source of partnership funds</td><td>Silent partners; LLPs used as layering vehicles</td></tr>
-        </tbody>
-      </table>
-
-      <div class="callout warning">
-        <div class="callout-label">⚠️ The "Legal Entity" Trap</div>
-        <p>A company name on a title deed tells you almost nothing. A company can have nominee directors, nominee shareholders, and be owned by another company in a different jurisdiction. Your CDD obligation is to <strong>look through</strong> the corporate structure to the natural person who ultimately controls it. This can require multiple layers of inquiry.</p>
-      </div>
-
-      <div class="exam-note">
-        <div class="exam-note-label">📘 ICA Exam Note — Applying CDD: The Two Scenarios</div>
-        <p><strong>Mrs A:</strong> Opens a joint current account with her employed husband. Resident in the account country, depositing savings from salary. → <em>Standard CDD applies.</em></p>
-        <p style="margin-top:8px"><strong>Mrs B:</strong> A Filipino national, UK resident, senior diplomat, opening current and savings accounts with an initial £12,000 deposit. → <em>Must determine PEP status. If PEP (senior diplomat may qualify), Enhanced Due Diligence applies — including source of wealth investigation.</em></p>
-        <p style="margin-top:8px">These examples appear in the ICA manual and are representative of the type of scenario-based questions you should expect in the exam.</p>
-      </div>
-
-      <div class="qc-block">
-        <div class="qc-label">✋ Quick Check</div>
-        <div class="qc-q">A property purchase is being funded by a company registered in the British Virgin Islands. The company has one director and one shareholder — both nominee services. What is your CDD obligation?</div>
-        <div class="qc-opts">
-          <button class="qc-btn" onclick="qc(this,false,'qc1')">Accept the company as the client — the BVI is a legitimate jurisdiction</button>
-          <button class="qc-btn" onclick="qc(this,true,'qc1')">Look through the corporate structure to identify and verify the natural person who ultimately owns and controls the company — even if this requires multiple layers of inquiry</button>
-          <button class="qc-btn" onclick="qc(this,false,'qc1')">Request a certificate of incorporation and proceed — company documents satisfy CDD</button>
-        </div>
-        <div class="qc-fb" id="qc1"></div>
-      </div>
-
-      <div class="bottom-nav">
-        <button class="btn-prev" onclick="goTo(0)">← Back</button>
-        <button class="btn-next" onclick="goTo(2)">Next: Simplified Due Diligence →</button>
-      </div>
+    <div class="nav-item locked" onclick="goTo(2)" id="ni2">
+      <div class="nav-icon">3</div>
+      <div class="nav-text"><div class="nav-label">Simplified Due Diligence</div><div class="nav-sublabel">When & how SDD applies</div></div>
+      <span class="lock-icon" id="li2">🔒</span>
     </div>
-
-    <!-- ══════════════════════════════════════════════ -->
-    <!-- SEC 2: SIMPLIFIED DUE DILIGENCE -->
-    <!-- ══════════════════════════════════════════════ -->
-    <div class="section" id="sec2">
-      <div class="lesson-tag">Module 05 — Section 3 of 7</div>
-      <div class="lesson-header">
-        <h1>Simplified Due Diligence (SDD)</h1>
-        <p class="lesson-intro">SDD is not an exemption from CDD — it is a reduction in what is required, available only in genuinely low-risk situations that your firm has actively assessed and documented.</p>
-      </div>
-
-      <h2>What Is SDD?</h2>
-      <p>Most AML regulations allow for a lighter-touch approach in the lowest-risk situations. The key word is <em>allow</em> — it is not automatic. A firm must make an active, documented decision that the specific relationship or transaction presents a genuinely low ML/TF risk before applying SDD.</p>
-
-      <div class="exam-note">
-        <div class="exam-note-label">📘 ICA Exam Note — JMLSG Definition of SDD (2023)</div>
-        <p>The JMLSG 2023 guidance states:</p>
-        <p style="margin-top:8px;font-style:italic">"A firm may apply SDD measures in relation to a particular business relationship or transaction if it determines that, taking into account its risk assessment, the business relationship or transaction presents a low degree of risk of ML/TF."</p>
-        <p style="margin-top:8px"><strong>Critical:</strong> The FATF Interpretive Notes make clear that SDD is a <em>reduction</em> in measures, not an elimination. Basic identification requirements still apply. Any decision to use SDD must be carefully documented and justifiable to regulators.</p>
-      </div>
-
-      <h2>What Can Be Reduced Under SDD?</h2>
-      <p>The FATF Interpretive Notes to Recommendation 10 set out examples of what SDD measures might look like in practice:</p>
-      <ul>
-        <li>Verifying the identity of the customer <em>after</em> establishing the business relationship (e.g. when account transactions rise above a defined monetary threshold) — delayed verification rather than no verification</li>
-        <li>Reducing the <em>frequency</em> of customer identification updates</li>
-        <li>Reducing the <em>degree</em> of ongoing monitoring and transaction scrutiny based on a reasonable monetary threshold</li>
-        <li>Not collecting specific information to understand the business relationship's purpose, but <em>inferring</em> the purpose from the type of transaction or relationship</li>
-      </ul>
-
-      <div class="callout warning">
-        <div class="callout-label">⚠️ SDD is NOT a Free Pass</div>
-        <p>The ICA is explicit: SDD may provide opportunities to reduce costs and remove paperwork — but it does not mean you can ignore the client entirely. In a simple term-assurance life insurance policy, for example, minimal documents may be collected at account opening — but <em>greater checks apply at the claim pay-out stage</em>. The risk hasn't disappeared; it has shifted to a different point in the relationship.</p>
-      </div>
-
-      <h2>When Is SDD Typically Available?</h2>
-      <p>Specific situations permitting SDD are usually set out in the legislation applying to your firm. Common examples include:</p>
-      <ul>
-        <li>Listed companies on regulated, recognised exchanges (ownership is transparent)</li>
-        <li>Regulated financial institutions themselves (subject to their own AML regimes)</li>
-        <li>Government or public bodies</li>
-        <li>Low-value, low-risk product types (e.g. basic term life assurance with no investment element and low premiums)</li>
-        <li>Products or services with no realistic ML risk due to structural limitations</li>
-      </ul>
-
-      <div class="callout danger">
-        <div class="callout-label">🔴 When SDD Is Never Available</div>
-        <p>SDD can <strong>never</strong> be applied to Politically Exposed Persons (PEPs), clients from high-risk third countries, or any situation where there are active suspicions of ML or TF. These situations always require EDD — regardless of any other assessment. There is no discretion here.</p>
-      </div>
-
-      <div class="property-link">
-        <div class="property-label">🏠 Coadjute / Property Sector Context</div>
-        <p>In property transactions, SDD will be uncommon. The property sector is explicitly high-risk under UK AML regulation. However, SDD might conceivably apply for very small value transactions, or where the counterparty is a regulated UK financial institution whose own AML framework you can rely on. In practice, your firm's compliance guidance will specify exactly when (if ever) SDD is available for property work.</p>
-      </div>
-
-      <div class="qc-block">
-        <div class="qc-label">✋ Quick Check</div>
-        <div class="qc-q">A firm's compliance officer says: "This client is a regulated UK bank, so we can apply SDD and skip most of our normal identity checks." Is this correct?</div>
-        <div class="qc-opts">
-          <button class="qc-btn" onclick="qc(this,false,'qc2')">Yes — regulated UK banks always qualify for SDD and no further checks are needed</button>
-          <button class="qc-btn" onclick="qc(this,true,'qc2')">Partially — SDD may be available for regulated institutions, but it means reduced measures, not zero checks. The decision must be documented and justifiable to regulators, and basic identification requirements still apply</button>
-          <button class="qc-btn" onclick="qc(this,false,'qc2')">No — SDD is never available for corporate clients</button>
-        </div>
-        <div class="qc-fb" id="qc2"></div>
-      </div>
-
-      <div class="bottom-nav">
-        <button class="btn-prev" onclick="goTo(1)">← Back</button>
-        <button class="btn-next" onclick="goTo(3)">Next: Enhanced Due Diligence →</button>
-      </div>
+    <div class="nav-item locked" onclick="goTo(3)" id="ni3">
+      <div class="nav-icon">4</div>
+      <div class="nav-text"><div class="nav-label">Enhanced Due Diligence</div><div class="nav-sublabel">EDD triggers, source of wealth & funds</div></div>
+      <span class="lock-icon" id="li3">🔒</span>
     </div>
-
-    <!-- ══════════════════════════════════════════════ -->
-    <!-- SEC 3: ENHANCED DUE DILIGENCE -->
-    <!-- ══════════════════════════════════════════════ -->
-    <div class="section" id="sec3">
-      <div class="lesson-tag">Module 05 — Section 4 of 7</div>
-      <div class="lesson-header">
-        <h1>Enhanced Due Diligence (EDD)</h1>
-        <p class="lesson-intro">EDD is mandatory in specific high-risk situations. It goes beyond standard ID verification to examine the source of wealth and funds in depth — and requires senior management involvement.</p>
-      </div>
-
-      <h2>When Is EDD Mandatory?</h2>
-      <p>Regulations specify certain situations where EDD is not optional — it is a legal requirement:</p>
-
-      <div class="exam-note">
-        <div class="exam-note-label">📘 ICA Exam Note — Mandatory EDD Triggers</div>
-        <ul>
-          <li>Politically Exposed Persons (PEPs) — and their close family members and associates</li>
-          <li>Customers from, or transactions involving, <strong>high-risk third countries</strong> identified by FATF as having strategic deficiencies</li>
-          <li>Correspondent banking relationships</li>
-          <li>Any situation identified by the firm's own risk assessment as presenting <strong>higher ML/TF risk</strong></li>
-          <li>Non-face-to-face business relationships (in some jurisdictions — increased risk of identity fraud)</li>
-          <li>Complex or unusually large transactions with no apparent economic purpose</li>
-        </ul>
-      </div>
-
-      <h2>What Does EDD Actually Involve?</h2>
-      <p>EDD means going significantly further than standard identity checks. The ICA outlines several additional measures:</p>
-
-      <h3>Source of Wealth vs Source of Funds</h3>
-      <p>These two concepts are frequently confused and are both tested in the ICA exam:</p>
-
-      <table class="doc-table">
-        <thead><tr><th>Concept</th><th>Definition</th><th>Example</th></tr></thead>
-        <tbody>
-          <tr><td>Source of Wealth (SoW)</td><td>How the client built up their total wealth over their lifetime</td><td>"Built and sold a manufacturing business in 2018 for £4m"</td></tr>
-          <tr><td>Source of Funds (SoF)</td><td>Where the specific funds in this transaction came from</td><td>"£850,000 from the proceeds of selling my previous home"</td></tr>
-        </tbody>
-      </table>
-
-      <p>For EDD clients, <strong>both</strong> must be established and documented. Simply asserting a source is not enough — the ICA is explicit about which explanations are <em>not acceptable</em>:</p>
-
-      <div class="callout danger">
-        <div class="callout-label">🔴 Unacceptable EDD Source of Wealth Descriptions</div>
-        <p>The ICA explicitly states that the following descriptions are <strong>insufficient</strong> as source of wealth for EDD purposes. They require further investigation, not acceptance:</p>
-        <ul>
-          <li>"Savings" — from what income, over what period?</li>
-          <li>"Profits from investments" — which investments, where held, how generated?</li>
-          <li>"Inheritance" — from whom, what was their wealth, documented with probate?</li>
-          <li>"Business dealings" — what business, where, what does it do?</li>
-          <li>"Sale of business" — to whom, for what sum, with what evidence?</li>
-        </ul>
-        <p style="margin-top:8px">These are starting points for enquiry, not final answers.</p>
-      </div>
-
-      <h3>Methods for Corroborating Source of Wealth</h3>
-      <p>The ICA identifies the following as valid approaches:</p>
-      <ul>
-        <li>In-depth client interviews (and documenting the answers thoroughly)</li>
-        <li>Collection of documentary evidence — accounts, contracts, tax returns, sale agreements, probate documents</li>
-        <li>Reference to publicly available information from reliable sources — Land Registry, Companies House, news sources</li>
-        <li>Background checks using commercial databases</li>
-        <li>Verification of information with third parties (where appropriate and legal)</li>
-      </ul>
-
-      <h3>Senior Management Approval</h3>
-      <p>For EDD clients — particularly PEPs — establishing the relationship requires senior management approval. The Singapore MAS Notice (quoted in the ICA manual) requires a bank to obtain approval from senior management to establish or continue business relations with a PEP client, and to conduct enhanced monitoring throughout the relationship.</p>
-
-      <div class="case-study">
-        <div class="case-label">📋 Property Scenario — EDD in a Real Transaction</div>
-        <h3>The Offshore Company Purchase</h3>
-        <p>A buyer wants to purchase a £3.5m London property through a company registered in the Cayman Islands. The company has a nominee director. The stated source of funds is "proceeds of business in West Africa."</p>
-        <p style="margin-top:10px"><strong>EDD Required. Here's what that looks like:</strong></p>
-        <ul>
-          <li>Identify and verify the ultimate beneficial owner behind the Cayman company — look through the nominee structure</li>
-          <li>Obtain senior management sign-off before proceeding</li>
-          <li>Conduct in-depth source of wealth investigation — what is the West African business? Who are the counterparties? Obtain audited accounts, contracts, banking records</li>
-          <li>Assess country risk — which West African country? Are there FATF concerns?</li>
-          <li>Check PEP status of the UBO — do they have any connection to government or public functions?</li>
-          <li>Apply enhanced ongoing monitoring throughout the transaction</li>
-        </ul>
-      </div>
-
-      <div class="callout info">
-        <div class="callout-label">ℹ️ The "Domestic PEP" Change (4MLD)</div>
-        <p>The Fourth EU Money Laundering Directive (4MLD) removed a previous anomaly: prior to 4MLD, only <em>foreign</em> PEPs automatically required EDD. After 4MLD (incorporated into UK law), domestic PEPs — those from your own jurisdiction — also require EDD. In practice this made little difference, as most UK firms were already risk-rating domestic senior officials as high-risk. Firms may assess local PEPs as lower risk than foreign PEPs if there is reasonable, documented justification.</p>
-      </div>
-
-      <div class="qc-block">
-        <div class="qc-label">✋ Quick Check</div>
-        <div class="qc-q">A client seeking to purchase a £1.8m property states their source of wealth as "inheritance." Is this a satisfactory EDD response?</div>
-        <div class="qc-opts">
-          <button class="qc-btn" onclick="qc(this,false,'qc3')">Yes — inheritance is a clearly legitimate source of wealth</button>
-          <button class="qc-btn" onclick="qc(this,true,'qc3')">No — "inheritance" is explicitly listed by the ICA as an insufficient source of wealth description for EDD. You must investigate further: from whom, what was the original wealth, do you have probate documentation?</button>
-          <button class="qc-btn" onclick="qc(this,false,'qc3')">Yes, provided a will or solicitor's letter is provided</button>
-        </div>
-        <div class="qc-fb" id="qc3"></div>
-      </div>
-
-      <div class="bottom-nav">
-        <button class="btn-prev" onclick="goTo(2)">← Back</button>
-        <button class="btn-next" onclick="goTo(4)">Next: Plausibility Testing →</button>
-      </div>
+    <div class="nav-item locked" onclick="goTo(4)" id="ni4">
+      <div class="nav-icon">5</div>
+      <div class="nav-text"><div class="nav-label">Plausibility Testing</div><div class="nav-sublabel">Applying common sense to CDD</div></div>
+      <span class="lock-icon" id="li4">🔒</span>
     </div>
-
-    <!-- ══════════════════════════════════════════════ -->
-    <!-- SEC 4: PLAUSIBILITY TESTING -->
-    <!-- ══════════════════════════════════════════════ -->
-    <div class="section" id="sec4">
-      <div class="lesson-tag">Module 05 — Section 5 of 7</div>
-      <div class="lesson-header">
-        <h1>Plausibility Testing</h1>
-        <p class="lesson-intro">Plausibility testing is the ICA's term for what is, at heart, common sense. It means stepping back from the documents and asking: does this client's story actually make sense?</p>
-      </div>
-
-      <h2>What Is Plausibility Testing?</h2>
-      <p>The ICA defines plausibility testing as "quite simply using common sense when applying CDD." It is the professional obligation to assess whether a client's stated circumstances, financial profile, and explanation of source of funds/wealth are credible — given everything you know about them.</p>
-      <p>CDD is never a tick-box exercise. Even in a routine, low-risk case, each situation should be treated on its merits. Plausibility testing is the mental discipline that prevents CDD from becoming administrative box-ticking.</p>
-
-      <div class="exam-note">
-        <div class="exam-note-label">📘 ICA Exam Note — The ICA Plausibility Test Example</div>
-        <p>The manual sets out a detailed example that appears in various forms in exam questions:</p>
-        <p style="margin-top:8px"><strong>Client profile:</strong> 24-year-old, single, UK national, resident in UAE for 12 months. Wants to open current and savings accounts. Previously banked with a rival in UAE. Occupation: IT Consultant, income ~AED 150,000 ($41,000). Has a property in UAE valued at 5 million Dirhams AND one in Germany valued at €13 million — both rented, no mortgages.</p>
-        <p style="margin-top:8px"><strong>ICA verdict: On the face of it, not plausible.</strong></p>
-        <ul>
-          <li>A large amount of assets for his age</li>
-          <li>How were the property purchases funded without mortgages on an IT consultant's income?</li>
-          <li>How long has he had the properties? Pre-employment?</li>
-          <li>What else does he receive from his employer? Other income streams?</li>
-        </ul>
-        <p style="margin-top:8px">The ICA notes there may be a rational explanation — perhaps inherited wealth, or early tech success. But: <em>"unless you ask the question you will not know."</em></p>
-      </div>
-
-      <h2>The Four Plausibility Testing Questions</h2>
-      <p>The ICA sets out four key questions to work through when applying plausibility testing — particularly for EDD clients:</p>
-
-      <div class="scenario-box">
-        <div class="scenario-label">🔍 ICA Plausibility Testing Framework</div>
-        <ul>
-          <li>Are you <strong>convinced that the funds and wealth</strong> can be reasonably explained and established to be legitimate?</li>
-          <li>Can you <strong>independently obtain evidence</strong> of the client's source of wealth for higher-risk accounts?</li>
-          <li>Are you able to <strong>establish the relationship between the client and any third party</strong> where accounts are funded by a third party?</li>
-          <li>Do you <strong>continue asking for information</strong> and persist in seeking clarity wherever circumstances are unclear or account structures are complex?</li>
-        </ul>
-      </div>
-
-      <h2>Property Sector Plausibility Scenarios</h2>
-      <p>Plausibility testing is especially important in property transactions, where large sums change hands and the sector is specifically identified as high-risk. Some common scenarios:</p>
-
-      <table class="doc-table">
-        <thead><tr><th>Client Statement</th><th>Plausibility Question</th><th>What to Do</th></tr></thead>
-        <tbody>
-          <tr><td>"I saved £450,000 cash from my market stall over 10 years"</td><td>What is a realistic annual profit from a market stall? Does the maths work? Is there any banking history to support this?</td><td>Request trading accounts, bank records showing accumulation over time</td></tr>
-          <tr><td>"The funds are from my family in Nigeria"</td><td>Who is the family member? What is the source of their wealth? Is there any connection to PEP status or high-risk business?</td><td>Identify the third-party source; apply EDD to the relationship between parties</td></tr>
-          <tr><td>"I run a cash business — restaurant"</td><td>What is the restaurant's turnover? Is the amount being deposited consistent with HMRC records and trading accounts?</td><td>Request business accounts, HMRC records; sense-check against industry benchmarks</td></tr>
-          <tr><td>"I sold my company last year"</td><td>To whom? For how much? Are there Companies House / news records of the sale?</td><td>Obtain sale agreement, completion statements, evidence of funds received</td></tr>
-          <tr><td>"I won at gambling"</td><td>Is there documentary evidence? Casino winnings of this scale would be documented by the casino</td><td>Request casino payment records; a vague claim is not acceptable</td></tr>
-        </tbody>
-      </table>
-
-      <div class="callout key">
-        <div class="callout-label">✅ The ICA's Key Insight on Plausibility</div>
-        <p>You are not a detective. You are not required to prove that a crime has been committed. You are simply required to satisfy yourself that the explanation makes sense — and to persist with questions when it doesn't. Accepting an implausible explanation without enquiry is a failure of your CDD obligation.</p>
-      </div>
-
-      <div class="qc-block">
-        <div class="qc-label">✋ Quick Check</div>
-        <div class="qc-q">A buyer is purchasing a £600,000 property and states their source of funds as "cash savings from working as a cleaner for 15 years." Is this plausible, and what should you do?</div>
-        <div class="qc-opts">
-          <button class="qc-btn" onclick="qc(this,false,'qc4')">Accept it — cleaners can save money over 15 years</button>
-          <button class="qc-btn" onclick="qc(this,true,'qc4')">Treat this as requiring plausibility testing — the maths should be checked against realistic earnings, and evidence of the savings accumulation (bank statements showing build-up over time) should be requested before accepting the explanation</button>
-          <button class="qc-btn" onclick="qc(this,false,'qc4')">Reject the transaction immediately — the explanation is impossible</button>
-        </div>
-        <div class="qc-fb" id="qc4"></div>
-      </div>
-
-      <div class="bottom-nav">
-        <button class="btn-prev" onclick="goTo(3)">← Back</button>
-        <button class="btn-next" onclick="goTo(5)">Next: Ongoing Monitoring →</button>
-      </div>
+    <div class="nav-item locked" onclick="goTo(5)" id="ni5">
+      <div class="nav-icon">6</div>
+      <div class="nav-text"><div class="nav-label">Ongoing Monitoring</div><div class="nav-sublabel">Reg 28, transaction scrutiny & reviews</div></div>
+      <span class="lock-icon" id="li5">🔒</span>
     </div>
-
-    <!-- ══════════════════════════════════════════════ -->
-    <!-- SEC 5: ONGOING MONITORING -->
-    <!-- ══════════════════════════════════════════════ -->
-    <div class="section" id="sec5">
-      <div class="lesson-tag">Module 05 — Section 6 of 7</div>
-      <div class="lesson-header">
-        <h1>Ongoing Monitoring</h1>
-        <p class="lesson-intro">CDD is not a one-time event at onboarding. Regulation 28 of the MLR 2017 imposes a clear, ongoing obligation to scrutinise transactions and keep CDD records up to date throughout the relationship.</p>
-      </div>
-
-      <h2>The Legal Basis: Regulation 28, MLR 2017</h2>
-
-      <div class="exam-note">
-        <div class="exam-note-label">📘 ICA Exam Note — Regulation 28 (MLR 2017)</div>
-        <p>Regulation 28 of the UK Money Laundering Regulations 2017 states that a relevant person must conduct ongoing monitoring of a business relationship, including:</p>
-        <ul>
-          <li><strong>(a)</strong> Scrutiny of transactions undertaken throughout the course of the relationship — including, where necessary, the source of funds — to ensure that transactions are consistent with the firm's knowledge of the customer, their business and risk profile</li>
-          <li><strong>(b)</strong> Undertaking reviews of existing records and keeping the documents or information obtained for CDD purposes up to date</li>
-        </ul>
-        <p style="margin-top:8px">This obligation is ongoing — it does not cease after the first transaction.</p>
-      </div>
-
-      <h2>What Ongoing Monitoring Means in Practice</h2>
-      <p>Ongoing monitoring has two distinct components: <strong>transaction scrutiny</strong> and <strong>keeping CDD records up to date</strong>. Both are legally required.</p>
-
-      <h3>Transaction Scrutiny</h3>
-      <p>Each transaction should be assessed for consistency with what the firm knows about the client. This means your initial CDD — the client profile — is the benchmark. A transaction is suspicious not in the abstract, but in relation to that specific client's known circumstances, history, and profile.</p>
-      <p>The ICA provides a framework for monitoring methodologies. An effective system should:</p>
-      <ul>
-        <li>Compare account or transaction history against the client's specific profile</li>
-        <li>Compare against established ML/TF typologies and scenarios</li>
-        <li>Set up processes to compare transactions against risk models for "normal" clients — not all large transactions are unusual; some clients regularly transact at high values</li>
-        <li>Generate alerts where appropriate</li>
-        <li>Track alerts to ensure they are actioned and suspicions reported as required</li>
-        <li>Be available for audit purposes</li>
-        <li>Provide management information and statistics</li>
-      </ul>
-
-      <div class="case-study">
-        <div class="case-label">📋 ICA Case Study — 9/11 Hijackers' Banking Activity</div>
-        <h3>How the Terrorists Blended In (and the Monitoring Lessons)</h3>
-        <p>The 19 hijackers of the 9/11 attacks opened 24 accounts. A review of their transaction activity showed patterns that, in retrospect, should have generated alerts. Their activity included:</p>
-        <ul>
-          <li>Direct transfers to and from foreign jurisdictions (UAE, Saudi Arabia, Germany)</li>
-          <li>Most withdrawals were from debit cards immediately following deposits</li>
-          <li>Very few cheque transactions — cash or card only</li>
-          <li>Transactions generally below reporting requirements (deliberate structuring)</li>
-          <li>Multiple hijackers withdrawing at the same ATM machines — a pattern</li>
-          <li>Numerous balance enquiries between transactions</li>
-        </ul>
-        <p style="margin-top:10px">No single transaction was dramatic. The picture only emerged when transactions were viewed as a pattern over time. This is exactly what automated transaction monitoring is designed to detect.</p>
-      </div>
-
-      <h3>Keeping CDD Records Up to Date</h3>
-      <p>CDD information has a shelf life. A client who was low-risk at onboarding may become high-risk because:</p>
-      <ul>
-        <li>They have taken on a new role that makes them a PEP</li>
-        <li>Adverse media has emerged linking them to criminal conduct</li>
-        <li>Their country of residence has changed to a high-risk jurisdiction</li>
-        <li>Their transaction patterns have changed significantly</li>
-        <li>Their ID documents have expired and need renewal</li>
-        <li>A business relationship has changed its nature significantly</li>
-      </ul>
-
-      <div class="callout warning">
-        <div class="callout-label">⚠️ The Fixed 5-Year Review Trap</div>
-        <p>A firm that reviews all CDD records on a 5-year cycle — and does nothing in between unless prompted — is NOT meeting its ongoing monitoring obligations. Regulation 28 requires monitoring that is <em>risk-sensitive and responsive to change</em>. Material changes must trigger an immediate review. Periodic reviews are a minimum floor, not a substitute for responsiveness.</p>
-      </div>
-
-      <h3>Automated Transaction Monitoring (ATM Systems)</h3>
-      <p>Larger firms use automated systems to flag potentially suspicious transactions. The ICA (citing FCA guidance) emphasises that there must be a clear allocation of responsibilities for reviewing, investigating, and reporting alerts generated by these systems. Staff responsible for this work must have appropriate skills and be subject to effective quality assurance.</p>
-      <p>Automated alerts are only useful if they are acted upon. A backlog of unreviewed alerts is a regulatory failure — and a sign of inadequate resources.</p>
-
-      <div class="property-link">
-        <div class="property-label">🏠 Coadjute / Property Sector Context — Ongoing Monitoring</div>
-        <p>Property transactions are typically discrete events rather than ongoing banking relationships — but ongoing monitoring still applies. If a client returns for a second transaction, your earlier CDD must be reviewed and refreshed. If circumstances have changed (new address, new business, adverse media), those changes are material. For estate agents with ongoing client relationships, monitoring covers the continuing relationship — not just each individual sale.</p>
-      </div>
-
-      <div class="qc-block">
-        <div class="qc-label">✋ Quick Check</div>
-        <div class="qc-q">A client was assessed as low-risk at onboarding 18 months ago. They have now been appointed as a minister in a foreign government. Your next scheduled CDD review is in 3.5 years. What should you do?</div>
-        <div class="qc-opts">
-          <button class="qc-btn" onclick="qc(this,false,'qc5')">Wait for the next scheduled review — the 5-year cycle is the regulatory standard</button>
-          <button class="qc-btn" onclick="qc(this,true,'qc5')">Conduct an immediate CDD review — a ministerial appointment makes the client a PEP, which is a material change requiring reassessment and application of EDD regardless of when the next scheduled review falls</button>
-          <button class="qc-btn" onclick="qc(this,false,'qc5')">Only act if the client discloses the change themselves</button>
-        </div>
-        <div class="qc-fb" id="qc5"></div>
-      </div>
-
-      <div class="bottom-nav">
-        <button class="btn-prev" onclick="goTo(4)">← Back</button>
-        <button class="btn-next" onclick="goTo(6)">Next: Identifying Suspicious Activity →</button>
-      </div>
+    <div class="nav-item locked" onclick="goTo(6)" id="ni6">
+      <div class="nav-icon">7</div>
+      <div class="nav-text"><div class="nav-label">Identifying Suspicious Activity</div><div class="nav-sublabel">Red flags, suspicion & reporting triggers</div></div>
+      <span class="lock-icon" id="li6">🔒</span>
     </div>
+    <div class="nav-item locked" onclick="goTo(7)" id="ni7">
+      <div class="nav-icon">✦</div>
+      <div class="nav-text"><div class="nav-label">Module 5 Quiz</div><div class="nav-sublabel">15 questions · 70% to pass</div></div>
+      <span class="lock-icon" id="li7">🔒</span>
+    </div>
+  </nav>
+  <div class="sidebar-footer">
+    <div class="module-progress-label" id="progLabel">0 of 8 sections complete</div>
+    <div class="module-progress-bar"><div class="module-progress-fill" id="progFill" style="width:0%"></div></div>
+  </div>
+</aside>
 
-    <!-- ══════════════════════════════════════════════ -->
-    <!-- SEC 6: IDENTIFYING SUSPICIOUS ACTIVITY -->
-    <!-- ══════════════════════════════════════════════ -->
-    <div class="section" id="sec6">
-      <div class="lesson-tag">Module 05 — Section 7 of 7</div>
-      <div class="lesson-header">
-        <h1>Identifying Suspicious Activity</h1>
-        <p class="lesson-intro">Good CDD is what makes suspicious activity detectable. Without knowing your client, you cannot identify when they are behaving unusually. This section brings the module together — how CDD translates into recognising and acting on suspicion.</p>
-      </div>
+<!-- ════ MAIN CONTENT ════ -->
+<main class="main" id="mainContent">
 
-      <h2>Why CDD Is the Foundation of Suspicion Detection</h2>
-      <p>The ICA is direct: "CDD information is invaluable in the recognition and determination of suspicion." Money laundering is rarely identified because you know for certain that a specific crime was committed. It is identified because a client's behaviour is inconsistent with what you know about them. That inconsistency is only visible if you have done your CDD properly.</p>
+<!-- ══════════════════════════ SEC 0: WHAT IS CDD ══════════════════════════ -->
+<div class="section active" id="sec0">
+  <div class="lesson-tag">Module 05 — Section 1 of 7</div>
+  <h1>What is <span>Customer Due Diligence?</span></h1>
+  <p class="lesson-intro">CDD is the foundation of every firm's AML framework. It is not a one-time identity check — it is an ongoing process of knowing your customer well enough to spot when something is wrong.</p>
 
-      <h2>How to Identify Suspicious Activity</h2>
-      <p>Money laundering activity is typically identified in one of three situations:</p>
-      <ol>
-        <li><strong>No legitimate commercial rationale</strong> for the relationship or transaction — why is this person doing this?</li>
-        <li><strong>Suspicious client behaviour</strong> — pressure to follow instructions without providing full answers; reluctance to provide information; evasive or inconsistent responses</li>
-        <li><strong>Unusual or irregular activity</strong> compared with: the client's historical pattern; what is known about their circumstances; the known commercial objectives; comparable clients in similar situations</li>
-      </ol>
+  <h2>CDD in Plain English</h2>
+  <p>At its core, CDD is a risk assessment. It is the process by which a business obtains sufficient information about a client to assess the ML/TF risks that relationship poses — at the outset, and throughout the life of the relationship.</p>
+  <p>The ICA is direct: without good CDD, you cannot understand the potential a relationship has for exposing your organisation to the risk of money laundering. CDD is your most effective weapon against being used to launder the proceeds of crime.</p>
+  <p>You may also hear it referred to as <strong>KYC — Know Your Customer</strong>. KYC is another term for the same concept: understanding the personal and financial circumstances of a client well enough that you can spot when something doesn't fit.</p>
 
-      <div class="exam-note">
-        <div class="exam-note-label">📘 ICA Exam Note — Common Barriers to Reporting Suspicion</div>
-        <p>The ICA identifies several common reasons employees fail to report suspicious activity — even when CDD information is on file. Know these — they appear in scenario questions:</p>
-        <ul>
-          <li><em>"I can't point to a specific crime"</em> — You don't need to. Suspicion of criminality in the broadest sense is sufficient. Most legislation sets the threshold at "reasonable grounds to suspect."</li>
-          <li><em>"I can't prove a crime was committed"</em> — Proof is not required. Suspicion is the threshold.</li>
-          <li><em>"No one aspect of the relationship is suspicious"</em> — It is very often the combination of factors that creates suspicion. Don't dismiss individual red flags because none alone is conclusive.</li>
-          <li><em>"The crime occurred before AML laws were introduced"</em> — You still have an obligation to report. It is possible to commit the offence of money laundering by knowingly handling property derived from historic crimes.</li>
-          <li><em>"This is a long-standing client"</em> — Existing client relationships pose as great a ML threat as new ones — often greater, because complacency has set in.</li>
-        </ul>
-      </div>
+  <div class="callout info">
+    <div class="callout-label">ℹ️ CDD Serves Multiple Purposes</div>
+    <p>Beyond AML compliance, good CDD protects genuine clients from being suspected of ML; guards against identity theft; protects the firm from reputational and financial risk; assists in detecting fraud; and is a legal obligation in the UK under the Money Laundering Regulations 2017.</p>
+  </div>
 
-      <h2>The Suspicion Formulation Process</h2>
-      <p>The ICA describes suspicion as a gradual process — it rarely happens in an instant or from a single event. The typical pathway follows three stages:</p>
+  <div class="exam-note">
+    <div class="exam-note-label">📘 ICA Exam Note — The FATF Definition of CDD</div>
+    <p>FATF defines CDD as comprising four components. Memorise all four — they are tested in multiple forms:</p>
+    <ul>
+      <li><strong>(a)</strong> Identifying the customer and verifying that customer's identity using reliable, independent source documents, data or information</li>
+      <li><strong>(b)</strong> Identifying the beneficial owner, and taking reasonable measures to verify the identity of the beneficial owner — for legal persons and arrangements, understanding the ownership and control structure</li>
+      <li><strong>(c)</strong> Understanding and, as appropriate, obtaining information on the purpose and intended nature of the business relationship</li>
+      <li><strong>(d)</strong> Conducting ongoing due diligence on the business relationship and scrutiny of transactions to ensure they are consistent with the institution's knowledge of the customer, their business and risk profile, including, where necessary, the source of funds</li>
+    </ul>
+  </div>
 
-      <div class="scenario-box">
-        <div class="scenario-label">📊 The Suspicion Formulation Pathway (ICA)</div>
-        <p><strong>Comfort → Concern → Suspicion</strong></p>
-        <p style="margin-top:8px">An event within a normal client relationship triggers a <em>concern</em>. Once concerned, you should:</p>
-        <ol style="margin-top:8px">
-          <li>Analyse available CDD and business information</li>
-          <li>Discuss concerns with colleagues and managers</li>
-          <li>Make discreet enquiries of the client — this is <strong>not</strong> tipping off</li>
-        </ol>
-        <p style="margin-top:8px">Following this, either: concerns are allayed → return to comfort; OR concerns remain/deepen → suspicion → <strong>report to the MLRO as quickly as possible.</strong></p>
-      </div>
+  <h2>When Must CDD Be Applied?</h2>
+  <p>A firm must apply CDD measures in the following four situations — and only one needs to be present:</p>
+  <ol>
+    <li>When <strong>establishing a business relationship</strong></li>
+    <li>When <strong>carrying out an occasional transaction</strong> (even a one-off)</li>
+    <li>When there are <strong>suspicions of ML or TF</strong>, regardless of any other trigger</li>
+    <li>When there are <strong>doubts about the veracity or adequacy</strong> of documents or information previously obtained for identification or verification purposes</li>
+  </ol>
 
-      <h2>Objective vs. Subjective Suspicion</h2>
-      <p>The ICA draws an important distinction between two tests of suspicion:</p>
+  <div class="callout warn">
+    <div class="callout-label">⚠️ ICA Non-Negotiable Rule</div>
+    <p><strong>"CDD must be completed in all cases before any transactions are completed for any client."</strong> There is no minimum transaction threshold, no grace period, no exception for trusted long-standing clients. CDD first — then the transaction.</p>
+  </div>
 
-      <table class="doc-table">
-        <thead><tr><th>Test</th><th>What It Asks</th><th>Risk for You</th></tr></thead>
-        <tbody>
-          <tr><td><strong>Subjective</strong></td><td>Did this person <em>actually</em> suspect ML was occurring?</td><td>Lower — it is what you genuinely believed</td></tr>
-          <tr><td><strong>Objective</strong></td><td>Should a reasonable person in this position have suspected ML, given all the relevant information available?</td><td>Higher — you may be judged on what you <em>should</em> have known, not just what you knew</td></tr>
-        </tbody>
-      </table>
+  <h2>The Three-Tier CDD Framework</h2>
+  <p>Not every client carries the same risk, so CDD intensity varies across three levels. The choice of which level to apply must be documented and defensible:</p>
 
-      <div class="callout danger">
-        <div class="callout-label">🔴 The Objective Test: Why It Matters</div>
-        <p>The objective test is the higher standard — and the one that prosecutors use. It means that ignoring CDD information, failing to follow up on red flags, or simply not engaging with the information in your files can be criminal. The standard is higher for employees of financial services businesses and regulated firms than for those in unregulated sectors. You are expected to be trained to spot what a lay person might miss.</p>
-      </div>
+  <div class="spectrum">
+    <div class="sp-card sdd">
+      <h4>🟢 Simplified (SDD)</h4>
+      <p>Reduced measures for genuinely low-risk situations. Still requires basic identification. NOT a full exemption from CDD.</p>
+    </div>
+    <div class="sp-card std">
+      <h4>🟣 Standard (CDD)</h4>
+      <p>The default for most clients. Full identification, verification, understanding of the business relationship and ongoing monitoring.</p>
+    </div>
+    <div class="sp-card edd">
+      <h4>🔴 Enhanced (EDD)</h4>
+      <p>Mandatory for PEPs, high-risk third countries, and any higher-risk situations. More intensive verification and senior sign-off.</p>
+    </div>
+  </div>
 
-      <h2>Key Red Flags in Property Transactions</h2>
+  <h2>Why CDD Matters at Coadjute</h2>
+  <p>At Coadjute, we perform AML checks on behalf of estate agents and conveyancers. That means the CDD we conduct is the frontline defence for our clients' legal compliance. We are not a passive data-collector — we are an active gatekeeper. If CDD is incomplete, inadequate, or not applied at the right time, the professional who instructed us may face regulatory action, fines, or criminal prosecution.</p>
+  <p>The MLR 2017 applies directly to estate agents and conveyancers as "relevant persons." They — and by extension we — have a legal duty to conduct CDD before completing any property transaction.</p>
 
-      <table class="doc-table">
-        <thead><tr><th>Red Flag</th><th>Why It's Suspicious</th></tr></thead>
-        <tbody>
-          <tr><td>Anonymous company purchase with no UBO identified</td><td>Classic layering — concealing the true owner behind a corporate veil</td></tr>
-          <tr><td>Source of funds is vague or changes mid-transaction</td><td>Inconsistency suggests the story is constructed, not genuine</td></tr>
-          <tr><td>Buyer paying significantly above market value</td><td>Over-payment with no commercial explanation; could be to move large sums quickly</td></tr>
-          <tr><td>Third party paying on behalf of buyer with no explanation</td><td>The third party may be the real source of criminal funds</td></tr>
-          <tr><td>Client is evasive or uncooperative with ID/documentation requests</td><td>Reluctance to provide information is a red flag regardless of other factors</td></tr>
-          <tr><td>Rapid resale at a loss shortly after purchase</td><td>Loss may be accepted as the cost of integrating criminal funds</td></tr>
-          <tr><td>Funds routed through multiple jurisdictions before reaching the transaction</td><td>Classic layering — creating a complex money trail</td></tr>
-        </tbody>
-      </table>
+  <div class="qc" id="qc0">
+    <div class="qc-tag">⚡ Quick Check</div>
+    <div class="qc-q">Which of the following is NOT one of the four FATF components of CDD?</div>
+    <div class="qc-opts">
+      <button class="qc-btn" onclick="qc(this,false,'qc0')">Identifying and verifying the customer's identity</button>
+      <button class="qc-btn" onclick="qc(this,false,'qc0')">Conducting ongoing due diligence on the business relationship</button>
+      <button class="qc-btn" onclick="qc(this,true,'qc0')">Conducting a criminal background check on all customers</button>
+      <button class="qc-btn" onclick="qc(this,false,'qc0')">Identifying the beneficial owner</button>
+    </div>
+    <div class="qc-fb" id="qc0-fb">Correct. FATF defines CDD as: (a) identifying/verifying the customer; (b) identifying the beneficial owner; (c) understanding the purpose and nature of the business relationship; and (d) ongoing monitoring and transaction scrutiny. Criminal background checks are not part of the FATF CDD definition.</div>
+  </div>
 
-      <div class="callout key">
-        <div class="callout-label">✅ The CDD Module Summary</div>
-        <p>CDD is not bureaucracy — it is how money laundering gets detected. Every element of CDD (identification, verification, understanding the relationship, ongoing monitoring, plausibility testing) exists to help you build a picture of the client that lets you spot when something is wrong. Done properly, it protects your clients, your firm, and the broader financial system.</p>
-      </div>
+  <div class="bottom-nav">
+    <div></div>
+    <button class="btn-next" onclick="goTo(1)">Next: Standard CDD →</button>
+  </div>
+</div>
 
-      <div class="qc-block">
-        <div class="qc-label">✋ Quick Check</div>
-        <div class="qc-q">A junior employee says: "I can't file a SAR because I don't know what crime has been committed." Is this reasoning correct?</div>
-        <div class="qc-opts">
-          <button class="qc-btn" onclick="qc(this,false,'qc6')">Yes — you must identify the specific predicate offence before making a report</button>
-          <button class="qc-btn" onclick="qc(this,true,'qc6')">No — you are not required to suspect a particular type of crime or to prove one has been committed. Suspicion of criminality in the broadest sense is sufficient. The threshold is reasonable grounds to suspect ML is taking place.</button>
-          <button class="qc-btn" onclick="qc(this,false,'qc6')">Yes — without knowing the crime, the MLRO cannot make a useful report</button>
-        </div>
-        <div class="qc-fb" id="qc6"></div>
-      </div>
+<!-- ══════════════════════════ SEC 1: STANDARD CDD ══════════════════════════ -->
+<div class="section" id="sec1">
+  <div class="lesson-tag">Module 05 — Section 2 of 7</div>
+  <h1>Standard CDD <span>in Practice</span></h1>
+  <p class="lesson-intro">Standard CDD is the default. It applies to the vast majority of client relationships and sets the benchmark against which all CDD is measured. Understanding what it requires — and how to calibrate it — is the core practical skill this module builds.</p>
 
-      <div class="bottom-nav">
-        <button class="btn-prev" onclick="goTo(5)">← Back</button>
-        <button class="btn-next cta" onclick="goTo(7)">Proceed to Module Quiz →</button>
+  <h2>The Three Core Requirements</h2>
+  <p>Standard CDD requires a firm to do three things:</p>
+  <ol>
+    <li><strong>Identify the client</strong> — including beneficial owners of any legal entity</li>
+    <li><strong>Verify that identity</strong> — using reliable, independent source documents, data or information</li>
+    <li><strong>Record sufficient additional information</strong> — to understand the relationship and assist in detecting suspicious activity</li>
+  </ol>
+
+  <p>That third element is often underweighted in practice. Identification and verification alone are not enough. You also need to understand the client's circumstances well enough that you can spot when something doesn't fit.</p>
+
+  <h2>What "Additional Information" Means in Practice</h2>
+  <p>For an individual client, the additional information the ICA expects includes:</p>
+  <ul>
+    <li>The type of business or employment they are engaged in</li>
+    <li>Their industry or sector</li>
+    <li>Whether they are new or established in that business</li>
+    <li>Their stage of life — a 22-year-old buying a £2m property warrants more scrutiny than a 55-year-old executive</li>
+    <li>The counterparties they deal with — who they pay, and who pays them</li>
+    <li>The geographical areas in which they operate</li>
+    <li>The expected turnover on the account — values, volumes and frequency of money in and out</li>
+  </ul>
+
+  <p>This information creates a <strong>client profile</strong>. That profile is what allows you to detect when activity is unusual — because "unusual" only has meaning when you have a baseline expectation.</p>
+
+  <div class="case-study">
+    <div class="case-label">📋 ICA Illustration — Same CDD, Very Different Depth</div>
+    <h3>How intensity varies within standard CDD</h3>
+    <p><strong>Client A:</strong> A salaried individual working for a multinational company who wants a mortgage. Standard ID verification, payslips, basic income check — straightforward. Low risk.</p>
+    <p style="margin-top:10px"><strong>Client B:</strong> A director of a private limited company seeking to purchase a £3.5m commercial property via a corporate structure. Requires: company verification, ultimate beneficial ownership chain, source of company funds, confirmation of business purpose, and understanding of the transaction structure. More intensive, but still "standard" CDD if no PEP or high-risk country connection.</p>
+    <p style="margin-top:10px">Both are applying standard CDD — but the depth of enquiry differs enormously. The ICA expects calibration to the risk profile, not a one-size-fits-all form.</p>
+  </div>
+
+  <h2>Identifying the Beneficial Owner</h2>
+  <p>When the client is a legal entity — a company, LLP, trust, or other structure — you must look through it to identify the natural person (or persons) who ultimately own or control it. This is the <strong>beneficial owner</strong>.</p>
+  <p>The ICA is explicit: understanding legal structure alone is insufficient. You must understand the <em>real</em> ownership and control. Shell companies, nominee shareholders, and offshore structures are all routinely used to obscure beneficial ownership — which is precisely why regulators require it to be identified.</p>
+
+  <div class="exam-note">
+    <div class="exam-note-label">📘 ICA Exam Note — Beneficial Owner Definition</div>
+    <p>For a corporate entity, the beneficial owner is the natural person(s) who ultimately own or control the customer through direct or indirect ownership of a sufficient percentage of shares or voting rights (typically 25%), or through other means of control. Where a trust is involved, beneficial owners include the settlor, the trustees, the beneficiaries, and any other natural person exercising effective control.</p>
+  </div>
+
+  <h2>Property Sector: CDD in a Transaction Chain</h2>
+  <p>In a property transaction, you may need to apply CDD to multiple parties:</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Party</th><th>CDD Requirement</th><th>Common Issues</th></tr></thead>
+      <tbody>
+        <tr><td>Buyer (individual)</td><td>ID, proof of address, source of funds for deposit and full purchase price</td><td>Funds from overseas; third-party gift funds; newly opened accounts</td></tr>
+        <tr><td>Buyer (company)</td><td>Company verification, ownership structure, UBO identification, corporate source of funds</td><td>Nominee directors; complex offshore structures; multiple layers of ownership</td></tr>
+        <tr><td>Seller</td><td>ID and proof of address; consideration of where proceeds will go</td><td>Rapid resale at loss; proceeds directed to third party</td></tr>
+        <tr><td>Third-party funder</td><td>Identity of the funder and their relationship to the buyer; source of the funder's wealth</td><td>Unrelated third party providing large cash gift — who is this person?</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="qc" id="qc1">
+    <div class="qc-tag">⚡ Quick Check</div>
+    <div class="qc-q">A buyer is purchasing a property through a BVI-incorporated company. The registered director is a nominee company. The buyer tells you the ultimate owner is "a family trust." What is the correct CDD approach?</div>
+    <div class="qc-opts">
+      <button class="qc-btn" onclick="qc(this,false,'qc1')">Accept the certificate of incorporation and proceed — the company is legally registered</button>
+      <button class="qc-btn" onclick="qc(this,true,'qc1')">Identify the natural person(s) who are the beneficial owners of the trust — the settlor, trustees, and beneficiaries — and verify their identities. The corporate structure must be looked through entirely.</button>
+      <button class="qc-btn" onclick="qc(this,false,'qc1')">Apply simplified CDD — trust structures are low risk by nature</button>
+    </div>
+    <div class="qc-fb" id="qc1-fb">Correct. CDD requires looking through any corporate structure to the ultimate beneficial owner — the natural person who ultimately owns or controls the entity. A nominee structure combined with an offshore jurisdiction and a trust arrangement are all classic layering techniques. Certificate of incorporation only confirms legal existence, not true ownership.</div>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="btn-prev" onclick="goTo(0)">← Back</button>
+    <button class="btn-next" onclick="goTo(2)">Next: Simplified Due Diligence →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════ SEC 2: SDD ══════════════════════════ -->
+<div class="section" id="sec2">
+  <div class="lesson-tag">Module 05 — Section 3 of 7</div>
+  <h1>Simplified <span>Due Diligence (SDD)</span></h1>
+  <p class="lesson-intro">SDD is available where a firm determines that a business relationship or transaction presents a genuinely low ML/TF risk. It is a reduction in the depth and frequency of CDD measures — not an exemption from them.</p>
+
+  <h2>What SDD Is — and Isn't</h2>
+  <p>A common misconception is that SDD means doing nothing. It does not. SDD means a firm may apply reduced measures — for example, less frequent monitoring, accepting a narrower range of verification documents, or inferring the purpose of a relationship from the type of transaction rather than specifically asking.</p>
+  <p>The crucial point: the <strong>decision to apply SDD must itself be documented and justifiable</strong>. You cannot simply decide a client "seems low risk." You must have assessed the relationship against a defined set of risk factors and concluded, on that evidence, that the risk is genuinely low.</p>
+
+  <div class="exam-note">
+    <div class="exam-note-label">📘 ICA Exam Note — FATF on SDD</div>
+    <p>The FATF Interpretive Notes to Recommendation 10 specify that where SDD is applied, firms may reduce CDD measures, including by: (i) delaying verification of identity until after the business relationship is established, on condition that transactions remain below a defined monetary threshold; (ii) reducing the frequency of customer identification updates; (iii) reducing the degree of ongoing monitoring; and (iv) not collecting specific information or carrying out specific measures to understand the purpose and intended nature of the business relationship, but inferring the purpose and nature from the type of transactions or business relationship established. SDD requires a firm-level risk assessment — it is not automatic for any category of client.</p>
+  </div>
+
+  <h2>When SDD Might Be Appropriate</h2>
+  <p>Examples of situations the ICA identifies as potentially qualifying for SDD include:</p>
+  <ul>
+    <li>UK-regulated financial institutions (e.g. banks, building societies)</li>
+    <li>UK-listed companies subject to disclosure obligations</li>
+    <li>UK government bodies and public authorities</li>
+    <li>Products or transactions with a low transaction value and no cash element</li>
+    <li>Pension schemes or child savings products with documented membership criteria</li>
+  </ul>
+
+  <div class="callout warn">
+    <div class="callout-label">⚠️ Property Sector Caution</div>
+    <p>SDD is rarely appropriate in residential property transactions. The combination of large cash sums, high value assets, and the sector's historic attractiveness to money launderers means the risk profile almost always demands at minimum standard CDD. Do not assume that because a buyer has a UK-regulated solicitor acting for them, you can apply SDD to the buyer directly — that is a different protection, not a substitute for your own CDD.</p>
+  </div>
+
+  <h2>The Common Mistake: SDD as a Default</h2>
+  <p>The ICA consistently examines on the distinction between SDD as a considered, documented, risk-assessed decision versus SDD as a shortcut for busy or compliant-looking clients. The answer is always the same: SDD is not available merely because a client appears trustworthy or has a professional background. The decision must flow from a risk assessment, not from instinct.</p>
+
+  <div class="qc" id="qc2">
+    <div class="qc-tag">⚡ Quick Check</div>
+    <div class="qc-q">A conveyancer instructs Coadjute to conduct AML checks on a buyer. The buyer is a UK-registered solicitor buying a buy-to-let property. The conveyancer says: "Just do simplified CDD — they're a regulated professional." Is this correct?</div>
+    <div class="qc-opts">
+      <button class="qc-btn" onclick="qc(this,false,'qc2')">Yes — regulated professionals qualify for SDD automatically</button>
+      <button class="qc-btn" onclick="qc(this,true,'qc2')">No — SDD is only permissible following the firm's own documented risk assessment of this specific relationship. A professional occupation does not automatically qualify. The risk assessment must consider the transaction, the funds, and the client profile.</button>
+      <button class="qc-btn" onclick="qc(this,false,'qc2')">Yes — the conveyancer's instruction is sufficient authorisation for SDD</button>
+    </div>
+    <div class="qc-fb" id="qc2-fb">Correct. SDD requires the firm's own risk assessment to determine that this specific relationship presents low ML/TF risk. The decision must be documented and justifiable. Professional occupation is one factor — it does not override the need for proper risk assessment.</div>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="btn-prev" onclick="goTo(1)">← Back</button>
+    <button class="btn-next" onclick="goTo(3)">Next: Enhanced Due Diligence →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════ SEC 3: EDD ══════════════════════════ -->
+<div class="section" id="sec3">
+  <div class="lesson-tag">Module 05 — Section 4 of 7</div>
+  <h1>Enhanced <span>Due Diligence (EDD)</span></h1>
+  <p class="lesson-intro">Where standard CDD is the default, EDD is the mandatory response to higher-risk. It requires more intensive verification, senior management involvement, and a deeper understanding of the client's source of wealth and source of funds.</p>
+
+  <h2>When Is EDD Mandatory?</h2>
+  <p>The ICA and the UK MLR 2017 both specify categories where EDD is automatically required. You do not have discretion in these cases — EDD must be applied:</p>
+  <ul>
+    <li><strong>Politically Exposed Persons (PEPs)</strong> — including their close family and known associates</li>
+    <li><strong>Customers from, or transactions involving, high-risk third countries</strong> — as listed by FATF or the UK government</li>
+    <li><strong>Correspondent banking relationships</strong> — where one bank processes transactions on behalf of another</li>
+    <li><strong>Any situation where the firm determines the risk to be higher</strong> based on its own assessment — complex structures, unusual transaction patterns, unexplained wealth, etc.</li>
+  </ul>
+
+  <div class="exam-note">
+    <div class="exam-note-label">📘 ICA Exam Note — The EDD Obligation</div>
+    <p>The ICA states that in higher-risk situations, firms must: obtain additional information on the customer and the beneficial owner; obtain additional information on the intended nature of the business relationship; obtain information on the source of funds and source of wealth of the customer and the beneficial owner; obtain information on the reasons for the intended or performed transactions; and increase the monitoring of the business relationship — including greater scrutiny of transactions.</p>
+  </div>
+
+  <h2>Source of Funds vs Source of Wealth</h2>
+  <p>These are two distinct concepts that the ICA tests on separately. Understanding the difference is essential:</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Concept</th><th>What it means</th><th>What it requires</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Source of Funds</strong></td><td>The specific money being used in this particular transaction — where did the £480,000 deposit come from?</td><td>Bank statements, completion statement from a property sale, gift letter, HMRC records</td></tr>
+        <tr><td><strong>Source of Wealth</strong></td><td>The origin of the client's overall wealth — how did they accumulate what they have?</td><td>Employment history, business ownership records, inheritance evidence, audited accounts, probate documentation</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>For EDD clients, you need both. "The funds came from my savings account" answers the source of funds question for the account — but it does not answer the source of wealth question unless you know how the savings accumulated.</p>
+
+  <h2>Insufficient Answers for EDD Source of Wealth</h2>
+  <p>The ICA provides explicit guidance on answers that are insufficient for an EDD source of wealth enquiry. These are starting points for further questioning, not satisfactory answers:</p>
+  <ul>
+    <li>"<em>Savings</em>" — says nothing about how the savings were accumulated</li>
+    <li>"<em>Profits from investments</em>" — which investments, over what period, in what amounts?</li>
+    <li>"<em>Inheritance</em>" — from whom? What was the original source of that person's wealth?</li>
+    <li>"<em>Business dealings</em>" — what business, where, with what turnover?</li>
+    <li>"<em>Sale of business</em>" — what was the business, what did it generate, where are the sale proceeds documented?</li>
+  </ul>
+
+  <div class="case-study">
+    <div class="case-label">📋 Property Sector EDD Example</div>
+    <h3>A PEP Purchasing via Coadjute's Platform</h3>
+    <p>A buyer is identified as a PEP — a former government minister in an Eastern European state with a history of corruption. They are purchasing a £2.8m residential property in London. They state source of funds as "business income from my consulting firm."</p>
+    <p style="margin-top:10px"><strong>EDD response required:</strong></p>
+    <ul>
+      <li>Senior management sign-off required before proceeding</li>
+      <li>Name of consulting firm; nature of its work; revenue and profit history</li>
+      <li>Audited accounts or financial statements</li>
+      <li>Explanation of how consulting income supports a £2.8m property purchase</li>
+      <li>Source of the specific funds used — bank statements tracing the money from the consulting firm to the purchase funds</li>
+      <li>Background checks on the consulting firm's clients and activities</li>
+      <li>Ongoing enhanced monitoring of the relationship</li>
+    </ul>
+    <p style="margin-top:10px">Accepting "consulting income" without this detail would not meet the EDD standard. The ICA's test is not whether the answer is plausible — it is whether it has been <em>independently verified</em>.</p>
+  </div>
+
+  <div class="qc" id="qc3">
+    <div class="qc-tag">⚡ Quick Check</div>
+    <div class="qc-q">A buyer subject to EDD states that their source of wealth is "inheritance from my late grandfather." Is this sufficient?</div>
+    <div class="qc-opts">
+      <button class="qc-btn" onclick="qc(this,false,'qc3')">Yes — inheritance is a clearly legitimate source of wealth</button>
+      <button class="qc-btn" onclick="qc(this,true,'qc3')">No — "inheritance" is explicitly listed by the ICA as an insufficient source of wealth description for EDD. You must investigate further: from whom, what was the grandfather's source of wealth, is there probate documentation, and do the sums make sense?</button>
+      <button class="qc-btn" onclick="qc(this,false,'qc3')">Yes, provided a solicitor's letter confirming the inheritance is provided</button>
+    </div>
+    <div class="qc-fb" id="qc3-fb">Correct. "Inheritance" is explicitly listed by the ICA as one of several insufficient source of wealth descriptions for EDD purposes. It is a starting point, not an answer. You must ask further questions and obtain independent evidence.</div>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="btn-prev" onclick="goTo(2)">← Back</button>
+    <button class="btn-next" onclick="goTo(4)">Next: Plausibility Testing →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════ SEC 4: PLAUSIBILITY ══════════════════════════ -->
+<div class="section" id="sec4">
+  <div class="lesson-tag">Module 05 — Section 5 of 7</div>
+  <h1>Plausibility <span>Testing</span></h1>
+  <p class="lesson-intro">Plausibility testing is the ICA's term for what is, at heart, professional common sense. It means stepping back from the documents and asking: does this client's story actually make sense?</p>
+
+  <h2>What Is Plausibility Testing?</h2>
+  <p>The ICA defines plausibility testing as <em>"quite simply using common sense when applying CDD."</em> It is the professional obligation to assess whether a client's stated circumstances, financial profile, and explanation of source of funds and wealth are credible — given everything you know about them.</p>
+  <p>CDD is never a tick-box exercise. Even in a routine, low-risk case, each situation should be treated on its merits. Plausibility testing is the mental discipline that prevents CDD from becoming administrative box-ticking.</p>
+
+  <div class="exam-note">
+    <div class="exam-note-label">📘 ICA Exam Note — The ICA Plausibility Test Example</div>
+    <p>The manual sets out a specific example that appears in various forms in exam questions:</p>
+    <p style="margin-top:8px"><strong>Client profile:</strong> 24-year-old single UK national, resident in UAE for 12 months. Wants to open current and savings accounts. Previously banked with a rival in UAE. Occupation: IT Consultant, income ~AED 150,000 ($41,000). Has a property in UAE valued at 5 million Dirhams AND one in Germany valued at €13 million — both rented, no mortgages.</p>
+    <p style="margin-top:12px"><strong>ICA verdict: On the face of it, not plausible.</strong></p>
+    <ul>
+      <li>A large amount of assets for his age and stated income</li>
+      <li>How were the properties funded without mortgages on an IT consultant's salary?</li>
+      <li>How long has he had the properties? Were they purchased before employment?</li>
+      <li>What other income sources might exist?</li>
+    </ul>
+    <p style="margin-top:8px">The ICA notes there may be a rational explanation — perhaps inherited wealth, an early tech exit, or family support. But: <em>"unless you ask the question you will not know."</em></p>
+  </div>
+
+  <h2>The Four Plausibility Testing Questions</h2>
+  <p>The ICA sets out four key questions to work through when applying plausibility testing — particularly for EDD clients:</p>
+  <ol>
+    <li>Are you <strong>convinced that the funds and wealth</strong> can be reasonably explained and established to be legitimate?</li>
+    <li>Can you <strong>independently obtain evidence</strong> of the client's source of wealth for higher-risk accounts?</li>
+    <li>Are you able to <strong>establish the relationship between the client and any third party</strong> where accounts are funded by a third party?</li>
+    <li>Do you <strong>continue asking for information</strong> and persist in seeking clarity wherever circumstances are unclear or account structures are complex?</li>
+  </ol>
+
+  <h2>Property Sector Plausibility Scenarios</h2>
+  <p>Plausibility testing is especially important in property transactions, where large sums change hands rapidly. Some common scenarios Coadjute's team should recognise:</p>
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Client Statement</th><th>Plausibility Question</th><th>What to Do</th></tr></thead>
+      <tbody>
+        <tr><td>"I saved £450,000 cash from my market stall over 10 years"</td><td>What is a realistic annual profit from a market stall? Does the maths work? Is there any banking history showing gradual accumulation?</td><td>Request trading accounts and bank statements showing gradual accumulation. Cash-heavy businesses are high-risk — scrutinise closely.</td></tr>
+        <tr><td>"The funds are a gift from my family in Nigeria"</td><td>Who is the family member? What is their source of wealth? Are they a PEP? What is their relationship to the buyer?</td><td>Identify the third-party funder. Apply full CDD to them. Consider EDD if high-risk jurisdiction applies.</td></tr>
+        <tr><td>"I run a cash restaurant — these are trading profits"</td><td>What is the restaurant's turnover? What year did it open? Do the claimed profits match HMRC records?</td><td>Request business accounts, HMRC self-assessment records, and bank statements. Cross-reference turnover with the claimed funds.</td></tr>
+        <tr><td>"I sold my cryptocurrency portfolio last year"</td><td>What exchange? What coins? What was the purchase price vs. sale price? Are there records?</td><td>Request exchange records and transaction history. Large crypto gains are possible but must be documented.</td></tr>
+        <tr><td>"My employer pays me partly in cash"</td><td>Is this legal? Is there a contractual basis? Does it comply with minimum wage legislation?</td><td>Request employment contract, payslips, and bank records. Off-the-books payments are a red flag.</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout key">
+    <div class="callout-label">💡 The Plausibility Mindset</div>
+    <p>The ICA does not expect you to be a private investigator or to prove guilt. It expects you to be a <strong>professional with common sense</strong> who asks questions when a story doesn't add up. If the explanation is legitimate, asking questions causes no harm. If it is not, asking questions may be the thing that prevents your firm from being used to launder the proceeds of crime.</p>
+  </div>
+
+  <div class="qc" id="qc4">
+    <div class="qc-tag">⚡ Quick Check</div>
+    <div class="qc-q">A 28-year-old buyer is purchasing a £1.9m property in cash. They state they are a "self-employed trader." No further detail is provided. Applying the ICA's plausibility testing framework, what is the correct response?</div>
+    <div class="qc-opts">
+      <button class="qc-btn" onclick="qc(this,false,'qc4')">Accept the answer — self-employment is a legitimate occupation</button>
+      <button class="qc-btn" onclick="qc(this,false,'qc4')">Decline the transaction immediately — the profile is suspicious</button>
+      <button class="qc-btn" onclick="qc(this,true,'qc4')">Ask further questions — the profile is not obviously consistent with the transaction size. What type of trading? What turnover? How were the funds accumulated? There may be a legitimate explanation, but you must seek it before proceeding.</button>
+    </div>
+    <div class="qc-fb" id="qc4-fb">Correct. Plausibility testing does not require you to refuse — it requires you to ask. Age, transaction size, and vague occupational description together create a profile that warrants further enquiry. The ICA's position is: ask the question. If the answer is satisfactory and documented, you can proceed.</div>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="btn-prev" onclick="goTo(3)">← Back</button>
+    <button class="btn-next" onclick="goTo(5)">Next: Ongoing Monitoring →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════ SEC 5: ONGOING MONITORING ══════════════════════════ -->
+<div class="section" id="sec5">
+  <div class="lesson-tag">Module 05 — Section 6 of 7</div>
+  <h1>Ongoing <span>Monitoring</span></h1>
+  <p class="lesson-intro">CDD does not end when a business relationship is established. Regulation 28 of the MLR 2017 creates a continuing legal obligation to monitor — ensuring that what you learn about a client over time remains consistent with what you know about them.</p>
+
+  <h2>The Legal Basis: Regulation 28 MLR 2017</h2>
+  <p>Regulation 28 requires firms to conduct ongoing monitoring of every business relationship. This has two distinct and mandatory components:</p>
+  <ol>
+    <li><strong>Scrutiny of transactions</strong> — ensuring that transactions being undertaken are consistent with the firm's knowledge of the customer, their business and risk profile, including, where necessary, the source of funds</li>
+    <li><strong>Keeping CDD documents, data and information up to date</strong> — records must be kept current and reflect changes in the customer's circumstances</li>
+  </ol>
+
+  <div class="exam-note">
+    <div class="exam-note-label">📘 ICA Exam Note — Reg 28 Two-Part Obligation</div>
+    <p>The ICA tests on the distinction between the two components of Regulation 28. Both are mandatory. Scrutiny of transactions alone is insufficient — you must also keep records current. A firm that monitors activity but never updates its CDD records would not comply with Reg 28.</p>
+  </div>
+
+  <h2>What Transaction Scrutiny Means in Practice</h2>
+  <p>Transaction scrutiny is not about reviewing every payment manually. It is about having systems and processes that flag transactions that are inconsistent with the known profile of the customer. This means:</p>
+  <ul>
+    <li>Understanding what level of activity is <em>normal</em> for each client</li>
+    <li>Noticing when transactions change in size, frequency, counterparty, or jurisdiction</li>
+    <li>Identifying transactions that serve no apparent commercial or logical purpose</li>
+    <li>Escalating concerns to the MLRO when something doesn't fit the profile</li>
+  </ul>
+
+  <h2>Keeping CDD Records Up to Date</h2>
+  <p>The ICA is clear: CDD records must be reviewed and updated when the firm becomes aware of changes in the client's circumstances. Examples include:</p>
+  <ul>
+    <li>A change in the client's occupation or business activity</li>
+    <li>A change in the ownership structure of a corporate client</li>
+    <li>The client becoming a PEP (e.g. being appointed to public office)</li>
+    <li>The client's country of residence or business changing to a high-risk jurisdiction</li>
+    <li>Expiry of identity documents</li>
+  </ul>
+
+  <div class="callout warn">
+    <div class="callout-label">⚠️ The "Set and Forget" Failure</div>
+    <p>A major compliance failure the ICA highlights is treating CDD as a one-time event at onboarding. A client who was low-risk in 2020 may be high-risk in 2024. A client who was a private individual may now be a government minister. The obligation is ongoing — the risk is ongoing — and the monitoring must be ongoing.</p>
+  </div>
+
+  <h2>Risk-Based Monitoring Frequency</h2>
+  <p>How often should ongoing monitoring occur? The ICA's answer is: it depends on the risk. Higher-risk clients require more intensive and frequent monitoring. The ICA suggests frameworks such as:</p>
+  <ul>
+    <li>30-, 60- or 90-day client reviews for higher-risk relationships</li>
+    <li>Annual client reviews for standard-risk relationships, ideally conducted by someone other than the primary relationship manager</li>
+    <li>Event-triggered reviews — any significant change in circumstances, transaction pattern, or risk status should prompt an immediate review regardless of the scheduled cycle</li>
+  </ul>
+
+  <h2>CDD in Property: The Ongoing Obligation</h2>
+  <p>For Coadjute's purposes, the most relevant ongoing monitoring obligation arises where we maintain a continuing relationship with an estate agent or conveyancer, and where repeat transactions occur. If a buyer or seller appears multiple times in transactions, the CDD on file must be current and the historical risk profile must be reconsidered in light of each new transaction.</p>
+  <p>A one-time buyer purchasing a residential property is, in most cases, a transaction relationship that concludes. But where a client purchases multiple properties through the same agent, or where a developer transacts repeatedly, the relationship becomes ongoing — and ongoing monitoring obligations apply fully.</p>
+
+  <div class="qc" id="qc5">
+    <div class="qc-tag">⚡ Quick Check</div>
+    <div class="qc-q">Regulation 28 of the MLR 2017 requires ongoing monitoring to include: (select the most complete and accurate answer)</div>
+    <div class="qc-opts">
+      <button class="qc-btn" onclick="qc(this,false,'qc5')">An annual face-to-face review with every client</button>
+      <button class="qc-btn" onclick="qc(this,true,'qc5')">Scrutiny of transactions to ensure consistency with the firm's knowledge of the customer AND keeping CDD documents and information up to date — both are mandatory and distinct requirements</button>
+      <button class="qc-btn" onclick="qc(this,false,'qc5')">Reporting all transactions above £5,000 to the FCA</button>
+      <button class="qc-btn" onclick="qc(this,false,'qc5')">Re-verifying client identity every three years automatically</button>
+    </div>
+    <div class="qc-fb" id="qc5-fb">Correct. Regulation 28 has two distinct requirements: (a) transaction scrutiny — ensuring transactions match the customer's known profile; and (b) keeping CDD records current. Both are mandatory. Neither an annual face-to-face review nor automatic re-verification on a fixed schedule is the standard — it is risk-sensitive and responsive to change.</div>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="btn-prev" onclick="goTo(4)">← Back</button>
+    <button class="btn-next" onclick="goTo(6)">Next: Identifying Suspicious Activity →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════ SEC 6: SUSPICIOUS ACTIVITY ══════════════════════════ -->
+<div class="section" id="sec6">
+  <div class="lesson-tag">Module 05 — Section 7 of 7</div>
+  <h1>Identifying <span>Suspicious Activity</span></h1>
+  <p class="lesson-intro">Good CDD is what makes suspicious activity detectable. Without a baseline understanding of a client's expected behaviour, you cannot recognise when something is wrong. This section covers how to identify red flags, what "suspicion" means legally, and when to act.</p>
+
+  <h2>What Is a "Red Flag"?</h2>
+  <p>A red flag is an indicator — a piece of information, a pattern of behaviour, or a characteristic of a transaction — that suggests the possibility of ML or TF. Red flags are not proof of wrongdoing. They are signals that warrant closer examination.</p>
+  <p>The ICA categorises red flags across several dimensions. In the property sector, the most significant categories are:</p>
+
+  <div class="table-wrap">
+    <table>
+      <thead><tr><th>Category</th><th>Red Flags</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Source of Funds</strong></td><td>Unexplained cash; funds from a third party with no clear relationship; overseas funds from high-risk jurisdictions; large cash deposits shortly before purchase</td></tr>
+        <tr><td><strong>Transaction Behaviour</strong></td><td>Urgency to complete; indifference to price or terms; purchase significantly above market value; rapid resale at a loss; multiple transactions in short succession</td></tr>
+        <tr><td><strong>Identity & Ownership</strong></td><td>Complex offshore corporate structures; nominee arrangements; reluctance to identify beneficial owner; changing ownership structure mid-transaction</td></tr>
+        <tr><td><strong>Client Behaviour</strong></td><td>Refusal to provide information; unusual secrecy; changes in story; using multiple advisers for a simple transaction; avoiding face-to-face contact</td></tr>
+        <tr><td><strong>Property Characteristics</strong></td><td>Property purchased and immediately rented out at below-market rent; unusual property modifications; property rarely occupied after purchase</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>The Legal Threshold: What Does "Suspicious" Mean?</h2>
+  <p>The ICA spends considerable time on this question, because the answer matters legally. You do not need to <em>know</em> that money laundering is occurring to have a reporting obligation. The legal threshold is lower: you need <strong>reasonable grounds to suspect</strong>.</p>
+  <p>This means a suspicion that is based on objective facts — not a feeling, but information that would cause a reasonable person in your position to think something might be wrong. It is deliberately set below certainty, because the law wants concerns reported early, not after ML has been completed and the money has moved on.</p>
+
+  <div class="exam-note">
+    <div class="exam-note-label">📘 ICA Exam Note — The Suspicion Threshold</div>
+    <p>The ICA distinguishes between three levels:</p>
+    <ul>
+      <li><strong>Knowledge</strong> — you know ML is taking place. This is the highest threshold and rarely the trigger.</li>
+      <li><strong>Suspicion</strong> — you think ML is possible, based on objective grounds. This triggers the internal reporting obligation.</li>
+      <li><strong>Reasonable grounds to suspect</strong> — an objective standard: would a reasonable, informed professional in your position have reached the same conclusion? This is the standard applied to determine whether a SAR was appropriate.</li>
+    </ul>
+    <p style="margin-top:8px">The ICA also notes: you are not required to suspect a specific predicate offence. Suspicion that something criminal is occurring — even if you cannot identify what — is sufficient to trigger reporting.</p>
+  </div>
+
+  <h2>What Happens When a Red Flag Is Identified?</h2>
+  <p>When you encounter a red flag, the response is not to refuse the transaction or challenge the client. It is to escalate internally. Specifically:</p>
+  <ol>
+    <li><strong>Do not act on the transaction</strong> — do not complete, proceed, or take any further steps until the concern has been assessed</li>
+    <li><strong>Report internally to the MLRO</strong> — via your firm's internal reporting procedure. At Coadjute, this means escalating through the designated compliance channel</li>
+    <li><strong>Do not tip off the client</strong> — you must not tell the client that a report has been made or that they are under suspicion (this is a criminal offence — covered in Module 6)</li>
+    <li><strong>The MLRO decides</strong> — whether to make an external SAR to the National Crime Agency (NCA), and whether to consent to the transaction proceeding</li>
+  </ol>
+
+  <div class="callout warn">
+    <div class="callout-label">⚠️ The "I Wasn't Sure" Defence</div>
+    <p>A common misconception: "I thought it might be suspicious, but I wasn't certain, so I didn't report." The ICA is clear this is not a valid defence. The reporting obligation arises at the point of suspicion — not certainty. If you had reasonable grounds to suspect and did not report, you may have committed a criminal offence under POCA 2002.</p>
+  </div>
+
+  <div class="qc" id="qc6">
+    <div class="qc-tag">⚡ Quick Check</div>
+    <div class="qc-q">A staff member suspects unusual activity on a transaction but cannot identify what specific crime has been committed. They decide not to file an internal report because "I can't name the offence." According to the ICA, is this reasoning correct?</div>
+    <div class="qc-opts">
+      <button class="qc-btn" onclick="qc(this,false,'qc6')">Yes — you must identify the specific predicate offence before making a report</button>
+      <button class="qc-btn" onclick="qc(this,true,'qc6')">No — you are not required to suspect a particular type of crime or identify a specific predicate offence. Suspicion of criminality in the broadest sense is sufficient. The threshold is reasonable grounds to suspect ML is taking place — you report, and the MLRO and NCA investigate.</button>
+      <button class="qc-btn" onclick="qc(this,false,'qc6')">Yes — without knowing the crime, a SAR cannot be usefully filed</button>
+    </div>
+    <div class="qc-fb" id="qc6-fb">Correct. You are not required to identify a specific predicate offence. The ICA is explicit: suspicion of criminality — even at a general level — is sufficient to trigger the internal reporting obligation. The role of the MLRO, and ultimately the NCA, is to investigate. Your role is to report your concern.</div>
+  </div>
+
+  <div class="bottom-nav">
+    <button class="btn-prev" onclick="goTo(5)">← Back</button>
+    <button class="btn-next" onclick="goTo(7)">Proceed to Module Quiz →</button>
+  </div>
+</div>
+
+<!-- ══════════════════════════ SEC 7: QUIZ ══════════════════════════ -->
+<div class="section" id="sec7">
+  <div class="lesson-tag">Module 05 — Assessment</div>
+  <h1>Module 5 <span>Quiz</span></h1>
+  <p class="lesson-intro">15 questions · ICA-style · Pass mark: 70% (11 out of 15). Detailed explanations on every answer.</p>
+
+  <div id="quiz-start">
+    <div class="quiz-start-box">
+      <div style="font-size:2.5rem;margin-bottom:16px">📋</div>
+      <h2>Ready to Test Your Knowledge?</h2>
+      <p>This quiz covers all 7 sections of Module 5: the FATF CDD definition, standard CDD, simplified due diligence, enhanced due diligence, plausibility testing, Regulation 28 ongoing monitoring, and identifying suspicious activity.</p>
+      <button class="btn-next" style="padding:14px 40px;font-size:1rem" onclick="startQuiz()">Start Quiz →</button>
+    </div>
+  </div>
+
+  <div id="quiz-shell" style="display:none">
+    <div class="quiz-progress-bar"><div class="quiz-progress-fill" id="qpf" style="width:0%"></div></div>
+    <div id="q-mount"></div>
+  </div>
+
+  <div id="quiz-results" style="display:none">
+    <div id="result-fail" style="display:none">
+      <div class="result-fail-box">
+        <div class="result-emoji">❌</div>
+        <div class="result-score" id="fail-score"></div>
+        <div class="result-msg" id="fail-msg"></div>
+        <div class="result-breakdown" id="fail-breakdown"></div>
+        <button class="btn-retry-pri" onclick="retryQuiz()">Try Again</button>
       </div>
     </div>
-
-    <!-- ══════════════════════════════════════════════ -->
-    <!-- SEC 7: QUIZ -->
-    <!-- ══════════════════════════════════════════════ -->
-    <div class="section" id="sec7">
-      <div class="lesson-tag">Module 05 — Assessment</div>
-      <div class="lesson-header">
-        <h1>Module 5 Quiz</h1>
-        <p class="lesson-intro">15 questions · ICA-style · Pass mark: 70% (11/15)</p>
-      </div>
-
-      <div id="quiz-start">
-        <div class="callout info">
-          <div class="callout-label">ℹ️ Before You Begin</div>
-          <p>This quiz covers all sections of Module 5: the FATF CDD definition, standard CDD, simplified due diligence, enhanced due diligence, plausibility testing, ongoing monitoring (Regulation 28), and identifying suspicious activity. You need 11/15 (70%) to pass.</p>
+    <div id="result-pass" style="display:none">
+      <div class="result-pass-box">
+        <div class="result-emoji">🎉</div>
+        <div class="result-score pass" id="pass-score"></div>
+        <div class="result-msg" id="pass-msg"></div>
+        <div class="result-breakdown" id="pass-breakdown"></div>
+        <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-top:8px">
+          <a href="index.html" class="btn-dashboard">← Back to Dashboard</a>
+          <button class="btn-retry-sec" onclick="retryQuiz()">Retake for a Better Score</button>
         </div>
-        <div style="text-align:center;margin:32px 0">
-          <button class="btn-next cta" style="padding:16px 48px;font-size:1rem" onclick="startQuiz()">Start Quiz →</button>
-        </div>
-      </div>
-
-      <div id="quiz-shell" style="display:none">
-        <div class="quiz-header">
-          <h2 id="q-header">Question 1 of 15</h2>
-          <p id="q-progress-label">Progress: 0 of 15 answered</p>
-        </div>
-        <div id="q-mount"></div>
-      </div>
-
-      <div class="quiz-results" id="quiz-results" style="display:none">
-        <div style="font-size:3rem">🎓</div>
-        <div class="result-score" id="res-score"></div>
-        <div class="result-msg" id="res-msg"></div>
-        <div class="result-breakdown" id="res-breakdown"></div>
-        <div style="margin-top:16px;display:flex;gap:12px;justify-content:center;flex-wrap:wrap">
-          <button class="btn-prev" onclick="retake()">↩ Retake Quiz</button>
-          <div class="completion-banner" id="comp-banner">
-            <h3>✅ Module 5 Complete!</h3>
-            <p>Excellent work — CDD is the most important practical skill in AML. You've mastered it.</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="bottom-nav">
-        <button class="btn-prev" onclick="goTo(6)">← Back to Content</button>
-        <div></div>
       </div>
     </div>
+  </div>
 
-  </main>
+  <div class="bottom-nav" id="quiz-back-nav">
+    <button class="btn-prev" onclick="goTo(6)">← Back to Content</button>
+    <div></div>
+  </div>
+</div>
+
+</main>
 </div>
 
 <script>
-const Qs=[
+// ════ NAVIGATION ════
+let unlockedUpTo = 0;
+const TOTAL = 8;
+
+function goTo(n) {
+  if (n > unlockedUpTo + 1) return; // allow going back freely
+  // Actually allow jumping back to any completed section
+  if (n > unlockedUpTo) return;
+  
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec'+n).classList.add('active');
+  updateSidebar(n);
+  updateProgress();
+  window.scrollTo(0,0);
+  document.getElementById('mainContent').scrollTop = 0;
+  
+  // Hide quiz back nav if not on quiz
+  document.getElementById('quiz-back-nav').style.display = n === 7 ? 'flex' : 'none';
+}
+
+function unlock(n) {
+  if (n > unlockedUpTo) unlockedUpTo = n;
+  updateSidebar(null);
+  updateProgress();
+}
+
+function completeSection(n) {
+  unlock(n + 1); // unlock next
+  goTo(n + 1);
+}
+
+function updateSidebar(active) {
+  for (let i = 0; i < TOTAL; i++) {
+    const el = document.getElementById('ni'+i);
+    const li = document.getElementById('li'+i);
+    const ti = el ? el.querySelector('.tick-icon') : null;
+    if (!el) continue;
+    el.classList.remove('active','completed','locked');
+    if (li) li.style.display = 'none';
+    if (i < unlockedUpTo) {
+      el.classList.add('completed');
+      if (li) { li.textContent = '✓'; li.className = 'tick-icon'; li.style.display = 'inline'; }
+    } else if (i === unlockedUpTo) {
+      // current unlocked
+    } else {
+      el.classList.add('locked');
+      if (li) { li.textContent = '🔒'; li.className = 'lock-icon'; li.style.display = 'inline'; }
+    }
+    if (active !== null && i === active) el.classList.add('active');
+  }
+}
+
+function updateProgress() {
+  const pct = Math.round((unlockedUpTo / TOTAL) * 100);
+  document.getElementById('topFill').style.width = pct + '%';
+  document.getElementById('topPct').textContent = pct + '% complete';
+  document.getElementById('progFill').style.width = pct + '%';
+  document.getElementById('progLabel').textContent = unlockedUpTo + ' of ' + TOTAL + ' sections complete';
+}
+
+// Override goTo to allow back-navigation freely
+function goTo(n) {
+  if (n > unlockedUpTo) return; // can't skip ahead past unlocked
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec'+n).classList.add('active');
+  updateSidebar(n);
+  updateProgress();
+  window.scrollTo(0,0);
+  document.getElementById('quiz-back-nav').style.display = (n === 7) ? 'flex' : 'none';
+}
+
+// Unlock first section
+unlockedUpTo = 0;
+updateSidebar(0);
+updateProgress();
+document.getElementById('quiz-back-nav').style.display = 'none';
+
+// When user clicks Next, unlock the next section
+// Intercept bottom-nav next buttons via wrapper
+function nextSection(current) {
+  unlock(current + 1);
+  goTo(current + 1);
+}
+
+// Re-wire bottom-nav buttons to use nextSection
+document.addEventListener('DOMContentLoaded', () => {
+  // Already wired inline, just ensure quiz-back-nav hidden
+  document.getElementById('quiz-back-nav').style.display = 'none';
+});
+
+// ════ QUICK CHECKS ════
+function qc(btn, correct, id) {
+  const container = document.getElementById(id);
+  const btns = container.querySelectorAll('.qc-btn');
+  btns.forEach(b => { b.disabled = true; });
+  btn.classList.add(correct ? 'correct' : 'wrong');
+  const fb = document.getElementById(id + '-fb');
+  fb.style.display = 'block';
+  if (correct) fb.innerHTML = '✅ ' + fb.innerHTML;
+  else fb.innerHTML = '❌ ' + fb.innerHTML;
+}
+
+// ════ QUIZ DATA ════
+const Qs = [
   {
-    q:"Which of the following is NOT one of the four FATF components of CDD?",
-    opts:["Identifying and verifying the customer's identity","Identifying the beneficial owner","Conducting ongoing due diligence and transaction scrutiny","Conducting a criminal background check on all customers"],
-    ans:3,
-    expl:"FATF defines CDD as comprising: (a) identifying and verifying the customer; (b) identifying the beneficial owner; (c) understanding the business relationship's purpose; and (d) ongoing monitoring and transaction scrutiny. Criminal background checks are not part of the standard FATF CDD definition."
+    q: "Which of the following is NOT one of the four FATF components of CDD?",
+    opts: ["Identifying and verifying the customer's identity","Identifying the beneficial owner","Conducting ongoing due diligence and transaction scrutiny","Conducting a criminal background check on all customers"],
+    ans: 3,
+    expl: "FATF defines CDD as comprising: (a) identifying and verifying the customer; (b) identifying the beneficial owner; (c) understanding the business relationship's purpose; and (d) ongoing monitoring and transaction scrutiny. Criminal background checks are not part of the standard FATF CDD definition."
   },
   {
-    q:"When must CDD be completed, according to the ICA?",
-    opts:["Within 30 days of the first transaction","Before any transactions are completed for any client","Only for transactions above £10,000","After the first meeting with the client, within a reasonable timeframe"],
-    ans:1,
-    expl:"The ICA states clearly: 'CDD must be completed in all cases before any transactions are completed for any client.' There is no monetary threshold and no grace period. CDD comes first — then the transaction."
+    q: "When must CDD be completed, according to the ICA?",
+    opts: ["Within 30 days of the first transaction","Before any transactions are completed for any client","Only for transactions above £10,000","After the first meeting with the client, within a reasonable timeframe"],
+    ans: 1,
+    expl: "The ICA states clearly: 'CDD must be completed in all cases before any transactions are completed for any client.' There is no monetary threshold and no grace period. CDD comes first — then the transaction."
   },
   {
-    q:"A firm must apply CDD when it suspects money laundering — but which of the following is also a trigger requiring CDD to be applied?",
-    opts:["When a client changes their address","When a client's account has been dormant for 6 months","When the firm has doubts about the veracity or adequacy of documents previously obtained","When a client misses a scheduled appointment"],
-    ans:2,
-    expl:"The four CDD triggers are: (1) establishing a business relationship; (2) carrying out an occasional transaction; (3) suspicion of ML/TF; and (4) doubts about the veracity or adequacy of previously obtained documents. Option C is a CDD trigger directly listed by the ICA."
+    q: "A firm must apply CDD when it suspects money laundering — but which of the following is also a trigger requiring CDD to be applied?",
+    opts: ["When a client changes their address","When a client's account has been dormant for 6 months","When the firm has doubts about the veracity or adequacy of documents previously obtained","When a client misses a scheduled appointment"],
+    ans: 2,
+    expl: "The four CDD triggers are: (1) establishing a business relationship; (2) carrying out an occasional transaction; (3) suspicion of ML/TF; and (4) doubts about the veracity or adequacy of previously obtained documents. Option C is a CDD trigger directly listed by the ICA."
   },
   {
-    q:"Simplified Due Diligence (SDD) is best described as:",
-    opts:["A complete exemption from CDD requirements for low-risk clients","A reduced version of CDD applicable only where the firm has actively assessed and documented that the relationship presents a genuinely low ML/TF risk","Available whenever the client is a UK national","The default CDD approach for all retail clients"],
-    ans:1,
-    expl:"SDD is a reduction, not an exemption. It requires the firm's own risk assessment to determine the relationship presents low ML/TF risk. That decision must be documented and justifiable to regulators. Basic identification requirements still apply."
+    q: "Simplified Due Diligence (SDD) is best described as:",
+    opts: ["A complete exemption from CDD requirements for low-risk clients","A reduced version of CDD applicable only where the firm has actively assessed and documented that the relationship presents a genuinely low ML/TF risk","Available whenever the client is a UK national","The default CDD approach for all retail clients"],
+    ans: 1,
+    expl: "SDD is a reduction, not an exemption. It requires the firm's own risk assessment to determine the relationship presents low ML/TF risk. That decision must be documented and justifiable to regulators. Basic identification requirements still apply."
   },
   {
-    q:"Which of the following is an example of a simplified CDD measure permitted by the FATF Interpretive Notes to Recommendation 10?",
-    opts:["Applying no CDD at all for small transactions","Verifying identity after the business relationship is established if transactions remain below a defined monetary threshold","Accepting verbal confirmation of identity without documentation","Applying EDD measures at a reduced frequency"],
-    ans:1,
-    expl:"The FATF Interpretive Notes permit, under SDD: delaying verification until transactions exceed a defined threshold; reducing frequency of ID updates; reducing ongoing monitoring; and inferring purpose from transaction type rather than collecting specific information."
+    q: "Which of the following is an example of a simplified CDD measure permitted by the FATF Interpretive Notes to Recommendation 10?",
+    opts: ["Applying no CDD at all for small transactions","Delaying verification of identity until after the business relationship is established, provided transactions remain below a defined monetary threshold","Accepting verbal confirmation of identity without documentation","Applying EDD measures at a reduced frequency"],
+    ans: 1,
+    expl: "The FATF Interpretive Notes permit, under SDD: delaying verification until transactions exceed a defined threshold; reducing frequency of ID updates; reducing ongoing monitoring; and inferring purpose from transaction type rather than collecting specific information."
   },
   {
-    q:"Enhanced Due Diligence (EDD) is mandatory for which of the following?",
-    opts:["All clients from EU member states","Politically Exposed Persons (PEPs) and customers from high-risk third countries","Clients with more than £500,000 in assets","Any client whose account has been open for more than five years"],
-    ans:1,
-    expl:"EDD is specifically mandated for PEPs and their close associates, customers from or involving high-risk third countries, correspondent banking relationships, and any situation the firm's risk assessment identifies as higher-risk. There is no asset threshold or duration trigger."
+    q: "Enhanced Due Diligence (EDD) is mandatory for which of the following?",
+    opts: ["All clients from EU member states","Politically Exposed Persons (PEPs) and customers from high-risk third countries","Clients with more than £500,000 in assets","Any client whose account has been open for more than five years"],
+    ans: 1,
+    expl: "EDD is specifically mandated for PEPs and their close associates, customers from or involving high-risk third countries, correspondent banking relationships, and any situation the firm's risk assessment identifies as higher-risk. There is no asset threshold or duration trigger."
   },
   {
-    q:"Which of the following source of wealth descriptions would the ICA consider INSUFFICIENT for an EDD client?",
-    opts:["Audited financial statements showing five years of business income","'Savings' — with no further detail or documentation","Sale proceeds from a property, supported by a completion statement","Salary income documented by HMRC P60 records"],
-    ans:1,
-    expl:"The ICA explicitly lists 'savings' as one of several insufficient source of wealth descriptions for EDD purposes (alongside 'profits from investments', 'inheritance', 'business dealings', 'sale of business'). These are starting points for enquiry, not answers. Audited accounts, completion statements, and HMRC records are examples of adequate documentation."
+    q: "Which of the following source of wealth descriptions would the ICA consider INSUFFICIENT for an EDD client?",
+    opts: ["Audited financial statements showing five years of business income","'Savings' — with no further detail or documentation","Sale proceeds from a property, supported by a completion statement","Salary income documented by HMRC P60 records"],
+    ans: 1,
+    expl: "The ICA explicitly lists 'savings' as one of several insufficient source of wealth descriptions for EDD purposes (alongside 'profits from investments', 'inheritance', 'business dealings', 'sale of business'). These are starting points for enquiry, not answers."
   },
   {
-    q:"The ICA's plausibility testing concept is best summarised as:",
-    opts:["Verifying that all property valuations are accurate","Applying professional common sense to assess whether a client's financial profile and explanation of funds are credible given what you know about them","A formal statistical analysis of client income versus expenditure","A tick-box verification process for standard identity documents"],
-    ans:1,
-    expl:"The ICA defines plausibility testing as 'quite simply using common sense when applying CDD.' It is the obligation to assess whether the client's story makes sense in light of their stated circumstances. It is explicitly described as not a tick-box exercise — each case must be assessed on its merits."
+    q: "What is the difference between 'source of funds' and 'source of wealth' in an EDD context?",
+    opts: ["They are the same concept — the ICA uses the terms interchangeably","Source of funds refers to the specific money used in this transaction; source of wealth refers to how the client accumulated their overall wealth","Source of wealth is only relevant for PEPs","Source of funds only applies to cash transactions"],
+    ans: 1,
+    expl: "These are distinct concepts. Source of funds = where did the money in this specific transaction come from? Source of wealth = how did the client come to have the wealth they have overall? For EDD clients, both must be established and verified independently."
   },
   {
-    q:"A 24-year-old IT consultant earning $41,000 per year wants to open bank accounts. He has two properties — one valued at 5 million AED and one at €13 million — both owned mortgage-free. What is the correct CDD response?",
-    opts:["Proceed with standard CDD — high-value property ownership is not suspicious","Apply plausibility testing — the profile is not obviously consistent with the stated income and occupation, and questions must be asked","Apply SDD — young clients are generally low risk","Refuse the relationship without making further enquiries"],
-    ans:1,
-    expl:"This is directly based on the ICA's plausibility testing example. The ICA verdict: 'on the face of it, not plausible.' A large amount of assets for the stated income and age, funded without mortgages. The correct response is to ask questions — there may be a legitimate explanation (e.g. inherited wealth), but you must ask."
+    q: "The ICA's plausibility testing concept is best summarised as:",
+    opts: ["Verifying that all property valuations are accurate","Applying professional common sense to assess whether a client's financial profile and explanation of funds are credible given what you know about them","A formal statistical analysis of client income versus expenditure","A tick-box verification process for standard identity documents"],
+    ans: 1,
+    expl: "The ICA defines plausibility testing as 'quite simply using common sense when applying CDD.' It is the obligation to assess whether the client's story makes sense in light of their stated circumstances. It is explicitly described as not a tick-box exercise — each case must be assessed on its merits."
   },
   {
-    q:"Regulation 28 of the MLR 2017 requires ongoing monitoring to include:",
-    opts:["An annual face-to-face review with every client","Scrutiny of transactions to ensure consistency with the firm's knowledge of the customer, AND keeping CDD documents and information up to date","Reporting all transactions above £5,000 to the FCA","Re-verifying identity for all clients every three years"],
-    ans:1,
-    expl:"Regulation 28 has two distinct requirements: (a) transaction scrutiny — ensuring transactions match the customer's known profile; and (b) keeping CDD records current. Both are mandatory. Neither an annual face-to-face review nor automatic re-verification on a fixed schedule is the requirement — the standard is risk-sensitive and responsive to change."
+    q: "A 24-year-old IT consultant earning $41,000 per year wants to open bank accounts. He owns two properties — one valued at 5 million AED and one at €13 million — both owned mortgage-free. What is the correct CDD response?",
+    opts: ["Proceed with standard CDD — high-value property ownership is not suspicious","Apply plausibility testing — the profile is not obviously consistent with the stated income and occupation, and questions must be asked","Apply SDD — young clients are generally low risk","Refuse the relationship without making further enquiries"],
+    ans: 1,
+    expl: "This is directly based on the ICA's plausibility testing example. The ICA verdict: 'on the face of it, not plausible.' A large amount of assets for the stated income and age, funded without mortgages. The correct response is to ask questions — there may be a legitimate explanation, but you must ask."
   },
   {
-    q:"An employee has noticed that a client's transactions have changed pattern significantly — larger, more frequent transfers to overseas accounts. The employee is not sure whether this is suspicious. According to the ICA, what should they do?",
-    opts:["Do nothing — a suspicion must be certain before reporting","Analyse available CDD, discuss with colleagues and management, and if appropriate make discreet client enquiries — if concern remains or deepens, report to the MLRO","Wait six months to see if the pattern continues","Only act if the client is a PEP"],
-    ans:1,
-    expl:"The ICA describes the suspicion formulation process as: Comfort → Concern → Suspicion. When concern is triggered, the employee should: analyse CDD; discuss with colleagues/managers; make discreet enquiries. If concern remains or deepens into suspicion, report to the MLRO as quickly as possible. Certainty is not required — reasonable grounds to suspect is the threshold."
+    q: "Regulation 28 of the MLR 2017 requires ongoing monitoring to include:",
+    opts: ["An annual face-to-face review with every client","Scrutiny of transactions to ensure consistency with the firm's knowledge of the customer, AND keeping CDD documents and information up to date — both requirements are distinct and mandatory","Reporting all transactions above £5,000 to the FCA","Re-verifying identity for all clients every three years"],
+    ans: 1,
+    expl: "Regulation 28 has two distinct requirements: (a) transaction scrutiny — ensuring transactions match the customer's known profile; and (b) keeping CDD records current. Both are mandatory. Neither an annual face-to-face review nor automatic re-verification on a fixed schedule is the standard — it is risk-sensitive and responsive to change."
   },
   {
-    q:"An employee fails to report suspicious activity because 'no individual transaction was suspicious on its own.' According to the ICA, is this a valid reason?",
-    opts:["Yes — each transaction must be assessed independently","No — it is often the combination of factors across a relationship that creates suspicion. Individual elements that seem innocuous may be suspicious in combination","Yes — only transactions that are individually suspicious must be reported","No — all unusual transactions must be reported regardless of context"],
-    ans:1,
-    expl:"The ICA explicitly addresses this: 'Very often it is a combination of factors or features within a relationship that will lead to a suspicion about the relationship as a whole.' Failing to report because no single element is suspicious ignores the holistic picture that CDD is designed to build."
+    q: "An employee notices that a client's transactions have significantly changed — larger, more frequent transfers to overseas accounts. The employee is not certain whether this is suspicious. According to the ICA, what should they do?",
+    opts: ["Wait until they are certain before taking any action","Report their concern to the MLRO via the firm's internal reporting procedure — the threshold is reasonable grounds to suspect, not certainty","Confront the client directly to ask for an explanation","Do nothing — transaction pattern changes are normal"],
+    ans: 1,
+    expl: "The reporting obligation arises at the point of suspicion, not certainty. The employee has a concern based on objective observations — a change in pattern. That is sufficient to trigger the internal reporting obligation. The MLRO will assess the concern and decide whether an external SAR is warranted."
   },
   {
-    q:"The 'objective test of suspicion' means that:",
-    opts:["You are only liable if you personally believed the activity was suspicious","You may be judged on what a reasonable, trained person in your position should have suspected — not just on what you actually believed","The test is the same for all employees regardless of their role","Suspicion must be proven beyond reasonable doubt"],
-    ans:1,
-    expl:"The objective test requires a prosecutor to prove not that you actually suspected ML (subjective test), but that you should have suspected it given all available information. The ICA notes that this standard is higher for employees of regulated firms — you are expected to have the training and CDD tools to identify what others might miss."
+    q: "In the context of identifying suspicious activity, which of the following is a red flag specific to property sector transactions?",
+    opts: ["A buyer using a standard residential mortgage","A buyer insisting on unusually rapid completion, apparently indifferent to the price, and paying substantially above market value in cash","A buyer who has previously purchased property in the UK","A buyer represented by a solicitor"],
+    ans: 1,
+    expl: "Urgency combined with cash purchase above asking price is a classic ML red flag in property. Criminals are often willing to overpay because the purpose is laundering funds, not achieving value. Indifference to price is a strong plausibility testing failure and should trigger an internal report to the MLRO."
   },
   {
-    q:"A client who was assessed as low-risk at onboarding has just been appointed as a government minister in a foreign country. Your next scheduled CDD review is in 3 years. What must you do?",
-    opts:["Wait for the next scheduled review — the 3-year cycle is reasonable","Conduct an immediate CDD review — ministerial appointment makes the client a PEP, triggering mandatory EDD regardless of when the next scheduled review falls","Request updated ID documents only","Only act if the client's transaction patterns change"],
-    ans:1,
-    expl:"A ministerial appointment is a material change that triggers PEP status. PEPs require EDD — this cannot wait for a scheduled review cycle. Regulation 28 requires CDD to be kept up to date, including responding to material changes in client circumstances. Fixed review cycles are a floor, not a ceiling."
+    q: "The legal threshold for making an internal ML report (an internal SAR to the MLRO) is:",
+    opts: ["Certainty that money laundering has occurred","Knowledge of a specific predicate offence","Reasonable grounds to suspect that money laundering is taking place — based on objective information, not merely a feeling","Proof that the client has made a false statement on their ID documents"],
+    ans: 2,
+    expl: "The threshold for internal reporting is 'reasonable grounds to suspect' — an objective standard. You do not need certainty, you do not need to identify the predicate offence, and you do not need proof. If a reasonable, informed professional in your position would have had the same suspicion, you must report. Failure to do so may constitute a criminal offence under POCA 2002."
   },
   {
-    q:"A buyer's source of funds for a £950,000 property purchase is described as 'family money from my father in Pakistan — he runs a business there.' Which is the most appropriate response under the ICA's CDD framework?",
-    opts:["Accept this — family gifts are a normal source of funds","This requires plausibility testing and likely EDD: identify the father, understand his source of wealth and the nature of the business, assess country risk for Pakistan, and establish the legal basis for the gift","Simply request a bank transfer statement showing the funds in the buyer's account","Decline the instruction — overseas funds are too risky to accept"],
-    ans:1,
-    expl:"Third-party funding requires establishing the relationship between the buyer and the third party and understanding the third party's own source of funds. Pakistan may have specific country risk factors requiring assessment. The description 'runs a business' is not a sufficient source of wealth. This scenario may also trigger EDD. Simply seeing a bank statement showing funds in the account does not answer where those funds originally came from."
+    q: "A staff member decides not to report a suspicious transaction because they 'can't name the exact crime' they suspect is being committed. According to the ICA, this reasoning is:",
+    opts: ["Correct — you need to identify the offence before a report is useful","Correct — vague reports are not acted upon by the NCA","Incorrect — you are not required to identify a specific predicate offence. Suspicion of ML/criminal activity in general is sufficient to trigger the reporting obligation","Correct — it is the MLRO's job to independently detect suspicion, not the employee's"],
+    ans: 2,
+    expl: "You are not required to identify a specific predicate offence. The ICA is explicit: suspicion of criminality at a general level is sufficient to trigger the internal reporting obligation. Your job is to report your concern. The MLRO — and if they make an external SAR, the NCA — will investigate. Failing to report because you cannot name the offence is a compliance failure and may be a criminal offence."
   }
 ];
 
-let qIdx=0,score=0,answered=[];
+let answered = [], current = 0;
 
-function startQuiz(){
-  qIdx=0;score=0;answered=[];
-  document.getElementById('quiz-start').style.display='none';
-  document.getElementById('quiz-shell').style.display='block';
-  renderQ();
+function startQuiz() {
+  document.getElementById('quiz-start').style.display = 'none';
+  document.getElementById('quiz-shell').style.display = 'block';
+  document.getElementById('quiz-back-nav').style.display = 'none';
+  answered = [];
+  current = 0;
+  renderQ(0);
 }
 
-function renderQ(){
-  const Q=Qs[qIdx];
-  const letters=['A','B','C','D'];
-  document.getElementById('q-header').textContent=`Question ${qIdx+1} of ${Qs.length}`;
-  document.getElementById('q-progress-label').textContent=`Progress: ${qIdx} of ${Qs.length} answered`;
-  document.getElementById('q-mount').innerHTML=`
-    <div class="q-block">
-      <div class="q-num">Question ${qIdx+1}</div>
-      <div class="q-text">${Q.q}</div>
-      ${Q.opts.map((o,i)=>`<div class="a-opt" onclick="pick(this,${i})" id="opt${i}"><span class="let">${letters[i]}</span><span>${o}</span></div>`).join('')}
-      <div class="q-fb" id="qfb"></div>
-      <div class="q-next" id="qnext" style="display:none"><button class="btn-qnext" onclick="nextQ()">${qIdx===Qs.length-1?'See Results →':'Next Question →'}</button></div>
+function renderQ(i) {
+  const q = Qs[i];
+  document.getElementById('qpf').style.width = (i / Qs.length * 100) + '%';
+  const html = `
+    <div class="quiz-q-box">
+      <div class="quiz-q-num">Question ${i+1} of ${Qs.length}</div>
+      <div class="quiz-q-text">${q.q}</div>
+      <div class="quiz-opts" id="opts">
+        ${q.opts.map((o,j) => `<button class="quiz-opt" onclick="answerQ(${i},${j})">${o}</button>`).join('')}
+      </div>
+      <div class="quiz-expl" id="expl">${q.expl}</div>
+      <div class="quiz-nav" id="qnav" style="display:none">
+        <button class="btn-next-q" onclick="nextQ(${i})">${i < Qs.length-1 ? 'Next Question →' : 'See Results →'}</button>
+      </div>
     </div>`;
+  document.getElementById('q-mount').innerHTML = html;
 }
 
-function pick(el,i){
-  const Q=Qs[qIdx];
-  document.querySelectorAll('.a-opt').forEach(o=>o.onclick=null);
-  const ok=i===Q.ans;
-  el.classList.add(ok?'correct':'wrong');
-  document.getElementById('opt'+Q.ans).classList.add('correct');
-  const fb=document.getElementById('qfb');
-  fb.className='q-fb show '+(ok?'c':'w');
-  fb.innerHTML='<strong>'+(ok?'✓ Correct! ':'✗ Incorrect. ')+Q.expl+'</strong>';
-  fb.innerHTML='<strong>'+(ok?'✓ Correct!':'✗ Incorrect.')+'</strong> '+Q.expl;
-  document.getElementById('qnext').style.display='flex';
-  if(ok)score++;
-  answered.push({q:Q.q,correct:ok,right:Q.opts[Q.ans]});
+function answerQ(qi, sel) {
+  const q = Qs[qi];
+  const opts = document.querySelectorAll('.quiz-opt');
+  opts.forEach(b => b.disabled = true);
+  opts[sel].classList.add(sel === q.ans ? 'correct' : 'wrong');
+  if (sel !== q.ans) opts[q.ans].classList.add('correct');
+  document.getElementById('expl').style.display = 'block';
+  document.getElementById('qnav').style.display = 'flex';
+  answered[qi] = { correct: sel === q.ans, q: q.q, right: q.opts[q.ans] };
 }
 
-function nextQ(){
-  qIdx++;
-  if(qIdx>=Qs.length){showResults();return;}
-  renderQ();
+function nextQ(i) {
+  if (i < Qs.length - 1) {
+    current = i + 1;
+    renderQ(current);
+  } else {
+    showResults();
+  }
 }
 
-function showResults(){
-  document.getElementById('quiz-shell').style.display='none';
-  const r=document.getElementById('quiz-results');r.style.display='block';
-  const pct=Math.round((score/Qs.length)*100);
-  const pass=pct>=70;
-  document.getElementById('res-score').textContent=`${score}/${Qs.length}`;
-  document.getElementById('res-msg').innerHTML=`<strong>${pct}%</strong> — <span class="${pass?'result-pass':'result-fail'}">${pass?'✓ PASS — well done! Module 5 complete.':'✗ FAIL — review the content and try again. You need 70% to pass.'}</span>`;
-  const bd=document.getElementById('res-breakdown');
-  bd.innerHTML='<strong style="display:block;margin-bottom:12px;font-size:.9rem">Question Breakdown</strong>';
-  answered.forEach((a,i)=>{
-    const d=document.createElement('div');d.className='rb-item';
-    d.innerHTML=`<span style="min-width:24px;font-weight:700;font-size:.8rem">${i+1}.</span><span class="${a.correct?'rb-correct':'rb-wrong'}" style="min-width:20px">${a.correct?'✓':'✗'}</span><span style="flex:1"><strong>${a.q}</strong>${!a.correct?`<br><span style="color:#889;font-size:.8rem">Correct: ${a.right}</span>`:''}</span>`;
-    bd.appendChild(d);
-  });
-  if(pass)document.getElementById('comp-banner').classList.add('show');
-  unlockSidebar(7);updateProgress();
+function showResults() {
+  document.getElementById('quiz-shell').style.display = 'none';
+  document.getElementById('quiz-results').style.display = 'block';
+  document.getElementById('qpf').style.width = '100%';
+
+  const score = answered.filter(a => a && a.correct).length;
+  const pct = Math.round((score / Qs.length) * 100);
+  const pass = pct >= 70;
+
+  const breakdown = answered.map((a, i) => `
+    <div class="rb-item">
+      <span style="min-width:24px;font-weight:700;font-size:.8rem">${i+1}.</span>
+      <span class="${a.correct ? 'rb-correct' : 'rb-wrong'}" style="min-width:20px">${a.correct ? '✓' : '✗'}</span>
+      <span style="flex:1"><strong>${a.q}</strong>${!a.correct ? `<br><span style="color:#889;font-size:.8rem">Correct: ${a.right}</span>` : ''}</span>
+    </div>`).join('');
+
+  if (pass) {
+    document.getElementById('result-fail').style.display = 'none';
+    document.getElementById('result-pass').style.display = 'block';
+    document.getElementById('pass-score').textContent = score + '/' + Qs.length + ' — ' + pct + '%';
+    document.getElementById('pass-msg').textContent = 'You passed! CDD is the most important practical skill in AML — well done.';
+    document.getElementById('pass-breakdown').innerHTML = '<strong style="display:block;margin-bottom:12px;font-size:.9rem">Question Breakdown</strong>' + breakdown;
+    unlock(TOTAL); // mark module complete
+  } else {
+    document.getElementById('result-pass').style.display = 'none';
+    document.getElementById('result-fail').style.display = 'block';
+    document.getElementById('fail-score').textContent = score + '/' + Qs.length + ' — ' + pct + '%';
+    document.getElementById('fail-msg').textContent = 'You need 70% (11/15) to pass. Review the sections and try again.';
+    document.getElementById('fail-breakdown').innerHTML = '<strong style="display:block;margin-bottom:12px;font-size:.9rem">Question Breakdown</strong>' + breakdown;
+  }
 }
 
-function retake(){
-  document.getElementById('quiz-results').style.display='none';
-  document.getElementById('quiz-start').style.display='block';
+function retryQuiz() {
+  document.getElementById('quiz-results').style.display = 'none';
+  document.getElementById('quiz-start').style.display = 'block';
+  document.getElementById('quiz-back-nav').style.display = 'flex';
 }
 
-// NAV
-let unlockedUpTo=0;
-function goTo(n){
-  if(n>unlockedUpTo+1)return;
-  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
-  document.getElementById('sec'+n).classList.add('active');
-  updateSidebarHL(n);
-  if(n>unlockedUpTo)unlockSidebar(n);
-  updateProgress();
-  document.getElementById('main-content').scrollTop=0;window.scrollTo(0,0);
-}
-function unlockSidebar(n){
-  if(n>unlockedUpTo)unlockedUpTo=n;
-  document.querySelectorAll('.snav-item').forEach((el,i)=>{
-    el.classList.remove('active','locked');
-    if(i>unlockedUpTo)el.classList.add('locked');
-  });
-}
-function updateSidebarHL(n){
-  document.querySelectorAll('.snav-item').forEach((el,i)=>{el.classList.remove('active');if(i===n)el.classList.add('active');});
-}
-function updateProgress(){
-  const pct=Math.round((unlockedUpTo/7)*100);
-  document.getElementById('progress-fill').style.width=pct+'%';
-  document.getElementById('sp-fill').style.width=pct+'%';
-  document.getElementById('sp-pct').textContent=(unlockedUpTo)+' of 8 sections';
-}
-
-// QUICK CHECKS
-const qcX={
-  qc0:"The four FATF CDD components are: (a) identifying/verifying the customer; (b) identifying the beneficial owner; (c) understanding the business relationship's purpose; and (d) ongoing monitoring. Criminal background checks are not part of the definition.",
-  qc1:"CDD requires looking through any corporate structure to the ultimate beneficial owner — the natural person who ultimately owns or controls the entity. A nominee structure and an offshore jurisdiction make this more important, not less. Certificate of incorporation only confirms legal existence, not true ownership.",
-  qc2:"SDD is available for regulated institutions but it means reduced measures, not zero checks. The decision must be documented and justifiable. Basic identification requirements still apply.",
-  qc3:"The ICA explicitly lists 'inheritance' as an insufficient source of wealth description for EDD purposes. You must investigate further — who the deceased was, what their source of wealth was, and whether you have probate documentation or similar.",
-  qc4:"Plausibility testing is required. £600,000 in savings from cleaning wages over 15 years would require very high savings rates relative to typical cleaning income. The explanation may be legitimate — the client may have had other income sources — but bank statements showing the gradual accumulation of savings over time should be requested before accepting the explanation.",
-  qc5:"A ministerial appointment is a material change that makes the client a PEP, triggering mandatory EDD immediately. Regulation 28 requires CDD to be kept up to date and responsive to material changes in client circumstances — you cannot wait for a scheduled review cycle.",
-  qc6:"The ICA is explicit: there is no requirement to suspect a particular type of crime, or to prove one has been committed. Most legislation sets the reporting threshold at 'reasonable grounds to suspect' ML is taking place. Suspicion of 'criminality in the broadest sense' is sufficient."
-};
-function qc(btn,correct,id){
-  btn.parentElement.querySelectorAll('.qc-btn').forEach(b=>b.disabled=true);
-  btn.classList.add(correct?'correct':'wrong');
-  const fb=document.getElementById(id);
-  fb.className='qc-fb show '+(correct?'correct':'wrong');
-  fb.innerHTML=(correct?'<strong>✓ Correct!</strong> ':'<strong>✗ Not quite.</strong> ')+qcX[id];
-}
+// Wire Next buttons on content sections
+// Sections 0-6 have inline onclick="goTo(n)" but we need unlock first
+// Patch: override all .btn-next clicks to unlock before navigating
+document.addEventListener('click', e => {
+  const btn = e.target.closest('.btn-next');
+  if (btn) {
+    // find current active section
+    const active = document.querySelector('.section.active');
+    if (active) {
+      const n = parseInt(active.id.replace('sec',''));
+      if (!isNaN(n)) unlock(n + 1);
+    }
+  }
+});
 </script>
 </body>
 </html>
