@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Coadjute AML – ICA Certificate Course</title>
+<style>
+  :root{
+    --ink:#002846;--lilac:#C17FFF;--pink:#FF44D6;--orange:#FF6D3D;
+    --active:#4EEFF9;--l10:#DFBEFF;--l20:#F2E5FF;--l30:#F9F2FF;
+    --grey:#EEE8F1;
+    --grad:linear-gradient(90deg,#C17FFF 0%,#FF44D6 50%,#FF6D3D 100%);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',system-ui,sans-serif;background:#f5f0fa;color:var(--ink);min-height:100vh}
+
+  /* ── TOPBAR ── */
+  .topbar{background:var(--ink);height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 40px;position:sticky;top:0;z-index:100;box-shadow:0 2px 16px rgba(0,0,0,.3)}
+  .tb-logo{font-size:1.1rem;font-weight:900;color:#fff;letter-spacing:-.01em}
+  .tb-logo span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+  .tb-right{font-size:.78rem;color:rgba(255,255,255,.45);letter-spacing:.04em;text-transform:uppercase}
+
+  /* ── HERO ── */
+  .hero{background:var(--ink);padding:56px 40px 64px;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;top:-80px;right:-80px;width:420px;height:420px;background:radial-gradient(circle,rgba(193,127,255,.18) 0%,transparent 65%);pointer-events:none}
+  .hero::after{content:'';position:absolute;bottom:0;left:0;right:0;height:3px;background:var(--grad)}
+  .hero-label{font-size:.7rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--active);margin-bottom:12px}
+  .hero h1{font-size:2.4rem;font-weight:900;color:#fff;line-height:1.15;margin-bottom:14px;max-width:600px}
+  .hero p{color:rgba(255,255,255,.6);font-size:1rem;max-width:520px;line-height:1.65}
+  .hero-stats{display:flex;gap:20px;margin-top:32px;flex-wrap:wrap}
+  .stat{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:10px;padding:14px 22px;text-align:center}
+  .stat-val{font-size:1.6rem;font-weight:900;color:#fff;display:block;line-height:1}
+  .stat-lbl{font-size:.68rem;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.07em;margin-top:4px;display:block}
+
+  /* ── OVERALL PROGRESS ── */
+  .progress-band{background:#fff;border-bottom:1px solid var(--grey);padding:20px 40px;display:flex;align-items:center;gap:24px}
+  .pb-label{font-size:.78rem;font-weight:700;color:var(--ink);white-space:nowrap;min-width:120px}
+  .pb-track{flex:1;height:8px;background:var(--grey);border-radius:99px;overflow:hidden}
+  .pb-fill{height:100%;background:var(--grad);border-radius:99px;transition:width .6s ease}
+  .pb-pct{font-size:.82rem;font-weight:800;color:var(--ink);min-width:36px;text-align:right}
+
+  /* ── MAIN CONTENT ── */
+  .content{max-width:1100px;margin:0 auto;padding:48px 40px 80px}
+
+  /* ── WEEK SECTIONS ── */
+  .week-label{font-size:.68rem;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--lilac);margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid var(--l20)}
+  .week-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:40px}
+
+  /* ── MODULE CARDS ── */
+  .card{background:#fff;border-radius:14px;border:1.5px solid var(--grey);padding:24px 26px;cursor:pointer;transition:all .22s;position:relative;overflow:hidden;text-decoration:none;display:block;color:var(--ink)}
+  .card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:var(--grad);opacity:0;transition:.22s}
+  .card:hover{border-color:var(--lilac);box-shadow:0 6px 24px rgba(193,127,255,.2);transform:translateY(-2px)}
+  .card:hover::before{opacity:1}
+  .card.locked{cursor:not-allowed;opacity:.55;filter:grayscale(.3)}
+  .card.locked:hover{transform:none;box-shadow:none;border-color:var(--grey)}
+  .card.locked:hover::before{opacity:0}
+  .card.completed{border-color:#22cc77;background:linear-gradient(135deg,#fff 80%,rgba(34,204,119,.04))}
+  .card.completed::before{background:linear-gradient(90deg,#22cc77,#00dd88);opacity:1}
+
+  .card-header{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:14px}
+  .card-num{font-size:.65rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:rgba(0,40,70,.4)}
+  .card-badge{font-size:.68rem;font-weight:700;padding:3px 10px;border-radius:99px;white-space:nowrap}
+  .badge-done{background:rgba(34,204,119,.12);color:#22aa66;border:1px solid rgba(34,204,119,.3)}
+  .badge-next{background:linear-gradient(90deg,#C17FFF,#FF44D6);color:#fff}
+  .badge-locked{background:var(--grey);color:rgba(0,40,70,.4)}
+  .badge-exam{background:linear-gradient(90deg,#FF6D3D,#FF44D6);color:#fff}
+
+  .card h3{font-size:1rem;font-weight:800;line-height:1.3;margin-bottom:6px}
+  .card-desc{font-size:.82rem;color:rgba(0,40,70,.6);line-height:1.5;margin-bottom:16px}
+  .card-meta{display:flex;align-items:center;justify-content:space-between}
+  .card-duration{font-size:.72rem;color:rgba(0,40,70,.4);display:flex;align-items:center;gap:5px}
+  .card-duration::before{content:'⏱'}
+  .card-progress{font-size:.72rem;font-weight:700;color:var(--lilac)}
+  .card-lock-msg{font-size:.72rem;color:rgba(0,40,70,.4);display:flex;align-items:center;gap:5px}
+  .card-lock-msg::before{content:'🔒'}
+
+  /* ── MOCK EXAM CARD (full width) ── */
+  .exam-card{background:var(--ink);border-radius:14px;border:none;padding:32px 36px;cursor:pointer;transition:all .22s;position:relative;overflow:hidden;text-decoration:none;display:flex;align-items:center;justify-content:space-between;gap:24px;color:#fff;margin-top:8px}
+  .exam-card::after{content:'';position:absolute;top:-60px;right:-60px;width:280px;height:280px;background:radial-gradient(circle,rgba(193,127,255,.2) 0%,transparent 65%)}
+  .exam-card:hover{transform:translateY(-2px);box-shadow:0 8px 32px rgba(0,0,0,.25)}
+  .exam-card.locked{opacity:.5;cursor:not-allowed}
+  .exam-card.locked:hover{transform:none;box-shadow:none}
+  .exam-info h3{font-size:1.2rem;font-weight:900;margin-bottom:6px}
+  .exam-info p{font-size:.85rem;color:rgba(255,255,255,.6);max-width:440px;line-height:1.5}
+  .exam-meta{display:flex;gap:16px;margin-top:16px;flex-wrap:wrap}
+  .exam-stat{background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:10px 18px;text-align:center}
+  .exam-stat .ev{font-size:1.1rem;font-weight:800;color:#fff}
+  .exam-stat .el{font-size:.65rem;color:rgba(255,255,255,.45);text-transform:uppercase;letter-spacing:.06em}
+  .exam-btn{background:var(--grad);color:#fff;border:none;padding:14px 28px;border-radius:10px;font-size:.9rem;font-weight:800;cursor:pointer;white-space:nowrap;box-shadow:0 4px 18px rgba(193,127,255,.4);transition:.2s;flex-shrink:0;z-index:1}
+  .exam-btn:hover{opacity:.9}
+
+  /* ── FOOTER ── */
+  footer{text-align:center;padding:24px;font-size:.75rem;color:rgba(0,40,70,.35);border-top:1px solid var(--grey)}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="tb-logo">Coadjute <span>AML Training</span></div>
+  <div class="tb-right">ICA Certificate in AML</div>
+</header>
+
+<section class="hero">
+  <div class="hero-label">ICA Certificate in AML — Coadjute Team Training</div>
+  <h1>Anti-Money Laundering<br>e-Learning Course</h1>
+  <p>Eight modules covering the full ICA syllabus, tailored to the property sector. Complete all modules before attempting the final mock exam.</p>
+  <div class="hero-stats">
+    <div class="stat"><span class="stat-val">8</span><span class="stat-lbl">Modules</span></div>
+    <div class="stat"><span class="stat-val">40</span><span class="stat-lbl">Exam Questions</span></div>
+    <div class="stat"><span class="stat-val">70%</span><span class="stat-lbl">Pass Mark</span></div>
+    <div class="stat"><span class="stat-val">~8h</span><span class="stat-lbl">Total Study Time</span></div>
+  </div>
+</section>
+
+<div class="progress-band">
+  <div class="pb-label">Overall Progress</div>
+  <div class="pb-track"><div class="pb-fill" id="overall-fill" style="width:0%"></div></div>
+  <div class="pb-pct" id="overall-pct">0%</div>
+</div>
+
+<main class="content">
+
+  <!-- WEEK 1 -->
+  <div class="week-label">Week 1 — Foundations</div>
+  <div class="week-grid">
+
+    <a href="Module 1 What is Money Laundering.html" class="card completed" id="card-1">
+      <div class="card-header">
+        <div class="card-num">Module 01</div>
+        <span class="card-badge badge-done">✓ Complete</span>
+      </div>
+      <h3>What is Money Laundering?</h3>
+      <p class="card-desc">Definitions, the three stages (placement, layering, integration), predicate offences, criminal liability, and why it matters.</p>
+      <div class="card-meta">
+        <span class="card-duration">45–60 min</span>
+        <span class="card-progress">Quiz: Unlocked</span>
+      </div>
+    </a>
+
+    <a href="Module 2 Terrorist Financing & Sanctions.html" class="card completed" id="card-2">
+      <div class="card-header">
+        <div class="card-num">Module 02</div>
+        <span class="card-badge badge-done">✓ Complete</span>
+      </div>
+      <h3>Terrorist Financing &amp; Sanctions</h3>
+      <p class="card-desc">How TF differs from ML, sanctions regimes (UN, EU, OFAC), identifying sanctioned individuals and entities, and Coadjute obligations.</p>
+      <div class="card-meta">
+        <span class="card-duration">45–60 min</span>
+        <span class="card-progress">Quiz: Unlocked</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- WEEK 2 -->
+  <div class="week-label">Week 2 — Sector Vulnerabilities</div>
+  <div class="week-grid">
+
+    <a href="Module 3 How Financial Institutions Are Exploited.html" class="card" id="card-3">
+      <div class="card-header">
+        <div class="card-num">Module 03</div>
+        <span class="card-badge badge-next">Up Next</span>
+      </div>
+      <h3>How Financial Institutions Are Exploited</h3>
+      <p class="card-desc">Bank accounts, private banking, correspondent banking, shell companies, legal entities, and property sector exploitation typologies.</p>
+      <div class="card-meta">
+        <span class="card-duration">45–60 min</span>
+        <span class="card-progress">Quiz: 15 questions</span>
+      </div>
+    </a>
+
+    <a href="Module 4 High-Risk Products & Sectors.html" class="card locked" id="card-4">
+      <div class="card-header">
+        <div class="card-num">Module 04</div>
+        <span class="card-badge badge-locked">Locked</span>
+      </div>
+      <h3>High-Risk Products &amp; Sectors</h3>
+      <p class="card-desc">Insurance, investment products, betting &amp; gaming, mobile financial services, prepaid cards, and virtual currencies.</p>
+      <div class="card-meta">
+        <span class="card-duration">45–60 min</span>
+        <span class="card-lock-msg">Complete Module 3 first</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- WEEK 3 -->
+  <div class="week-label">Week 3 — AML in Practice</div>
+  <div class="week-grid">
+
+    <a href="Module 5 Customer Due Diligence (CDD).html" class="card locked" id="card-5">
+      <div class="card-header">
+        <div class="card-num">Module 05</div>
+        <span class="card-badge badge-locked">Locked</span>
+      </div>
+      <h3>Customer Due Diligence (CDD)</h3>
+      <p class="card-desc">Standard, simplified and enhanced CDD, identifying suspicious activity, plausibility testing, and property sector CDD obligations.</p>
+      <div class="card-meta">
+        <span class="card-duration">45–60 min</span>
+        <span class="card-lock-msg">Complete Module 4 first</span>
+      </div>
+    </a>
+
+    <a href="Module 6 Monitoring, PEPs & Reporting.html" class="card locked" id="card-6">
+      <div class="card-header">
+        <div class="card-num">Module 06</div>
+        <span class="card-badge badge-locked">Locked</span>
+      </div>
+      <h3>Monitoring, PEPs &amp; Reporting</h3>
+      <p class="card-desc">Beneficial ownership, politically exposed persons, suspicious activity reports (SARs), tipping off, and ongoing monitoring obligations.</p>
+      <div class="card-meta">
+        <span class="card-duration">45–60 min</span>
+        <span class="card-lock-msg">Complete Module 5 first</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- WEEK 4 -->
+  <div class="week-label">Week 4 — Law, Regulation &amp; Management</div>
+  <div class="week-grid">
+
+    <a href="Module 7 Legal & Regulatory Framework.html" class="card locked" id="card-7">
+      <div class="card-header">
+        <div class="card-num">Module 07</div>
+        <span class="card-badge badge-locked">Locked</span>
+      </div>
+      <h3>Legal &amp; Regulatory Framework</h3>
+      <p class="card-desc">FATF, international bodies, national frameworks (POCA, EU Directives), money laundering offences, and legal duty to report.</p>
+      <div class="card-meta">
+        <span class="card-duration">45–60 min</span>
+        <span class="card-lock-msg">Complete Module 6 first</span>
+      </div>
+    </a>
+
+    <a href="Module 8 Risk-Based Approach & Management Obligations.html" class="card locked" id="card-8">
+      <div class="card-header">
+        <div class="card-num">Module 08</div>
+        <span class="card-badge badge-locked">Locked</span>
+      </div>
+      <h3>Risk-Based Approach &amp; Management Obligations</h3>
+      <p class="card-desc">Building an AML policy, designing procedures, monitoring compliance, training obligations, and organisational culture.</p>
+      <div class="card-meta">
+        <span class="card-duration">45–60 min</span>
+        <span class="card-lock-msg">Complete Module 7 first</span>
+      </div>
+    </a>
+
+  </div>
+
+  <!-- WEEK 5 / MOCK EXAM -->
+  <div class="week-label">Week 5 — Final Assessment</div>
+  <a href="Mock Exam.html" class="exam-card locked" id="card-exam">
+    <div class="exam-info">
+      <h3>🎓 Final Mock Exam</h3>
+      <p>ICA-style comprehensive assessment covering all eight modules. Complete all modules before attempting.</p>
+      <div class="exam-meta">
+        <div class="exam-stat"><div class="ev">40</div><div class="el">Questions</div></div>
+        <div class="exam-stat"><div class="ev">60m</div><div class="el">Time Limit</div></div>
+        <div class="exam-stat"><div class="ev">70%</div><div class="el">Pass Mark</div></div>
+        <div class="exam-stat"><div class="ev">28/40</div><div class="el">To Pass</div></div>
+      </div>
+    </div>
+    <button class="exam-btn" id="exam-btn">🔒 Complete All Modules</button>
+  </a>
+
+</main>
+
+<footer>Coadjute AML Training &nbsp;·&nbsp; ICA Certificate in AML &nbsp;·&nbsp; For internal training use only</footer>
+
+<script>
+// ── FILE NAMES — update if your filenames differ ──
+const MODULES = [
+  { id: 1, file: 'Module 1 What is Money Laundering.html' },
+  { id: 2, file: 'Module 2 Terrorist Financing & Sanctions.html' },
+  { id: 3, file: 'Module 3 How Financial Institutions Are Exploited.html' },
+  { id: 4, file: 'Module 4 High-Risk Products & Sectors.html' },
+  { id: 5, file: 'Module 5 Customer Due Diligence (CDD).html' },
+  { id: 6, file: 'Module 6 Monitoring, PEPs & Reporting.html' },
+  { id: 7, file: 'Module 7 Legal & Regulatory Framework.html' },
+  { id: 8, file: 'Module 8 Risk-Based Approach & Management Obligations.html' },
+];
+
+// ── MANUAL OVERRIDE — mark modules as complete here until
+//    we wire up real cross-module completion signals ──
+//    Set to true for modules whose quiz has been passed.
+const COMPLETED = {
+  1: true,   // Module 1 — done
+  2: true,   // Module 2 — done
+  3: false,
+  4: false,
+  5: false,
+  6: false,
+  7: false,
+  8: false,
+};
+
+function updateDashboard() {
+  const doneCount = Object.values(COMPLETED).filter(Boolean).length;
+  const total = MODULES.length;
+  const pct = Math.round(doneCount / total * 100);
+
+  document.getElementById('overall-fill').style.width = pct + '%';
+  document.getElementById('overall-pct').textContent = pct + '%';
+
+  let firstIncomplete = null;
+
+  MODULES.forEach(m => {
+    const card = document.getElementById('card-' + m.id);
+    if (!card) return;
+    const prev = m.id === 1 ? true : COMPLETED[m.id - 1];
+    const done = COMPLETED[m.id];
+
+    card.classList.remove('locked', 'completed');
+
+    if (done) {
+      card.classList.add('completed');
+      const badge = card.querySelector('.card-badge');
+      if (badge) { badge.className = 'card-badge badge-done'; badge.textContent = '✓ Complete'; }
+      card.removeAttribute('onclick');
+    } else if (prev) {
+      if (!firstIncomplete) firstIncomplete = m.id;
+      const badge = card.querySelector('.card-badge');
+      if (badge) { badge.className = 'card-badge badge-next'; badge.textContent = 'Up Next'; }
+      const meta = card.querySelector('.card-meta .card-progress, .card-meta .card-lock-msg');
+      if (meta) { meta.className = 'card-progress'; meta.textContent = 'Quiz: 15 questions'; }
+    } else {
+      card.classList.add('locked');
+      const badge = card.querySelector('.card-badge');
+      if (badge) { badge.className = 'card-badge badge-locked'; badge.textContent = 'Locked'; }
+    }
+  });
+
+  // Exam card
+  const examCard = document.getElementById('card-exam');
+  const examBtn = document.getElementById('exam-btn');
+  const allDone = Object.values(COMPLETED).every(Boolean);
+  if (allDone) {
+    examCard.classList.remove('locked');
+    examBtn.textContent = '→ Start Exam';
+  }
+}
+
+// ── Prevent locked cards from navigating ──
+document.querySelectorAll('.card.locked, .exam-card.locked').forEach(c => {
+  c.addEventListener('click', e => e.preventDefault());
+});
+
+updateDashboard();
+
+// Re-apply locked click prevention after update
+setTimeout(() => {
+  document.querySelectorAll('.card.locked, .exam-card.locked').forEach(c => {
+    c.addEventListener('click', e => e.preventDefault());
+  });
+}, 0);
+</script>
+</body>
+</html>
