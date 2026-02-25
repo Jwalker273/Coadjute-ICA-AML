@@ -765,8 +765,11 @@ function goTo(idx) {
 
 function nextSection() {
   completed[current] = true;
+  unlocked[current] = true;
   const next = current+1;
-  unlocked[next] = true;
+  if(next < unlocked.length) unlocked[next] = true;
+  updateSidebar();
+  updateProgress();
   goTo(next);
 }
 function prevSection() { if(current>0) goTo(current-1); }
@@ -972,12 +975,13 @@ function submitQuiz(){
   if(passed){
     document.getElementById('result-pass').style.display='block';
     document.getElementById('pass-score-msg').textContent=`You scored ${correct}/${QUESTIONS.length} (${pct}%) — well done!`;
-    completed[5]=true; // mark final section done
+    completed[5]=true;
+    unlocked[5]=true;
     unlocked[6]=true;
     updateProgress();
     updateSidebar();
     // save to localStorage
-    try{localStorage.setItem('coadjute_aml_m8_complete','1');localStorage.setItem('coadjute_aml_m8_score',pct);}catch(e){}
+    try{localStorage.setItem('module_8_complete','true');}catch(e){}
   } else {
     document.getElementById('result-fail').style.display='block';
     document.getElementById('fail-score-msg').textContent=`You scored ${correct}/${QUESTIONS.length} (${pct}%). You need 70% to pass. Review the sections and try again.`;
@@ -998,3 +1002,4 @@ updateProgress();
 </script>
 </body>
 </html>
+
