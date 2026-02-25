@@ -975,6 +975,7 @@ function showResults() {
   verd.textContent = pass ? '✓ Pass — well done!' : '✗ Not passed — review content and try again';
 
   if (pass) {
+    localStorage.setItem('module_4_complete', 'true'); //
     document.getElementById('result-pass').style.display = 'block';
     document.getElementById('pass-score-msg').textContent = `You scored ${score}/${Qs.length} (${pct}%) — excellent work. Module 4 is complete.`;
   } else {
@@ -1009,3 +1010,4 @@ buildSidebar();
 </script>
 </body>
 </html>
+
