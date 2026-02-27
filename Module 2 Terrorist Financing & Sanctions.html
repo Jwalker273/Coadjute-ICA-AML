@@ -899,6 +899,7 @@ function submitQuiz() {
     document.getElementById('pass-breakdown').innerHTML = bdHTML;
     document.getElementById('result-pass').style.display = 'block';
     completed.add(current);
+    localStorage.setItem('module_2_complete', 'true');
     updateProgress();
     refreshNav();
   } else {
@@ -920,4 +921,5 @@ updateProgress();
 </script>
 </body>
 </html>
+
 
