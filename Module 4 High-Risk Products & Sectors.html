@@ -793,11 +793,10 @@ function updateProgress() {
 }
 
 function goTo(n) {
-  if (n > unlockedTo) return;
+  if (n > unlockedTo) unlockedTo = n;
+  if (n + 1 <= SECS.length - 1) unlockedTo = Math.max(unlockedTo, n + 1);
   document.getElementById('sec' + cur).classList.remove('active');
   cur = n;
-  if (n > unlockedTo) unlockedTo = n;
-  if (n + 1 > unlockedTo) unlockedTo = Math.min(n + 1, SECS.length - 1);
   document.getElementById('sec' + n).classList.add('active');
   buildSidebar();
   window.scrollTo(0, 0);
@@ -1010,4 +1009,5 @@ buildSidebar();
 </script>
 </body>
 </html>
+
 
