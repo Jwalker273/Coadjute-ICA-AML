@@ -814,11 +814,14 @@ function goTo(n) {
   document.getElementById('quiz-back-nav').style.display = (n === 7) ? 'flex' : 'none';
 }
 
-function advance(from) {
-  // Called by every "Next" button — unlocks the next section then navigates to it
-  const next = from + 1;
-  if (next > unlockedUpTo) unlockedUpTo = next;
-  goTo(next);
+function goTo(n) {
+  if (n > unlockedUpTo) unlockedUpTo = n;
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.getElementById('sec' + n).classList.add('active');
+  buildSidebar(n);
+  updateProgress();
+  window.scrollTo(0, 0);
+  document.getElementById('quiz-back-nav').style.display = (n === 7) ? 'flex' : 'none';
 }
 
 // ════ SIDEBAR ════
@@ -1073,5 +1076,6 @@ document.getElementById('quiz-back-nav').style.display = 'none';
 </script>
 </body>
 </html>
+
 
 
