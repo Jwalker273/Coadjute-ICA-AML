@@ -895,12 +895,11 @@ const QUIZ=[
 let cur=0, done=new Set(), answers={}, submitted=false;
 
 function goTo(i){
-  if(i>0 && i<7 && !done.has(i-1)) return;
-  if(i===7 && !done.has(6)) return;
+  done.add(cur);
   document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
   document.getElementById('sec'+i).classList.add('active');
   updateNav(i);
-  done.add(cur); cur=i;
+  cur=i;
   updateProgress();
   window.scrollTo({top:0,behavior:'smooth'});
 }
@@ -1046,4 +1045,5 @@ updateProgress();
 </script>
 </body>
 </html>
+
 
