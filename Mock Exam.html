@@ -424,7 +424,7 @@ const QS = [
 ];
 
 // ════════ STATE ════════
-let answers = new Array(40).fill(null);
+let answers = [];
 let cur = 0;
 let timeLeft = 3600;
 let timerInterval = null;
@@ -439,6 +439,7 @@ function showScreen(id) {
 
 // ════════ BEGIN ════════
 function beginExam() {
+  answers = new Array(QS.length).fill(null);
   buildGrid();
   renderQ(0);
   showScreen('screen-exam');
@@ -592,7 +593,7 @@ function showResults() {
 }
 
 function retryExam() {
-  answers = new Array(40).fill(null);
+  answers = new Array(QS.length).fill(null);
   cur = 0;
   timeLeft = 3600;
   examSubmitted = false;
@@ -605,4 +606,3 @@ function retryExam() {
 </script>
 </body>
 </html>
-
