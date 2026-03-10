@@ -135,7 +135,8 @@ ul li,ol li{margin-bottom:6px;line-height:1.6}
 .q-opts{display:flex;flex-direction:column;gap:8px}
 .q-opt{text-align:left;background:var(--l10);border:2px solid var(--l50);border-radius:8px;padding:12px 16px;cursor:pointer;font-size:.88rem;color:var(--ink);transition:all .15s;line-height:1.4}
 .q-opt:hover:not(:disabled){border-color:var(--lilac);background:var(--l20)}
-.q-opt.selected{border-color:var(--lilac);background:var(--l20)}
+.q-opt.selected{border-color:var(--ink);background:var(--ink);color:var(--white);font-weight:600;}
+.q-opt.selected::before{content:'✓ ';color:var(--active);font-weight:800;}
 .q-opt.correct{border-color:#2a9d6f!important;background:#f0fff8!important;color:#1a6b4a}
 .q-opt.wrong{border-color:#c33!important;background:#fff0f0!important;color:#a00}
 .q-opt:disabled{cursor:default}
@@ -330,70 +331,53 @@ ul li,ol li{margin-bottom:6px;line-height:1.6}
 <div class="section" id="sec1">
   <div class="lesson-tag">Module 06 — Section 2 of 6</div>
   <h1>Beneficial Ownership</h1>
-  <p class="lesson-intro">One of the most powerful tools available to money launderers is concealing who actually owns assets by placing them in corporate structures, trusts, or nominee arrangements. Identifying the real person behind a transaction — the beneficial owner — is one of the most important and most challenging obligations in AML practice.</p>
+  <p class="lesson-intro">You already know what a beneficial owner is and why the 25% threshold matters — that was Module 5. This section focuses on what actually goes wrong in verification practice: where the PSC register fails you, what to do when a chain goes offshore, and how to handle the situations where a client won't — or genuinely can't — provide you with the information you need.</p>
 
-  <h2>What Is a Beneficial Owner?</h2>
+  <h2>Where Verification Breaks Down in Practice</h2>
+  <p>In theory, tracing a beneficial owner is straightforward: follow the ownership chain until you reach a natural person. In practice, you will routinely hit one of these dead ends:</p>
 
-  <div class="exam-note">
-    <div class="exam-note-label">📘 ICA Exam Note — Beneficial Owner Definition</div>
-    <p>A <strong>beneficial owner</strong> is the natural person who <em>ultimately</em> owns or controls a customer, or on whose behalf a transaction is being conducted. The key word is <em>ultimately</em> — you must look through layers of corporate structure to find the human being at the end of the chain.</p>
-    <p style="margin-top:10px">For companies, beneficial ownership is defined under the <strong>MLRs 2017</strong> as ownership or control of more than <strong>25%</strong> of the shares or voting rights, or any other means of exercising significant control over the management of the company.</p>
-    <p style="margin-top:10px">If you cannot identify any natural person who meets this threshold, you should treat the senior managing official(s) of the entity as the beneficial owner for AML purposes.</p>
+  <ul>
+    <li><strong>The chain goes offshore.</strong> A UK company's PSC register shows another company — incorporated in the BVI, Cayman, or Panama — as its sole shareholder. There is no public equivalent of Companies House in those jurisdictions. You are now entirely dependent on what the client chooses to tell you.</li>
+    <li><strong>Nominees are disclosed but the real controller isn't.</strong> A client confirms that nominee directors are in place and even provides their names. This tells you nothing about who instructs those nominees. The identity of the true controller can still be concealed behind a compliant-looking set of nominees.</li>
+    <li><strong>Discretionary trust beneficiaries are unidentified.</strong> Unlike fixed-interest trusts, discretionary trusts do not name fixed beneficiaries at outset — the trustees have discretion over who benefits and when. A trustee may legitimately say no beneficiaries are currently determined. This is not necessarily evasion, but it leaves you unable to complete the verification chain.</li>
+    <li><strong>Circular ownership structures.</strong> Company A owns Company B, which owns Company C, whose sole shareholder appears to be Company A. Circular structures designed to prevent tracing are a known ML technique and a clear red flag in their own right.</li>
+  </ul>
+
+  <div class="callout warn">
+    <div class="callout-label">⚠️ Cannot Identify the UBO? You Cannot Proceed</div>
+    <p>The ICA's position is explicit: if you cannot satisfactorily identify the beneficial owner after reasonable enquiry, you cannot complete the transaction. You should also consider whether the refusal or inability to provide the information is itself a red flag warranting an internal report to the MLRO. The absence of information is not neutral — it is a risk indicator.</p>
   </div>
 
-  <h2>Why Corporate Structures Are Used to Launder Money</h2>
-  <p>A company, trust, or partnership can hold property in its own name without the underlying owner ever appearing in a public record. By layering multiple corporate entities across different jurisdictions, launderers can make it virtually impossible to trace funds back to their criminal origin.</p>
-  <p>Classic structures used in property money laundering include:</p>
+  <h2>The PSC Register — More Limited Than It Looks</h2>
+  <p>The Persons with Significant Control register at Companies House is a useful starting point, but it has real limitations that matter for verification:</p>
   <ul>
-    <li><strong>UK company owned by a BVI (British Virgin Islands) company</strong> — the BVI company has nominee shareholders, hiding the true owner</li>
-    <li><strong>Scottish Limited Partnerships (SLPs)</strong> — historically lightly regulated, used extensively in fraud and ML schemes</li>
-    <li><strong>Discretionary trusts</strong> — the beneficiaries are not fixed and may not be named in accessible documents</li>
-    <li><strong>Nominee shareholders and directors</strong> — professionals (or complicit individuals) who hold shares or act as directors on behalf of the true owner, for a fee</li>
+    <li><strong>Self-reported and unverified.</strong> Companies House does not verify what is filed. A company can list a nominee, an incorrect person, or a false entry — and the register will reflect it. Treating a PSC register entry as conclusive is a compliance failure.</li>
+    <li><strong>Corporate PSCs still need tracing.</strong> If the PSC entry shows another company rather than a natural person, your obligation is not met. The register has told you where to look next, not who the UBO is.</li>
+    <li><strong>Non-compliance is widespread.</strong> Failure to file accurate PSC information is a known enforcement gap, particularly in higher-risk sectors. Do not assume a company has properly disclosed.</li>
   </ul>
+
+  <div class="exam-note">
+    <div class="exam-note-label">📘 ICA Exam Note — Register of Overseas Entities (ROE)</div>
+    <p>Since January 2023, overseas entities that own UK land must register with Companies House under the <strong>Economic Crime (Transparency and Enforcement) Act 2022</strong> and disclose their beneficial owners. For any property transaction involving an overseas entity, checking the ROE is mandatory — not optional. An overseas entity that refuses to register, or discloses nominees without identifying natural persons behind them, is a significant red flag requiring immediate MLRO escalation.</p>
+  </div>
+
+  <h2>When a Trustee Refuses to Disclose Beneficiaries</h2>
+  <p>A common resistance in property transactions is the claim that trust documents are confidential and that a trustee is not obliged to disclose beneficiary details to a third party. This is sometimes true as a matter of trust law — but it does not override your AML obligations.</p>
+  <p>As a regulated firm, you are legally entitled to request the information required to comply with the MLRs. If a trustee refuses to cooperate with reasonable and proportionate requests, that refusal is a red flag — not a legitimate reason to proceed without the information.</p>
 
   <div class="callout prop">
-    <div class="callout-label">🏠 Property Sector Example — The Layered Structure</div>
-    <p>A conveyancer receives instructions to act for "UK Property Holdings Ltd" on the purchase of a London flat for £1.4m. The buyer's representative says the funds are coming from another company, "International Investments Ltd", registered in Gibraltar. That company is 100% owned by a trust in Guernsey whose beneficiaries are "undisclosed".</p>
-    <p style="margin-top:8px">Each layer adds distance from the true owner. The conveyancer's obligation is to look through every layer and identify the natural person who ultimately controls this chain — or to refuse the instruction if they cannot.</p>
-  </div>
-
-  <h2>The Persons with Significant Control (PSC) Register</h2>
-  <p>Since 2016, UK companies are required to maintain a <strong>Persons with Significant Control (PSC) register</strong>, which is publicly accessible at Companies House. PSCs are those who own more than 25% of shares, control more than 25% of voting rights, have the right to appoint or remove the majority of the board, or otherwise exercise significant influence or control.</p>
-  <p>The PSC register is a valuable starting point for beneficial ownership verification, but it has limitations:</p>
-  <ul>
-    <li>It covers UK-registered companies only — overseas companies are not covered</li>
-    <li>Compliance with the register is self-reported and not always accurate</li>
-    <li>It may show another company rather than a natural person, requiring you to trace further</li>
-    <li>It does not cover trusts, partnerships, or informal nominee arrangements</li>
-  </ul>
-
-  <div class="exam-note">
-    <div class="exam-note-label">📘 ICA Exam Note — Registers of Overseas Entities</div>
-    <p>Since January 2023, overseas entities that own UK property must register with Companies House under the <strong>Economic Crime (Transparency and Enforcement) Act 2022</strong>. The Register of Overseas Entities (ROE) requires disclosure of beneficial ownership of overseas companies that own or wish to acquire UK land.</p>
-    <p style="margin-top:8px">This is particularly significant for the property sector, where overseas ownership structures have historically been a significant ML risk. Conveyancers and estate agents must check the ROE where overseas entities are involved in a transaction.</p>
-  </div>
-
-  <h2>Trusts and Beneficial Ownership</h2>
-  <p>Trusts present particular challenges because ownership is split: the <strong>trustee</strong> legally owns the assets, while the <strong>beneficiaries</strong> benefit from them. For AML purposes, you must identify:</p>
-  <ul>
-    <li>The <strong>settlor</strong> — the person who created the trust and transferred assets into it</li>
-    <li>The <strong>trustee(s)</strong> — who control and manage the assets</li>
-    <li>The <strong>beneficiaries</strong> — or, for discretionary trusts, the class of potential beneficiaries</li>
-    <li>Any person who exercises control over the trust</li>
-  </ul>
-
-  <div class="callout key">
-    <div class="callout-label">💡 The Key Principle</div>
-    <p>Your CDD obligation does not stop at the entity in front of you. You must always ask: <em>who is the natural person ultimately behind this?</em> If you cannot satisfactorily answer that question, you cannot proceed.</p>
+    <div class="callout-label">🏠 The "Family Trust" Deflection — What Coadjute's Team Should Know</div>
+    <p>One of the most common deflections in property transactions processed through Coadjute's platform is "the purchase funds are coming from a family trust." This sounds benign but answers almost nothing: Who is the settlor? Who are the trustees? Who are the beneficiaries — or what class of people could benefit? What is the trust's source of assets?</p>
+    <p style="margin-top:8px">"Family trust" as a complete answer to source of funds is not acceptable. The response should always be to request the trust deed, trustee identification, and beneficiary class. If that documentation is refused, escalate to the MLRO before proceeding.</p>
   </div>
 
   <div class="qc" id="qc-sec1">
     <div class="qc-label">✋ Quick Check</div>
-    <div class="qc-q">A property buyer is "Global Estates Ltd", a UK-registered company. Its sole shareholder is "International Holdings Corp", registered in the British Virgin Islands. What is the correct AML approach?</div>
+    <div class="qc-q">A property buyer is "Global Estates Ltd", a UK-registered company. Its PSC register shows "International Holdings Corp" (BVI-registered) as the sole person with significant control. The client says the BVI company's ownership is "private and not publicly available." What is the correct approach?</div>
     <div class="qc-opts">
-      <button class="qc-btn" onclick="answerQC(this,'qc-sec1',false,'Incorrect. The PSC register may record International Holdings Corp as a PSC, but a corporate entity is not a beneficial owner. You must trace through to the natural person(s) behind the BVI company.')">Verify Global Estates Ltd at Companies House and check the PSC register — your obligation ends there</button>
-      <button class="qc-btn" onclick="answerQC(this,'qc-sec1',false,'Incorrect. Verifying a BVI company\'s registration does not tell you who the natural person behind it is. The BVI is specifically noted in AML guidance as a high-risk jurisdiction for corporate opacity.')">Verify the BVI company\'s registration and accept it as a confirmed entity</button>
-      <button class="qc-btn" onclick="answerQC(this,'qc-sec1',true,'Correct. AML obligations require looking through all corporate layers to find the natural person(s) who ultimately own or control the purchasing entity. The BVI structure is itself a red flag warranting enhanced scrutiny and thorough documentation.')">Look through both companies to identify the natural person(s) who ultimately own or control the purchasing entity. The offshore structure is a red flag warranting enhanced scrutiny.</button>
+      <button class="qc-btn" onclick="answerQC(this,'qc-sec1',false,'Incorrect. The PSC register has recorded a corporate PSC — but a company is not a beneficial owner. The register has told you where to look next; it has not resolved the question of who the natural person is.')">Check the PSC register — the significant controller has been identified, so your CDD obligation is met</button>
+      <button class="qc-btn" onclick="answerQC(this,'qc-sec1',false,'Incorrect. Confirming a BVI company\'s existence does not identify the beneficial owner behind it. BVI companies are specifically cited in AML guidance as a high-risk structure for concealing true ownership.')">Verify the BVI company is legitimately registered and accept its existence as sufficient</button>
+      <button class="qc-btn" onclick="answerQC(this,'qc-sec1',true,'Correct. You must ask the client to identify and evidence the natural person(s) behind International Holdings Corp. Privacy of the BVI structure is not a valid reason to refuse. If the client will not cooperate, you cannot proceed — and that refusal should be reported to the MLRO.')">Ask the client to identify and document the natural person(s) behind the BVI company. If they refuse, you cannot proceed and the refusal is itself a red flag for the MLRO.</button>
     </div>
     <div class="qc-fb" id="qc-sec1-fb"></div>
   </div>
@@ -410,83 +394,68 @@ ul li,ol li{margin-bottom:6px;line-height:1.6}
 <div class="section" id="sec2">
   <div class="lesson-tag">Module 06 — Section 3 of 6</div>
   <h1>Politically Exposed Persons (PEPs)</h1>
-  <p class="lesson-intro">PEPs are consistently one of the highest-risk categories in AML — and one of the most heavily tested in the ICA exam. Public position gives opportunity; opportunity creates risk. Understanding who is a PEP, why they are high-risk, and what enhanced obligations apply is essential knowledge for anyone working in AML.</p>
+  <p class="lesson-intro">Module 5 covered who PEPs are, why they require EDD, and what source of wealth verification involves. This section goes into the harder questions — the ones that generate compliance failures in practice: who counts as a close associate, how long a cooling-off period should last, what adverse media screening actually involves, and where the domestic/foreign distinction gets complicated.</p>
 
-  <h2>The Definition of a PEP</h2>
+  <h2>The Edge Cases That Catch People Out</h2>
+
+  <h3>Close Associates — Wider Than You Think</h3>
+  <p>The MLRs 2017 extend PEP status to "known close associates" — a category that goes beyond family and catches people that firms routinely fail to flag. A known close associate is not limited to immediate social contacts. It includes:</p>
+  <ul>
+    <li>Business partners who are <em>known</em> to jointly own or control a business or business relationship with the PEP</li>
+    <li>Any natural person who is the <em>sole beneficial owner</em> of a legal entity or arrangement set up for the benefit of the PEP</li>
+  </ul>
+  <p>The word "known" matters: you are not required to investigate every client for hidden connections to PEPs. But if information emerges during CDD — in a company structure, a business filing, a news search, or the client's own disclosure — that a business partner is a PEP, the close associate obligation is triggered.</p>
+
+  <h3>The Cooling-Off Period — No Fixed Duration</h3>
+  <p>There is no statutory cooling-off period for former PEPs in the UK. The MLRs require a risk assessment — and that assessment must be proportionate and documented. In practice, this means:</p>
+
+  <table class="data-table">
+    <tr><th>Factor</th><th>Effect on Cooling-Off Period</th></tr>
+    <tr><td>Seniority of the role held</td><td>A former head of state requires a much longer period than a former local councillor</td></tr>
+    <tr><td>Jurisdiction risk</td><td>A former minister from a high-corruption country requires longer than one from a low-risk FATF-member country</td></tr>
+    <tr><td>Retained influence</td><td>If the person continues to advise, consult, or hold positions in connected bodies, their risk profile may not diminish</td></tr>
+    <tr><td>Ongoing investigations or adverse media</td><td>Any unresolved allegations effectively extend the period indefinitely until resolved</td></tr>
+    <tr><td>Nature of wealth accumulated</td><td>Wealth accumulated during tenure in a high-corruption jurisdiction requires more scrutiny for longer</td></tr>
+  </table>
 
   <div class="exam-note">
-    <div class="exam-note-label">📘 ICA Exam Note — PEP Definition (MLRs 2017, Reg 35)</div>
-    <p>A <strong>Politically Exposed Person</strong> is an individual who is, or has been, entrusted with a prominent public function. The definition is extended to include their <strong>immediate family members</strong> and <strong>known close associates</strong>.</p>
-    <p style="margin-top:10px"><strong>Categories of PEPs include:</strong></p>
-    <ul>
-      <li>Heads of state and heads of government</li>
-      <li>Senior politicians — ministers, members of parliament, MEPs, senior officials of political parties</li>
-      <li>Senior government, judicial, and military officials</li>
-      <li>Senior executives of state-owned enterprises</li>
-      <li>Important political party officials</li>
+    <div class="exam-note-label">📘 ICA Exam Note — Domestic vs Foreign PEPs: The Key Distinction</div>
+    <p>The MLRs 2017 introduced a tiered approach — but it is frequently misapplied in exam questions. The correct rule is:</p>
+    <ul style="margin-top:8px">
+      <li><strong>Foreign PEPs</strong> (those from outside the EEA/UK): <em>automatic</em> EDD. Senior management approval required before establishing a relationship. No discretion.</li>
+      <li><strong>Domestic PEPs</strong> (UK nationals in UK public positions) and <strong>international organisation PEPs</strong>: must be identified, but EDD only applies if the firm's own risk assessment determines higher risk. A lower-risk domestic PEP may receive standard CDD.</li>
     </ul>
-    <p style="margin-top:10px"><strong>Family members</strong> include spouses/civil partners, children and their spouses/civil partners, and parents. <strong>Known close associates</strong> include business partners who are known to jointly own or control a business with the PEP.</p>
-    <p style="margin-top:10px"><strong>Former PEPs</strong> retain their status for a <em>risk-assessed cooling-off period</em> after leaving office. There is no fixed statutory period — the duration must be determined by risk assessment.</p>
+    <p style="margin-top:8px">Common exam trap: EU member state officials are <em>foreign</em> PEPs under UK MLRs, not domestic PEPs. EEA membership does not make someone a domestic PEP for a UK firm.</p>
   </div>
 
-  <h2>Why Are PEPs High-Risk?</h2>
-  <p>The concern is straightforward: public office creates the opportunity to misuse it for personal financial gain — through bribery, embezzlement of state funds, facilitation of contracts in exchange for kickbacks, or other forms of corruption. The resulting wealth — known as <strong>proceeds of corruption</strong> — then needs to be laundered.</p>
-  <p>High-profile cases illustrate the scale of the problem:</p>
+  <h2>Adverse Media Screening — What It Actually Requires</h2>
+  <p>EDD for PEPs includes adverse media screening, but firms often apply this too narrowly — searching only for the client's name in a basic news search. Effective adverse media screening for PEPs should cover:</p>
   <ul>
-    <li>Former Nigerian dictator Sani Abacha and his associates are estimated to have stolen $3–5bn from state funds, much of it laundered through western banks and property markets</li>
-    <li>Azerbaijani officials were found to have moved hundreds of millions of pounds through UK property and luxury goods using shell companies and family members — the "Azerbaijani Laundromat"</li>
-    <li>Property is a recurring theme: it is stable, appreciates in value, and can be titled in a family member's or company's name</li>
+    <li>The PEP's own name — including variations, transliterations, and aliases</li>
+    <li>Their immediate family members named in the CDD file</li>
+    <li>The companies, trusts, and business interests disclosed in the CDD process</li>
+    <li>Sources including international news, NGO reports (Transparency International, Global Witness), court records, and official sanctions lists</li>
+    <li>Not just direct ML/fraud allegations — corruption, bribery, political controversy, and unexplained wealth are all relevant</li>
   </ul>
+  <p>Adverse media screening is not a one-time exercise at onboarding. For PEPs, it is part of the enhanced ongoing monitoring obligation — a change in political fortune or a new investigation can emerge at any point in the relationship.</p>
 
   <div class="callout prop">
-    <div class="callout-label">🏠 Property Sector Example</div>
-    <p>A senior official in a developing country's national oil company approaches an estate agent to purchase a £3m London townhouse. His stated source of wealth is "salary and investments." His salary as a state oil executive is publicly known to be approximately £60,000 per year. The gap between salary and purchase price is one of the clearest EDD red flags the ICA describes: the source of wealth claim is implausible and requires substantiation through documentation, not assertion.</p>
+    <div class="callout-label">🏠 The Close Associate Problem in Property Transactions</div>
+    <p>A conveyancer is acting on a £2.1m residential purchase. The buyer is a UK national with no apparent PEP flags. During source of funds review, it emerges that the purchase funds come from a business sale. The co-owner of that business — who received the other half of the sale proceeds — is a recently retired regional governor from a Central Asian state. The buyer is now a "known close associate" of a foreign PEP. EDD is triggered — not just for the governor, but for the implications of the shared business relationship and the origin of the buyer's share of the sale proceeds.</p>
   </div>
-
-  <h2>The Domestic vs Foreign PEP Distinction</h2>
-
-  <div class="exam-note">
-    <div class="exam-note-label">📘 ICA Exam Note — Domestic vs Foreign PEPs</div>
-    <p>The <strong>MLRs 2017</strong> introduced a tiered approach following the 4th EU Money Laundering Directive:</p>
-    <ul style="margin-top:8px">
-      <li><strong>Foreign PEPs</strong> (from outside the EEA): automatic Enhanced Due Diligence. Senior management approval required before establishing a relationship.</li>
-      <li><strong>Domestic PEPs</strong> (UK nationals in UK positions) and <strong>international organisation PEPs</strong>: must be identified, but EDD applies only where the firm's own risk assessment determines there is a higher risk. Lower-risk domestic PEPs may receive standard CDD.</li>
-    </ul>
-    <p style="margin-top:8px">The key distinction is that <em>not all domestic PEPs automatically require EDD</em> — but <em>all foreign PEPs do</em>.</p>
-  </div>
-
-  <h2>What Does EDD Look Like for a PEP?</h2>
-  <p>Enhanced Due Diligence for PEPs goes significantly beyond standard CDD. The ICA specifies that EDD must include:</p>
-  <ul>
-    <li><strong>Establishing the source of wealth</strong> — not just asking, but verifying with documentary evidence. "Business income" is not an acceptable answer on its own.</li>
-    <li><strong>Establishing the source of funds</strong> — specifically for the transaction in question</li>
-    <li><strong>Senior management approval</strong> (for foreign PEPs) before establishing the relationship</li>
-    <li><strong>Enhanced ongoing monitoring</strong> — more frequent review of the relationship</li>
-    <li><strong>Adverse media screening</strong> — checking for reputational risks and corruption allegations</li>
-    <li><strong>Understanding the nature and purpose</strong> of the relationship in more depth than for a standard client</li>
-  </ul>
 
   <div class="callout key">
-    <div class="callout-label">💡 EDD Is Not About Refusing PEPs</div>
-    <p>Identifying a client as a PEP does not mean refusing to deal with them. PEPs are entitled to use regulated services. EDD means conducting a more thorough assessment of their risk profile and being satisfied that their wealth is legitimate. Refusing all PEPs would itself be discriminatory.</p>
+    <div class="callout-label">💡 EDD Does Not Mean Refusal</div>
+    <p>Being a PEP does not disqualify a client from using regulated services. Many PEPs — including the majority of UK domestic PEPs — are entirely legitimate. EDD means a more thorough, documented assessment. Blanket refusal of PEP clients is not an AML requirement and could itself constitute discrimination.</p>
   </div>
-
-  <h2>The Cooling-Off Period for Former PEPs</h2>
-  <p>A key exam point: leaving public office does not immediately remove PEP status. A former prime minister, retired general, or ex-state executive retains their PEP classification for a period determined by risk assessment. Factors that affect the length of the cooling-off period include:</p>
-  <ul>
-    <li>The nature and seniority of the office held</li>
-    <li>The jurisdiction — higher-risk countries require longer cooling-off periods</li>
-    <li>Whether the person retains influence or connections from their former role</li>
-    <li>Whether there is any adverse information or ongoing investigation</li>
-  </ul>
 
   <div class="qc" id="qc-sec2">
     <div class="qc-label">✋ Quick Check</div>
-    <div class="qc-q">A client is a former Minister of Finance from an Eastern European EU member state. They left office two years ago. They are purchasing a property for £950,000 and state their source of wealth as "ministerial salary and property investments." Which statement is correct?</div>
+    <div class="qc-q">A client is a former Minister of Finance from an Eastern European EU member state. They left office two years ago and are purchasing a property for £950,000. Their stated source of wealth is "ministerial salary and property investments." Which statement is correct?</div>
     <div class="qc-opts">
-      <button class="qc-btn" onclick="answerQC(this,'qc-sec2',false,'Incorrect. Former PEPs retain their PEP status for a risk-assessed cooling-off period. Two years ago is recent — this person almost certainly remains a PEP. And even if domestic EU status meant a tiered approach applied, the firm must still make a risk assessment, not simply drop EDD.')">They are no longer a PEP — two years have passed since leaving office. Standard CDD applies.</button>
-      <button class="qc-btn" onclick="answerQC(this,'qc-sec2',true,'Correct. Former PEPs retain their status for a risk-assessed period. As a former foreign minister (from outside the UK), EDD is required. The source of wealth assertion needs documentary evidence — you must verify it, not just record it.')">They remain a PEP in the cooling-off period. As a foreign national holding a senior government position, EDD is required. The stated source of wealth must be verified with documentation, not just accepted.</button>
-      <button class="qc-btn" onclick="answerQC(this,'qc-sec2',false,'Incorrect. As a former EU official, this client is a foreign PEP during their cooling-off period, which attracts automatic EDD, not simplified due diligence. The EU membership of the country is irrelevant to this classification.')">EU member state officials are treated as domestic PEPs under the MLRs. Simplified due diligence is appropriate.</button>
+      <button class="qc-btn" onclick="answerQC(this,'qc-sec2',false,'Incorrect. Former PEPs retain their PEP status for a risk-assessed cooling-off period. Two years is recent for a senior ministry role. The firm must make a documented risk assessment — it cannot simply drop EDD after a fixed number of years.')">They are no longer a PEP — two years since leaving office is a sufficient cooling-off period. Standard CDD applies.</button>
+      <button class="qc-btn" onclick="answerQC(this,'qc-sec2',true,'Correct. As a former EU member state official, this is a foreign PEP under UK MLRs — EU membership does not make them a domestic PEP. Two years is insufficient without a documented risk assessment. EDD is required and the stated source of wealth must be independently verified, not simply recorded.')">They remain a foreign PEP requiring EDD. EU member states are not treated as domestic PEPs under UK MLRs. Two years is insufficient without a risk-assessed cooling-off decision, and the source of wealth requires documentary verification.</button>
+      <button class="qc-btn" onclick="answerQC(this,'qc-sec2',false,'Incorrect. EU member state officials are foreign PEPs under UK MLRs — not domestic PEPs. The tiered approach that permits standard CDD for lower-risk domestic PEPs does not apply here.')">As an EU member state official, they are treated as a domestic PEP. A risk assessment could justify standard CDD.</button>
     </div>
     <div class="qc-fb" id="qc-sec2-fb"></div>
   </div>
@@ -503,69 +472,56 @@ ul li,ol li{margin-bottom:6px;line-height:1.6}
 <div class="section" id="sec3">
   <div class="lesson-tag">Module 06 — Section 4 of 6</div>
   <h1>Identifying Suspicious Activity</h1>
-  <p class="lesson-intro">Spotting suspicious activity is not about certainty. It is not your job to prove money laundering is taking place — that is the job of law enforcement. Your job is to recognise when something does not add up and to act on that recognition. This section covers the suspicion threshold, key red flags in property, and how plausibility testing works in practice.</p>
+  <p class="lesson-intro">Module 5 covered the suspicion threshold, the reporting obligation, and the basics of plausibility testing. This section goes further — focusing on how red flags combine and escalate, how the objective test works under pressure, wilful blindness, and the harder judgement calls that arise in real property transactions.</p>
 
-  <h2>The Suspicion Threshold</h2>
-
-  <div class="exam-note">
-    <div class="exam-note-label">📘 ICA Exam Note — The Suspicion Standard</div>
-    <p>The legal threshold for reporting is <strong>suspicion</strong> — not proof, not certainty, and not even a balance of probabilities. POCA 2002 uses the phrase "knows or suspects or has reasonable grounds for knowing or suspecting."</p>
-    <p style="margin-top:10px">The courts have defined suspicion as <em>a state of mind more than mere speculation but below proof</em>. Crucially, you do not need to:</p>
-    <ul style="margin-top:8px">
-      <li>Identify the specific predicate offence (what crime generated the money)</li>
-      <li>Have conclusive evidence</li>
-      <li>Be certain that ML is occurring</li>
-    </ul>
-    <p style="margin-top:8px">If the facts make you ask "this doesn't feel right — how is this funded?" that instinct may be sufficient to trigger reporting. The test is objective: <em>would a reasonable person in your position have suspected ML on these facts?</em></p>
-  </div>
-
-  <h2>Red Flags in Property Transactions</h2>
-  <p>The ICA, FATF, and HMRC all provide guidance on red flags specific to the property sector. The following are among the most commonly tested:</p>
+  <h2>Red Flag Combinations — When One Becomes Many</h2>
+  <p>Individual red flags are sometimes explicable. It is the combination of multiple flags, or the pattern of a client's behaviour over time, that typically crosses the threshold into reportable suspicion. The ICA does not expect you to refuse every cash buyer or question every urgency request — it expects you to assess the overall picture.</p>
 
   <table class="data-table">
-    <tr><th>Red Flag</th><th>Why It Matters</th></tr>
-    <tr><td>Cash purchase without clear source of funds</td><td>Property is a classic integration vehicle — "clean" cash appears once it's converted into an asset</td></tr>
-    <tr><td>Purchase price significantly above or below market value</td><td>Above: willingness to overpay suggests laundering motive. Below: potential for value extraction/disguised payment</td></tr>
-    <tr><td>Unusual urgency to complete</td><td>Criminals may rush transactions to exploit a window before checks are complete or suspicion is raised</td></tr>
-    <tr><td>Third-party payments (funds from someone other than the buyer)</td><td>Breaks the audit trail; may indicate the true owner is being concealed</td></tr>
-    <tr><td>Multiple purchases in a short period</td><td>Rapid acquisition can indicate layering or integration of large volumes of cash</td></tr>
-    <tr><td>Reluctance to provide ID or source of funds</td><td>A legitimate buyer has no reason to refuse standard CDD requirements</td></tr>
-    <tr><td>Inconsistency between stated occupation/income and property value</td><td>A classic plausibility testing failure — the numbers don't add up</td></tr>
-    <tr><td>Complex or opaque ownership structure</td><td>Offshore companies, layers of holding entities, or nominees without clear commercial rationale</td></tr>
-    <tr><td>Property purchased, then quickly re-sold</td><td>Rapid resale ("flipping") can indicate layering or value extraction</td></tr>
+    <tr><th>Scenario</th><th>Single Flag Reading</th><th>Combined Flag Reading</th></tr>
+    <tr><td>Cash purchase of £800,000</td><td>Unusual but not inherently suspicious — some buyers do have liquid assets</td><td>Cash purchase + urgency + buyer indifferent to price + third-party funds from unrelated company + vague source of wealth = strong suspicion profile</td></tr>
+    <tr><td>Property purchased rapidly and then re-sold</td><td>Could be a legitimate investor strategy or change of circumstances</td><td>Rapid resale at a loss + buyer originally paid above market value + no apparent commercial rationale = classic layering pattern requiring investigation</td></tr>
+    <tr><td>Complex corporate structure</td><td>Some legitimate businesses do use multi-layer structures for tax or commercial reasons</td><td>Complex structure + offshore jurisdiction + nominee directors + refusal to identify UBO = the structure exists to obscure, not for commercial reasons</td></tr>
+    <tr><td>Third-party source of funds</td><td>Family gifts are common, especially for first-time buyers</td><td>Third-party funds + giftor is an unrelated corporate entity + giftor refuses to provide ID + buyer cannot explain the relationship = not a normal family gift</td></tr>
   </table>
 
-  <h2>Plausibility Testing</h2>
-  <p>Plausibility testing is the ICA's term for the active mental process of assessing whether a transaction "makes sense." It requires you to look at the whole picture and ask whether the client's stated purpose, financial profile, and transaction activity are consistent with each other.</p>
-  <p>The ICA describes plausibility testing as asking three key questions:</p>
-  <ol>
-    <li><strong>Does this transaction fit the customer profile?</strong> Is the value, type, and source of funds consistent with what you know about this client?</li>
-    <li><strong>Is the explanation given by the customer credible?</strong> Does it make commercial and financial sense?</li>
-    <li><strong>Is there a rational, legitimate reason for this transaction?</strong> Can you construct a plausible legitimate explanation, or does the only explanation point toward criminal activity?</li>
-  </ol>
-
-  <div class="scenario">
-    <div class="scenario-label">📋 Scenario — Plausibility Testing in Practice</div>
-    <p>A buyer approaches an estate agent. They are purchasing a three-bedroom flat in Manchester for £420,000. They say they work as a self-employed builder. They want to pay entirely in cash from a holdall. They cannot produce any bank statements, and they say their accountant "handles all of that." They want to complete within two weeks.</p>
-    <p style="margin-top:12px">Applying plausibility testing:</p>
-    <p style="margin-top:8px"><strong>Profile fit:</strong> A self-employed builder paying £420,000 cash, with no accessible bank account evidence, is implausible on a financial basis. Even a high-earning sole trader would have a paper trail.</p>
-    <p style="margin-top:8px"><strong>Explanation credibility:</strong> "My accountant handles it" is not an explanation of source of funds. It is a deflection.</p>
-    <p style="margin-top:8px"><strong>Legitimate explanation:</strong> There is no rational, lawful reason to pay £420,000 in cash from a holdall with no bank documentation.</p>
-    <p style="margin-top:8px"><strong>Conclusion:</strong> This is a textbook SAR situation. The agent should not complete the transaction before the MLRO has been notified and has made a decision on external reporting.</p>
-  </div>
+  <h2>The Objective Test Under Pressure</h2>
+  <p>The legal test for whether a report should be made is objective: would a reasonable, informed professional in your position have suspected ML on these facts? This matters in two directions:</p>
+  <ul>
+    <li><strong>It protects you when you report in good faith.</strong> If a reasonable professional would have suspected ML, and you reported, you are protected — even if the suspicion turns out to be wrong. POCA provides a statutory defence for good-faith reporters.</li>
+    <li><strong>It exposes you when you don't report.</strong> If a reasonable professional would have suspected ML, and you failed to report because you were reluctant, liked the client, or were under commercial pressure to complete — the objective test means that position is not defensible. Your subjective comfort with the situation is not the standard.</li>
+  </ul>
 
   <div class="callout warn">
-    <div class="callout-label">⚠️ Wilful Blindness</div>
-    <p>The law does not allow you to "not look" in order to avoid suspicion. If you deliberately fail to ask obvious questions, avoid collecting information that would reveal a red flag, or close your eyes to the obvious, a court can find that you <em>had reasonable grounds to know or suspect</em> — even if you claim you did not actually suspect. This is known as wilful blindness and it does not provide a legal defence.</p>
+    <div class="callout-label">⚠️ Wilful Blindness — A Criminal Standard</div>
+    <p>The law does not permit you to deliberately avoid learning information that would create suspicion. If you ask fewer questions than you should, decline to follow up on an obvious inconsistency, or instruct a colleague not to dig further into a transaction — a court can find that you had "reasonable grounds to know or suspect" ML, even though you claim you did not actually suspect it.</p>
+    <p style="margin-top:8px">This is not a theoretical risk. Wilful blindness is how many AML failures in regulated firms are prosecuted — not as outright complicity, but as a deliberate avoidance of knowledge. Commercial pressure ("this is a big transaction and the client will walk"), relationship pressure ("I've known this client for years"), and workload pressure ("I don't have time to investigate") are not legal defences against the wilful blindness standard.</p>
+  </div>
+
+  <h2>The "Won't Ask, Won't Tell" Culture</h2>
+  <p>A particularly dangerous compliance failure occurs when the culture within a team normalises not asking difficult questions. This can take several forms:</p>
+  <ul>
+    <li>Managers who signal that a transaction is important commercially and should not be delayed by "unnecessary" compliance queries</li>
+    <li>Informal pressure on junior staff not to raise concerns that might upset a client or lose a fee</li>
+    <li>A pattern of internal reports being dismissed by the MLRO without proper documentation of the decision</li>
+    <li>A firm-wide assumption that certain transaction types (e.g. repeat developer clients) are "known" and do not need fresh scrutiny</li>
+  </ul>
+  <p>Any of these patterns can constitute a systemic AML failure, and individual employees are not protected by a manager's apparent comfort with the situation. Your own reporting obligation runs to the MLRO — not to your line manager's assessment of commercial risk.</p>
+
+  <div class="scenario">
+    <div class="scenario-label">📋 Scenario — Pressure to Complete</div>
+    <p>A conveyancer is three days from completion on a £1.2m property purchase. The buyer has been a client of the firm for two years — two previous standard transactions, both unremarkable. This transaction is different: the purchase price is 20% above the valuation, the funds have arrived from a newly opened account in a jurisdiction on the UK's high-risk list, and the buyer's solicitor has been pressing unusually hard for completion.</p>
+    <p style="margin-top:12px">The conveyancer raises it with their manager. The manager says: "We know this client. It's probably a currency issue with their overseas account — just complete." The conveyancer is uncomfortable but says nothing further.</p>
+    <p style="margin-top:12px"><strong>The compliance failure:</strong> Two previous clean transactions do not establish a pattern that rules out ML in a third. The combination of above-market price, high-risk jurisdiction funds, and unusual urgency is a red flag cluster. The conveyancer had an independent obligation to report to the MLRO — not to accept the manager's dismissal as a final answer. Completing under these circumstances without an MLRO review may constitute both wilful blindness and a failure to make a required report.</p>
   </div>
 
   <div class="qc" id="qc-sec3">
     <div class="qc-label">✋ Quick Check</div>
-    <div class="qc-q">An employee at a conveyancing firm notices that funds for a £680,000 purchase have arrived from a third party — not the named buyer. The buyer's solicitor says "it's just from a family company." The employee is a junior paralegal and their manager seems unconcerned. What should the employee do?</div>
+    <div class="qc-q">An employee at a conveyancing firm notices that funds for a £680,000 purchase have arrived from a third party — not the named buyer. The buyer's solicitor says "it's just from a family company." The employee raises it with their manager, who seems unconcerned and says to proceed. What should the employee do?</div>
     <div class="qc-opts">
-      <button class="qc-btn" onclick="answerQC(this,'qc-sec3',false,'Incorrect. Third-party payments are an established red flag, and the vague explanation does not resolve it. The employee\'s own suspicion is legally significant — it does not matter that their manager seems unconcerned.')">Accept the explanation — a manager\'s comfort with the situation means the concern has been addressed</button>
-      <button class="qc-btn" onclick="answerQC(this,'qc-sec3',true,'Correct. Every employee has their own legal obligation to report suspicion to the MLRO. A manager\'s failure to act does not extinguish the junior employee\'s obligation. The MLRO is the right escalation point — not the manager who appears unconcerned.')">Make a written internal report to the MLRO. The employee\'s own suspicion is legally significant regardless of the manager\'s attitude. Third-party payments require clear explanation and documentation.</button>
-      <button class="qc-btn" onclick="answerQC(this,'qc-sec3',false,'Incorrect. POCA does not require you to be certain of the predicate offence before reporting. Suspicion is sufficient. Waiting for proof before reporting is both unlawful and potentially makes you complicit.')">Do nothing until there is clearer evidence of a specific crime — suspicion without evidence is not enough to act on</button>
+      <button class="qc-btn" onclick="answerQC(this,'qc-sec3',false,'Incorrect. Third-party payments are a recognised red flag, and a vague explanation from the solicitor does not resolve it. A manager\'s comfort with the situation does not extinguish the employee\'s own legal reporting obligation.')">Accept the manager's view — the manager has assessed the situation and is comfortable proceeding</button>
+      <button class="qc-btn" onclick="answerQC(this,'qc-sec3',true,'Correct. Every employee has their own independent legal obligation to report suspicion to the MLRO. A manager\'s failure to escalate does not remove that obligation. The MLRO — not the line manager — is the correct escalation point for an unresolved concern about a red flag.')">Make a written internal report to the MLRO directly. The employee's own suspicion is legally significant regardless of the manager's attitude — the obligation runs to the MLRO, not to the line manager.</button>
+      <button class="qc-btn" onclick="answerQC(this,'qc-sec3',false,'Incorrect. POCA does not require certainty or identification of a specific predicate offence. Suspicion of ML — including based on a third-party payment that cannot be satisfactorily explained — is sufficient to trigger the reporting obligation.')">Wait for clearer evidence of a specific crime before taking action — suspicion alone is not enough</button>
     </div>
     <div class="qc-fb" id="qc-sec3-fb"></div>
   </div>
@@ -1123,4 +1079,3 @@ updateProgress();
 </script>
 </body>
 </html>
-
