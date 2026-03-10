@@ -338,11 +338,31 @@ tr:nth-child(even) td{background:var(--l10)}
           <p>A buyer arrives with a large cash deposit, splitting payment across multiple sources. This is a classic placement red flag. By the time your firm is involved, layering may already have begun — your CDD at this point is critical.</p>
         </div>
 
+        <div class="quick-check" id="qc_placement">
+          <h4>⚡ Quick Check — Placement</h4>
+          <p>A drug dealer visits four different branches of the same bank on the same day, depositing £9,500 in cash at each. What is this technique called, and which stage does it represent?</p>
+          <button class="qc-opt" onclick="qc('qc_placement','a','b')">a) Loan-back — Integration stage</button>
+          <button class="qc-opt" onclick="qc('qc_placement','b','b')">b) Smurfing / structured deposits — Placement stage</button>
+          <button class="qc-opt" onclick="qc('qc_placement','c','b')">c) Commingling — Layering stage</button>
+          <button class="qc-opt" onclick="qc('qc_placement','d','b')">d) Currency conversion — Integration stage</button>
+          <div class="qc-fb" id="qc_placement-fb"></div>
+        </div>
+
         <h3 style="margin:22px 0 12px;color:var(--ink)">Layering — Creating Distance</h3>
         <p style="margin-bottom:12px">Once placed, criminals create as many transaction layers as possible: offshore accounts, shell companies, complex chains across multiple jurisdictions, and increasingly virtual currencies which add technical complexity. The goal is always to put maximum distance between the criminal and the money.</p>
         <div class="note-box callout">
           <div class="clabel">📝 Note</div>
           <p>Even when proceeds are initially generated electronically (e.g. fraud), criminals often withdraw cash, transport it internationally, and redeposit it — deliberately creating a messy, multi-step paper trail to confuse investigators.</p>
+        </div>
+
+        <div class="quick-check" id="qc_layering">
+          <h4>⚡ Quick Check — Layering</h4>
+          <p>A convicted fraudster transfers £500,000 through three offshore companies in the Cayman Islands, then through a Liechtenstein trust, then converts the remaining funds into Bitcoin before wiring them to a Dubai bank account. Which stage best describes this activity?</p>
+          <button class="qc-opt" onclick="qc('qc_layering','a','b')">a) Placement — the funds are entering the financial system</button>
+          <button class="qc-opt" onclick="qc('qc_layering','b','b')">b) Layering — the funds are being obscured through multiple transactions</button>
+          <button class="qc-opt" onclick="qc('qc_layering','c','b')">c) Integration — the funds are re-entering the legitimate economy</button>
+          <button class="qc-opt" onclick="qc('qc_layering','d','b')">d) This is not money laundering — no cash is involved</button>
+          <div class="qc-fb" id="qc_layering-fb"></div>
         </div>
 
         <h3 style="margin:22px 0 12px;color:var(--ink)">Integration — Reintegration Methods</h3>
@@ -494,12 +514,12 @@ tr:nth-child(even) td{background:var(--l10)}
           <blockquote><strong>Single criminality</strong> — looks only at whether the conduct is criminal under the law of the country where laundering occurs, regardless of where the original crime took place.<br><br><strong>Dual criminality</strong> — requires the underlying conduct to be unlawful in <em>both</em> the country where the crime occurred AND the country where laundering takes place.</blockquote>
         </div>
 
-        <h3 style="margin:22px 0 10px;color:var(--ink)">The SOCPA 2005 Defence (UK)</h3>
+        <h3 style="margin:22px 0 10px;color:var(--ink)">The Serious Organised Crime and Police Act 2005 (SOCPA) Defence (UK)</h3>
         <p>SOCPA introduced a limited defence where overseas conduct was lawful in that jurisdiction — but only if the conduct would not be punishable in the UK by more than 12 months' imprisonment. This is the "bullfighter scenario": money earned legitimately from bullfighting abroad is not money laundering in the UK. However, for serious crimes like drug trafficking and tax evasion, this defence does not apply regardless of where the crime occurred.</p>
 
         <div class="important callout">
           <div class="clabel">⚠️ Your Personal Responsibility</div>
-          <p>Report any knowledge or suspicion of criminality to your MLRO. It is then the MLRO's responsibility — not yours — to decide whether to escalate to the authorities. Even if your report turns out to be nothing, it helps your firm manage risk and protects you personally.</p>
+          <p>Report any knowledge or suspicion of criminality to your Money Laundering Reporting Officer (MLRO). It is then the MLRO's responsibility — not yours — to decide whether to escalate to the authorities. Even if your report turns out to be nothing, it helps your firm manage risk and protects you personally.</p>
         </div>
       </div>
 
@@ -568,7 +588,7 @@ tr:nth-child(even) td{background:var(--l10)}
 
       <div class="card">
         <h3 style="margin-bottom:12px;color:var(--ink)">The Scale of the Problem</h3>
-        <p>A UNODC study estimates that money laundered globally each year represents between 2–5% of global GDP — equivalent to <strong>$800 billion to $2 trillion</strong>. Illicit drugs account for roughly a fifth; human trafficking, fraud, bribery, and corruption make up the rest. The true figure is almost certainly higher — by its nature, money laundering is hidden.</p>
+        <p>A United Nations Office on Drugs and Crime (UNODC) study estimates that money laundered globally each year represents between 2–5% of global GDP — equivalent to <strong>$800 billion to $2 trillion</strong>. Illicit drugs account for roughly a fifth; human trafficking, fraud, bribery, and corruption make up the rest. The true figure is almost certainly higher — by its nature, money laundering is hidden.</p>
 
         <div class="exam-note callout" style="margin-top:20px">
           <div class="clabel">📘 ICA Exam Note — Four Forms of Damage</div>
@@ -696,6 +716,8 @@ function reveal(id) {
 
 /* ── QUICK CHECKS ── */
 const qcExp = {
+  qc_placement:"This is smurfing (also called structured deposits) — a classic placement technique. By splitting £38,000 into four deposits of £9,500, the dealer stays below the £10,000 reporting threshold at each branch. It's still placement because cash is being introduced into the financial system. The pattern itself should trigger suspicion regardless of each individual amount.",
+  qc_layering:"This is classic layering. The funds were already in the financial system — so there's no placement. The purpose of the offshore companies, trust, Bitcoin conversion, and cross-border transfers is entirely to confuse the audit trail and obscure the source of funds. Note also: the absence of cash doesn't prevent money laundering.",
   qc1:"The auction sale converts criminal property (the racehorse bought with stolen funds) into clean money from a legitimate buyer. This is integration — the final stage where laundered funds re-enter the economy.",
   qc2:"Because the fraud proceeds were already within the financial system (not cash), the three-stage model doesn't cleanly apply. This is a key limitation. Financial crime bypasses the placement stage entirely.",
   qc3:"All three are criminal property. Any form of property — a watch, an insurance policy, a house — can be laundered. The name 'money laundering' is misleading in this respect."
@@ -805,14 +827,3 @@ buildQuiz();
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
