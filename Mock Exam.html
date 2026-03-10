@@ -250,177 +250,319 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--i
 <script>
 // ════════════ ALL 40 QUESTIONS ════════════
 const QS = [
-  // ── MODULE 1 ──
+
+  // ══════════════════════════════════════════
+  // MODULE 1 — What is Money Laundering?
+  // ══════════════════════════════════════════
+
+  // Q1 — Definition. ans: C (index 2). Was: B.
   {m:'Module 1',t:'What is Money Laundering?',
    q:"Which of the following BEST defines money laundering?",
-   o:["Evading tax on legitimate income","The process by which the proceeds of criminal activity are made to appear as legitimate funds","Paying bribes to public officials","Moving money between bank accounts to avoid transaction fees"],
-   a:1,e:"Money laundering is the process by which funds derived from criminal activity (predicate offences) are processed to make them appear legitimately obtained. Tax evasion, bribery, and fund transfers may be related crimes or typologies, but they do not define ML itself."},
+   o:["Evading tax on undeclared income from a legitimate business","Moving funds between jurisdictions to take advantage of currency differences","The process by which the proceeds of criminal activity are made to appear as legitimately obtained funds","Bribing a public official in exchange for a commercial advantage"],
+   a:2,
+   e:"Money laundering is the process by which funds derived from criminal activity (the 'predicate offence') are processed so that they appear to have a legitimate origin. Tax evasion and bribery are separate criminal offences — and may themselves be predicate offences that generate proceeds requiring laundering — but they do not define ML itself."},
+
+  // Q2 — Three stages: ICA "statements" format. ans: A (index 0). Was: B.
   {m:'Module 1',t:'What is Money Laundering?',
-   q:"The three classic stages of money laundering are:",
-   o:["Concealment, conversion, extraction","Placement, layering, integration","Smuggling, structuring, shell companies","Identification, verification, monitoring"],
-   a:1,e:"The classic FATF/ICA model identifies three stages: Placement (introducing criminal funds into the financial system), Layering (disguising the trail through multiple transactions), and Integration (the now 'clean' money re-entering the legitimate economy)."},
+   q:"Which of the following statements about the three classic stages of money laundering is CORRECT?",
+   o:["During the placement stage, the criminal is most exposed to detection because the funds are still most closely connected to the underlying criminal activity","Integration is the riskiest stage for the launderer because the funds re-enter the legitimate economy in large visible amounts","Layering is always the first stage — funds must be disguised before they can be introduced into the financial system","A transaction can only constitute money laundering if all three stages — placement, layering, and integration — occur in sequence"],
+   a:0,
+   e:"Placement is the most dangerous stage for the launderer. The cash is still physically connected to its criminal origin and the process of introducing it into the financial system (cash deposits, currency exchange, cash-intensive businesses) creates the greatest detection risk. Layering and integration do not require a strict sequence, and a single transaction can constitute ML without all three stages being present."},
+
+  // Q3 — Property scenario / layering. ans: D (index 3). Was: B (index 1).
   {m:'Module 1',t:'What is Money Laundering?',
-   q:"At which stage of money laundering is the criminal most at risk of detection?",
-   o:["Integration","Layering","Placement","None — all stages carry equal risk"],
-   a:2,e:"Placement is the most dangerous stage for the launderer. The cash is most obviously connected to criminal activity and the volume of physical currency being introduced into the system creates the greatest detection risk."},
+   q:"A conveyancer is acting on a purchase where the buyer is a BVI company, the funds arrive from three different Liechtenstein accounts in staged tranches over six weeks, and the source of those funds is described only as 'investment returns'. This structure MOST closely represents which stage of money laundering?",
+   o:["Placement — the funds are being introduced into the financial system for the first time","Integration — the criminal property is being used to purchase a legitimate asset","Predicate offending — the transaction itself constitutes a criminal offence","Layering — multiple jurisdictions, corporate structures, and staged transfers are being used to obscure the origin of the funds"],
+   a:3,
+   e:"Layering involves creating a complex chain of transactions designed to disguise the criminal origin of funds. Using multiple offshore holding companies, staged fund transfers from different jurisdictions, and vague descriptions of source of funds are classic layering techniques. The aim is to make the audit trail so complex that the criminal origin cannot be traced back. This scenario should trigger significant red flags for any regulated conveyancer."},
+
+  // Q4 — Predicate offences. ans: B (index 1). Was: A (index 0).
   {m:'Module 1',t:'What is Money Laundering?',
-   q:"A property is purchased using a complex chain of offshore loans, nominee directors, and shell companies in multiple jurisdictions. This MOST closely represents which stage of money laundering?",
-   o:["Placement","Layering","Integration","Structuring"],
-   a:1,e:"Layering involves creating a complex trail of transactions to disguise the criminal origin of funds. Using offshore structures, multiple jurisdictions, nominees and shell companies is a classic layering technique — the aim is to make the audit trail so complex that the criminal origin cannot be traced."},
+   q:"Under the Proceeds of Crime Act 2002, which statement BEST describes the scope of 'predicate offences' for money laundering?",
+   o:["Only offences that carry a custodial sentence of five years or more can generate criminal property for ML purposes","Any criminal conduct that generates a financial benefit can be a predicate offence — the UK applies an 'all crimes' approach","Only offences specifically listed in Schedule 2 of POCA 2002 qualify as predicate offences","Predicate offences are limited to drug trafficking, fraud, and corruption under POCA"],
+   a:1,
+   e:"The UK applies what is known as an 'all crimes' approach to money laundering. POCA 2002 defines 'criminal conduct' broadly — it covers any conduct constituting an offence in the UK, or that would be an offence if it occurred in the UK. There is no minimum sentence threshold and no closed list. This means that even relatively minor crimes (e.g. minor tax fraud) can generate 'criminal property' within the meaning of POCA."},
+
+  // Q5 — POCA offence recognition scenario. ans: A (index 0). Was: (new topic).
   {m:'Module 1',t:'What is Money Laundering?',
-   q:"Under the Proceeds of Crime Act 2002, which of the following is a 'predicate offence' for the purposes of money laundering?",
-   o:["Any criminal conduct which generates a financial benefit","Only drug trafficking offences","Only offences carrying a sentence of 5 years or more","Only offences listed in Schedule 2 of POCA"],
-   a:0,e:"POCA 2002 defines 'criminal conduct' very broadly — it covers any conduct which constitutes an offence in the UK (or would do so if it occurred in the UK). Unlike some other jurisdictions, the UK does not limit ML predicate offences to a defined list. This is sometimes called 'all crimes' ML."},
+   q:"An estate agent knowingly assists a buyer in structuring a property purchase so that the true beneficial owner — a person with criminal convictions for fraud — is concealed behind a nominee director. Under POCA 2002, which offence is the estate agent MOST at risk of committing?",
+   o:["Section 328 — Arranging: becoming concerned in an arrangement that facilitates another person's acquisition or control of criminal property","Section 327 — Concealing: disguising the criminal origin of property","Section 329 — Acquisition: acquiring criminal property for their own benefit","Section 330 — Failure to disclose: failing to report a suspicion of money laundering"],
+   a:0,
+   e:"Section 328 POCA — 'arranging' — is the offence most relevant to property professionals. It criminalises entering into, or becoming concerned in, an arrangement that facilitates another person's acquisition, retention, use or control of criminal property. The estate agent here is actively structuring the transaction. Section 327 covers the launderer's own acts of concealment; s.329 covers personal acquisition; s.330 is the failure to report. An estate agent who knowingly assists the transaction commits s.328, not merely s.330."},
 
-  // ── MODULE 2 ──
-  {m:'Module 2',t:'Terrorist Financing & Sanctions',
-   q:"Which of the following BEST describes the key distinction between money laundering and terrorist financing?",
-   o:["Terrorist financing always involves larger sums of money","In terrorist financing, the funds may be from a legitimate source; in money laundering the funds always derive from crime","Terrorist financing is legal in most jurisdictions","Money laundering always involves real estate; terrorist financing does not"],
-   a:1,e:"This is the critical ICA distinction: ML always involves criminal proceeds (dirty money being cleaned), whereas TF may involve perfectly legitimate funds (charity donations, business income, personal savings) being diverted to fund terrorism. The criminality in TF lies in the destination of the funds, not their origin."},
-  {m:'Module 2',t:'Terrorist Financing & Sanctions',
-   q:"A UK person who provides financial services to a firm on the UN Consolidated Sanctions List, without a licence, is:",
-   o:["Committing an offence only if they knew the client was sanctioned","Committing a strict liability criminal offence regardless of knowledge","Guilty of a civil infraction only","Acting lawfully provided the transaction is below £10,000"],
-   a:1,e:"Sanctions offences under UK law (The Sanctions and Anti-Money Laundering Act 2018 and related regulations) are strict liability. The prosecution does not need to prove the defendant knew the person was sanctioned. It is the responsibility of regulated firms to screen for sanctions matches before providing services."},
-  {m:'Module 2',t:'Terrorist Financing & Sanctions',
-   q:"Which of the following is NOT one of the key objectives of the UN Security Council sanctions regime?",
-   o:["Maintaining international peace and security","Supporting legitimate businesses in sanctioned countries","Targeting the financing of weapons of mass destruction","Countering terrorism"],
-   a:1,e:"UN Security Council sanctions are designed to maintain international peace and security, counter terrorism, prevent the proliferation of weapons of mass destruction, and protect human rights. They are specifically not designed to support businesses in sanctioned countries — that is the opposite of their intent."},
-  {m:'Module 2',t:'Terrorist Financing & Sanctions',
-   q:"A property transaction is proceeding when you discover the beneficial owner of the purchasing company appears on the OFAC SDN list. What is the appropriate action?",
-   o:["Complete the transaction quickly to avoid financial loss","Continue but apply enhanced due diligence","Stop the transaction immediately and seek legal/compliance advice before proceeding","Report to the MLRO only after the transaction completes"],
-   a:2,e:"Transacting with a person on the OFAC SDN list (or UK/EU equivalent) is a sanctions violation. The transaction must stop immediately. Completing it — even to avoid financial loss — would be a criminal offence. The MLRO and legal/compliance team must be involved before any further steps are taken."},
-  {m:'Module 2',t:'Terrorist Financing & Sanctions',
-   q:"The 'tipping off' prohibition in terrorist financing cases means:",
-   o:["You may never discuss TF with colleagues","You must not disclose to the subject that a report has been made or an investigation is underway, if that would prejudice the investigation","You must immediately tell the police if you suspect TF","You can only report suspicions through OFAC"],
-   a:1,e:"Tipping off in a TF context — as in ML — means you must not tell the person who is subject to a report or investigation that you have made a disclosure, if doing so would prejudice the investigation. This does not prevent internal discussion or reporting through proper channels."},
+  // ══════════════════════════════════════════
+  // MODULE 2 — Terrorist Financing & Sanctions
+  // ══════════════════════════════════════════
 
-  // ── MODULE 3 ──
+  // Q6 — ML vs TF distinction. ans: D (index 3). Was: B (index 1).
+  {m:'Module 2',t:'Terrorist Financing & Sanctions',
+   q:"Which of the following BEST describes the key distinction between money laundering and terrorist financing in terms of the origin and destination of funds?",
+   o:["Both money laundering and terrorist financing always involve funds derived from criminal activity","In terrorist financing, the funds are always generated through criminal activity; in money laundering, the funds may be from a legitimate source","Terrorist financing always involves larger amounts of money than money laundering","In money laundering, the funds always derive from criminal activity; in terrorist financing, the funds may originate from entirely legitimate sources — it is their intended use that is criminal"],
+   a:3,
+   e:"This is the critical ICA distinction. Money laundering always involves criminal proceeds — the purpose is to clean 'dirty money'. Terrorist financing may involve entirely legitimate funds (charity donations, business income, personal savings) that are being diverted to fund terrorism. The criminality in TF lies in the destination and intended use of the funds, not their origin. This distinction matters practically because standard CDD focused on source of funds may not detect TF risk."},
+
+  // Q7 — Sanctions strict liability. ans: B (index 1). Was: B (index 1). Keep topic, improve distractors.
+  {m:'Module 2',t:'Terrorist Financing & Sanctions',
+   q:"A UK compliance officer approves a transaction with a foreign counterparty without screening them against the UK Consolidated Sanctions List. It later emerges the counterparty was a designated person. What is the compliance officer's legal position?",
+   o:["They have committed an offence only if they personally knew the counterparty was a designated person","They have committed a strict liability offence — the absence of knowledge is not a defence, though it may be relevant to sentencing","They have committed a civil infraction only, resulting in a financial penalty payable to OFSI","No offence is committed provided the firm's general sanctions screening procedures are documented and reasonable"],
+   a:1,
+   e:"UK financial sanctions offences (under the Sanctions and Anti-Money Laundering Act 2018 and applicable regulations) are strict liability in nature. The prosecution does not need to prove that the defendant knew the counterparty was designated. This places the burden squarely on firms to screen before transacting. Lack of knowledge may be a mitigating factor in sentencing but it is not a defence to the commission of the offence itself."},
+
+  // Q8 — Sanctions objectives "NOT" format. ans: A (index 0). Was: B (index 1).
+  {m:'Module 2',t:'Terrorist Financing & Sanctions',
+   q:"Which of the following is NOT a primary objective of the United Nations Security Council sanctions regime?",
+   o:["Facilitating economic recovery in countries affected by conflict through targeted trade incentives","Maintaining international peace and security by restricting financial flows to states or individuals posing a threat","Countering the financing of terrorism and the proliferation of weapons of mass destruction","Protecting human rights by applying financial pressure to individuals and entities engaged in serious abuses"],
+   a:0,
+   e:"The UNSC sanctions regime is a coercive tool — it is designed to apply pressure through restriction, not to facilitate economic recovery. Its core objectives are: maintaining international peace and security, counter-terrorism, countering WMD proliferation, and human rights protection. Trade incentives and economic recovery assistance are functions of different international mechanisms, such as development programmes or the World Bank."},
+
+  // Q9 — OFAC SDN scenario. ans: C (index 2). Was: C (index 2). Improve distractors.
+  {m:'Module 2',t:'Terrorist Financing & Sanctions',
+   q:"An estate agent is two weeks from exchange of contracts on a high-value residential sale. A routine sanctions screening check reveals the purchasing company's ultimate beneficial owner appears on the OFAC SDN List. What is the correct response?",
+   o:["Complete the transaction immediately to minimise financial exposure and report to the NCA post-completion","Continue with enhanced due diligence and additional documentation, but proceed to exchange given the commercial commitment","Halt the transaction immediately, do not proceed further, and take urgent legal and compliance advice before any next steps","Notify the NCA that the transaction is proceeding and request retrospective clearance within 30 days"],
+   a:2,
+   e:"Transacting with a person on the OFAC SDN List (or its UK/EU equivalents) is a sanctions violation. The transaction must stop immediately — there is no 'complete now and report later' route that provides a defence. The financial exposure from completing is far greater than from stopping: sanctions violations can result in unlimited fines and criminal prosecution. Continuing even under commercial pressure, or seeking retrospective clearance, are not legally available options."},
+
+  // Q10 — TF: small amounts / property scenario. ans: D (index 3). Was: B (index 1).
+  {m:'Module 2',t:'Terrorist Financing & Sanctions',
+   q:"A property transaction proceeds without any obvious financial irregularity. The buyer is a recently incorporated UK company with a clean sanctions screening result. After completion, law enforcement notifies the estate agent that the transaction was used to fund a domestic terrorist cell. Which statement about this scenario is MOST accurate?",
+   o:["The estate agent bears no legal responsibility — the transaction was financially unremarkable and screens returned clear","The estate agent should have suspected TF because all property transactions involving new companies are high risk","Standard AML checks focused on source of funds and sanctions may not detect TF risk, since TF may involve legitimate funds and newly-created entities with no adverse history","The transaction demonstrates that AML regulation is ineffective and only law enforcement can prevent TF"],
+   a:3,
+   e:"This scenario illustrates a key limitation of standard AML controls for TF purposes. TF may use legitimate funds — the source of funds is 'clean'. A newly incorporated UK company may have no adverse screening results. The red flags for TF are different from those for ML: unusual urgency, connections to high-risk jurisdictions, atypical transaction structures, and beneficial owners with limited verifiable history. Firms must have TF-specific risk assessment alongside standard ML controls."},
+
+  // ══════════════════════════════════════════
+  // MODULE 3 — How Financial Institutions Are Exploited
+  // ══════════════════════════════════════════
+
+  // Q11 — Correspondent banking "statements" format. ans: A (index 0). Was: B (index 1).
   {m:'Module 3',t:'How Financial Institutions Are Exploited',
-   q:"Which of the following is the PRIMARY money laundering vulnerability of correspondent banking?",
-   o:["High transaction fees make it unattractive to launderers","The respondent bank's customers are effectively invisible to the correspondent bank, creating a 'nested' anonymity risk","Correspondent banks always conduct full CDD on end customers","It is only used for legitimate inter-bank settlements"],
-   a:1,e:"The core vulnerability of correspondent banking is that the correspondent bank relies entirely on the respondent bank having conducted proper CDD. The correspondent has no direct relationship with — or visibility of — the respondent's customers. If the respondent has weak controls, the correspondent is effectively processing transactions for unknown third parties. This 'nested' risk is a key ICA exam topic."},
+   q:"Which of the following statements about the money laundering risks of correspondent banking is CORRECT?",
+   o:["The correspondent bank has limited visibility of the respondent bank's underlying customers and must rely on the respondent having conducted adequate CDD — creating a 'nested' anonymity risk","Correspondent banking relationships are considered lower risk because all parties are regulated financial institutions subject to their own AML obligations","The correspondent bank is legally required to conduct full CDD on every end customer of the respondent bank before processing transactions","Correspondent banking risk is confined to relationships with banks in FATF high-risk ('blacklisted') jurisdictions"],
+   a:0,
+   e:"The core vulnerability of correspondent banking is that the correspondent bank processes transactions for the respondent bank's customers without having any direct relationship with — or visibility of — those customers. The correspondent relies entirely on the respondent's CDD. If the respondent has weak controls, or if the respondent's customers include nested third-party banks, the correspondent is effectively a processing channel for unknown parties. This is why correspondent banking with respondents in weak AML jurisdictions carries heightened risk regardless of the respondent's own regulatory status."},
+
+  // Q12 — Shell companies. ans: D (index 3). Was: B (index 1).
   {m:'Module 3',t:'How Financial Institutions Are Exploited',
-   q:"A shell company has no genuine commercial activity but holds assets and a bank account. Why does this structure assist money laundering?",
-   o:["Shell companies are illegal in all jurisdictions","They create apparent corporate legitimacy and separate the criminal from direct ownership of assets, obscuring the beneficial ownership chain","Banks are not required to conduct CDD on corporate clients","Shell companies cannot own real estate"],
-   a:1,e:"Shell companies are legal entities with no genuine business operations. They are used in ML because they create a layer of corporate separation between the criminal and their assets. Combined with nominee directors and shareholders, they make it very difficult to identify the true beneficial owner — which is exactly what the launderer wants."},
+   q:"A conveyancer is acting for a buyer described as a 'family investment vehicle' incorporated in the British Virgin Islands. The sole director is a professional nominee firm and no UBO declaration has been provided. Why does this structure present a heightened ML risk?",
+   o:["BVI companies are illegal under UK law and the conveyancer must immediately terminate the instruction","BVI companies are common in legitimate property investment and present no greater risk than domestic corporate buyers","The structure is lower risk because professional nominee directors indicate the involvement of regulated professionals","The structure creates layers of corporate separation that make it difficult to identify the true beneficial owner, potentially allowing a criminal to control assets without being directly identifiable"],
+   a:3,
+   e:"Shell companies or nominee structures in secrecy jurisdictions are a classic ML vehicle. They create corporate separation between the criminal and their assets, making beneficial ownership difficult to establish. The British Virgin Islands has historically featured prominently in property ML cases in the UK. The ICA notes that the combination of: offshore incorporation, nominee directors, no UBO declaration, and vague purpose ('family investment') should trigger Enhanced Due Diligence. The conveyancer must establish the true beneficial owner before proceeding."},
+
+  // Q13 — Smurfing. ans: B (index 1). Was: B (index 1). Replace absurd distractors.
   {m:'Module 3',t:'How Financial Institutions Are Exploited',
-   q:"What is 'smurfing' in the context of money laundering?",
-   o:["A technique where criminal assets are hidden inside legitimate cartoon merchandising","Breaking large amounts of cash into smaller deposits, made by multiple individuals, to avoid reporting thresholds","Using animated characters to conceal ownership of assets","The process of extracting criminal funds from foreign accounts"],
-   a:1,e:"Smurfing (also called structuring) involves breaking large sums of criminal cash into multiple smaller deposits — often made by a network of individuals ('smurfs') — specifically to avoid transaction reporting thresholds. Each individual deposit may appear innocent, but the aggregate represents a significant criminal sum being placed into the financial system."},
+   q:"In the context of money laundering, what is 'smurfing' (also known as structuring)?",
+   o:["Transferring large amounts of cash electronically between correspondent banks in multiple jurisdictions to create a complex transaction trail","Breaking large sums of criminal cash into multiple smaller deposits — often made by different individuals — to stay below transaction reporting thresholds","Using a network of nominee directors and shell companies to obscure the beneficial ownership of criminal assets","Depositing criminal cash into already-open legitimate bank accounts belonging to complicit third parties"],
+   a:1,
+   e:"Smurfing — or structuring — involves breaking a large sum of criminal cash into multiple smaller deposits, typically made by a network of individuals (the 'smurfs') at different branches or banks. The purpose is to keep each individual deposit below reporting thresholds that would otherwise trigger scrutiny. Each transaction may appear innocent in isolation; the aggregate represents a significant placement of criminal funds. It is a specific ML typology and a red flag in cash-intensive businesses."},
+
+  // Q14 — Private banking: "statements" format. ans: C (index 2). Was: C (index 2). Richer options.
   {m:'Module 3',t:'How Financial Institutions Are Exploited',
-   q:"In a private banking context, which feature makes it particularly vulnerable to money laundering?",
-   o:["Private banking clients are always subject to the lowest level of CDD","Private banks operate exclusively in low-risk jurisdictions","The relationship manager model, where a single trusted contact manages a wealthy client, can create loyalty that overrides compliance scrutiny","Private banking accounts cannot hold real estate assets"],
-   a:2,e:"The relationship manager model in private banking creates an ML vulnerability: the RM builds a close personal relationship with the client and develops loyalty that can, consciously or unconsciously, lead to compliance corners being cut. The ICA notes that this dynamic — combined with HNWI clients, complex structures, and cross-border assets — makes private banking a high-risk sector."},
+   q:"Which of the following statements about private banking and money laundering risk is CORRECT?",
+   o:["Private banking clients are subject to the most stringent CDD requirements in all cases, making private banking one of the lower-risk sectors for ML","Private banks operate exclusively in stable, low-risk jurisdictions, reducing the ML risk inherent in their client base","The relationship manager model — where a single trusted adviser manages a wealthy client's entire portfolio — can create a loyalty dynamic that, consciously or unconsciously, leads to AML corners being cut","Private banking ML risk is limited to the initial onboarding stage; once a client is established, ongoing monitoring is less important"],
+   a:2,
+   e:"The ICA specifically identifies the relationship manager model as a ML vulnerability in private banking. RMs build close personal and commercial relationships with high-net-worth clients over many years. This can generate loyalty that conflicts with AML obligations — the RM may downplay red flags, avoid challenging a valued client on source of wealth, or resist escalating concerns to compliance. This dynamic, combined with complex cross-border structures and high transaction values, makes private banking a persistently high-risk sector."},
 
-  // ── MODULE 4 ──
+  // Q15 — Trust structures applied. ans: A (index 0). Was: (new topic replacing implausible Q).
+  {m:'Module 3',t:'How Financial Institutions Are Exploited',
+   q:"'This trust structure does not identify any specific beneficiaries. The trustee has absolute discretion to determine who benefits and in what amounts. The settlor — who is also the ultimate source of funds — provides informal 'wishes' to the trustee by letter of wishes, which has no legal force.' Which trust type is being described, and why is it attractive to money launderers?",
+   o:["A discretionary trust — the absence of named beneficiaries and the trustee's discretion make it very difficult to identify who ultimately benefits from the assets, obscuring the beneficial ownership chain","A fixed interest trust — the fixed entitlements of beneficiaries make it straightforward to trace the final destination of criminal assets","A constructive trust — imposed by law in response to unconscionable conduct, making it an unlikely vehicle for deliberate ML","A blind trust — where the trustee makes all investment decisions without instruction, removing the settlor from day-to-day control"],
+   a:0,
+   e:"The scenario describes a discretionary trust. The key features — no named beneficiaries, trustee's absolute discretion, and the use of a non-binding letter of wishes — make it highly attractive for ML. The beneficial ownership is effectively obscured: no one can definitively say who will benefit until the trustee makes distributions. The settlor can retain effective control through informal 'guidance' while maintaining legal distance. The ICA specifically identifies discretionary trusts as a vehicle used to distance criminals from their assets."},
+
+  // ══════════════════════════════════════════
+  // MODULE 4 — High-Risk Products & Sectors
+  // ══════════════════════════════════════════
+
+  // Q16 — Casino chip washing. ans: C (index 2). Was: B (index 1).
   {m:'Module 4',t:'High-Risk Products & Sectors',
-   q:"A person purchases casino chips with cash, gambles for a short period, then cashes out and receives a casino cheque. This is an example of:",
-   o:["Legitimate gambling activity","Chip washing — converting criminal cash into an apparently legitimate gaming receipt","A predicate offence","Terrorist financing"],
-   a:1,e:"'Chip washing' involves purchasing chips with criminal cash, gambling minimally to create cover, then cashing out and receiving a casino cheque — converting criminal cash into an apparently legitimate gaming receipt. This is a classic integration/placement technique exploiting the cash-intensive nature of casinos."},
+   q:"A person purchases £50,000 of casino chips with cash, places a small number of token bets, then cashes out the remaining chips and receives a casino bank cheque for approximately £47,000. This is an example of:",
+   o:["Legitimate gaming activity — the person suffered a small loss and received their winnings by cheque, which is standard practice","Layering — the casino cheque is being used as a step in a chain of transactions to disguise the origin of funds","Chip washing — criminal cash is converted into an apparently legitimate gaming receipt, completing the placement stage","Integration — the cash is re-entering the legitimate economy as a recorded, traceable payment from a regulated entity"],
+   a:2,
+   e:"'Chip washing' involves purchasing chips with criminal cash, gambling minimally to create a narrative ('I was gambling'), then cashing out and receiving an apparently legitimate cheque from the casino. This exploits the cash-intensive, high-turnover nature of casinos to convert criminal cash into a traceable, legitimate-looking receipt. It primarily functions as a placement technique. The ICA and FATF identify this as a specific casino ML typology."},
+
+  // Q17 — Prepaid cards. ans: A (index 0). Was: B (index 1).
   {m:'Module 4',t:'High-Risk Products & Sectors',
-   q:"Prepaid cards present AML risk primarily because:",
-   o:["They can only be used for online purchases","Many allow anonymous loading and use, making it difficult to trace the origin of funds","They are exclusively used by younger people","They are subject to unlimited transaction amounts"],
-   a:1,e:"Many prepaid cards — particularly those not requiring CDD — can be loaded with cash anonymously and used anywhere. This makes them effective placement vehicles for criminal funds, bypassing the CDD requirements that apply to conventional bank accounts."},
+   q:"Prepaid payment cards present AML risk primarily because:",
+   o:["Some allow anonymous loading with cash and use without identity verification, allowing criminal funds to be placed into a payment system and spent without CDD","They can only be used in the country of purchase, limiting their usefulness for cross-border layering","They are exclusively issued by unregulated entities and therefore fall outside the scope of AML regulation","Prepaid card transactions are processed outside the banking system and cannot be monitored by financial intelligence units"],
+   a:0,
+   e:"The ML risk with prepaid cards centres on anonymity. Cards that can be loaded with cash without identity checks, and used anywhere that accepts card payments, are effective placement vehicles — they convert physical cash into a digital payment instrument without triggering CDD. The 5th EU Money Laundering Directive specifically reduced prepaid card transaction limits (to €150, or €50 for online use) and prohibited anonymous funding, precisely because of this risk. Many prepaid cards are now regulated and do require CDD."},
+
+  // Q18 — High-value goods. ans: D (index 3). Was: B (index 1).
   {m:'Module 4',t:'High-Risk Products & Sectors',
-   q:"Why are high-value goods (art, jewellery, luxury cars) considered a high-risk sector for money laundering?",
-   o:["They are always purchased using bank transfers which are easy to trace","They store value, are portable, can be purchased with cash, and resold for apparent legitimate income — completing the integration cycle","High-value goods dealers are not required to conduct any AML checks","The goods must be declared to HMRC on purchase"],
-   a:1,e:"High-value goods are attractive to launderers because they: can often be purchased with cash (placement); are portable and can cross borders easily; store or even appreciate in value; and can be sold to generate apparently legitimate proceeds (integration). The art market in particular has been criticised for weak AML controls."},
+   q:"An art dealer is offered a cash purchase of £180,000 for a painting by a buyer who has never dealt with them before and declines to provide any background information. Which combination of factors makes this transaction high-risk for money laundering?",
+   o:["The buyer is new to the dealer — all new clients are high risk regardless of transaction size or payment method","The payment method is bank transfer, which always carries higher ML risk than cash in the art sector","The transaction is below the €10,000 CDD threshold for high-value dealers, so no AML checks are required","Cash payment, high transaction value, refusal to provide information, and the portability and resale value of art as an asset class all combine to create a significant ML risk"],
+   a:3,
+   e:"High-value goods — particularly art — are attractive to launderers for several reasons: they can be purchased with cash (placement); they are portable and can be moved across borders; they store or appreciate in value; and they can be sold to generate apparently legitimate proceeds (integration). The refusal to provide background information compounds the risk. The art market has faced sustained criticism from FATF and others for historically weak AML controls, leading to regulatory tightening in the EU and UK."},
+
+  // Q19 — Mens rea: ICA gap topic. ans: B (index 1). Was: C (index 2) on crypto.
   {m:'Module 4',t:'High-Risk Products & Sectors',
-   q:"Virtual currencies (cryptocurrencies) present which of the following specific AML challenges?",
-   o:["They are backed by central banks, making them easy to trace","They are too volatile to be used for money laundering","Pseudonymity, cross-border transfer without intermediaries, and the use of mixing services can obscure the origin and destination of funds","Cryptocurrency transactions are all publicly reported to regulators"],
-   a:2,e:"Cryptocurrencies present specific AML challenges: pseudonymity (wallet addresses are not directly linked to identities); the ability to transfer value across borders without a bank intermediary; and the use of mixing/tumbling services and privacy coins to further obscure transaction trails. The ICA notes these as key features that launderers exploit."},
+   q:"A compliance officer reviews a transaction but, despite several red flags being present in the file, concludes there is nothing to report. They later argue they had no personal suspicion at the time. Which of the following statements about this situation is CORRECT?",
+   o:["The compliance officer has no legal exposure — s.330 POCA requires actual personal knowledge or suspicion, not an objective standard","The 'reasonable grounds to suspect' element of s.330 POCA applies — if a reasonable professional in the same role, with access to the same information, would have formed a suspicion, the officer cannot rely on their own lack of personal suspicion as a complete defence","The officer is only at risk if a colleague also reviewed the transaction and formed a suspicion","The officer's position is protected provided the transaction was reviewed by a senior colleague who also did not suspect anything"],
+   a:1,
+   e:"Section 330 POCA has three mental state limbs: (i) actual knowledge; (ii) actual suspicion; and (iii) 'reasonable grounds to know or suspect' — the objective limb. The third limb means the test is not purely subjective. The court will ask: what would a reasonable professional, in the same role, with access to the same information, have concluded? If the answer is 'they would have suspected ML', the officer cannot fully rely on saying 'I personally didn't'. Workload, seniority, and colleague review are not defences."},
 
-  // ── MODULE 5 ──
-  {m:'Module 5',t:'Customer Due Diligence',
-   q:"Under the Money Laundering Regulations 2017, CDD is triggered in which of the following circumstances?",
-   o:["Only when a new account is opened","Only for transactions above £15,000","When establishing a business relationship, carrying out an occasional transaction at or above €15,000, or when there is suspicion of ML/TF regardless of transaction size","Only for PEPs and high-risk customers"],
-   a:2,e:"The MLRs 2017 specify multiple CDD trigger points: (i) establishing a business relationship; (ii) occasional transactions at/above the €15,000 threshold; (iii) suspicious activity regardless of value; and (iv) doubts about previously obtained identification. The threshold does not exempt firms from CDD when suspicion arises."},
-  {m:'Module 5',t:'Customer Due Diligence',
-   q:"Enhanced Due Diligence (EDD) is MANDATORY in which of the following situations under the MLRs 2017?",
-   o:["For any client who refuses to answer questions","For all new business relationships","For all Politically Exposed Persons — the MLRs require EDD for PEPs automatically","For all clients from EU member states"],
-   a:2,e:"The MLRs 2017 make EDD mandatory for all PEPs and their family members/close associates. EDD is also required for high-risk third countries and other high-risk business relationships, but for PEPs it is an automatic requirement regardless of other risk factors."},
-  {m:'Module 5',t:'Customer Due Diligence',
-   q:"What is 'plausibility testing' in the context of CDD?",
-   o:["Running a client's name through a commercial database","Testing whether the information provided by the client is consistent and credible given everything else you know about them — not merely whether it can be verified","Checking a client's credit score","Verifying a client's identity document against a government database"],
-   a:1,e:"Plausibility testing goes beyond documentary verification. It requires the firm to assess whether the client's explanation of their business, source of funds, and reasons for the transaction is credible and internally consistent. The ICA emphasises that you should be asking 'does this make sense?' not just 'can I verify this document?'"},
-  {m:'Module 5',t:'Customer Due Diligence',
-   q:"A client refuses to provide source of funds information, citing privacy concerns. Under the MLRs 2017, the appropriate response is:",
-   o:["Proceed with the transaction but note the refusal on file","Accept the refusal — privacy rights override AML obligations","Decline to proceed with the transaction or terminate the business relationship, and consider whether a SAR is required","Apply simplified CDD instead"],
-   a:2,e:"Refusal to provide information required for CDD is a legal basis for declining to establish or continue a business relationship. The MLRs 2017 require firms to apply CDD measures and, if they cannot do so, not to proceed. The refusal itself — combined with any other indicators — may also give rise to a suspicion requiring an internal SAR report to the MLRO."},
-  {m:'Module 5',t:'Customer Due Diligence',
-   q:"Simplified CDD is available when:",
-   o:["The client is a long-standing customer with no previous issues","The regulated firm concludes, based on documented risk assessment, that the business relationship presents a lower degree of risk","The client is a UK national","The transaction value is below £5,000"],
-   a:1,e:"Simplified CDD is not 'no CDD' — it is proportionately reduced CDD that may be applied where a documented risk assessment supports the conclusion that the customer or product presents lower risk. It cannot be applied as a default or based on assumptions; it requires documented justification."},
+  // Q20 — Virtual currencies. ans: C (index 2). Was: C (index 2). Improve distractors.
+  {m:'Module 4',t:'High-Risk Products & Sectors',
+   q:"Which combination of features makes virtual currencies a specific AML concern compared to traditional payment systems?",
+   o:["Virtual currencies are backed by central bank reserves, making their transaction flows easier to monitor than cash","Virtual currencies are too volatile in value to be useful for storing or transferring criminal proceeds at scale","Pseudonymity of wallet addresses, the ability to transfer value across borders without a bank intermediary, and the availability of mixing services and privacy coins can all be used to obscure the origin and destination of funds","All cryptocurrency transactions are reported to national financial intelligence units in real time under the 5th Money Laundering Directive"],
+   a:2,
+   e:"The AML challenges specific to virtual currencies are: (i) pseudonymity — wallet addresses are not directly linked to real-world identities; (ii) borderless transfer without a bank intermediary — funds can move globally without triggering correspondent banking CDD; and (iii) mixing/tumbling services and privacy coins, which further break transaction trails. The 5th MLD brought cryptocurrency exchanges and wallet providers within AML regulation for the first time, precisely because existing controls did not capture these risks."},
 
-  // ── MODULE 6 ──
-  {m:'Module 6',t:'Monitoring, PEPs & Reporting',
-   q:"Which of the following statements about Politically Exposed Persons (PEPs) is CORRECT under the MLRs 2017?",
-   o:["PEPs are always criminals and should be refused as clients","EDD for PEPs applies only while they hold public office — once they leave, standard CDD resumes immediately","A former PEP must be treated as a PEP for an appropriate period after leaving public office — the ICA notes this is commonly 12 months, though firms must assess ongoing risk","PEP status only applies to foreign government officials, not UK ones"],
-   a:2,e:"The ICA explicitly addresses the 'former PEP' issue: the elevated risk does not automatically cease when a person leaves public office. Firms must apply EDD for an appropriate period — commonly 12 months — and thereafter make a risk-based judgment. UK domestic PEPs are also in scope (though typically lower risk than foreign PEPs under MLRs 2017 guidance)."},
-  {m:'Module 6',t:'Monitoring, PEPs & Reporting',
-   q:"A Suspicious Activity Report (SAR) must be submitted to the National Crime Agency (NCA) when:",
-   o:["You are certain that money laundering has occurred","A transaction is above £10,000","You know or suspect, or have reasonable grounds for knowing or suspecting, that a person is engaged in money laundering or terrorist financing","You have documentary proof of criminal activity"],
-   a:2,e:"The legal threshold for SAR reporting is 'knows or suspects, or has reasonable grounds for knowing or suspecting.' This is deliberately low — you do not need to be certain, and you do not need documentary proof. The 'reasonable grounds' test is objective: what would a reasonable person in your position suspect given the information available?"},
-  {m:'Module 6',t:'Monitoring, PEPs & Reporting',
-   q:"'Tipping off' under POCA 2002 means:",
-   o:["Providing anonymous intelligence to law enforcement","Disclosing to another person information which is likely to prejudice an investigation, once you know or suspect a SAR has been made or an investigation is underway","Reporting to the MLRO more than once about the same client","Providing guidance to colleagues about AML requirements"],
-   a:1,e:"Tipping off is a specific criminal offence under POCA 2002. It requires: (a) disclosure to a person; (b) of information; (c) which is likely to prejudice an investigation; (d) after the person knows or suspects that an investigation is underway or a SAR has been made. It is not merely mentioning AML — it requires prejudicial disclosure of information about a specific investigation."},
-  {m:'Module 6',t:'Monitoring, PEPs & Reporting',
-   q:"A 'Defence Against Money Laundering' (DAML) SAR is required when:",
-   o:["You wish to report a completed transaction","You want to proceed with a transaction but believe it involves the proceeds of crime — you need NCA consent or a deemed consent period to pass before proceeding","You are reporting a PEP to the NCA","You have identified a sanctions match"],
-   a:1,e:"A DAML SAR is a specific type of SAR submitted when a firm identifies that a proposed or ongoing transaction involves criminal property and wishes to seek consent to proceed. Without submitting a DAML and either receiving consent or waiting for the 7-day moratorium period to expire, proceeding with the transaction could constitute the s.328 POCA 'arranging' offence."},
-  {m:'Module 6',t:'Monitoring, PEPs & Reporting',
-   q:"Ongoing monitoring of a business relationship requires which of the following?",
-   o:["Re-verifying the client's identity on every transaction","Only monitoring transactions above £15,000","Scrutinising transactions to ensure consistency with the firm's knowledge of the client, their business, and risk profile — and updating CDD when circumstances change","Monitoring is only required for PEPs and high-risk customers"],
-   a:2,e:"The MLRs 2017 require ongoing monitoring of all business relationships: scrutinising transactions for consistency with the client's known profile and risk assessment, and keeping CDD documents up to date. It is a continuous obligation, not an ad hoc one. Unusual transactions — even below financial thresholds — should trigger review."},
+  // ══════════════════════════════════════════
+  // MODULE 5 — Customer Due Diligence
+  // ══════════════════════════════════════════
 
-  // ── MODULE 7 ──
-  {m:'Module 7',t:'Legal & Regulatory Framework',
-   q:"FATF is best described as:",
-   o:["A UN body that prosecutes money launderers","An inter-governmental body that sets international AML standards and conducts peer reviews of national compliance","The UK's domestic AML regulator","A European Court that hears ML cases"],
-   a:1,e:"FATF (Financial Action Task Force) is an inter-governmental policy-making body that sets the international standards for AML/CFT — the '40 Recommendations'. It conducts peer reviews (mutual evaluations) of member states' compliance with its standards. It does not prosecute individuals; that is the role of national law enforcement."},
-  {m:'Module 7',t:'Legal & Regulatory Framework',
-   q:"The principal criminal offences for money laundering in the UK are contained in:",
-   o:["The Money Laundering Regulations 2017","The Terrorism Act 2000","The Proceeds of Crime Act 2002, sections 327–329","The Financial Services and Markets Act 2000"],
-   a:2,e:"The three primary ML criminal offences — concealing/disguising/converting criminal property (s.327), arranging (s.328), and acquisition/use/possession (s.329) — are all in POCA 2002. The MLRs 2017 create regulatory obligations for supervised firms but are not the source of the criminal offences. FSMA 2000 covers financial services regulation more broadly."},
-  {m:'Module 7',t:'Legal & Regulatory Framework',
-   q:"The principal failure-to-disclose offence under POCA 2002 applies to a person in the regulated sector when they:",
-   o:["Know about money laundering but choose not to report it to the police directly","Know or suspect, or have reasonable grounds for knowing or suspecting, that another person is engaged in money laundering, but fail to make a required disclosure to their MLRO or NCA","Lose paperwork relating to a suspicious transaction","Fail to attend AML training"],
-   a:1,e:"The s.330 failure-to-disclose offence (regulated sector) is committed when: (a) a person knows or suspects, or has reasonable grounds for knowing/suspecting, ML; (b) the information came to them in the course of business in the regulated sector; and (c) they do not make the required disclosure. The 'reasonable grounds' element makes this an objective — not just subjective — test."},
-  {m:'Module 7',t:'Legal & Regulatory Framework',
-   q:"Under the UK's risk-based approach to AML, the national risk assessment (NRA) published by HM Treasury and the Home Office:",
-   o:["Is a list of high-risk customers that must be declined","Provides a government-level assessment of the ML/TF risks facing the UK, which informs both government policy and firms' own risk assessments","Is binding on all firms and must be adopted verbatim","Replaces a firm's own risk assessment"],
-   a:1,e:"The NRA provides the macro-level analysis of threats and vulnerabilities facing the UK as a whole. Firms are expected to be aware of it and to factor it into their own sector- and firm-level risk assessments. It informs but does not replace a firm's own assessment — each firm must conduct its own proportionate analysis."},
-  {m:'Module 7',t:'Legal & Regulatory Framework',
-   q:"A solicitor discovers that a client they acted for last year has been convicted of fraud and that funds passed through the client account were the proceeds of crime. The solicitor should:",
-   o:["Do nothing — the transaction is complete","Consult the NRA","Make a disclosure (SAR) to the NCA, as the solicitor now has knowledge/suspicion of ML even though the transaction is historic","Wait for the client to contact them"],
-   a:2,e:"There is no limitation period on the ML reporting obligation. Discovery of past transactions involving criminal property creates a present obligation to make a SAR. The s.328 'arranging' offence may already have been committed, but making a voluntary SAR may provide a defence or mitigate liability. The MLRO must be informed immediately."},
+  // Q21 — CDD triggers. ans: B (index 1). Was: C (index 2).
+  {m:'Module 5',t:'Customer Due Diligence',
+   q:"Under the Money Laundering Regulations 2017, CDD obligations are triggered in which of the following circumstances?",
+   o:["Only when a new account or business relationship is opened with a private individual","When establishing a business relationship, when carrying out an occasional transaction at or above €15,000, when there is suspicion of ML/TF regardless of transaction size, or when there are doubts about the reliability of previously obtained CDD","Only for transactions above £15,000 by value, irrespective of whether a business relationship exists","Only where the client has been identified as a PEP, a high-risk third country national, or appears on a watchlist"],
+   a:1,
+   e:"The MLRs 2017 set out four CDD trigger points: (i) establishing a business relationship; (ii) carrying out an occasional transaction at or above €15,000 (including linked transactions); (iii) suspicion of ML or TF arising regardless of transaction value or CDD status; and (iv) doubts about the accuracy or adequacy of previously obtained identification information. The threshold does not operate as a safe harbour below which CDD can be skipped if suspicion arises."},
 
-  // ── MODULE 8 ──
+  // Q22 — Insurance typology: ICA gap topic. ans: D (index 3). Was: B (index 1) on EDD/PEPs.
+  {m:'Module 5',t:'Customer Due Diligence',
+   q:"Which of the following insurance-related scenarios is MOST commonly associated with money laundering typologies identified by the ICA?",
+   o:["A client takes out term life insurance with a £500,000 benefit and maintains the policy for 20 years, making regular monthly premium payments throughout","A client invests £150,000 as a single premium into an investment bond and withdraws a regular income over five years to supplement their pension","A client invests £200,000 as a single premium into an investment-linked insurance product, then cancels the policy within six months and receives a cheque from the insurer for the surrender value less charges","A client purchases a whole-of-life policy with annual premiums, and the benefit is paid to named family members on death"],
+   a:3,
+   e:"The single-premium-then-early-surrender typology is a classic insurance ML technique. Criminal cash is invested as a lump sum (placement into a regulated, legitimate-looking financial product), the policy is held briefly (creating a brief audit trail), then cancelled — and the resulting cheque from an insurer is a seemingly legitimate document explaining where the money came from (integration). The early surrender penalty is treated as the 'cost' of laundering. The ICA specifically identifies this as a red flag."},
+
+  // Q23 — Plausibility testing. ans: A (index 0). Was: B (index 1).
+  {m:'Module 5',t:'Customer Due Diligence',
+   q:"What does 'plausibility testing' require a regulated firm to do during the CDD process?",
+   o:["Assess whether the client's explanations about their source of funds, business purpose, and the nature of the transaction are internally consistent and credible in light of everything else the firm knows about them — not merely whether documents can be produced","Verify the client's identity through a government-issued document and record the verification on file","Run the client's name through a commercial AML database and obtain a risk score","Confirm that the client's declared source of wealth matches their transaction history on the firm's systems"],
+   a:0,
+   e:"Plausibility testing goes beyond document verification. It requires the firm to stand back and ask: does this client's story hang together? Is the declared source of funds consistent with the client's occupation, business, and transaction behaviour? Are there inconsistencies between what the client says and what the firm can observe? The ICA emphasises that a document can be genuine and a story can still be implausible. CDD is about understanding the client — not just collecting their passport."},
+
+  // Q24 — Client refuses source of funds. ans: C (index 2). Was: C (index 2). Improve distractors.
+  {m:'Module 5',t:'Customer Due Diligence',
+   q:"During CDD, a new client declines to explain the source of the funds they intend to use for a property purchase, stating that the information is 'commercially sensitive'. Under the MLRs 2017, what is the correct response?",
+   o:["Accept the refusal and proceed — commercial sensitivity is a recognised exception to source of funds requirements under the MLRs","Note the refusal on the file, apply enhanced monitoring, and proceed on the basis that the refusal alone does not constitute a suspicion","Decline to proceed with the transaction or establish the business relationship; the refusal itself, combined with any other indicators, may also give rise to a requirement to make an internal SAR report to the MLRO","Apply simplified CDD instead — the refusal means standard CDD is unavailable, so the simplified route is the appropriate alternative"],
+   a:2,
+   e:"The MLRs 2017 are clear: where a firm cannot apply required CDD measures, it must not establish the business relationship or carry out the transaction. 'Commercial sensitivity' is not a recognised exemption. The refusal does not, by itself, prove ML — but combined with other indicators it may cross the suspicion threshold requiring an internal SAR. Simplified CDD is not an alternative for when standard CDD fails; it is a proportionate reduction for genuinely lower-risk relationships where the firm has documented justification."},
+
+  // Q25 — Simplified CDD. ans: B (index 1). Was: B (index 1). Richer distractors.
+  {m:'Module 5',t:'Customer Due Diligence',
+   q:"Under the MLRs 2017, simplified CDD is available when:",
+   o:["The client is known to the firm as a long-standing customer with a clean transaction history and no previous concerns","The firm has documented a risk assessment concluding that the particular business relationship or product presents a lower degree of ML/TF risk, and no higher-risk factors are present","The client is a public limited company listed on a recognised stock exchange in a low-risk jurisdiction","The transaction value is below £5,000 and no ongoing business relationship is being established"],
+   a:1,
+   e:"Simplified CDD is not 'no CDD' — it is a proportionately reduced level of CDD that may only be applied where a documented risk assessment supports the conclusion that the specific relationship or product is lower risk. It requires active justification, not default application. Critically, simplified CDD cannot be applied when any of the MLR 2017's mandatory EDD triggers are present (PEPs, high-risk third countries, certain product types). Long-standing relationships and low transaction values do not automatically justify simplified CDD without a documented risk assessment."},
+
+  // ══════════════════════════════════════════
+  // MODULE 6 — Monitoring, PEPs & Reporting
+  // ══════════════════════════════════════════
+
+  // Q26 — PEPs: "statements" format. ans: D (index 3). Was: C (index 2).
+  {m:'Module 6',t:'Monitoring, PEPs & Reporting',
+   q:"Which of the following statements about Politically Exposed Persons (PEPs) under the Money Laundering Regulations 2017 is CORRECT?",
+   o:["A person ceases to be treated as a PEP immediately on leaving public office — the elevated risk is tied to the role, not the individual","PEP status under the MLRs 2017 applies only to foreign nationals holding senior political roles — UK domestic PEPs are not in scope","EDD for PEPs is triggered only when there is specific adverse media or known criminal association — PEP status alone is insufficient to require EDD","A former PEP must continue to be treated as a PEP for an appropriate period after leaving office; commonly applied as 12 months, though firms must make a risk-based judgment based on the individual's ongoing profile"],
+   a:3,
+   e:"The ICA explicitly addresses the 'former PEP' question: PEP risk does not automatically disappear when a person leaves public office. They retain connections, influence, and access to wealth accumulated during their tenure. The MLRs require EDD to be maintained for an appropriate period — the ICA notes 12 months as a commonly applied benchmark, though the firm must also assess ongoing factors such as retained influence and adverse media. UK domestic PEPs are within scope of the MLRs (though typically assessed as lower risk than foreign PEPs under FCA guidance)."},
+
+  // Q27 — SAR threshold. ans: A (index 0). Was: C (index 2).
+  {m:'Module 6',t:'Monitoring, PEPs & Reporting',
+   q:"At what threshold is a Suspicious Activity Report (SAR) required to be submitted to the National Crime Agency?",
+   o:["When a person knows or suspects, or has reasonable grounds for knowing or suspecting, that another person is engaged in money laundering or terrorist financing — there is no minimum transaction value","Only when the transaction value exceeds £10,000 and there is documented evidence of suspicious activity","When the firm has received legal advice confirming that ML has occurred and that reporting is appropriate","When two or more separate red flags have been identified and documented in the file in relation to the same client"],
+   a:0,
+   e:"The legal threshold for SAR reporting is deliberately low: 'knows or suspects, or has reasonable grounds for knowing or suspecting'. There is no minimum transaction value — a suspicious transaction of £500 must be reported if the threshold is met. The 'reasonable grounds' element makes the test partly objective: even if the individual did not personally reach suspicion, if the circumstances were such that a reasonable person in their position would have suspected ML, the obligation to report may still arise. Legal advice, evidence, and multiple red flags are not prerequisites."},
+
+  // Q28 — Tipping off. ans: C (index 2). Was: B (index 1).
+  {m:'Module 6',t:'Monitoring, PEPs & Reporting',
+   q:"Under section 333A POCA 2002, the tipping off offence is committed when:",
+   o:["A firm shares information about a client's transaction history with another regulated firm in the same group","A person discloses to another person information which is likely to prejudice an investigation into ML or TF, once they know or suspect that a SAR has been made or that an investigation is underway","A firm fails to complete its CDD obligations before entering into a business relationship, effectively 'tipping off' its regulator","A member of staff informs their compliance officer that they have concerns about a client transaction"],
+   a:2,
+   e:"The tipping off offence under s.333A POCA requires: (a) a disclosure to a person; (b) of information; (c) which is likely to prejudice a money laundering investigation; (d) where the discloser knows or suspects a SAR has been made or will be made, or that an investigation is underway. It does not prevent internal reporting to the MLRO or compliance team. The ICA notes it can be committed before or after a SAR is submitted — the key question is whether the disclosure would prejudice the investigation."},
+
+  // Q29 — DAML. ans: B (index 1). Was: B (index 1). Improve distractors.
+  {m:'Module 6',t:'Monitoring, PEPs & Reporting',
+   q:"A regulated firm has identified that a transaction it is about to complete may involve criminal property. It wants to proceed but recognises it may be at risk of committing the s.328 POCA 'arranging' offence. What is the correct process?",
+   o:["Proceed with the transaction and submit a standard SAR to the NCA after completion as a retrospective disclosure","Submit a Defence Against Money Laundering (DAML) SAR to the NCA before proceeding; if the NCA does not refuse within 7 working days, consent is deemed granted and the firm may proceed","Report the concern to the FCA and await their direction on whether the transaction should proceed","Make an internal SAR to the MLRO only — an external disclosure to the NCA is not required unless the MLRO also forms a suspicion"],
+   a:1,
+   e:"A DAML SAR is submitted where a firm wishes to carry out a transaction that may involve criminal property — it is seeking consent to proceed. The NCA has 7 working days to respond. If the NCA does not respond, consent is deemed granted. If the NCA refuses within the 7-day window, a 31-calendar-day moratorium follows during which the transaction cannot proceed. Proceeding without a DAML (or before deemed consent) exposes the firm to the s.328 arranging offence. Retrospective reporting after completion does not provide a defence."},
+
+  // Q30 — Ongoing monitoring. ans: D (index 3). Was: C (index 2).
+  {m:'Module 6',t:'Monitoring, PEPs & Reporting',
+   q:"The ongoing monitoring obligation under the MLRs 2017 requires which of the following?",
+   o:["Re-verifying the client's identity documentation at each transaction to ensure it remains current","Only monitoring transactions that exceed the €15,000 occasional transaction threshold","Conducting a full CDD review on all clients every 12 months regardless of transaction activity or risk","Scrutinising transactions to ensure they are consistent with the firm's knowledge of the client, their business and risk profile — and updating CDD when circumstances, risk factors, or the client's profile change"],
+   a:3,
+   e:"Ongoing monitoring is a continuous obligation, not a periodic administrative task. It requires firms to scrutinise transactions for consistency with the client's known purpose, risk profile, and business activity — and to update CDD documents when information becomes stale, the client's circumstances change, or new risk factors emerge. Unusual transactions — even below financial thresholds — should trigger review. Periodic document refresh without risk-sensitive scrutiny of actual transaction behaviour does not satisfy the obligation."},
+
+  // ══════════════════════════════════════════
+  // MODULE 7 — Legal & Regulatory Framework
+  // ══════════════════════════════════════════
+
+  // Q31 — FATF description. ans: A (index 0). Was: B (index 1).
+  {m:'Module 7',t:'Legal & Regulatory Framework',
+   q:"Which of the following BEST describes the Financial Action Task Force (FATF)?",
+   o:["An inter-governmental policy-making body that sets international AML/CFT standards (the 40 Recommendations) and conducts peer reviews (Mutual Evaluations) of member states' compliance — but does not prosecute individuals or directly enforce law","A United Nations agency that directly prosecutes money launderers and terrorist financiers in the International Court of Justice","The UK's domestic AML regulator, responsible for supervising firms against the Money Laundering Regulations 2017","An EU institution whose standards continue to bind the UK directly following Brexit"],
+   a:0,
+   e:"FATF is an inter-governmental body — its 39 member jurisdictions plus the EU set the global AML/CFT standards collectively, and FATF assesses each member through Mutual Evaluations (peer reviews). Crucially, FATF does not prosecute individuals; that is the function of national law enforcement. Its Recommendations are soft law — they only become enforceable when a country implements them through national legislation. In the UK, FATF standards flow through POCA 2002 and the MLRs 2017."},
+
+  // Q32 — POCA offences. ans: C (index 2). Was: C (index 2). Richer distractors.
+  {m:'Module 7',t:'Legal & Regulatory Framework',
+   q:"The principal criminal money laundering offences in the UK — concealing, arranging, and acquisition/use/possession of criminal property — are created by:",
+   o:["The Money Laundering Regulations 2017, which implement the EU's 4th Money Laundering Directive into UK law","The Serious Organised Crime and Police Act 2005, as amended by the Policing and Crime Act 2017","Sections 327–329 of the Proceeds of Crime Act 2002, which apply to any person regardless of whether they operate in a regulated sector","The Terrorism Act 2000, which also creates offences for money laundering associated with politically motivated crime"],
+   a:2,
+   e:"The three primary ML criminal offences are all in POCA 2002: s.327 (concealing/disguising/converting/transferring/removing criminal property), s.328 (arranging), and s.329 (acquisition/use/possession). Critically, these offences apply to everyone — not just regulated firms. The MLRs 2017 create regulatory obligations for supervised firms but are not the source of the criminal offences. SOCPA 2005 modified certain POCA defences but did not create the primary offences. The Terrorism Act 2000 is a parallel but separate legislative framework."},
+
+  // Q33 — Failure to disclose. ans: B (index 1). Was: B (index 1). Richer options.
+  {m:'Module 7',t:'Legal & Regulatory Framework',
+   q:"The section 330 POCA 2002 failure-to-disclose offence (regulated sector) applies when:",
+   o:["A person with actual knowledge of ML chooses not to report directly to the police — reporting to the MLRO only does not satisfy the obligation","A person in the regulated sector knows or suspects, or has reasonable grounds for knowing or suspecting, that another person is engaged in ML — and that knowledge or suspicion arose through their work — but they fail to make the required disclosure to their MLRO or the NCA","A person fails to file an annual AML training record or misses a required CDD review cycle","Any person, whether or not in the regulated sector, knows about ML activity and fails to inform law enforcement within 24 hours"],
+   a:1,
+   e:"The s.330 offence has three conditions: (i) the person knows or suspects, or has reasonable grounds to know or suspect, that ML is occurring; (ii) the information came to them in the course of their business in the regulated sector; and (iii) they fail to make the required disclosure. The 'reasonable grounds' element creates an objective limb — the failure to suspect can itself be unlawful if a reasonable person in the same position would have suspected. The disclosure must go to the MLRO or directly to the NCA; reporting to a line manager alone does not satisfy the obligation."},
+
+  // Q34 — National Risk Assessment. ans: D (index 3). Was: B (index 1).
+  {m:'Module 7',t:'Legal & Regulatory Framework',
+   q:"The UK's National Risk Assessment (NRA), published by HM Treasury and the Home Office, serves which of the following purposes?",
+   o:["It is a confidential government document, unavailable to regulated firms, used solely to direct law enforcement resource allocation","It provides a definitive list of high-risk customers that regulated firms must decline — firms that transact with NRA-listed customers are automatically in breach of the MLRs","It replaces a regulated firm's own risk assessment — firms in sectors identified as high-risk in the NRA do not need to conduct separate firm-level assessments","It provides a government-level analysis of the ML and TF threats facing the UK that informs both policy and firms' own risk assessments — but it does not replace a firm's own assessment"],
+   a:3,
+   e:"The NRA provides the macro-level picture — the threats, vulnerabilities, and overall ML/TF risk landscape facing the UK. Firms are expected to be aware of it and to factor it into their own sector- and firm-level risk assessments. It is publicly available. Critically, the NRA informs but does not replace a firm's own assessment: each firm must conduct a proportionate analysis of its own customer base, products, and geography. A firm in a 'high-risk' sector cannot substitute the NRA for a genuine firm-level assessment."},
+
+  // Q35 — Historic SAR obligation. ans: A (index 0). Was: C (index 2).
+  {m:'Module 7',t:'Legal & Regulatory Framework',
+   q:"A conveyancer who acted on a property transaction 18 months ago discovers that the client has since been convicted of fraud and that the funds used in the transaction were the proceeds of that fraud. What obligation, if any, does the conveyancer now have?",
+   o:["The conveyancer must now make a SAR to the NCA — there is no limitation period on the ML reporting obligation, and the current knowledge/suspicion of ML creates a present disclosure requirement","The conveyancer has no obligation — the transaction is complete and the limitation period for SAR reporting is 12 months from the date of the transaction","The conveyancer should consult the client's conviction record and, if the fraud post-dates the transaction, no disclosure is required","The obligation to report is extinguished once a client has been convicted — law enforcement already has all the relevant information"],
+   a:0,
+   e:"There is no limitation period on the AML reporting obligation. The conveyancer now has knowledge of ML — that the historic transaction involved criminal property. This creates a present obligation to make a SAR to the NCA. Making a voluntary disclosure may also provide a defence or mitigation if the s.328 'arranging' offence was committed. The fact that the transaction is complete, or that the client has been convicted, does not extinguish the reporting obligation. The MLRO must be informed immediately."},
+
+  // ══════════════════════════════════════════
+  // MODULE 8 — RBA & Management Obligations
+  // ══════════════════════════════════════════
+
+  // Q36 — Risk assessment as living document. ans: C (index 2). Was: C (index 2). Better distractors.
   {m:'Module 8',t:'RBA & Management Obligations',
-   q:"A firm's AML risk assessment should be:",
-   o:["Conducted once when the firm is established and filed away","A static document provided by the sector regulator","A living document, regularly reviewed and updated as the firm's business, customer base, products, and the wider threat environment change","Identical to every other firm in the same sector"],
-   a:2,e:"The ICA is explicit: a risk assessment is not a one-off exercise. It must be a living document that is reviewed and updated when the firm's business changes (new products, new markets, new customer types), when the regulatory environment changes, and periodically regardless. A static risk assessment provides false comfort."},
+   q:"A firm completed a detailed AML risk assessment three years ago when it first became regulated. Since then, the firm has expanded into a new geographic market, taken on several high-net-worth clients, and the sector's regulatory guidance has been updated. What does the ICA say about the firm's risk assessment?",
+   o:["The firm's risk assessment remains valid — a thorough initial assessment should be designed to cover foreseeable future developments","The firm should commission an external consultant to update the risk assessment every five years as a matter of good practice","The risk assessment is overdue for review and should be updated immediately to reflect the firm's new business profile, client base, and the updated regulatory environment","Risk assessments are only required to be updated when the firm's annual turnover increases by more than 25%"],
+   a:2,
+   e:"The ICA is explicit that a risk assessment is a living document, not a one-off exercise. It must be reviewed and updated when the firm's business changes (new products, new markets, new customer types), when the regulatory environment changes, and periodically regardless. A three-year-old risk assessment that does not reflect geographic expansion, new client types, or regulatory changes provides false comfort — and regulators will scrutinise whether the assessment remains current and proportionate."},
+
+  // Q37 — MLRO function. ans: B (index 1). Was: B (index 1). Improve options.
   {m:'Module 8',t:'RBA & Management Obligations',
-   q:"The Money Laundering Regulations 2017 require designated firms to have an MLRO (Money Laundering Reporting Officer). The MLRO's primary legal function is:",
-   o:["To conduct CDD on every client personally","To act as the single internal point for AML reports from staff, assess those reports, and make external disclosures to the NCA where required","To train all staff in AML procedures","To set the firm's commercial strategy in a way that avoids high-risk clients"],
-   a:1,e:"The MLRO's statutory function under the MLRs 2017 is to receive internal SARs from staff, assess them, and determine whether an external SAR to the NCA is warranted. They are the gatekeeper between internal suspicions and external law enforcement disclosure. Training and strategy are important but are secondary to this core legal role."},
+   q:"The Money Laundering Regulations 2017 require designated firms to appoint a Money Laundering Reporting Officer (MLRO). What is the MLRO's PRIMARY statutory function?",
+   o:["To conduct CDD checks on every individual client personally before any business relationship is established","To act as the single internal point for AML reports from staff, assess those reports against the suspicion threshold, and make external disclosures to the NCA where required","To be solely responsible for all AML training within the firm and to certify that every staff member is competent","To approve or reject all transactions personally where a file has been flagged with any AML concern"],
+   a:1,
+   e:"The MLRO's statutory function under the MLRs 2017 is to be the firm's nominated officer: receiving internal suspicion reports from staff, assessing them against the legal threshold, and determining whether an external SAR to the NCA is required. This is the MLRO's core legal role. Training and oversight of procedures are important functions but are secondary to the nominated officer role. The MLRO is also the firm's primary point of contact for AML matters with the regulator and law enforcement."},
+
+  // Q38 — Window-dressing policy. ans: D (index 3). Was: C (index 2).
   {m:'Module 8',t:'RBA & Management Obligations',
-   q:"A firm's AML policy is drafted by an external consultant and adopted without internal review or discussion. The ICA's view of this approach is that it:",
-   o:["Represents best practice — external expertise adds objectivity","Is acceptable provided the policy is legally compliant","Is likely to amount to 'window dressing' — the policy will not be embedded in the firm's actual operations and therefore provides limited real protection","Is fine for smaller firms with limited compliance resources"],
-   a:2,e:"The ICA explicitly warns against externally-drafted policies adopted without internal engagement. Such policies may be technically accurate but are operationally meaningless — staff won't know or own them, and they won't reflect how the firm actually works. Real AML protection requires genuine internal engagement, ownership, and embedding of the policy."},
+   q:"A firm adopts an externally-produced AML policy template without significant internal review or adaptation to the firm's specific business. The ICA's assessment of this approach is that it:",
+   o:["Represents best practice — external experts will produce a more legally accurate and comprehensive policy than the firm could develop internally","Is acceptable for smaller firms without dedicated compliance resources, provided the policy is technically accurate and legally compliant","Reduces the firm's regulatory risk because the policy can be attributed to specialist external advisers if challenged by a supervisor","Is likely to amount to 'window dressing' — the policy will not reflect how the firm actually operates, staff will not own it, and it will provide limited real-world ML protection even if it appears comprehensive on paper"],
+   a:3,
+   e:"The ICA explicitly warns against externally-drafted policies adopted without genuine internal engagement. Such policies may be technically accurate but operationally meaningless: staff won't recognise their own firm in the policy, won't know what it requires them to do, and won't have any ownership of it. A policy that looks good on a shelf but is not embedded in actual practice provides false comfort and may be more damaging than a simpler policy that staff actually follow. Real AML protection requires genuine internal design, ownership, and culture."},
+
+  // Q39 — Objective test and workload. ans: A (index 0). Was: C (index 2).
   {m:'Module 8',t:'RBA & Management Obligations',
-   q:"The 'objective test of suspicion' has which implication for a busy compliance employee?",
-   o:["Volume of work is a recognised mitigating factor if suspicious activity is missed","The employee is only liable if they were personally aware of the suspicious activity","Volume of work is legally irrelevant — if a reasonable person in their role should have been suspicious, the law treats them as having had grounds for suspicion","The objective test only applies to MLRO-level staff"],
-   a:2,e:"The objective test is indifferent to workload. It asks: what ought a reasonable person in this role, with access to the same information, have known or suspected? Factors like volume of work do not excuse failure to report. This is a significant point for property sector staff who handle many transactions simultaneously."},
+   q:"A property transaction coordinator processes 60 files per month. They miss a combination of red flags on one file — a cash-funded purchase by a recently incorporated offshore company with a nominee director and no source of funds explanation — and no internal SAR is raised. When the transaction later comes to law enforcement's attention, the coordinator argues that their workload made detailed review of every file impossible. Which statement BEST describes their legal position?",
+   o:["The objective test of suspicion is indifferent to workload — if a reasonable professional in the same role, with access to the same file, would have formed a suspicion, the coordinator may have committed the s.330 failure-to-disclose offence regardless of how many other files they were managing","Volume of work is a recognised mitigating factor under s.330 POCA — the 'reasonable grounds' test takes account of the practical constraints on regulated professionals","The coordinator is only at risk if their MLRO was also presented with the file and failed to act — individual staff below MLRO level have limited personal exposure","The s.330 offence requires deliberate evasion — a genuine oversight caused by excessive workload is not captured by the 'reasonable grounds to suspect' test"],
+   a:0,
+   e:"The objective test under s.330 POCA is not moderated by workload. It asks: what would a reasonable professional in this role, with access to this information, have concluded? The coordinator's caseload is irrelevant to whether the legal threshold was crossed — it may be relevant to sentencing or mitigation, but not to whether the offence was committed. This has significant implications for how firms manage case volumes: if the workload is such that staff cannot reasonably review files properly, the firm's systems are inadequate — and the firm may face regulatory action for inadequate controls."},
+
+  // Q40 — Positive AML culture / Coadjute property scenario. ans: C (index 2). Was: C (index 2). Rewrite as scenario.
   {m:'Module 8',t:'RBA & Management Obligations',
-   q:"A firm discovers it has repeatedly failed to comply with its own AML policy. According to the ICA, this situation is:",
-   o:["Acceptable provided the failures were unintentional","Less serious than having no policy at all","Extremely damaging — particularly when discovered by a regulator — as it shows the stated standards existed but were systematically ignored","A matter for the compliance team to address quietly without board involvement"],
-   a:2,e:"The ICA is explicit: discovery by a regulatory authority that a firm has failed to comply with its own policy is 'extremely damaging.' It is potentially more serious than having an imperfect policy, because it demonstrates the firm knew what the standard should be but chose (or failed) to meet it. It signals a governance and culture failure at the highest level."},
-  {m:'Module 8',t:'RBA & Management Obligations',
-   q:"Which of the following BEST describes a positive AML corporate culture according to the ICA?",
-   o:["Compliance procedures are streamlined to reduce friction on high-value transactions","Staff only raise concerns when they are certain that criminal activity is occurring","All staff — regardless of seniority — understand their AML role; the MLRO is accessible and backed by management; commercial pressure does not override compliance","Senior relationship managers are exempt from AML scrutiny to protect key client relationships"],
-   a:2,e:"The ICA's description of positive AML culture encompasses: universal staff understanding of their AML role; an approachable MLRO backed by senior management; freedom from commercial pressure on compliance matters; and no special treatment for 'important' clients. Territorial attitudes towards key clients and management pressure to close deals are specifically listed as cultural warning signs."}
+   q:"A senior relationship manager at a property technology firm has flagged to their line manager that a high-value client's source of funds 'doesn't add up'. The manager responds: 'This client generates significant revenue — don't rock the boat unless you're absolutely certain something is wrong.' According to the ICA, which of the following BEST describes this situation?",
+   o:["The manager's response is appropriate — the legal threshold requires certainty, and the firm's commercial interests are a legitimate factor in deciding whether to escalate AML concerns","The manager's response is only problematic if the firm later discovers that ML actually occurred — if the transaction is clean, no harm was done","The manager's response is a hallmark of poor AML culture — commercial pressure is explicitly identified by the ICA as a warning sign, and the employee's own reporting obligation runs directly to the MLRO, not through the line manager","The employee has no further obligation once they have raised the concern with their manager — escalation beyond that level is the manager's responsibility, not theirs"],
+   a:2,
+   e:"The ICA explicitly identifies commercial pressure as a red flag for poor AML culture. A manager telling staff not to escalate concerns unless they are 'absolutely certain' applies the wrong threshold (the legal threshold is reasonable suspicion, not certainty) and introduces a commercial filter on compliance obligations. Critically, the reporting obligation under s.330 POCA runs to the MLRO directly — it is not extinguished by a line manager's instruction to stand down. The employee in this scenario should report their concern to the MLRO regardless of the manager's response. Failing to do so may expose the employee personally."}
+
 ];
 
 // ════════ STATE ════════
