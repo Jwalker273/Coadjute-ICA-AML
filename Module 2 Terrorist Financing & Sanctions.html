@@ -383,7 +383,11 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--i
     </div>
     <div class="method-card">
       <h4>📦 Hawala and Informal Value Transfer</h4>
-      <p>A hawala broker receives funds in one country and signals a counterpart in another to release equivalent funds locally — no money physically crosses a border. No formal records are kept. The ICA identifies this as a significant TF risk because it is invisible to most AML monitoring systems.</p>
+      <p>Hawala is an informal, trust-based money transfer system that operates entirely outside the banking system. A <strong>hawala broker</strong> (known as a <em>hawaladar</em>) receives funds from a sender in one country, and instructs a counterpart broker in another country to pay the equivalent amount locally to a named recipient — minus a small commission. No money physically crosses a border. The two brokers settle their debts periodically through other means. No formal records are kept. The ICA identifies this as a significant TF risk because it is invisible to most AML monitoring systems.</p>
+      <div class="property-eg callout" style="margin-top:12px">
+        <div class="clabel">💡 How Hawala Works — Worked Example</div>
+        <p>A man in London wants to send £5,000 to a contact in Karachi. He gives the cash to a hawaladar in Whitechapel. The Whitechapel hawaladar calls his counterpart in Karachi and tells him to pay the equivalent in Pakistani rupees to the named recipient. The recipient collects the funds the same day. No bank is involved. No wire transfer exists. No compliance system sees this transaction. The two hawaladars settle their running balance later — perhaps through a property deal, a gold trade, or simply reversing the flow on another transaction. From a TF perspective, the original sender could be a terrorist financier, the recipient could be a procurement agent for weapons, and there would be almost no paper trail for investigators to follow.</p>
+      </div>
     </div>
     <div class="method-card">
       <h4>🌐 Virtual Currencies and Online Fundraising</h4>
@@ -424,6 +428,26 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--i
       <button class="qc-opt" onclick="qc('qc1','c','c')">c) Terrorist financing — clean funds directed to fund terrorism</button>
       <button class="qc-opt" onclick="qc('qc1','d','c')">d) Sanctions evasion — not terrorist financing</button>
       <div class="qc-fb" id="qc1-fb"></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h3>The Terrorism Act 2000 (TACT) — Your Reporting Obligation</h3>
+    <p>Just as POCA 2002 governs the duty to report money laundering suspicions, the <strong>Terrorism Act 2000 (TACT)</strong> creates a parallel and separate duty to report suspected terrorist financing. The two regimes work side by side.</p>
+
+    <div class="exam-note callout">
+      <div class="clabel">📘 ICA Exam Note — Terrorism Act 2000 Key Provisions</div>
+      <blockquote>
+        <strong>Section 19 TACT</strong> — Creates a duty on any person (not just regulated firms) who believes or suspects that another has committed a terrorist financing offence to disclose that belief or suspicion to a constable as soon as reasonably practicable. Failure to disclose is itself a criminal offence.<br><br>
+        <strong>Section 21A TACT</strong> — Applies to regulated sector firms specifically. Creates a duty to report where, in the course of business, a person knows or suspects — or has reasonable grounds for knowing or suspecting — that another has committed a terrorist financing offence. Reports must be made to the National Crime Agency (NCA).<br><br>
+        <strong>Section 38B TACT</strong> — Makes it an offence to fail to disclose information that you believe would be of material assistance in preventing a terrorist act, or in apprehending or prosecuting those responsible.
+      </blockquote>
+      <div class="note-foot">The reporting threshold under TACT is the same as under POCA — <strong>reasonable grounds to know or suspect</strong>. You do not need to be certain. The standard for TF reporting is not higher than for ML reporting — a common misconception. Reports go to the MLRO in the same way as internal ML reports.</div>
+    </div>
+
+    <div class="important callout">
+      <div class="clabel">⚠️ TACT vs POCA — Same Threshold, Different Legislation</div>
+      <p>The ICA exam tests whether you know that TF reporting obligations exist <em>separately</em> from ML reporting obligations — and that the suspicion threshold is identical. A firm cannot argue it was only alert to ML risks and therefore missed TF. Both must be considered throughout every transaction. In practice, your internal SAR to the MLRO covers both — but you should be aware that the legal basis differs.</p>
     </div>
   </div>
 
@@ -555,6 +579,17 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--i
       <button class="qc-opt" onclick="qc('qc2','d','b')">d) The firm is not liable as it did not know of the breach</button>
       <div class="qc-fb" id="qc2-fb"></div>
     </div>
+
+    <div class="quick-check" id="qc2b">
+      <h4>⚡ Quick Check — Match the Regime</h4>
+      <p>Match each statement to the correct sanctions regime: UN, EU, OFAC, or OFSI.</p>
+      <p style="font-size:.85rem;color:#4a5568;margin-bottom:14px">Which regime is described as having the longest extraterritorial arm — applying to non-US firms with no US connection if they deal with certain sanctioned parties?</p>
+      <button class="qc-opt" onclick="qc('qc2b','a','c')">a) UN — because UN resolutions bind all member states globally</button>
+      <button class="qc-opt" onclick="qc('qc2b','b','c')">b) EU — because EU regulations have direct legal effect across all member states</button>
+      <button class="qc-opt" onclick="qc('qc2b','c','c')">c) OFAC — secondary sanctions can apply to non-US firms with no US connection</button>
+      <button class="qc-opt" onclick="qc('qc2b','d','c')">d) OFSI — as the UK's domestic authority, OFSI has the widest enforcement powers</button>
+      <div class="qc-fb" id="qc2b-fb"></div>
+    </div>
   </div>
 
   <div class="bottom-nav">
@@ -604,6 +639,16 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--i
     <div class="property-eg callout">
       <div class="clabel">🏠 Coadjute Context — Russia and UK Property</div>
       <p>Since 2022, dozens of Russian individuals with significant UK property holdings have been sanctioned. In some cases, solicitors and agents handling their property transactions have had to freeze assets mid-transaction, notify OFSI, and await a licence before proceeding. These situations can arise in Coadjute-facilitated transactions — you need to know what to do before it happens.</p>
+    </div>
+
+    <div class="quick-check" id="qc_country">
+      <h4>⚡ Quick Check — Country Sanctions</h4>
+      <p>A Coadjute-facilitated property transaction involves a buyer whose funds originate from a company incorporated in Russia. The transaction began three months ago. The conveyancer screened all parties at the outset and found no sanctions hits. Which of the following statements is correct?</p>
+      <button class="qc-opt" onclick="qc('qc_country','a','c')">a) No further action is needed — the initial screen was clean</button>
+      <button class="qc-opt" onclick="qc('qc_country','b','c')">b) The firm only needs to re-screen if it receives a direct notification from OFSI</button>
+      <button class="qc-opt" onclick="qc('qc_country','c','c')">c) The firm must continue screening throughout the transaction — Russian-connected parties carry elevated inherent risk and sanctions lists are updated frequently</button>
+      <button class="qc-opt" onclick="qc('qc_country','d','c')">d) Russian sanctions only apply to Russian nationals — a company incorporated in Russia is not affected</button>
+      <div class="qc-fb" id="qc_country-fb"></div>
     </div>
   </div>
 
@@ -808,6 +853,8 @@ function advance(target) {
 const qcExp = {
   qc1: "Correct. The source being legitimate does not change the nature of the offence. This is the key distinction from money laundering — in TF, clean funds are directed to criminal (terrorist) purposes. The direction of the flow, not the origin of the money, determines whether it is TF.",
   qc2: "Correct. The USD trigger is a critical ICA exam point. All USD transactions clear through New York, giving OFAC jurisdiction even over non-US firms. Using USD with a sanctioned party could expose a UK firm to OFAC enforcement, fines, and loss of USD banking access.",
+  qc2b: "Correct. OFAC's secondary sanctions are uniquely powerful. They can apply to non-US firms with no US connection at all — if those firms deal with certain sanctioned parties (especially in relation to Iran and Russia). UN resolutions bind member states, but enforcement depends on those states. EU rules have direct effect in member states. OFSI is the UK domestic authority. Only OFAC claims extraterritorial reach of this breadth.",
+  qc_country: "Correct. Ongoing screening is a firm obligation — not a one-time exercise. Russian-connected parties carry particularly elevated inherent risk following the 2022 sanctions expansion. Sanctions lists are updated frequently (sometimes multiple times in a single day). A party clear at onboarding could be designated by the time completion arrives. Russian-incorporated companies are absolutely affected by sanctions — corporate form does not provide a shield.",
   qc3: "Correct. Ongoing screening obligations mean firms must act even after a transaction is complete. A confirmed sanctions match requires reporting to OFSI and potentially filing a SAR. The obligation to freeze assets and report arises automatically — inaction is itself a sanctions breach."
 };
 
@@ -921,5 +968,3 @@ updateProgress();
 </script>
 </body>
 </html>
-
-
