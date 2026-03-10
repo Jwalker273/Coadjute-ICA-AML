@@ -395,8 +395,8 @@ tr:nth-child(even) td{background:rgba(193,127,255,.05)}
     <div class="qc-q">A buyer is purchasing a property through a BVI-incorporated company. The registered director is a nominee company. The buyer tells you the ultimate owner is "a family trust." What is the correct CDD approach?</div>
     <div class="qc-opts">
       <button class="qc-btn" onclick="qc(this,false,'qc1')">Accept the certificate of incorporation and proceed — the company is legally registered</button>
-      <button class="qc-btn" onclick="qc(this,true,'qc1')">Identify the natural person(s) who are the beneficial owners of the trust — the settlor, trustees, and beneficiaries — and verify their identities. The corporate structure must be looked through entirely.</button>
-      <button class="qc-btn" onclick="qc(this,false,'qc1')">Apply simplified CDD — trust structures are low risk by nature</button>
+      <button class="qc-btn" onclick="qc(this,true,'qc1')">Look through the entire corporate structure to identify and verify the natural persons who are the ultimate beneficial owners of the trust — settlor, trustees, and beneficiaries</button>
+      <button class="qc-btn" onclick="qc(this,false,'qc1')">Apply simplified CDD — offshore trust structures are treated as low risk under the MLRs</button>
     </div>
     <div class="qc-fb" id="qc1-fb">Correct. CDD requires looking through any corporate structure to the ultimate beneficial owner — the natural person who ultimately owns or controls the entity. A nominee structure combined with an offshore jurisdiction and a trust arrangement are all classic layering techniques. Certificate of incorporation only confirms legal existence, not true ownership.</div>
   </div>
@@ -522,8 +522,8 @@ tr:nth-child(even) td{background:rgba(193,127,255,.05)}
     <div class="qc-q">A buyer subject to EDD states that their source of wealth is "inheritance from my late grandfather." Is this sufficient?</div>
     <div class="qc-opts">
       <button class="qc-btn" onclick="qc(this,false,'qc3')">Yes — inheritance is a clearly legitimate source of wealth</button>
-      <button class="qc-btn" onclick="qc(this,true,'qc3')">No — "inheritance" is explicitly listed by the ICA as an insufficient source of wealth description for EDD. You must investigate further: from whom, what was the grandfather's source of wealth, is there probate documentation, and do the sums make sense?</button>
-      <button class="qc-btn" onclick="qc(this,false,'qc3')">Yes, provided a solicitor's letter confirming the inheritance is provided</button>
+      <button class="qc-btn" onclick="qc(this,true,'qc3')">No — "inheritance" is explicitly listed by the ICA as insufficient for EDD. From whom? What was the grandfather's source of wealth? Is there probate documentation? Do the sums make sense?</button>
+      <button class="qc-btn" onclick="qc(this,false,'qc3')">Yes, if a solicitor's letter confirming the inheritance is provided alongside it</button>
     </div>
     <div class="qc-fb" id="qc3-fb">Correct. "Inheritance" is explicitly listed by the ICA as one of several insufficient source of wealth descriptions for EDD purposes. It is a starting point, not an answer. You must ask further questions and obtain independent evidence.</div>
   </div>
@@ -654,9 +654,15 @@ tr:nth-child(even) td{background:rgba(193,127,255,.05)}
     <li>Event-triggered reviews — any significant change in circumstances, transaction pattern, or risk status should prompt an immediate review regardless of the scheduled cycle</li>
   </ul>
 
-  <h2>CDD in Property: The Ongoing Obligation</h2>
-  <p>For Coadjute's purposes, the most relevant ongoing monitoring obligation arises where we maintain a continuing relationship with an estate agent or conveyancer, and where repeat transactions occur. If a buyer or seller appears multiple times in transactions, the CDD on file must be current and the historical risk profile must be reconsidered in light of each new transaction.</p>
-  <p>A one-time buyer purchasing a residential property is, in most cases, a transaction relationship that concludes. But where a client purchases multiple properties through the same agent, or where a developer transacts repeatedly, the relationship becomes ongoing — and ongoing monitoring obligations apply fully.</p>
+  <div class="callout warn">
+    <div class="callout-label">🏠 What This Means for Coadjute</div>
+    <p>The most relevant ongoing monitoring obligation for Coadjute arises where we maintain a continuing relationship with an estate agent or conveyancer, and where repeat transactions occur. Two scenarios to distinguish:</p>
+    <ul style="margin-top:10px">
+      <li><strong>One-time buyer:</strong> A residential buyer who completes a single purchase is typically a transaction relationship that concludes. Ongoing monitoring is limited — but CDD must remain accurate until completion.</li>
+      <li><strong>Repeat client:</strong> Where a buyer purchases multiple properties through the same agent, or a developer transacts repeatedly, the relationship is ongoing. Each new transaction must be assessed against the updated CDD profile — you cannot rely on checks from a previous transaction without confirming they are still current and accurate.</li>
+    </ul>
+    <p style="margin-top:10px">If CDD obtained in January is being used to complete a transaction in November, ask: has anything material changed? If the answer is "we don't know" — that is itself a compliance gap.</p>
+  </div>
 
   <div class="qc" id="qc5">
     <div class="qc-tag">⚡ Quick Check</div>
@@ -885,93 +891,138 @@ function qc(btn, correct, id) {
 const Qs = [
   {
     q: "Which of the following is NOT one of the four FATF components of CDD?",
-    opts: ["Identifying and verifying the customer's identity","Identifying the beneficial owner","Conducting ongoing due diligence and transaction scrutiny","Conducting a criminal background check on all customers"],
-    ans: 3,
-    expl: "FATF defines CDD as comprising: (a) identifying and verifying the customer; (b) identifying the beneficial owner; (c) understanding the business relationship's purpose; and (d) ongoing monitoring and transaction scrutiny. Criminal background checks are not part of the standard FATF CDD definition."
-  },
-  {
-    q: "When must CDD be completed, according to the ICA?",
-    opts: ["Within 30 days of the first transaction","Before any transactions are completed for any client","Only for transactions above £10,000","After the first meeting with the client, within a reasonable timeframe"],
-    ans: 1,
-    expl: "The ICA states clearly: 'CDD must be completed in all cases before any transactions are completed for any client.' There is no monetary threshold and no grace period. CDD comes first — then the transaction."
-  },
-  {
-    q: "A firm must apply CDD when it suspects money laundering — but which of the following is also a trigger requiring CDD to be applied?",
-    opts: ["When a client changes their address","When a client's account has been dormant for 6 months","When the firm has doubts about the veracity or adequacy of documents previously obtained","When a client misses a scheduled appointment"],
+    opts: ["Identifying and verifying the customer's identity",
+           "Identifying the beneficial owner and their ownership structure",
+           "Conducting a criminal background check on all customers",
+           "Ongoing monitoring and scrutiny of the business relationship"],
     ans: 2,
-    expl: "The four CDD triggers are: (1) establishing a business relationship; (2) carrying out an occasional transaction; (3) suspicion of ML/TF; and (4) doubts about the veracity or adequacy of previously obtained documents. Option C is a CDD trigger directly listed by the ICA."
+    expl: "FATF defines CDD as: (a) identifying and verifying the customer; (b) identifying the beneficial owner; (c) understanding the purpose and nature of the business relationship; and (d) ongoing monitoring. Criminal background checks are not a standard FATF CDD requirement."
+  },
+  {
+    q: "When must CDD be completed according to the ICA?",
+    opts: ["After the first meeting with the client, within a reasonable timeframe",
+           "Only for transactions above £10,000",
+           "Before any transactions are completed for any client",
+           "Within 30 days of establishing the business relationship"],
+    ans: 2,
+    expl: "The ICA is explicit: CDD must be completed before any transactions are completed for any client. There is no monetary threshold and no grace period. CDD comes first — then the transaction."
+  },
+  {
+    q: "A firm must apply CDD when it suspects money laundering. Which of the following is also a trigger requiring CDD?",
+    opts: ["When a client misses a scheduled appointment",
+           "When a client's account has been dormant for six months",
+           "When a client changes their registered address",
+           "When the firm has doubts about the veracity or adequacy of documents previously obtained"],
+    ans: 3,
+    expl: "The four CDD triggers are: (1) establishing a business relationship; (2) carrying out an occasional transaction; (3) suspicion of ML/TF; and (4) doubts about the veracity or adequacy of previously obtained documents. The fourth trigger is directly listed by the ICA and is frequently tested."
   },
   {
     q: "Simplified Due Diligence (SDD) is best described as:",
-    opts: ["A complete exemption from CDD requirements for low-risk clients","A reduced version of CDD applicable only where the firm has actively assessed and documented that the relationship presents a genuinely low ML/TF risk","Available whenever the client is a UK national","The default CDD approach for all retail clients"],
+    opts: ["The default CDD approach for all retail clients regardless of risk",
+           "A reduced level of CDD, permitted only where the firm has documented that the relationship presents a genuinely low ML/TF risk",
+           "A complete exemption from all CDD requirements for low-risk clients",
+           "Available automatically whenever the client is a UK national"],
     ans: 1,
-    expl: "SDD is a reduction, not an exemption. It requires the firm's own risk assessment to determine the relationship presents low ML/TF risk. That decision must be documented and justifiable to regulators. Basic identification requirements still apply."
+    expl: "SDD is a reduction, not an exemption. It requires the firm's own documented risk assessment to confirm the relationship presents low ML/TF risk. That decision must be justifiable to regulators. Basic identification requirements still apply."
   },
   {
-    q: "Which of the following is an example of a simplified CDD measure permitted by the FATF Interpretive Notes to Recommendation 10?",
-    opts: ["Applying no CDD at all for small transactions","Delaying verification of identity until after the business relationship is established, provided transactions remain below a defined monetary threshold","Accepting verbal confirmation of identity without documentation","Applying EDD measures at a reduced frequency"],
-    ans: 1,
-    expl: "The FATF Interpretive Notes permit, under SDD: delaying verification until transactions exceed a defined threshold; reducing frequency of ID updates; reducing ongoing monitoring; and inferring purpose from transaction type rather than collecting specific information."
+    q: "Which measure is permitted under FATF's Interpretive Notes to Recommendation 10 as a form of simplified CDD?",
+    opts: ["Accepting verbal confirmation of identity in place of documentary evidence",
+           "Applying EDD measures at a reduced frequency for lower-risk clients",
+           "Applying no CDD at all for transactions under a specified amount",
+           "Delaying identity verification until transactions exceed a defined monetary threshold"],
+    ans: 3,
+    expl: "The FATF Interpretive Notes permit under SDD: delaying verification until transactions reach a defined threshold; reducing frequency of ID updates; reducing ongoing monitoring; and inferring purpose from transaction type rather than collecting specific information. Verbal-only confirmation or complete exemptions are not permitted."
   },
   {
-    q: "Enhanced Due Diligence (EDD) is mandatory for which of the following?",
-    opts: ["All clients from EU member states","Politically Exposed Persons (PEPs) and customers from high-risk third countries","Clients with more than £500,000 in assets","Any client whose account has been open for more than five years"],
-    ans: 1,
-    expl: "EDD is specifically mandated for PEPs and their close associates, customers from or involving high-risk third countries, correspondent banking relationships, and any situation the firm's risk assessment identifies as higher-risk. There is no asset threshold or duration trigger."
+    q: "EDD is mandatory for which of the following client types?",
+    opts: ["Any client whose account has been open for more than five years",
+           "Clients with more than £500,000 in assets under management",
+           "PEPs and their close associates, and customers from or involving high-risk third countries",
+           "All clients from EU member states"],
+    ans: 2,
+    expl: "EDD is specifically mandated for PEPs and close associates, clients from high-risk third countries, correspondent banking relationships, and any situation the firm's own risk assessment identifies as higher-risk. There is no asset threshold or account age trigger."
   },
   {
-    q: "Which of the following source of wealth descriptions would the ICA consider INSUFFICIENT for an EDD client?",
-    opts: ["Audited financial statements showing five years of business income","'Savings' — with no further detail or documentation","Sale proceeds from a property, supported by a completion statement","Salary income documented by HMRC P60 records"],
-    ans: 1,
-    expl: "The ICA explicitly lists 'savings' as one of several insufficient source of wealth descriptions for EDD purposes (alongside 'profits from investments', 'inheritance', 'business dealings', 'sale of business'). These are starting points for enquiry, not answers."
+    q: "Which source of wealth description would the ICA consider insufficient for an EDD client?",
+    opts: ["Sale proceeds from a property, supported by a solicitor's completion statement",
+           "Salary documented by three years of HMRC P60 records",
+           "Audited business accounts showing five years of trading income",
+           "'Savings' with no further detail or documentation"],
+    ans: 3,
+    expl: "The ICA explicitly lists 'savings' as one of several insufficient source of wealth descriptions for EDD (alongside 'profits from investments', 'inheritance', 'business dealings', 'sale of business'). These are starting points for further enquiry, not complete answers."
   },
   {
-    q: "What is the difference between 'source of funds' and 'source of wealth' in an EDD context?",
-    opts: ["They are the same concept — the ICA uses the terms interchangeably","Source of funds refers to the specific money used in this transaction; source of wealth refers to how the client accumulated their overall wealth","Source of wealth is only relevant for PEPs","Source of funds only applies to cash transactions"],
-    ans: 1,
-    expl: "These are distinct concepts. Source of funds = where did the money in this specific transaction come from? Source of wealth = how did the client come to have the wealth they have overall? For EDD clients, both must be established and verified independently."
+    q: "What is the key distinction between 'source of funds' and 'source of wealth' in an EDD context?",
+    opts: ["Source of funds only applies to cash transactions; source of wealth applies to all payment types",
+           "Source of wealth is only relevant when the client is a PEP",
+           "They are the same concept — the ICA uses them interchangeably",
+           "Source of funds means where the money in this specific transaction came from; source of wealth means how the client accumulated their overall assets"],
+    ans: 3,
+    expl: "These are distinct concepts. Source of funds = where did the money for this specific transaction come from? Source of wealth = how did the client build up their overall wealth? For EDD clients, both must be established and independently verified — neither alone is sufficient."
   },
   {
     q: "The ICA's plausibility testing concept is best summarised as:",
-    opts: ["Verifying that all property valuations are accurate","Applying professional common sense to assess whether a client's financial profile and explanation of funds are credible given what you know about them","A formal statistical analysis of client income versus expenditure","A tick-box verification process for standard identity documents"],
-    ans: 1,
-    expl: "The ICA defines plausibility testing as 'quite simply using common sense when applying CDD.' It is the obligation to assess whether the client's story makes sense in light of their stated circumstances. It is explicitly described as not a tick-box exercise — each case must be assessed on its merits."
-  },
-  {
-    q: "A 24-year-old IT consultant earning $41,000 per year wants to open bank accounts. He owns two properties — one valued at 5 million AED and one at €13 million — both owned mortgage-free. What is the correct CDD response?",
-    opts: ["Proceed with standard CDD — high-value property ownership is not suspicious","Apply plausibility testing — the profile is not obviously consistent with the stated income and occupation, and questions must be asked","Apply SDD — young clients are generally low risk","Refuse the relationship without making further enquiries"],
-    ans: 1,
-    expl: "This is directly based on the ICA's plausibility testing example. The ICA verdict: 'on the face of it, not plausible.' A large amount of assets for the stated income and age, funded without mortgages. The correct response is to ask questions — there may be a legitimate explanation, but you must ask."
-  },
-  {
-    q: "Regulation 28 of the MLR 2017 requires ongoing monitoring to include:",
-    opts: ["An annual face-to-face review with every client","Scrutiny of transactions to ensure consistency with the firm's knowledge of the customer, AND keeping CDD documents and information up to date — both requirements are distinct and mandatory","Reporting all transactions above £5,000 to the FCA","Re-verifying identity for all clients every three years"],
-    ans: 1,
-    expl: "Regulation 28 has two distinct requirements: (a) transaction scrutiny — ensuring transactions match the customer's known profile; and (b) keeping CDD records current. Both are mandatory. Neither an annual face-to-face review nor automatic re-verification on a fixed schedule is the standard — it is risk-sensitive and responsive to change."
-  },
-  {
-    q: "An employee notices that a client's transactions have significantly changed — larger, more frequent transfers to overseas accounts. The employee is not certain whether this is suspicious. According to the ICA, what should they do?",
-    opts: ["Wait until they are certain before taking any action","Report their concern to the MLRO via the firm's internal reporting procedure — the threshold is reasonable grounds to suspect, not certainty","Confront the client directly to ask for an explanation","Do nothing — transaction pattern changes are normal"],
-    ans: 1,
-    expl: "The reporting obligation arises at the point of suspicion, not certainty. The employee has a concern based on objective observations — a change in pattern. That is sufficient to trigger the internal reporting obligation. The MLRO will assess the concern and decide whether an external SAR is warranted."
-  },
-  {
-    q: "In the context of identifying suspicious activity, which of the following is a red flag specific to property sector transactions?",
-    opts: ["A buyer using a standard residential mortgage","A buyer insisting on unusually rapid completion, apparently indifferent to the price, and paying substantially above market value in cash","A buyer who has previously purchased property in the UK","A buyer represented by a solicitor"],
-    ans: 1,
-    expl: "Urgency combined with cash purchase above asking price is a classic ML red flag in property. Criminals are often willing to overpay because the purpose is laundering funds, not achieving value. Indifference to price is a strong plausibility testing failure and should trigger an internal report to the MLRO."
-  },
-  {
-    q: "The legal threshold for making an internal ML report (an internal SAR to the MLRO) is:",
-    opts: ["Certainty that money laundering has occurred","Knowledge of a specific predicate offence","Reasonable grounds to suspect that money laundering is taking place — based on objective information, not merely a feeling","Proof that the client has made a false statement on their ID documents"],
+    opts: ["A formal statistical model comparing client income against expenditure patterns",
+           "A tick-box verification process applied to standard identity documents",
+           "Applying professional common sense to assess whether a client's stated financial profile and explanation of funds is credible",
+           "Verifying that all property purchase prices are in line with market valuations"],
     ans: 2,
-    expl: "The threshold for internal reporting is 'reasonable grounds to suspect' — an objective standard. You do not need certainty, you do not need to identify the predicate offence, and you do not need proof. If a reasonable, informed professional in your position would have had the same suspicion, you must report. Failure to do so may constitute a criminal offence under POCA 2002."
+    expl: "The ICA defines plausibility testing as 'quite simply using common sense when applying CDD.' It is the obligation to step back from the paperwork and ask whether the client's story makes sense. It is explicitly not a tick-box exercise — each case must be assessed on its own merits."
   },
   {
-    q: "A staff member decides not to report a suspicious transaction because they 'can't name the exact crime' they suspect is being committed. According to the ICA, this reasoning is:",
-    opts: ["Correct — you need to identify the offence before a report is useful","Correct — vague reports are not acted upon by the NCA","Incorrect — you are not required to identify a specific predicate offence. Suspicion of ML/criminal activity in general is sufficient to trigger the reporting obligation","Correct — it is the MLRO's job to independently detect suspicion, not the employee's"],
+    q: "A 24-year-old IT consultant earning $41,000/year owns two mortgage-free properties worth 5m AED and €13m respectively. What is the correct CDD response?",
+    opts: ["Apply plausibility testing — the asset profile is not consistent with the stated income and occupation; questions must be asked before proceeding",
+           "Refuse the relationship without further enquiry — the profile is too high-risk",
+           "Proceed with standard CDD — high-value property ownership alone is not suspicious",
+           "Apply SDD — the client is young and unlikely to be high risk"],
+    ans: 0,
+    expl: "This is the ICA's own plausibility testing example. The ICA verdict: 'on the face of it, not plausible.' The asset base is too large relative to the income and age, and properties are mortgage-free. The correct response is to ask questions — there may be a legitimate explanation, but you must seek it."
+  },
+  {
+    q: "What are the two distinct mandatory components of Regulation 28 MLR 2017 ongoing monitoring?",
+    opts: ["Annual client reviews and re-verification of identity every three years",
+           "Reporting all transactions above £5,000 to the FCA and retaining records for seven years",
+           "Transaction scrutiny to check consistency with the customer's known profile, and keeping CDD records up to date",
+           "Face-to-face client meetings and independent audits of all client files"],
     ans: 2,
-    expl: "You are not required to identify a specific predicate offence. The ICA is explicit: suspicion of criminality at a general level is sufficient to trigger the internal reporting obligation. Your job is to report your concern. The MLRO — and if they make an external SAR, the NCA — will investigate. Failing to report because you cannot name the offence is a compliance failure and may be a criminal offence."
+    expl: "Regulation 28 has two distinct requirements: (a) transaction scrutiny — ensuring transactions are consistent with the customer's known profile; and (b) keeping CDD records current. Both are mandatory. Neither a fixed review schedule nor a monetary reporting threshold is the standard — it is risk-sensitive and event-driven."
+  },
+  {
+    q: "An employee notices a client's transactions have changed significantly — larger, more frequent transfers to overseas accounts. They are not certain whether this is suspicious. What should they do?",
+    opts: ["Confront the client directly to ask for an explanation before escalating",
+           "Do nothing — transaction pattern changes are normal and expected",
+           "Wait until they are certain before taking any action",
+           "Report the concern to the MLRO — the threshold is reasonable grounds to suspect, not certainty"],
+    ans: 3,
+    expl: "The internal reporting obligation is triggered by reasonable grounds to suspect — not certainty. A change in transaction pattern is an objective observation that warrants escalation. The MLRO will assess whether an external SAR is required. Waiting for certainty before reporting is a compliance failure."
+  },
+  {
+    q: "Which of the following is a recognised red flag specific to property sector transactions?",
+    opts: ["A buyer who has previously purchased property in the UK",
+           "A buyer represented by a solicitor who insists on reviewing all title documents",
+           "A buyer using a standard residential mortgage from a UK high-street lender",
+           "A buyer pressing for unusually rapid completion, indifferent to price, paying well above market value in cash"],
+    ans: 3,
+    expl: "Cash purchase substantially above market value, combined with urgency and apparent indifference to price, is a classic ML red flag. Criminals are often willing to overpay because the goal is laundering funds, not achieving value. This combination should trigger an internal report to the MLRO."
+  },
+  {
+    q: "The legal threshold for making an internal ML report to the MLRO is:",
+    opts: ["Proof that the client has made a false statement on their identity documents",
+           "Reasonable grounds to suspect that money laundering or terrorist financing is taking place",
+           "Certainty that money laundering has occurred",
+           "Knowledge of a specific predicate offence linked to the client"],
+    ans: 1,
+    expl: "The threshold for internal reporting is 'reasonable grounds to suspect' — an objective standard based on what a reasonable, informed professional would think in the same circumstances. You do not need certainty, proof, or to identify the specific predicate offence. Failure to report when this threshold is met may be a criminal offence under POCA 2002."
+  },
+  {
+    q: "A staff member doesn't report a suspicious transaction because they 'can't name the exact crime.' According to the ICA, this reasoning is:",
+    opts: ["Correct — vague reports without a named offence are not useful to the NCA",
+           "Correct — it is the MLRO's role to identify suspicious activity independently",
+           "Incorrect — you do not need to identify a specific predicate offence; suspicion of criminal activity in general is sufficient to trigger the reporting obligation",
+           "Correct — you need to identify the offence to complete the SAR form accurately"],
+    ans: 2,
+    expl: "The ICA is explicit: you are not required to identify a specific predicate offence. Suspicion of criminality at a general level is sufficient to trigger the internal reporting obligation. The MLRO — and if necessary the NCA via an external SAR — will investigate. Failing to report because you cannot name the offence is a compliance failure and may be a criminal offence."
   }
 ];
 
@@ -1076,6 +1127,3 @@ document.getElementById('quiz-back-nav').style.display = 'none';
 </script>
 </body>
 </html>
-
-
-
