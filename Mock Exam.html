@@ -137,6 +137,69 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--i
 .btn-retry:hover{background:#ddd8e5}
 .btn-dashboard{display:inline-block;padding:13px 32px;background:var(--grad);color:#fff;font-weight:700;font-size:.9rem;border-radius:8px;text-decoration:none;border:none;cursor:pointer;box-shadow:0 4px 14px rgba(193,127,255,.35);transition:opacity .2s}
 .btn-dashboard:hover{opacity:.88}
+
+/* ════════ NAME ENTRY ════════ */
+.name-entry-wrap{background:#fff;border:1px solid var(--grey);border-radius:12px;padding:24px 32px;margin-bottom:28px;box-shadow:0 2px 8px rgba(0,0,0,.05)}
+.name-entry-wrap h2{font-size:.95rem;font-weight:700;color:var(--ink);margin-bottom:6px}
+.name-entry-wrap p{font-size:.82rem;color:#7a8fa3;margin-bottom:14px}
+.name-input-row{display:flex;gap:10px;align-items:center}
+.name-input{flex:1;padding:11px 16px;border:2px solid var(--grey);border-radius:8px;font-size:.92rem;color:var(--ink);outline:none;transition:border .2s;font-family:inherit}
+.name-input:focus{border-color:var(--lilac)}
+.name-input.filled{border-color:rgba(193,127,255,.4);background:var(--l10)}
+
+/* ════════ CERTIFICATE EXPORT ════════ */
+.cert-export-section{background:linear-gradient(135deg,#f9f2ff 0%,#f2e5ff 100%);border:1px solid var(--l50);border-radius:12px;padding:28px 32px;margin-bottom:24px}
+.cert-export-section h2{font-size:1rem;font-weight:700;color:var(--ink);margin-bottom:6px}
+.cert-export-section p{font-size:.85rem;color:#5a3f78;margin-bottom:16px;line-height:1.5}
+.btn-cert{display:inline-flex;align-items:center;gap:8px;padding:13px 28px;background:var(--grad);color:#fff;border:none;border-radius:8px;font-size:.9rem;font-weight:700;cursor:pointer;box-shadow:0 4px 14px rgba(193,127,255,.4);transition:.2s}
+.btn-cert:hover{opacity:.9;transform:translateY(-1px)}
+.cert-hint{font-size:.75rem;color:#8a6fa3;margin-top:10px}
+
+/* ════════ CERTIFICATE (printable overlay) ════════ */
+#cert-overlay{display:none;position:fixed;inset:0;background:rgba(0,30,50,.7);z-index:9000;align-items:center;justify-content:center;padding:20px}
+#cert-overlay.show{display:flex}
+.cert-modal{background:#fff;width:900px;max-width:100%;border-radius:4px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.4);position:relative}
+.cert-close{position:absolute;top:14px;right:14px;background:rgba(0,0,0,.08);border:none;border-radius:50%;width:32px;height:32px;font-size:1.1rem;cursor:pointer;z-index:10;color:#333;display:flex;align-items:center;justify-content:center}
+.cert-close:hover{background:rgba(0,0,0,.15)}
+.cert-body{padding:60px 64px;position:relative;overflow:hidden;background:#fff}
+.cert-body::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c17fff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")}
+.cert-top-bar{height:8px;background:linear-gradient(90deg,#C17FFF 0%,#FF44D6 60%,#FF6D3D 100%);margin:-60px -64px 48px;position:relative}
+.cert-watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:8rem;font-weight:900;color:rgba(193,127,255,.04);letter-spacing:-.02em;white-space:nowrap;pointer-events:none;z-index:0;top:45%}
+.cert-logo{font-size:1.1rem;font-weight:800;color:#002846;margin-bottom:4px;position:relative;z-index:1}
+.cert-logo span{background:linear-gradient(90deg,#C17FFF,#FF44D6,#FF6D3D);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.cert-issuer{font-size:.75rem;color:#8a9db0;margin-bottom:40px;position:relative;z-index:1}
+.cert-presents{text-align:center;font-size:.8rem;text-transform:uppercase;letter-spacing:.2em;color:#8a9db0;margin-bottom:16px;position:relative;z-index:1}
+.cert-recipient{text-align:center;font-size:2.6rem;font-weight:800;color:#002846;margin-bottom:8px;line-height:1.1;position:relative;z-index:1;min-height:60px}
+.cert-divider{width:120px;height:3px;background:linear-gradient(90deg,#C17FFF,#FF44D6,#FF6D3D);margin:16px auto 24px;border-radius:2px}
+.cert-qual{text-align:center;font-size:.85rem;color:#5a6a7a;margin-bottom:4px;position:relative;z-index:1}
+.cert-title{text-align:center;font-size:1.3rem;font-weight:700;color:#002846;margin-bottom:32px;position:relative;z-index:1}
+.cert-score-row{display:flex;justify-content:center;gap:32px;margin-bottom:36px;position:relative;z-index:1}
+.cert-stat{text-align:center;padding:16px 28px;border-radius:10px;border:1px solid #EEE8F1;background:#fafafa}
+.cert-stat .sv{font-size:1.8rem;font-weight:900;color:#002846;display:block}
+.cert-stat .sl{font-size:.68rem;text-transform:uppercase;letter-spacing:.08em;color:#8a9db0;display:block;margin-top:2px}
+.cert-pass-stamp{text-align:center;margin-bottom:36px;position:relative;z-index:1}
+.cert-pass-badge{display:inline-block;padding:10px 28px;border-radius:30px;font-size:.85rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+.cert-pass-badge.pass{background:rgba(26,158,95,.1);color:#1a9e5f;border:1.5px solid rgba(26,158,95,.25)}
+.cert-pass-badge.fail{background:rgba(214,59,31,.1);color:#d63b1f;border:1.5px solid rgba(214,59,31,.25)}
+.cert-footer{display:flex;justify-content:space-between;align-items:flex-end;padding-top:28px;border-top:1px solid #EEE8F1;position:relative;z-index:1}
+.cert-sig-block{text-align:center}
+.cert-sig-line{width:140px;height:1px;background:#002846;margin:0 auto 6px}
+.cert-sig-name{font-size:.75rem;font-weight:700;color:#002846}
+.cert-sig-role{font-size:.68rem;color:#8a9db0}
+.cert-date-block{text-align:right;font-size:.75rem;color:#8a9db0;line-height:1.6}
+.cert-module-list{font-size:.72rem;color:#8a9db0;text-align:center;margin-top:12px;position:relative;z-index:1;line-height:1.8}
+.cert-actions{display:flex;gap:12px;padding:20px 32px;background:#f9f2ff;border-top:1px solid #EEE8F1;justify-content:flex-end}
+.btn-cert-dl{padding:11px 24px;background:var(--grad);color:#fff;border:none;border-radius:8px;font-size:.85rem;font-weight:700;cursor:pointer;box-shadow:0 3px 10px rgba(193,127,255,.35)}
+.btn-cert-print{padding:11px 24px;background:#fff;color:var(--ink);border:2px solid var(--grey);border-radius:8px;font-size:.85rem;font-weight:700;cursor:pointer}
+.btn-cert-print:hover{border-color:var(--lilac)}
+
+@media print{
+  body > *:not(#cert-overlay){display:none}
+  #cert-overlay{position:static;background:none;padding:0}
+  .cert-modal{box-shadow:none;width:100%}
+  .cert-close,.cert-actions{display:none!important}
+  .cert-top-bar{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
 </style>
 </head>
 <body>
@@ -191,7 +254,14 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--i
         <span class="mod-tag">M8: RBA &amp; Management</span>
       </div>
     </div>
-    <button class="begin-btn" onclick="beginExam()">Begin Exam — Start Timer →</button>
+    <div class="name-entry-wrap">
+      <h2>👤 Your Name</h2>
+      <p>Enter your full name — this will appear on your certificate when you complete the exam.</p>
+      <div class="name-input-row">
+        <input type="text" id="candidate-name" class="name-input" placeholder="e.g. Jane Smith" oninput="updateNameInput()" autocomplete="name">
+      </div>
+    </div>
+    <button class="begin-btn" id="begin-btn" onclick="beginExam()" disabled style="opacity:.5;cursor:not-allowed">Enter your name above to begin</button>
   </div>
 </div>
 
@@ -244,11 +314,85 @@ body{font-family:'Segoe UI',Arial,sans-serif;background:var(--l10);color:var(--i
     </div>
     <!-- v2 pass/fail actions -->
     <div class="results-actions" id="results-actions"></div>
+
+    <!-- Certificate export -->
+    <div class="cert-export-section" id="cert-export-section" style="display:none">
+      <h2>🎓 Download Your Certificate</h2>
+      <p>Your result has been recorded. Download or print your certificate and send it to your line manager to confirm completion of the ICA AML mock assessment.</p>
+      <button class="btn-cert" onclick="showCert()">
+        <span>📜</span> View &amp; Export Certificate
+      </button>
+      <div class="cert-hint">Certificate shows your name, score, percentage, time taken, and pass/fail status.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ════════ CERTIFICATE OVERLAY ════════ -->
+<div id="cert-overlay">
+  <div class="cert-modal">
+    <button class="cert-close" onclick="closeCert()">✕</button>
+    <div class="cert-body">
+      <div class="cert-top-bar"></div>
+      <div class="cert-watermark">COADJUTE</div>
+      <div class="cert-logo"><span>Coadjute</span></div>
+      <div class="cert-issuer">Property Technology — AML Training Programme</div>
+      <div class="cert-presents">This is to certify that</div>
+      <div class="cert-recipient" id="cert-name"></div>
+      <div class="cert-divider"></div>
+      <div class="cert-qual">has successfully completed the</div>
+      <div class="cert-title">ICA Certificate in Anti-Money Laundering<br><span style="font-size:.85rem;font-weight:500;color:#5a6a7a">Mock Assessment — All 8 Modules</span></div>
+      <div class="cert-score-row">
+        <div class="cert-stat"><span class="sv" id="cert-score-val"></span><span class="sl">Score</span></div>
+        <div class="cert-stat"><span class="sv" id="cert-pct-val"></span><span class="sl">Percentage</span></div>
+        <div class="cert-stat"><span class="sv" id="cert-time-val"></span><span class="sl">Time Taken</span></div>
+      </div>
+      <div class="cert-pass-stamp">
+        <span class="cert-pass-badge" id="cert-pass-badge"></span>
+      </div>
+      <div class="cert-module-list">
+        Modules covered: M1 What is ML? · M2 Terrorist Financing &amp; Sanctions · M3 FI Exploitation · M4 High-Risk Sectors<br>
+        M5 Customer Due Diligence · M6 PEPs, SARs &amp; Reporting · M7 Legal Framework · M8 Risk-Based Approach
+      </div>
+      <div class="cert-footer">
+        <div class="cert-sig-block">
+          <div class="cert-sig-line"></div>
+          <div class="cert-sig-name">Coadjute AML Training</div>
+          <div class="cert-sig-role">Training Programme Administrator</div>
+        </div>
+        <div class="cert-date-block" id="cert-date-block"></div>
+      </div>
+    </div>
+    <div class="cert-actions">
+      <button class="btn-cert-print" onclick="printCert()">🖨 Print Certificate</button>
+      <button class="btn-cert-dl" onclick="downloadCert()">⬇ Download as PNG</button>
+    </div>
   </div>
 </div>
 
 <script>
 // ════════════ ALL 40 QUESTIONS ════════════
+let candidateName = '';
+
+function updateNameInput() {
+  const v = document.getElementById('candidate-name').value.trim();
+  candidateName = v;
+  const btn = document.getElementById('begin-btn');
+  const inp = document.getElementById('candidate-name');
+  if (v.length >= 2) {
+    btn.disabled = false;
+    btn.style.opacity = '1';
+    btn.style.cursor = 'pointer';
+    btn.textContent = 'Begin Exam — Start Timer →';
+    inp.classList.add('filled');
+  } else {
+    btn.disabled = true;
+    btn.style.opacity = '.5';
+    btn.style.cursor = 'not-allowed';
+    btn.textContent = 'Enter your name above to begin';
+    inp.classList.remove('filled');
+  }
+}
+
 const QS = [
 
   // ══════════════════════════════════════════
@@ -678,13 +822,27 @@ function showResults() {
   if (pass) { try { localStorage.setItem('mock_exam_complete', 'true'); } catch(e) {} }
   const elapsed = startTime ? Math.floor((Date.now()-startTime)/1000) : 0;
   const em = Math.floor(elapsed/60), es = elapsed%60;
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-GB',{day:'numeric',month:'long',year:'numeric'});
+  const timeStr = `${em}m ${es}s`;
+
+  // Store cert data
+  certData = {
+    name: candidateName,
+    score, total, pct, pass,
+    timeStr, dateStr,
+    elapsed
+  };
 
   document.getElementById('res-score-big').textContent = `${score}/${total}`;
   document.getElementById('res-pct').textContent = `${pct}%`;
   const v = document.getElementById('res-verdict');
   v.textContent = pass ? '✓ PASS — Well done!' : '✗ NOT YET — Review and retry';
   v.className = 'res-verdict ' + (pass ? 'pass' : 'fail');
-  document.getElementById('res-time-used').textContent = `Time used: ${em}m ${es}s`;
+  document.getElementById('res-time-used').textContent = `Time used: ${timeStr}`;
+
+  // Show certificate export section
+  document.getElementById('cert-export-section').style.display = 'block';
 
   // Module breakdown
   const mTotals={}, mScores={};
@@ -745,6 +903,63 @@ function retryExam() {
   document.getElementById('timer-wrap').style.display = 'none';
   showScreen('screen-intro');
 }
+
+// ════════ CERTIFICATE ════════
+let certData = {};
+
+function showCert() {
+  // Populate certificate fields
+  document.getElementById('cert-name').textContent = certData.name || candidateName || 'Candidate';
+  document.getElementById('cert-score-val').textContent = `${certData.score}/${certData.total}`;
+  document.getElementById('cert-pct-val').textContent = `${certData.pct}%`;
+  document.getElementById('cert-time-val').textContent = certData.timeStr;
+  const badge = document.getElementById('cert-pass-badge');
+  badge.textContent = certData.pass ? '✓ PASS — 70% Pass Mark Achieved' : '✗ NOT PASSED — Below 70% Pass Mark';
+  badge.className = 'cert-pass-badge ' + (certData.pass ? 'pass' : 'fail');
+  document.getElementById('cert-date-block').innerHTML =
+    `Completed: ${certData.dateStr}<br>Pass Mark: 70% (28/40)<br>Duration: 60 minutes`;
+  document.getElementById('cert-overlay').classList.add('show');
+}
+
+function closeCert() {
+  document.getElementById('cert-overlay').classList.remove('show');
+}
+
+function printCert() {
+  window.print();
+}
+
+function downloadCert() {
+  // Use html2canvas if available, otherwise fall back to print dialog
+  const modal = document.querySelector('.cert-modal');
+  if (typeof html2canvas !== 'undefined') {
+    const actions = document.querySelector('.cert-actions');
+    const close = document.querySelector('.cert-close');
+    actions.style.display = 'none';
+    close.style.display = 'none';
+    html2canvas(modal, {scale:2, useCORS:true, backgroundColor:'#fff'}).then(canvas => {
+      actions.style.display = '';
+      close.style.display = '';
+      const link = document.createElement('a');
+      const safeName = (certData.name || 'certificate').replace(/[^a-z0-9]/gi,'_').toLowerCase();
+      link.download = `Coadjute_AML_Certificate_${safeName}.png`;
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+    });
+  } else {
+    // Load html2canvas dynamically then retry
+    const script = document.createElement('script');
+    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
+    script.onload = () => downloadCert();
+    script.onerror = () => { alert('Download unavailable — use Print instead (Ctrl+P / Cmd+P) and save as PDF.'); };
+    document.head.appendChild(script);
+  }
+}
+
+// Close overlay on background click
+document.getElementById('cert-overlay').addEventListener('click', function(e) {
+  if (e.target === this) closeCert();
+});
 </script>
 </body>
 </html>
